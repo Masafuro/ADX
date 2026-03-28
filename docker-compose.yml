@@ -1,0 +1,13 @@
+services:
+  docusaurus:
+    image: node:lts
+    container_name: docusaurus-wiki
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/opt/docusaurus
+    working_dir: /opt/docusaurus
+    # 初回起動時にパッケージをインストールしてからサーバーを起動
+    # command: sh -c "npm install && npm start -- --host 0.0.0.0"
+    command: sh -c "npm start -- --host 0.0.0.0"
+    restart: unless-stopped
