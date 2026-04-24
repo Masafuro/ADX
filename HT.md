@@ -1,7 +1,9 @@
-# Hypothesis Template
+# Project Snapshot
 
-## 記入日
-- 2026/04/24 10:02
+## 0. プロジェクト
+- ADX: Advanced Devices eXtended
+- It's a form factor for Industrial ATX and Next Gen Arduino.
+- 1st Goal is to start Crowd Supply.
 
 ## 1. 現状
 - ADX Core V0
