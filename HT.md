@@ -1,7 +1,7 @@
 # Hypothesis Template
 
 ## 記入日
-- 2026/04/24 06:23
+- 2026/04/24 10:02
 
 ## 1. 現状
 - ADX Core V0
@@ -20,6 +20,8 @@
     - 新規開発しようとついついしてしまう。
     - できるだけ既製品を利用する方向で調整。
     - Analog Discovery 3を発注したので、様子見した方がいいかも。
+- Git-HT
+    - github.devに移動し、WEB Editorを開き、ファイルを開いてから右クリックで、TIMELINEを確認できる。
 - ブログ
     - 順調に記事の投入は進行中
     - Cloudflare Zero Trustでセキュリティを強化した。
