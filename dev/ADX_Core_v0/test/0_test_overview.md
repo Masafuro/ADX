@@ -5,7 +5,7 @@
 - テスト項目
   - [100_cold_test.md](https://github.com/Masafuro/ADX/blob/4f7ac57cd61040fc78d0f03c3955bf7419ba311e/dev/ADX_Core_v0/test/100_cold_test.md)
 - 必要なもの
-  - ADX Core V0 ボード
+  - ADX Core V0 Board
   - テスター
   - 記録用Github
 
@@ -14,7 +14,8 @@
 - テスト項目
   - [200_hot_test.md](https://github.com/Masafuro/ADX/blob/4f7ac57cd61040fc78d0f03c3955bf7419ba311e/dev/ADX_Core_v0/test/200_hot_test.md)
 - 必要なもの
-  - ADX Core V0 ボード
+  - ADX Core V0 Board
+  - IDC Breakout Board
   - Analog Discovery 3
   - [UPDI Friend](https://www.digikey.jp/ja/products/detail/adafruit-industries-llc/5879/22596413?gclsrc=aw.ds&gad_source=1&gad_campaignid=17336038749&gbraid=0AAAAADrbLlg4ff8HgFQSZpjbqrpZtKQ4M&gclid=CjwKCAjwqazPBhALEiwAOuXqdNNdevnqq7QBsj_P4HC9viQkpzmpqBf65MSMBvPoWiUNEkrQsVFh9hoCbccQAvD_BwE)
     - ★未発注
