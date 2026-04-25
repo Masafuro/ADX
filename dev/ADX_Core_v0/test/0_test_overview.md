@@ -17,8 +17,10 @@
   - ADX Core V0 Board
   - IDC Breakout Board
   - Analog Discovery 3
-  - [UPDI Friend](https://www.digikey.jp/ja/products/detail/adafruit-industries-llc/5879/22596413?gclsrc=aw.ds&gad_source=1&gad_campaignid=17336038749&gbraid=0AAAAADrbLlg4ff8HgFQSZpjbqrpZtKQ4M&gclid=CjwKCAjwqazPBhALEiwAOuXqdNNdevnqq7QBsj_P4HC9viQkpzmpqBf65MSMBvPoWiUNEkrQsVFh9hoCbccQAvD_BwE)
+  - [USB-UPDI シリアル変換アダプタ](https://www.switch-science.com/products/9833?srsltid=AfmBOorsQxXZl9mzRVWr1nGvxjNZj7mHYrLwM3wYnoYn2lLD-4AgsqZT)
     - ★未発注
+    - Adafruit UPDI Friend HVは挙動が怪しいため不可。
+    - 12Vパルスリセットは必要になったら考える。
   - RS-485検査用スケッチ
     - [スケッチ仕様](https://github.com/Masafuro/ADX/blob/4f7ac57cd61040fc78d0f03c3955bf7419ba311e/dev/ADX_Core_v0/test/201_RS485_test_sketch_spec.md)
     - [テストスケッチ](https://github.com/Masafuro/ADX/blob/5864930ae42afa0e893e913f02a4b336e196b19e/dev/ADX_Core_v0/test/202_RS485_test_sketch_01.ino)
