@@ -3,7 +3,6 @@
 ## 1. Visual inspection
 
 - 顕微鏡による外観検査
-- 
 
 ## 2. COLD TEST
 
