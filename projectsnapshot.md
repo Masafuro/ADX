@@ -17,8 +17,8 @@
     - 購入するもの
       - 顕微鏡、USB-UPDI、USB-RS485
 - ADX DEBUG BOARD
-    - ~発注可能と思われる。~
-    - 24pin -> 20pin への変更が必要
+    - 20pin への変更を完了
+    - 寸法がまだ。
 - ADX LED Tape Drive CARD
     - 基本計画を立案した。
     - LEDテープ型で5Wくらいまでは行けそうな感じ。
