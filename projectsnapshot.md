@@ -9,10 +9,7 @@
 - ADX Core V0
     - 回路基本設計を完了。寸法記入を完了。
     - Notebooklmのレビューを開始。
-        - BOMレビューを開始。
-            - 一つの抵抗に入手性や能力バランスに少し無理があり、0402 -> 1206 へと変更
-            - IDCボックスヘッダを24pin -> 20pin に変更。それに伴いGPIOの引き直しが発生。一応完了。
-            - ★20pinリボンケーブルの購入または作成が必要。
+        - BOM Review 2ndへ。
 - ADX Core V0 試験
     - 試験計画を立案した。
       - [試験概要](dev/ADX_Core_v0/test/0_test_overview.md)
