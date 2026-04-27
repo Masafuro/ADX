@@ -24,6 +24,10 @@
         - [ ] 配線数
         - [ ] via数
         - [ ] ばらつき
+    - [ ] Pickandplace
+        - [ ] 部品間距離
+        - [ ] ターミナル位置
+        - [ ] ネジ位置
 - ADX Core V0 試験
     - 試験計画を立案した。
       - [試験概要](dev/ADX_Core_v0/test/0_test_overview.md)
