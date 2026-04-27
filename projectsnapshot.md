@@ -9,15 +9,27 @@
 - ADX Core V0
     - 回路基本設計を完了。寸法記入を完了。
       - via 足りてない問題がある。
-    - Notebooklmのレビューを開始。
-        - BOM Review 2ndへ。
+- ADX Core V0 レビュー
+    - [ ] BOM
+        - [ ] 温度域　`-40℃ ~ 105℃`
+        - [ ] 在庫数　`5,000以上`
+    - [ ] Netlist
+        - [ ] 周辺回路
+            - [ ] ATtiny1616-MNR
+            - [ ] LMR36506RRPER
+            - [ ] THVD2410DR
+        - [ ] RCL配置
+    - [ ] NetAnalytics
+        - [ ] 配線長
+        - [ ] 配線数
+        - [ ] via数
+        - [ ] ばらつき
 - ADX Core V0 試験
     - 試験計画を立案した。
       - [試験概要](dev/ADX_Core_v0/test/0_test_overview.md)
     - 購入するもの
       - 顕微鏡、USB-UPDI、USB-RS485
 - ADX DEBUG BOARD
-    - 20pin への変更を完了
     - 寸法がまだ。
 - ADX LED Tape Drive CARD
     - 基本計画を立案した。
