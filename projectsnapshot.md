@@ -8,6 +8,7 @@
 ## 1. 現状
 - ADX Core V0
     - 回路基本設計を完了。寸法記入を完了。
+      - via 足りてない問題がある。
     - Notebooklmのレビューを開始。
         - BOM Review 2ndへ。
 - ADX Core V0 試験
