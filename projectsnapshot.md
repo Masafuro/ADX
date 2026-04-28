@@ -46,14 +46,14 @@
 - USB-RS485
 - 20pin IDC リボンケーブル
 
-
+### 1.2 ADX CARD
 - ADX LED Tape Drive CARD
     - 基本計画を立案した。
     - LEDテープ型で5Wくらいまでは行けそうな感じ。
     - [LEDテープドライブ拡張カードの検討](https://memo.adxplatform.com/note/PL4%EF%BC%88Power%20over%20LIN%20based%20RS485%EF%BC%89LED%E3%83%86%E3%83%BC%E3%83%97%E7%94%A8%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E3%83%9C%E3%83%BC%E3%83%89%E6%A4%9C%E8%A8%8E%E8%B3%87%E6%96%99)
 
 
-### 1.2 World
+### 1.3 World
 - 未踏アドバンスト2026
     - 申請済み
     - 2026/04/26 ipa.go.jp から新着メールなし
@@ -69,7 +69,7 @@
 - セキュリティ
     - tailscaleの掃除
 
-### 1.3 System
+### 1.4 System
 - Obsidianによる管理を開始
 	- 順調に利用できるようになってきた。
  
