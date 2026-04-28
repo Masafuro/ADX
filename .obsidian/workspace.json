@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "projectsnapshot.md",
+                "file": "dev/MEMO/レビューシステムの検討.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "projectsnapshot"
+              "title": "レビューシステムの検討"
             }
           }
         ]
@@ -196,8 +196,10 @@
   },
   "active": "445c6454a2a38695",
   "lastOpenFiles": [
-    "Project_Snapshot.md",
     "projectsnapshot.md",
+    "dev/MEMO/レビューシステムの検討.md",
+    "dev/MEMO",
+    "Project_Snapshot.md",
     "dev/ADX_Core_v0/TEST_SHEET/302_RS485_test_sketch_01.md",
     "dev/ADX_Core_v0/TEST_SHEET/301_RS485_test_sketch_spec.md",
     "obsidian_test/My code file. ino",
