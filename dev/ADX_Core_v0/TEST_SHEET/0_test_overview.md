@@ -7,7 +7,7 @@
 ## 2. COLD TEST
 
 - テスト項目
-  - [200_cold_test.md](/dev/ADX_Core_v0/test/200_cold_test.md)
+  - [200_cold_test.md](200_cold_test.md)
 - 必要なもの
   - ADX Core V0 Board
   - テスター
@@ -16,7 +16,7 @@
 ## 3. HOT TEST
 
 - テスト項目
-  - [300_hot_test.md](/dev/ADX_Core_v0/test/300_hot_test.md)
+  - [300_hot_test.md](300_hot_test.md)
 - 必要なもの
   - ADX Core V0 Board
   - IDC20pinリボンケーブル
@@ -27,7 +27,7 @@
     - Adafruit UPDI Friend HVは挙動が怪しいため不可。
     - 12Vパルスリセットは必要になったら考える。
   - RS-485検査用スケッチ
-    - [スケッチ仕様](/dev/ADX_Core_v0/test/301_RS485_test_sketch_spec.md)
-    - [テストスケッチ](dev/ADX_Core_v0/test/302_RS485_test_sketch_01.ino)
+    - [スケッチ仕様](301_RS485_test_sketch_spec.md)
+    - [テストスケッチ](302_RS485_test_sketch_01.ino)
   - 記録用Github
 

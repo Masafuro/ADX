@@ -36,7 +36,7 @@
     - たぶん、これを先に完成させた方がいい。
 - ADX Core V0 試験
     - 試験計画を立案した。
-      - [試験概要](dev/ADX_Core_v0/test/0_test_overview.md)
+      - [試験概要](0_test_overview.md)
     - 購入するもの
       - 顕微鏡、USB-UPDI、USB-RS485
 
