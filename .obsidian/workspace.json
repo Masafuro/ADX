@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "dev/MEMO/レビューシステムの検討.md",
+                "file": "Project_Snapshot.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "レビューシステムの検討"
+              "title": "Project_Snapshot"
             }
           }
         ]
@@ -196,8 +196,11 @@
   },
   "active": "445c6454a2a38695",
   "lastOpenFiles": [
-    "projectsnapshot.md",
+    "dev/MEMO/ReviewDataSchematic.canvas",
+    "dev/ADX_IDCtoPinheader_adapter/20260428/Netlist_PCB1_2026-04-28.enet",
     "dev/MEMO/レビューシステムの検討.md",
+    "dev/ADX_IDCtoPinheader_adapter/20260428/Netlist_Schematic1_2026-04-28.enet",
+    "projectsnapshot.md",
     "dev/MEMO",
     "Project_Snapshot.md",
     "dev/ADX_Core_v0/TEST_SHEET/302_RS485_test_sketch_01.md",
@@ -209,8 +212,6 @@
     "dev/ADX_IDCtoPinheader_adapter/20260428/Gerber_PCB1_2026-04-28.zip",
     "dev/ADX_IDCtoPinheader_adapter/20260428/PickAndPlace_PCB1_2026-04-28.csv",
     "dev/ADX_IDCtoPinheader_adapter/20260428/ADX_IDCtoPinheader_adapter_2026-04-28.epro",
-    "dev/ADX_IDCtoPinheader_adapter/20260428/BOM_Board1_PCB1_2026-04-28.csv",
-    "dev/ADX_IDCtoPinheader_adapter",
     "dev/ADX_Core_v0/TEST_SHEET/300_hot_test.md",
     "dev/ADX_Core_v0/TEST_SHEET/200_cold_test.md",
     "dev/ADX_Core_v0/TEST_SHEET/0_test_overview.md",
