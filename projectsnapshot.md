@@ -71,7 +71,11 @@
 
 ### 1.4 System
 - Obsidianによる管理を開始
-	- 順調に利用できるようになってきた。
+	- とりあえず.md以外にはデフォルトアプリで開いてしまう。
+	- inoは一旦.mdにする他ない。
+	- vs-codeならやりやすいことを考えるとArduino IDEからplatform I/Oへの移行を早く進めた方がよさそう。
+- Arduino IDE から Platform I/O への移行
+	- そろそろ限界
  
 
 ## 2. 違和感
