@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Project_Snapshot.md",
+                "file": "projectsnapshot.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Project_Snapshot"
+              "title": "projectsnapshot"
             }
           }
         ]
@@ -194,8 +194,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f86d1c8014aa79ed",
+  "active": "445c6454a2a38695",
   "lastOpenFiles": [
+    "Project_Snapshot.md",
     "projectsnapshot.md",
     "dev/ADX_Core_v0/TEST_SHEET/302_RS485_test_sketch_01.md",
     "dev/ADX_Core_v0/TEST_SHEET/301_RS485_test_sketch_spec.md",
@@ -211,7 +212,6 @@
     "dev/ADX_Core_v0/TEST_SHEET/300_hot_test.md",
     "dev/ADX_Core_v0/TEST_SHEET/200_cold_test.md",
     "dev/ADX_Core_v0/TEST_SHEET/0_test_overview.md",
-    "Project_Snapshot.md",
     "dev/doc/data.md"
   ]
 }
