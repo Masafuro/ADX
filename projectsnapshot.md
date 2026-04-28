@@ -33,8 +33,9 @@
       - [試験概要](dev/ADX_Core_v0/test/0_test_overview.md)
     - 購入するもの
       - 顕微鏡、USB-UPDI、USB-RS485
-- ADX DEBUG BOARD
+- ADX IDCtoPinHeader Adapter
     - 寸法がまだ。
+    - たぶん、これを先に完成させた方がいい。
 - ADX LED Tape Drive CARD
     - 基本計画を立案した。
     - LEDテープ型で5Wくらいまでは行けそうな感じ。
@@ -55,6 +56,7 @@
     - tailscaleの掃除
 - Obsidianによる管理を開始
 	- Githubの相対リンク引き直しはスムーズになった模様。
+	- git の拡張を投入
  
 ### 1.1 買い物リスト
 - 顕微鏡
