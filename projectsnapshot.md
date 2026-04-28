@@ -45,6 +45,9 @@
 - USB-UPDI
 - USB-RS485
 - 20pin IDC リボンケーブル
+- ターミナル
+- Ethernetケーブル
+- フェルール端子
 
 ### 1.2 ADX CARD
 - ADX LED Tape Drive CARD
