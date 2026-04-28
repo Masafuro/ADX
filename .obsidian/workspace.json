@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "projectsnapshot.md",
+                "file": "Project_Snapshot.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "projectsnapshot"
+              "title": "Project_Snapshot"
             }
           }
         ]
@@ -184,7 +184,6 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "vscode-editor:Create Code File": false,
       "switcher:クイックスイッチャーを開く": false,
       "graph:グラフビューを開く": false,
       "canvas:新規キャンバスを作成": false,
@@ -195,8 +194,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "445c6454a2a38695",
+  "active": "f86d1c8014aa79ed",
   "lastOpenFiles": [
+    "projectsnapshot.md",
     "dev/ADX_Core_v0/TEST_SHEET/302_RS485_test_sketch_01.md",
     "dev/ADX_Core_v0/TEST_SHEET/301_RS485_test_sketch_spec.md",
     "obsidian_test/My code file. ino",
@@ -211,7 +211,7 @@
     "dev/ADX_Core_v0/TEST_SHEET/300_hot_test.md",
     "dev/ADX_Core_v0/TEST_SHEET/200_cold_test.md",
     "dev/ADX_Core_v0/TEST_SHEET/0_test_overview.md",
-    "projectsnapshot.md",
+    "Project_Snapshot.md",
     "dev/doc/data.md"
   ]
 }
