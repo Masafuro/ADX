@@ -28,6 +28,7 @@
 - [PickAndPlace](dev/ADX_Core_v0/Manufacture/20260429_1302/PickAndPlace_PCB1_2026-04-29.csv)
 ## その他データ
 - [Netlist(easyeda)](dev/ADX_Core_v0/Manufacture/20260429_1302/Netlist_PCB1_2026-04-29.enet)
+- [EasyEDA Pro Peoject](ProPrj_ADX_Core_v0_2026-04-29.epro)
 ## DFM Check
 - PCB DFM
 	- フットプリント以外でGood以下のもの無し

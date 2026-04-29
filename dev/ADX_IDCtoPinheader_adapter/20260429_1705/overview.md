@@ -13,3 +13,4 @@
 - [Gerber](dev/ADX_IDCtoPinheader_adapter/20260429_1705/Gerber_PCB1_2026-04-29.zip)
 - [PickAndPlace](dev/ADX_IDCtoPinheader_adapter/20260429_1705/PickAndPlace_PCB1_2026-04-29.csv)
 - [NetList](dev/ADX_IDCtoPinheader_adapter/20260429_1705/Netlist_PCB1_2026-04-29.enet)
+- [EasyEDA Pro Peoject](ProPrj_ADX_IDCtoPinheader%20adapter_2026-04-29.epro)
