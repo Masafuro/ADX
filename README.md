@@ -15,4 +15,5 @@ ADX: Advanced Devices eXtended's project documents.
 ## 2. 進捗ログ
 - [Project_Snapshot.md](Project_Snapshot.md)
 	- [History](https://github.dev/Masafuro/ADX/blob/main/Project_Snapshot.md)
-- [Blog](https://dev-blog.adxplatform.com/)
+- [Main Site: ADX platform](https://adxplatform.com/)
+	- [Blog](https://dev-blog.adxplatform.com/)
