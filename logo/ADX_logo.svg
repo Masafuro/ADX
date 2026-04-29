@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="58.476376mm"
+   height="21.94438mm"
+   viewBox="0 0 58.476376 21.94438"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="ADX_logo.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   inkscape:export-filename="ADX_logo.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#cccccc"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="3.4794322"
+     inkscape:cx="110.50654"
+     inkscape:cy="41.529765"
+     inkscape:window-width="1600"
+     inkscape:window-height="829"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1"
+     inkscape:export-bgcolor="#ffffff00" />
+  <defs
+     id="defs1">
+    <rect
+       x="166.49814"
+       y="247.06175"
+       width="483.38168"
+       height="173.65935"
+       id="rect1-4-4-4" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-40.872192,-173.10357)">
+    <text
+       xml:space="preserve"
+       transform="matrix(0.22690197,0,0,0.22690197,7.0917155,115.31464)"
+       id="text1-2-2-2"
+       style="font-weight:900;font-size:85.3333px;font-family:'Noto Sans JP';-inkscape-font-specification:'Noto Sans JP Heavy';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect1-4-4-4);display:inline;fill:#000000;fill-opacity:1;stroke-width:3.77953;stroke-linejoin:bevel"><tspan
+         x="166.49805"
+         y="332.82246"
+         id="tspan4"><tspan
+           style="font-weight:normal;font-family:'Special Gothic Expanded One';-inkscape-font-specification:'Special Gothic Expanded One'"
+           id="tspan2">ADX</tspan></tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2-4-5-4"
+       width="56.476379"
+       height="19.944382"
+       x="41.872192"
+       y="174.10356"
+       ry="0" />
+  </g>
+</svg>
