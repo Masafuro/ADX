@@ -1,5 +1,15 @@
-- ADX Core V0
+## ADX Core V0
 - 2026/04.29 17:22
+### SPEC
+- GPIO IDC 20pin with VDD
+- INPUT DC 7V ~ 48V
+- TEMPLATURE -40℃ ~ 105℃
+- Main Chip ATtiny1616-MNR
+- Function 
+	- RS-485
+	- No USB
+- M3 × 4 with PAD 8mm
+- Board Edge C3 × 3
 
 ## 3D View
 
@@ -46,13 +56,3 @@
 ![](Price_Qty5_result.png)
 ![](Price_Qty30_result.png)
 
-### SPEC
-- GPIO IDC 20pin with VDD
-- INPUT DC 7V ~ 48V
-- TEMPLATURE -40℃ ~ 105℃
-- Main Chip ATtiny1616-MNR
-- DESULT 
-	- RS-485
-	- No USB
-- M3 × 4 with PAD 8mm
-- Board Edge C3 × 3
