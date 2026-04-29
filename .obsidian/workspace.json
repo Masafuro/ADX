@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Project_Snapshot.md",
+                "file": "dev/ADX_IDCtoPinheader_adapter/20260429_1705/overview.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Project_Snapshot"
+              "title": "overview"
             }
           }
         ]
@@ -196,8 +196,8 @@
   },
   "active": "445c6454a2a38695",
   "lastOpenFiles": [
-    "README.md",
     "Project_Snapshot.md",
+    "README.md",
     "dev/ADX_Core_v0/Manufacture/20260429_1302/overview.md",
     "dev/ADX_IDCtoPinheader_adapter/20260429_1705/overview.md",
     "dev/ADX_IDCtoPinheader_adapter/20260429_1705/SCH_Schematic1_1-P1_2026-04-29.pdf",
