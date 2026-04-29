@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "dev/ADX_IDCtoPinheader_adapter/20260429_1705/overview.md",
+                "file": "memo/Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "overview"
+              "title": "Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討"
             }
           }
         ]
@@ -197,6 +197,8 @@
   "active": "445c6454a2a38695",
   "lastOpenFiles": [
     "dev/ADX_IDCtoPinheader_adapter/20260429_1705/overview.md",
+    "memo/Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討.md",
+    "memo",
     "dev/ADX_Core_v0/Manufacture/20260429_1302/overview.md",
     "dev/ADX_IDCtoPinheader_adapter/20260429_1705/ProPrj_ADX_IDCtoPinheader adapter_2026-04-29.epro",
     "dev/ADX_Core_v0/Manufacture/20260429_1302/ProPrj_ADX_Core_v0_2026-04-29.epro",
@@ -216,7 +218,6 @@
     "dev/ADX_Core_v0/Manufacture/20260429_1302",
     "dev/ADX_Core_v0/Manufacture",
     "dev/MEMO/ReviewDataSchematic.canvas",
-    "dev/ADX_IDCtoPinheader_adapter/20260428/Netlist_PCB1_2026-04-28.enet",
     "dev/MEMO/レビューシステムの検討.md",
     "projectsnapshot.md",
     "dev/ADX_Core_v0/TEST_SHEET/302_RS485_test_sketch_01.md",
