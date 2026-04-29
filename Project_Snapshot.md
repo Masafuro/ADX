@@ -7,18 +7,18 @@
 ## 1. 現状
 
 ### 1.1 ADX Core Development
-
 - ADX Core V0
     - 製造へ
-- ADX Core V0 レビュー
-	- 終了
-- ADX IDCtoPinHeader Adapter
+- ADX IDCtoPinheader Adapter
     - 製造へ
 - ADX Core V0 試験
     - 試験計画を立案した。
       - [試験概要](0_test_overview.md)
 #### 1.1.1 買い物リスト
-- 発注状況
+- JLCPCB 発注
+	- [ ] ADX Core V0
+	- [ ] ADX IDCtoPinheader Adapter
+- 一般購買
 	- [ ] 顕微鏡
 	- [ ] USB-UPDI
 	- [ ] USB-RS485
