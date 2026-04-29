@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Project_Snapshot.md",
+                "file": "dev/ADX_Core_v0/Manufacture/20260429_1302/overview.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Project_Snapshot"
+              "title": "overview"
             }
           }
         ]
@@ -196,19 +196,19 @@
   },
   "active": "445c6454a2a38695",
   "lastOpenFiles": [
-    "dev/ADX_Core_v0/Manufacture/20260429_1302/overview.md",
-    "dev/ADX_Core_v0/Manufacture/20260429.md",
-    "dev/ADX_Core_v0/Manufacture/overview.md",
-    "dev/ADX_Core_v0/Manufacture/20260429_1302/SMT_DFM_result.png",
+    "dev/ADX_Core_v0/Manufacture/20260429_1302/PCB_DFM_result.png",
     "dev/ADX_Core_v0/Manufacture/20260429_1302/Price_Qty5_result.png",
     "dev/ADX_Core_v0/Manufacture/20260429_1302/Price_Qty30_result.png",
+    "dev/ADX_Core_v0/Manufacture/20260429_1302/SMT_DFM_result.png",
+    "dev/ADX_Core_v0/Manufacture/20260429_1302/overview.md",
+    "Project_Snapshot.md",
+    "dev/ADX_Core_v0/Manufacture/20260429.md",
+    "dev/ADX_Core_v0/Manufacture/overview.md",
     "dev/ADX_Core_v0/Manufacture/20260429_1302/PickAndPlace_PCB1_2026-04-29.csv",
-    "dev/ADX_Core_v0/Manufacture/20260429_1302/PCB_DFM_result.png",
     "dev/ADX_Core_v0/Manufacture/20260429_1302/Netlist_PCB1_2026-04-29.enet",
     "dev/ADX_Core_v0/Manufacture/20260429_1302/Gerber_PCB1_2026-04-29.zip",
     "dev/ADX_Core_v0/Manufacture/20260429_1302/BOM_Board1_PCB1_2026-04-29.csv",
     "dev/ADX_Core_v0/Manufacture/20260429_1302",
-    "Project_Snapshot.md",
     "dev/ADX_Core_v0/Manufacture",
     "dev/MEMO/ReviewDataSchematic.canvas",
     "dev/ADX_IDCtoPinheader_adapter/20260428/Netlist_PCB1_2026-04-28.enet",
