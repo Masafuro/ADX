@@ -13,4 +13,5 @@ ADX: Advanced Devices eXtended's project documents.
 ![](dev/ADX_IDCtoPinheader_adapter/20260429_1705/3D_front.png)
 
 ## 2. 進捗ログ
-[Project_Snapshot.md](Project_Snapshot.md)
+- [Project_Snapshot.md](Project_Snapshot.md)
+	- [History](https://github.dev/Masafuro/ADX/blob/main/Project_Snapshot.md)
