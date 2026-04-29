@@ -8,7 +8,10 @@
 
 ### 1.1 ADX Core Development
 - ADX Core V0
-    - 製造へ
+    - RS485再調整
+      - TVSダイオード
+      - 終端抵抗とソルダーパッド（ターミナル側）
+      - バイアス抵抗とソルダーパッド（トランシーバー側）
 - ADX IDCtoPinheader Adapter
     - 製造へ
 - ADX Core V0 試験
