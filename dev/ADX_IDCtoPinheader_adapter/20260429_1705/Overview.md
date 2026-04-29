@@ -6,8 +6,7 @@
 ![](3D_back.png)
 
 ### Schematic
-
-![](SCH_Schematic1_1-P1_2026-04-29.pdf)
+- [SCH_Schematic1_1-P1_2026-04-29.pdf](SCH_Schematic1_1-P1_2026-04-29.pdf)
 
 ### Data
 - [BOM](dev/ADX_IDCtoPinheader_adapter/20260429_1705/BOM_Board1_PCB1_2026-04-29.csv)
