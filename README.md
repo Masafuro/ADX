@@ -18,7 +18,7 @@ ADX: Advanced Devices eXtended's project documents.
 | ---------- | -------------------------------------- | --------------------------- |
 | **搭載MCU**  | Microchip ATtiny1616-MNR               | 8-bit AVR® megaAVR 0-series |
 | **動作周波数**  | 20 MHz ( **16 MHz** Recomended )       | (内部クロック / 設計推奨値)            |
-| **ロジック電圧** | **5.0 V**                              |                             |
+| **ロジック電圧** | **5 V**                                |                             |
 | **メモリ容量**  | Flash 16 KB / SRAM 2 KB / EEPROM 256 B |                             |
 | **動作周囲温度** | -40 ℃ ～ +105 ℃                         | (工業用グレード部品採用)               |
 ### 2. 電源・保護仕様 (Power & Protection Specifications)
