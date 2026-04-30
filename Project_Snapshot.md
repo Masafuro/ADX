@@ -56,6 +56,11 @@
     - 古いまま。
 - Hackaday.io
     - 2026/04/30 logをポストした。
+
+| date       | view | comments | followers | likes |
+| ---------- | ---- | -------- | --------- | ----- |
+| 2026/05/01 | 85   | 0        | 1         | 0     |
+
 - LinkedIn
     - 草稿を作成した。
 - ADXplatform トップページ

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "memo/old/Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討.md",
+                "file": "Project_Snapshot.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討"
+              "title": "Project_Snapshot"
             }
           }
         ]
@@ -196,8 +196,8 @@
   },
   "active": "445c6454a2a38695",
   "lastOpenFiles": [
-    "memo/ADX Core V0 start manufacturing.md",
     "memo/old/Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討.md",
+    "memo/ADX Core V0 start manufacturing.md",
     "memo/old",
     "Project_Snapshot.md",
     "README.md",
