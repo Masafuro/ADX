@@ -17,7 +17,7 @@
 		- JLCPCBが5/1~5/3までお休み（GMT +8)
 		- 休業中に重なるがどのように処理されるか興味深いところ。
 - ADX Core V0 試験
-      - [試験予定](0_test_overview.md)
+    - [試験予定](/dev/ADX_Core_v0/TEST_SHEET/0_test_overview.md)
 #### 1.1.1 買い物リスト
 - JLCPCB 
 	- 発注済み　2026/04/30 16:10
