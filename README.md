@@ -9,7 +9,9 @@ ADX: Advanced Devices eXtended's project documents.
 - [Project Data](dev/ADX_Core_v0/Manufacture/20260430_1154)
 ![](dev/ADX_Core_v0/Manufacture/20260430_1154/3dview_front.png)
 
-## ハードウェア仕様書：ADX Core V0 (Arduino like Industrial Control Board)
+## ハードウェア仕様書：ADX Core V0
+- Arduino like Industrial Control Board
+
 ### 1. 性能諸元 (Performance Specifications)
 | 項目 | 仕様 | 備考 |
 |---|---|---|
