@@ -12,6 +12,7 @@
 - ADX Core V0 スペック等情報作成？
 - 製造中
 	- ADX Core V0
+      - ターミナルは入手性が悪そう。どこかで妥協した方がいいかも？
 	- ADX IDCtoPinheader Adapter
 	- 備考
 		- JLCPCBが5/1~5/3までお休み（GMT +8)
