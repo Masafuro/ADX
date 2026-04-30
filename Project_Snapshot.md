@@ -2,7 +2,7 @@
 
 ## 0. プロジェクト
 - ADX: Advanced Devices eXtended
-- It's a form factor for Industrial ATX and Next Gen Arduino.
+- It's a form factor for Next Geneneration Industrial Arduino eco system.
 - 1st Goal is to start Crowd Supply.
 
 ## 0.1 Tasks
