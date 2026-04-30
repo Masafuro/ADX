@@ -95,3 +95,6 @@
 	    - シルクスクリーン文字最小幅は6mil、線幅は7mil
 	    - 基本は6mil以上、差動ペア幅は7mil
 ## 6. 完了したもの
+- 特になし
+## 7. その他
+- [History](https://github.dev/Masafuro/ADX/blob/main/Project_Snapshot.md)
