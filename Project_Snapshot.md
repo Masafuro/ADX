@@ -4,6 +4,10 @@
 - ADX: Advanced Devices eXtended
 - It's a form factor for Industrial ATX and Next Gen Arduino.
 - 1st Goal is to start Crowd Supply.
+
+## 0.1 Tasks
+- Add a post to hackaday.io 
+
 ## 1. 現状
 
 ### 1.1 ADX Core Development
@@ -12,6 +16,7 @@
 - ADX Core V0 スペック等情報作成？
 - 製造中
 	- ADX Core V0
+      - ターミナルは入手性が悪そう。どこかで妥協した方がいいかも？
 	- ADX IDCtoPinheader Adapter
 	- 備考
 		- JLCPCBが5/1~5/3までお休み（GMT +8)
