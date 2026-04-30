@@ -8,10 +8,9 @@
 
 ### 1.1 ADX Core Development
 - ADX Core V0
-    - RS485再調整
-      - TVSダイオード
-      - 終端抵抗とソルダーパッド（ターミナル側）
-      - バイアス抵抗とソルダーパッド（トランシーバー側）
+	- RS-485周辺を再調整
+		- TVSダイオード、終端抵抗とSOLDER JUMPERを追加した。
+	- 製造へ
 - ADX IDCtoPinheader Adapter
     - 製造へ
 - ADX Core V0 試験
@@ -35,7 +34,7 @@
     - [LEDテープドライブ拡張カードの検討](https://memo.adxplatform.com/note/PL4%EF%BC%88Power%20over%20LIN%20based%20RS485%EF%BC%89LED%E3%83%86%E3%83%BC%E3%83%97%E7%94%A8%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E3%83%9C%E3%83%BC%E3%83%89%E6%A4%9C%E8%A8%8E%E8%B3%87%E6%96%99)
 ### 1.3 World
 - 未踏アドバンスト2026
-    - 2026/04/29 17:29
+    - 2026/04/30 12:10
 	    - ipa.go.jp から新着メールなし
     - 2026/05/01までにメールがなければ、不採択
 	    - 05/02 00:00 を持って不採択と判断
