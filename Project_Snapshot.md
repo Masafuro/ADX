@@ -7,26 +7,28 @@
 ## 1. 現状
 
 ### 1.1 ADX Core Development
-- ADX Core V0
-	- RS-485周辺を再調整
-		- TVSダイオード、終端抵抗とSOLDER JUMPERを追加した。
-	- 製造へ
-- ADX IDCtoPinheader Adapter
-    - 製造へ
+- 試験環境の整備
+- 3Dプリンタ環境の整備
+- 製造中
+	- ADX Core V0
+	- ADX IDCtoPinheader Adapter
+	- 備考
+		- JLCPCBが5/1~5/3までお休み（GMT +8)
+		- 休業中に重なるがどのように処理されるか興味深いところ。
 - ADX Core V0 試験
-    - 試験計画を立案した。
-      - [試験概要](0_test_overview.md)
+      - [試験予定](0_test_overview.md)
 #### 1.1.1 買い物リスト
-- JLCPCB 発注
-	- [ ] ADX Core V0
-	- [ ] ADX IDCtoPinheader Adapter
+- JLCPCB 
+	- 発注済み　2026/04/30 16:10
+	- [x] ADX Core V0
+	- [x] ADX IDCtoPinheader Adapter
 - 一般購買
-	- [ ] 顕微鏡
-	- [ ] USB-UPDI
-	- [ ] USB-RS485
-	- [ ] 20pin IDC リボンケーブル
-	- [ ] プラガブルターミナル
-	- [ ] フェルール端子
+	- 発注済み　2026/04/30 17:00
+	- [x] 顕微鏡
+	- [x] USB-UPDI 
+	- [x] USB-RS485
+	- [x] 20pin IDC リボンケーブル
+	- [x] プラガブルターミナル
 ### 1.2 ADX CARD
 - ADX LED Tape Drive CARD
     - 基本計画を立案した。
@@ -34,7 +36,7 @@
     - [LEDテープドライブ拡張カードの検討](https://memo.adxplatform.com/note/PL4%EF%BC%88Power%20over%20LIN%20based%20RS485%EF%BC%89LED%E3%83%86%E3%83%BC%E3%83%97%E7%94%A8%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E3%83%9C%E3%83%BC%E3%83%89%E6%A4%9C%E8%A8%8E%E8%B3%87%E6%96%99)
 ### 1.3 World
 - 未踏アドバンスト2026
-    - 2026/04/30 12:10
+    - 2026/04/30 16:59
 	    - ipa.go.jp から新着メールなし
     - 2026/05/01までにメールがなければ、不採択
 	    - 05/02 00:00 を持って不採択と判断
