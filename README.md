@@ -1,8 +1,9 @@
 # ADX
-ADX: Advanced Devices eXtended's project documents.
+ADX's project documents.
 - ADX: Advanced Devices eXtended
-- It's a form factor for Industrial and Next Gen Arduino.
-- 1st Goal is to start Crowd Supply.
+- The ADX Core V0 is designed as an "Arduino-like" industrial control board. It introduces a new, standardized industrial form factor—inspired by the ATX philosophy—aimed at creating an ecosystem where enclosures and components are easily interchangeable and professional.
+
+
 ## 1. 現状
 ### Product Data
 #### ADX Core V0
