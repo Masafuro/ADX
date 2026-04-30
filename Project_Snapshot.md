@@ -4,6 +4,10 @@
 - ADX: Advanced Devices eXtended
 - It's a form factor for Industrial ATX and Next Gen Arduino.
 - 1st Goal is to start Crowd Supply.
+
+## 0.1 Tasks
+- Add a post to hackaday.io 
+
 ## 1. 現状
 
 ### 1.1 ADX Core Development
