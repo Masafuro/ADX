@@ -9,17 +9,18 @@ ADX: Advanced Devices eXtended's project documents.
 - [Project Data](dev/ADX_Core_v0/Manufacture/20260430_1154)
 ![](dev/ADX_Core_v0/Manufacture/20260430_1154/3dview_front.png)
 
-## ハードウェア仕様書：ADX Core V0
-- Arduino like Industrial Control Board
-
+## ハードウェア設計仕様
+- ADX Core V0
+	- Arduino like Industrial Control Board
+	- Industrial ATX Form Factor
 ### 1. 性能諸元 (Performance Specifications)
-| 項目 | 仕様 | 備考 |
-|---|---|---|
-| **搭載MCU** | Microchip ATtiny1616-MNR | 8-bit AVR® megaAVR 0-series |
-| **動作周波数** | **16 MHz** | (内部クロック / 設計推奨値) |
-| **ロジック電圧** | **5.0 V** |  |
-| **メモリ容量** | Flash 16 KB / SRAM 2 KB / EEPROM 256 B |  |
-| **動作周囲温度** | -40 ℃ ～ +105 ℃ | (工業用グレード部品採用) |
+| 項目         | 仕様                                     | 備考                          |
+| ---------- | -------------------------------------- | --------------------------- |
+| **搭載MCU**  | Microchip ATtiny1616-MNR               | 8-bit AVR® megaAVR 0-series |
+| **動作周波数**  | 20 MHz ( **16 MHz** Recomended )       | (内部クロック / 設計推奨値)            |
+| **ロジック電圧** | **5.0 V**                              |                             |
+| **メモリ容量**  | Flash 16 KB / SRAM 2 KB / EEPROM 256 B |                             |
+| **動作周囲温度** | -40 ℃ ～ +105 ℃                         | (工業用グレード部品採用)               |
 ### 2. 電源・保護仕様 (Power & Protection Specifications)
 | 項目 | 仕様 | 備考 |
 |---|---|---|
@@ -38,18 +39,19 @@ ADX: Advanced Devices eXtended's project documents.
 ### 4. 拡張I/O端子配列 (GPIO Pin Assignment)
 **コネクタ形式：2×10ピン ロック付IDCボックスヘッダ（ライトアングル）**
 配線の安定性を高める多点GND・VDD配置を採用。
-| Pin | 信号名 | 備考 | Pin | 信号名 | 備考 |
-|---|---|---|---|---|---|
-| **1** | **VDD** | 5V出力 | **2** | **GND_5V** | グランド |
-| **3** | **PC3** | GPIO | **4** | **PC2** | GPIO |
-| **5** | **PC1** | GPIO | **6** | **PC0** | GPIO |
-| **7** | **GND_5V** | グランド | **8** | **PB0** | GPIO |
-| **9** | **PB1** | GPIO | **10** | **PB2** | GPIO |
-| **11** | **PB3** | GPIO | **12** | **GND_5V** | グランド |
+
+| Pin    | 信号名     | 備考   | Pin    | 信号名     | 備考   |
+| ------ | ------- | ---- | ------ | ------- | ---- |
+| **1**  | **VDD** | 5V出力 | **2**  | **GND** | グランド |
+| **3**  | **PC3** | GPIO | **4**  | **PC2** | GPIO |
+| **5**  | **PC1** | GPIO | **6**  | **PC0** | GPIO |
+| **7**  | **GND** | グランド | **8**  | **PB0** | GPIO |
+| **9**  | **PB1** | GPIO | **10** | **PB2** | GPIO |
+| **11** | **PB3** | GPIO | **12** | **GND** | グランド |
 | **13** | **PB4** | GPIO | **14** | **PB5** | GPIO |
-| **15** | **GND_5V** | グランド | **16** | **PA7** | GPIO |
+| **15** | **GND** | グランド | **16** | **PA7** | GPIO |
 | **17** | **PA6** | GPIO | **18** | **PA5** | GPIO |
-| **19** | **GND_5V** | グランド | **20** | **VDD** | 5V出力 |
+| **19** | **GND** | グランド | **20** | **VDD** | 5V出力 |
 ### 5. 物理仕様 (Mechanical Specifications)
 | 項目 | 内容 | 備考 |
 |---|---|---|
