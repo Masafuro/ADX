@@ -44,15 +44,16 @@
     - LEDテープ型で5Wくらいまでは行けそうな感じ。
     - [LEDテープドライブ拡張カードの検討](https://memo.adxplatform.com/note/PL4%EF%BC%88Power%20over%20LIN%20based%20RS485%EF%BC%89LED%E3%83%86%E3%83%BC%E3%83%97%E7%94%A8%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E3%83%9C%E3%83%BC%E3%83%89%E6%A4%9C%E8%A8%8E%E8%B3%87%E6%96%99)
 ### 1.3 World
-- 未踏アドバンスト2026
-    - 一次審査通らず。closed
+- [DigiKey Make ONE Challenge 2026](https://www.digikey.jp/ja/resources/events/2026/make-one-challenge?utm_source=referral&utm_medium=pressrelease&utm_campaign=pressrelease)
+	- 6/22まで
+	- それまでにADXでなにかを作れるとこまでいけるのかは不明
 ### 1.4 Merketing
 - 哲学
 	- 比較ではなく、真新しさ
 - Hackster.io
     - 古いまま。
 - Hackaday.io
-    - どこかでログを追加していく必要がある。
+    - 2026/04/30 logをポストした。
 - LinkedIn
     - 草稿を作成した。
 - ADXplatform トップページ
