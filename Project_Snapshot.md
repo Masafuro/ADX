@@ -9,6 +9,7 @@
 ### 1.1 ADX Core Development
 - 試験環境の整備
 - 3Dプリンタ環境の整備
+- ADX Core V0 スペック等情報作成？
 - 製造中
 	- ADX Core V0
 	- ADX IDCtoPinheader Adapter
