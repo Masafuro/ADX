@@ -1,4 +1,3 @@
-```yaml
 
 - "supplier_part": "C28233"
   "product_name": "Samsung Electro-Mechanics CL21B104KCFNNNE"
@@ -399,5 +398,3 @@
     "Number of Receivers": "1"
     "Quiescent Supply Current": "1uA"
   "url": "https://www.lcsc.com/product-detail/C1849398.html"
-
-```
