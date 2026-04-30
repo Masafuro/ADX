@@ -1,7 +1,7 @@
 # ADX
 ADX's project documents.
 - ADX: Advanced Devices eXtended
-- The ADX Core V0 is designed as an "Arduino-like" industrial control board. It introduces a new, standardized industrial form factor—inspired by the ATX philosophy—aimed at creating an ecosystem where enclosures and components are easily interchangeable and professional.
+- The **ADX Core V0** is designed as an "Arduino-like" industrial control board. It introduces a new, standardized industrial form factor—inspired by the ATX philosophy—aimed at creating an ecosystem where enclosures and components are easily interchangeable and professional.
 
 
 ## 1. 現状
