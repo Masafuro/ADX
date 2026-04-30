@@ -6,8 +6,9 @@ ADX: Advanced Devices eXtended's project documents.
 ## 1. 現状
 ### Product Data
 #### ADX Core V0
-- [overview](dev/ADX_Core_v0/Manufacture/20260429_1302/overview.md)
-![](dev/ADX_Core_v0/Manufacture/20260429_1302/3Dview_front.png)
+- [Project Data](dev/ADX_Core_v0/Manufacture/20260430_1154)
+![](dev/ADX_Core_v0/Manufacture/20260430_1154/3dview_front.png)
+
 #### ADX IDCtoPinheader Adapter
 - [overview](dev/ADX_IDCtoPinheader_adapter/20260429_1705/overview.md)
 ![](dev/ADX_IDCtoPinheader_adapter/20260429_1705/3D_front.png)
