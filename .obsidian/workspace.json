@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Project_Snapshot.md",
+                "file": "memo/old/Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Project_Snapshot"
+              "title": "Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討"
             }
           }
         ]
@@ -196,8 +196,11 @@
   },
   "active": "445c6454a2a38695",
   "lastOpenFiles": [
-    "README.md",
+    "memo/ADX Core V0 start manufacturing.md",
+    "memo/old/Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討.md",
+    "memo/old",
     "Project_Snapshot.md",
+    "README.md",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/SCH_Schematic_2026-05-01.pdf",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/PCB_PCB1_2026-05-01.pdf",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/lcsc_bom_crawl.md",
@@ -217,10 +220,8 @@
     "dev/ADX_IDCtoPinheader_adapter/20260429_1705/qty5.png",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/qty30.png",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/qty5.png",
-    "memo/Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討.md",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/topside.png",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/smt_dfm.png",
-    "dev/ADX_Core_v0/Manufacture/20260430_1154/ProPrj_ADX_Core_v0_2026-04-30.epro",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/pcb_dfm.png",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/buttomside.png",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/3dview_front.png",
