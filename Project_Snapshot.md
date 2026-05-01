@@ -56,6 +56,8 @@
     - 古いまま。
 - Hackaday.io
     - 2026/04/30 logをポストした。
+    - まず10 logs を目指すのがよさそう。
+	    - Hackaday Prizeに応募できるようになるらしい。
 
 | date       | view | comments | followers | likes |
 | ---------- | ---- | -------- | --------- | ----- |
