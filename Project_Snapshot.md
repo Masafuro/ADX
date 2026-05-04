@@ -6,8 +6,6 @@
 - 1st Goal is to start Crowd Supply.
 
 ## 0.1 Tasks
-- [x] Add a post to hackaday.io
-- [ ] Add a post to blog.
 - [ ] Clean up my room and cabin.
 
 ## 1. 現状
