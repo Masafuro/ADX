@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "dev/ADX_Core_v0/report/adx_core_v0_1st_report.md",
+                "file": "dev/YT-0603R_W_testboard/YT-0603R_Wテストボード.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "adx_core_v0_1st_report"
+              "title": "YT-0603R_Wテストボード"
             }
           }
         ]
@@ -196,8 +196,9 @@
   },
   "active": "445c6454a2a38695",
   "lastOpenFiles": [
-    "dev/ADX_Core_v0/TEST_SHEET/302_RS485_test_sketch_01.md",
     "dev/ADX_Core_v0/report/adx_core_v0_1st_report.md",
+    "dev/YT-0603R_W_testboard/YT-0603R_Wテストボード.md",
+    "dev/ADX_Core_v0/TEST_SHEET/302_RS485_test_sketch_01.md",
     "dev/ADX_Core_v0/report",
     "dev/ADX_Core_v0/TEST_SHEET/301_RS485_test_sketch_spec.md",
     "dev/ADX_Core_v0/TEST_SHEET/300_hot_test.md",
