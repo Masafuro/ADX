@@ -10,7 +10,7 @@
 ### 1.1 ADX Core Development
 - 試験環境の整備
 - 3Dプリンタ環境の整備
-- 製造完了（20260513）
+- 製造完了（2026/05/13）
 - 動作確認中
 	- ADX Core V0
 		- [ファーストインプレッション](dev/ADX_Core_v0/report/adx_core_v0_1st_report)
