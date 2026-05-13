@@ -27,6 +27,9 @@
 		- Signalとオシロの動作を確認できた。
 			- というかこれがなければピン配置やケーブルの混乱はデバッグできなかったかも。
     - [試験予定](/dev/ADX_Core_v0/TEST_SHEET/0_test_overview.md)
+### 1.2 ADX Core v1
+- 専用のデバッグボードの開発の必要性を認める。
+	- [PL4モデム](dev/documents/PL-N/PL4モデム)
 - ADX Core v1
 	- 規格の抜本的変更
 		- COREボード
