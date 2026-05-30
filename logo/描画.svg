@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="描画.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#cccccc"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.5798599"
+     inkscape:cx="129.44186"
+     inkscape:cy="175.64849"
+     inkscape:window-width="1600"
+     inkscape:window-height="829"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <rect
+       x="96.676337"
+       y="136.06299"
+       width="617.65437"
+       height="372.38293"
+       id="rect1" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="font-size:85.3333px;font-family:Volkhov;-inkscape-font-specification:Volkhov;white-space:pre;stroke-width:7.55906"
+       d="m 95.822448,221.82246 v -3.92533 l 8.021332,-1.87733 20.73599,-54.35731 h 6.144 l 19.45599,54.44264 7.85066,1.792 v 3.92533 h -25.08799 v -3.92533 l 6.31467,-1.45066 -4.096,-11.52 h -20.90666 l -4.43733,11.264 7.50933,1.70666 v 3.92533 z m 20.309322,-21.93065 h 17.152 l -8.36267,-23.29599 z m 23.24269,-33.87732 v -3.92533 h 25.59999 v 3.92533 l -7.16799,1.536 12.20266,38.74131 12.28799,-44.20264 h 7.25333 l 14.25066,44.03198 10.06933,-38.22932 -6.912,-1.87733 v -3.92533 h 20.65066 v 3.92533 l -7.85066,1.87733 -14.50666,54.52798 h -6.74133 l -14.848,-44.54398 -12.54399,44.54398 h -6.57066 l -17.74933,-54.61331 z m 113.59991,-5.20533 c 6.59911,0 12.14577,0.99555 16.63999,2.98666 v 16.128 h -3.92533 l -3.92533,-12.62933 c -2.21867,-0.512 -4.77867,-0.768 -7.68,-0.768 -14.16533,0 -21.24799,8.47644 -21.24799,25.42932 0,16.95288 6.51378,25.42932 19.54133,25.42932 1.93422,0 3.66933,-0.0569 5.20533,-0.17066 1.536,-0.11378 2.92978,-0.28445 4.18133,-0.512 l 4.94933,-13.48266 h 3.92533 l -0.59733,16.12799 c -0.79644,0.45511 -1.93422,0.91022 -3.41333,1.36533 -1.47911,0.45511 -3.10045,0.85334 -4.864,1.19467 -1.70667,0.34133 -3.49867,0.62578 -5.376,0.85333 -1.82044,0.22755 -3.49866,0.34133 -5.03466,0.34133 -9.61422,0 -16.89599,-2.67378 -21.84532,-8.02133 -4.94933,-5.34755 -7.424,-13.05599 -7.424,-23.12532 0,-10.06933 2.56,-17.77777 7.67999,-23.12532 5.17689,-5.34755 12.91378,-8.02133 23.21066,-8.02133 z"
+       id="text1"
+       transform="scale(0.26458333)"
+       aria-label="AWC"
+       sodipodi:nodetypes="cccccccccccccccccccccccccccccccccccccccccccsccccssssccccsccssscs"
+       inkscape:export-filename="awc_logo.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2"
+       width="55.539474"
+       height="20.131577"
+       x="18.236841"
+       y="40.855263" />
+  </g>
+</svg>
