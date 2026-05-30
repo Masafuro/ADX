@@ -11,14 +11,10 @@
             "id": "445c6454a2a38695",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "dev/AWC/AD3_test_plan.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "AD3_test_plan"
+              "title": "新規タブ"
             }
           }
         ]
@@ -194,35 +190,38 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "445c6454a2a38695",
+  "active": "068e953c45360263",
   "lastOpenFiles": [
-    "dev/AWC/AWC_SPEC.md",
     "dev/AWC/AD3_test_plan.md",
+    "dev/subproject/AWC/v1/PickAndPlace_PCB1_2026-05-30.csv",
+    "dev/subproject/AWC/v1/Gerber_PCB1_2026-05-30.zip",
+    "dev/subproject/AWC/v1/BOM_Board1_PCB1_2026-05-30.csv",
+    "dev/subproject/AWC/v1",
+    "dev/subproject/AWC/AWC_SPEC.md",
+    "dev/subproject/AWC/awc_logo.png",
+    "dev/subproject/AWC/AD3_test_plan.md",
+    "dev/subproject/AWC",
+    "dev/subproject",
+    "dev/新しいフォルダー",
+    "dev/AWC/AWC_SPEC.md",
     "dev/AWC/v1/BOM_Board1_PCB1_2026-05-30.csv",
     "dev/AWC/v1/Gerber_PCB1_2026-05-30.zip",
     "dev/AWC/v1/PickAndPlace_PCB1_2026-05-30.csv",
-    "dev/AWC/v1",
-    "dev/AWC/V1",
-    "dev/AWC/新しいフォルダー",
     "logo/描画.svg",
     "Project_Snapshot.md",
     "README.md",
     "dev/documents/PL-N/PL4モデム.md",
     "dev/documents/PL-N/PL-N緊急停止・安全保護レイヤー.md",
     "dev/documents/PL-N/PL-Nフィールドネットワーク規格.md",
-    "dev/documents/PL-N",
-    "dev/documents",
     "dev/ADX_Core_v0/report/adx_core_v0_1st_report.md",
     "dev/YT-0603R_W_testboard/YT-0603R_Wテストボード.md",
     "dev/ADX_Core_v0/TEST_SHEET/302_RS485_test_sketch_01.md",
-    "dev/ADX_Core_v0/report",
     "dev/ADX_Core_v0/TEST_SHEET/301_RS485_test_sketch_spec.md",
     "dev/ADX_Core_v0/TEST_SHEET/300_hot_test.md",
     "dev/ADX_Core_v0/TEST_SHEET/200_cold_test.md",
     "dev/ADX_Core_v0/TEST_SHEET/0_test_overview.md",
     "memo/old/Ethernetケーブルの1ペアによるRS-485差動通信と終端抵抗に関する検討.md",
     "memo/ADX Core V0 start manufacturing.md",
-    "memo/old",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/lcsc_bom_crawl.md",
     "dev/datasheet/TI_THVD2410DR.md",
     "dev/datasheet/TI_LMR36506RRPER.md",
@@ -236,12 +235,8 @@
     "dev/ADX_Core_v0/Manufacture/20260430_1154/topside.png",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/smt_dfm.png",
     "dev/ADX_Core_v0/Manufacture/20260430_1154/pcb_dfm.png",
-    "dev/ADX_Core_v0/Manufacture/20260430_1154/buttomside.png",
     "dev/ADX_IDCtoPinheader_adapter/20260429_1705/overview.md",
     "dev/ADX_Core_v0/Manufacture/20260429_1302/overview.md",
-    "dev/ADX_Core_v0/Manufacture/20260429.md",
-    "dev/ADX_Core_v0/Manufacture/overview.md",
-    "dev/MEMO/ReviewDataSchematic.canvas",
-    "dev/MEMO/レビューシステムの検討.md"
+    "dev/MEMO/ReviewDataSchematic.canvas"
   ]
 }
