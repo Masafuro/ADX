@@ -1,3 +1,31 @@
+# ADX README 修正案 (README Revision Proposal)
+
+本ドキュメントは、新規格（**8748 Form Factor**, **ADX Pinout**）および最新の開発ボード（**ADX Core-D**, **ADX Prototyping CARD**）の反映に伴う `README.md` の改訂案です。
+GitHub の README として適切な、客観的で明瞭なエンジニアリング表現に調整しています。
+
+---
+
+## 修正の主なポイント
+1. **旧仕様（ADX Core V0 / 85x60mm 等）の整理**:
+   - `dev/OLD` へ移動した旧世代の記述を削除し、最新の標準規格と開発ボードに一本化。
+2. **客観的・標準的な技術表現への最適化**:
+   - 過度な修飾表現（「究極の〜」「極限まで〜」など）を排し、設計意図・機能的メリットを客観的に記述。
+3. **基幹仕様（Form Factor / Pinout）の明文化**:
+   - `8748_formfactor.md` に基づくエレメカ協調設計（87.0mm × 48.0mm）の物理仕様を掲載。
+   - `ADX_pinout.md` に基づく共通 20P インターフェースのピン定義を整理して掲載。
+4. **開発中ボード（dev配下）の反映**:
+   - `ADX Core-D`: LN-485（LIN-based RS-485）通信およびブートローダ開発基板。
+   - `ADX Prototyping CARD`: 8748規格対応の試作・拡張カード。
+5. **リポジトリ構造とドキュメント導線の整理**:
+   - 仕様書（`memo/`）および各ボードの設計データ（`dev/`）へのリンクを体系化。
+
+---
+
+# [提案] 新 README.md 構成案
+
+以下は、`README.md` にそのまま適用可能な Markdown 原稿です。
+
+```markdown
 # ADX (Advanced Devices eXtended)
 
 ADX（Advanced Devices eXtended）は、オープンソースハードウェアの扱いやすさと、産業用途に適した信頼性・耐ノイズ性・保守性を両立することを目指した小型制御プラットフォーム・ハードウェア規格です。
@@ -102,3 +130,5 @@ ADX/
 * **Project Snapshot**: [Project_Snapshot.md](Project_Snapshot.md)
 * **ADX Platform**: [https://adxplatform.com/](https://adxplatform.com/)
 * **Developer Blog**: [https://dev-blog.adxplatform.com/](https://dev-blog.adxplatform.com/)
+```
+
