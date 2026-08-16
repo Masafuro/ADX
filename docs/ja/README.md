@@ -1,3 +1,8 @@
+<!--
+Copyright (c) 2026 ADX Project Contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # ADX (Advanced Devices eXtended) - 日本語ドキュメント
 
 [ English (../en/README.md) | **日本語** ]
@@ -62,8 +67,8 @@ LIN-based RS-485（LN-485）通信およびブートローダ開発を目的と�
 * **USB / デバッグ**: USB Type-C、WCH CH342K（SerialUPDI 書き込み & UART シリアルモニタ対応）
 * **クロック**: 12MHz 水晶発振器搭載（EXTCLK 供給ジャンパ切替対応）
 * **保護回路**: 1A PTC リセッタブルヒューズ、フェライトビーズ、ESD保護ダイオード
-* **詳細仕様**: [../../dev/ADX_Core-D/proposal.md](../../dev/ADX_Core-D/proposal.md)
-* **設計・製造データ**: [../../dev/ADX_Core-D/data/](../../dev/ADX_Core-D/data/)
+* **詳細仕様**: [../../hardware/ADX_Core-D/proposal.md](../../hardware/ADX_Core-D/proposal.md)
+* **設計・製造データ**: [../../hardware/ADX_Core-D/data/](../../hardware/ADX_Core-D/data/)
 
 ### 2.2 ADX Prototyping CARD (拡張プロトタイピングカード)
 ADX規格コネクタに接続し、周辺回路やセンサの試作・検証を行うための拡張基板です。
@@ -72,8 +77,8 @@ ADX規格コネクタに接続し、周辺回路やセンサの試作・検証�
   - 下列 20ピン: ADX規格 GPIO / バス信号引き出し
   - 上列 20ピン: ユニバーサルエリア配線用カスタムピン
 * **外形**: 8748 Form Factor 準拠
-* **詳細仕様**: [../../dev/CARD/Prototyping/proposal.md](../../dev/CARD/Prototyping/proposal.md)
-* **設計・製造データ**: [../../dev/CARD/Prototyping/data/](../../dev/CARD/Prototyping/data/)
+* **詳細仕様**: [../../hardware/CARD/Prototyping/proposal.md](../../hardware/CARD/Prototyping/proposal.md)
+* **設計・製造データ**: [../../hardware/CARD/Prototyping/data/](../../hardware/CARD/Prototyping/data/)
 
 ---
 
@@ -82,7 +87,9 @@ ADX規格コネクタに接続し、周辺回路やセンサの試作・検証�
 ```text
 ADX/
 ├── README.md               # ポータル（英語概要・言語ナビゲーション）
-├── docs/                   # 仕様・ドキュメント（多言語）
+├── LICENSE.md              # ライセンス方針・商標規定
+├── LICENSES/               # REUSE準拠ライセンス正式条文 (CC-BY-4.0, CERN-OHL-P-2.0, MIT)
+├── docs/                   # 仕様・ドキュメント（多言語、CC BY 4.0）
 │   ├── en/                 # 英語版ドキュメント
 │   │   ├── README.md
 │   │   ├── 8748_formfactor.md
@@ -91,9 +98,11 @@ ADX/
 │       ├── README.md
 │       ├── 8748_formfactor.md
 │       └── ADX_pinout.md
-├── dev/                    # ハードウェア設計データ
+├── hardware/               # ハードウェア設計データ (CERN-OHL-P-v2)
 │   ├── ADX_Core-D/         # LN-485 ブートローダ開発基板
 │   └── CARD/Prototyping/   # プロトタイピング拡張カード
+├── firmware/               # ファームウェア・ドライバ・サンプル (MIT)
+├── logo/                   # ブランドロゴ・アセット
 ├── memo/                   # 開発メモ・作業レポート
 │   └── REPORT/             # 提案・計画書
 └── Project_Snapshot.md     # プロジェクト進捗・概要
@@ -106,3 +115,16 @@ ADX/
 * **Project Snapshot**: [../../Project_Snapshot.md](../../Project_Snapshot.md)
 * **ADX Platform**: [https://adxplatform.com/](https://adxplatform.com/)
 * **Developer Blog**: [https://dev-blog.adxplatform.com/](https://dev-blog.adxplatform.com/)
+
+---
+
+## 5. ライセンス (License)
+
+ADXプロジェクトは、用途に応じた3層マルチライセンス構成を採用しています：
+
+* **仕様書・ドキュメント** (`docs/`, `memo/`): [CC BY 4.0](../../LICENSES/CC-BY-4.0.txt) (`CC-BY-4.0`)
+* **ハードウェア設計データ** (`hardware/`): [CERN-OHL-P-v2](../../LICENSES/CERN-OHL-P-2.0.txt) (`CERN-OHL-P-2.0`)
+* **ファームウェア・コード** (`firmware/`): [MIT License](../../LICENSES/MIT.txt) (`MIT`)
+
+詳細は [../../LICENSE.md](../../LICENSE.md) を参照してください。
+

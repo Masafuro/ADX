@@ -1,3 +1,8 @@
+<!--
+Copyright (c) 2026 ADX Project Contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # 8748 Form Factor Specification
 
 ## 概要 (Overview)

@@ -1,3 +1,8 @@
+<!--
+Copyright (c) 2026 ADX Project Contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # ADX Pinout Specification
 
 [ **English** | [日本語 (../ja/ADX_pinout.md)](../ja/ADX_pinout.md) ]

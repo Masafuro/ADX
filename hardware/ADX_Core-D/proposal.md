@@ -1,3 +1,8 @@
+<!--
+Copyright (c) 2026 ADX Project Contributors
+SPDX-License-Identifier: CERN-OHL-P-2.0
+-->
+
 # ADX Core-D
 
 ## 主な目的

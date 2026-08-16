@@ -1,3 +1,8 @@
+<!--
+Copyright (c) 2026 ADX Project Contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # ADX (Advanced Devices eXtended)
 
 [ **English (docs/en)** | [日本語 (docs/ja)](docs/ja/README.md) ]
@@ -27,8 +32,8 @@ A 20-pin unified expansion interface (2×10-pin, 2.54 mm pitch) featuring GND sh
 
 | Board / Module | Description | Specifications & Manufacturing Data |
 | :--- | :--- | :--- |
-| **ADX Core-D** | LN-485 (LIN-based RS-485) and custom bootloader development board with USB-C, CH342K SerialUPDI flashing, and 12 MHz crystal oscillator. | [Proposal](dev/ADX_Core-D/proposal.md) / [Data](dev/ADX_Core-D/data/) |
-| **ADX Prototyping CARD** | 8748 Form Factor expansion add-on card with lower 20-pin ADX bus breakout and upper 20-pin custom prototyping grid. | [Proposal](dev/CARD/Prototyping/proposal.md) / [Data](dev/CARD/Prototyping/data/) |
+| **ADX Core-D** | LN-485 (LIN-based RS-485) and custom bootloader development board with USB-C, CH342K SerialUPDI flashing, and 12 MHz crystal oscillator. | [Proposal](hardware/ADX_Core-D/proposal.md) / [Data](hardware/ADX_Core-D/data/) |
+| **ADX Prototyping CARD** | 8748 Form Factor expansion add-on card with lower 20-pin ADX bus breakout and upper 20-pin custom prototyping grid. | [Proposal](hardware/CARD/Prototyping/proposal.md) / [Data](hardware/CARD/Prototyping/data/) |
 
 ---
 
@@ -48,12 +53,16 @@ A 20-pin unified expansion interface (2×10-pin, 2.54 mm pitch) featuring GND sh
 ```text
 ADX/
 ├── README.md               # Global portal & quick reference (this file)
-├── docs/                   # Full multilingual documentation
+├── LICENSE.md              # Multi-licensing policy & trademark notices
+├── LICENSES/               # REUSE-compliant license texts (CC-BY-4.0, CERN-OHL-P-2.0, MIT)
+├── docs/                   # Full multilingual documentation (CC BY 4.0)
 │   ├── en/                 # English documentation
 │   └── ja/                 # Japanese documentation
-├── dev/                    # Hardware design & production files (Gerber, BOM, etc.)
+├── hardware/               # Hardware design & production files (CERN-OHL-P-v2)
 │   ├── ADX_Core-D/         # LN-485 bootloader development board
 │   └── CARD/Prototyping/   # Prototyping add-on card
+├── firmware/               # Drivers, BSP, and sample sketches (MIT)
+├── logo/                   # Brand assets & logos
 ├── memo/                   # Development notes & reports
 │   └── REPORT/             # Proposals & migration plans
 └── Project_Snapshot.md     # Project progress & roadmap
@@ -66,3 +75,24 @@ ADX/
 * **Project Snapshot:** [Project_Snapshot.md](Project_Snapshot.md)
 * **ADX Platform Official:** [https://adxplatform.com/](https://adxplatform.com/)
 * **Developer Blog:** [https://dev-blog.adxplatform.com/](https://dev-blog.adxplatform.com/)
+
+---
+
+## 6. License
+
+ADX Project is released under a tri-license structure tailored for documentation, open hardware, and embedded software:
+
+* **Documentation & Specifications** (`docs/`, `memo/`):  
+  [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSES/CC-BY-4.0.txt)  
+  *SPDX-License-Identifier: `CC-BY-4.0`*
+
+* **Hardware Design & Production Files** (`hardware/`):  
+  [CERN Open Hardware Licence Version 2 - Permissive (CERN-OHL-P-v2)](LICENSES/CERN-OHL-P-2.0.txt)  
+  *SPDX-License-Identifier: `CERN-OHL-P-2.0`*
+
+* **Firmware, Drivers & Software** (`firmware/`):  
+  [MIT License](LICENSES/MIT.txt)  
+  *SPDX-License-Identifier: `MIT`*
+
+See [LICENSE.md](LICENSE.md) for full licensing policy and trademark terms.
+
