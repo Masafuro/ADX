@@ -1,4 +1,6 @@
-# 8748 Form Factor Specification
+# 8748 Form Factor 仕様書 (8748 Form Factor Specification)
+
+[ English (../en/8748_formfactor.md) | **日本語** ]
 
 ## 概要 (Overview)
 「8748 Form Factor」は、基板設計（mil単位）と筐体・メカ設計（mm単位）の寸法整合性を高め、製造公差や加工時のクリアランスに配慮した小型制御基板向けのフォームファクタ規格です。

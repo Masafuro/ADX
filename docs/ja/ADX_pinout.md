@@ -1,4 +1,6 @@
-# ADX Pinout Specification
+# ADX Pinout 仕様書 (ADX Pinout Specification)
+
+[ English (../en/ADX_pinout.md) | **日本語** ]
 
 ## 概要 (Overview)
 ADX Pinout は、マスター／スレーブ共通で利用可能な 20 ピン（2×10ピン 2.54mmピッチ）拡張コネクタ規格です。
