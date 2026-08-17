@@ -1,0 +1,727 @@
+PROTEL NETLIST 2.0
+[
+DESIGNATOR
+CN2
+FOOTPRINT
+IDC-TH_20P-P2.54_Z-230011020209
+PARTTYPE
+Z-230011020209
+DESCRIPTION
+Connector Type:Horn buckle Pitch:2.54mm Structure:2x10P Holder Type:Right-Angle Row Spacing:2.54mm Number of Rows:2 Pin Number in each Row:10 Contact Material:Copper Alloy Contact Plating:Gold
+Component Kind
+Standard
+Footprint
+IDC-TH_20P-P2.54_Z-230011020209
+Designator
+CN2
+LCSC Part Name
+2.54mm 2x10P 排数:2 每排P数:10 黑色
+Supplier Part
+C221002
+Manufacturer
+Nextron(正凌)
+Manufacturer Part
+Z-230011020209
+Supplier Footprint
+弯插,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://atta.szlcsc.com/upload/public/pdf/source/20180731/C221012_6A24CDA93994749D0946806D4F08BD76.pdf
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+IDC-TH_20P-P2.54_Z-230011020209
+Connector Type
+Horn buckle
+Pitch
+2.54mm
+Structure
+2x10P
+Holder Type
+Right-Angle
+Row Spacing
+2.54mm
+Number of Rows
+2
+Pin Number in each Row
+10
+Contact Material
+Copper Alloy
+Contact Plating
+Gold
+Name
+Z-230011020209
+Description
+Connector Type:Horn buckle Pitch:2.54mm Structure:2x10P Holder Type:Right-Angle Row Spacing:2.54mm Number of Rows:2 Pin Number in each Row:10 Contact Material:Copper Alloy Contact Plating:Gold
+Device
+Z-230011020209
+Unique ID
+gge42
+Reuse Block
+
+Group ID
+
+Channel ID
+$1I3740
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+J1
+FOOTPRINT
+HDR-TH_20P-P2.54-V-M-1
+PARTTYPE
+2.54-1*20P直针
+DESCRIPTION
+Pin Structure:1x20P Pitch:2.54mm Row Spacing:- Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:1 Number of Pins:20P Current Rating:3A Voltage Rating (Max):- Length of Mating Pin:- Insulation Height:- Length of End Connection
+Component Kind
+Standard
+Footprint
+HDR-TH_20P-P2.54-V-M-1
+Designator
+J1
+LCSC Part Name
+1x20P 间距:2.54mm 方针 直插
+Supplier Part
+C50981
+Manufacturer
+BOOMELE(博穆精密)
+Manufacturer Part
+2.54-1*20P直针
+Supplier Footprint
+插件,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/2.54-1*20P%25E7%259B%25B4%25E9%2592%2588/51993.html
+Supplier
+LCSC
+Pin Structure
+1x20P
+Pitch
+2.54mm
+Row Spacing
+-
+Circluar Pins/Square Pins
+Pin Header
+Mounting Type
+Through Hole
+Number of Rows
+1
+Number of Pins
+20P
+Current Rating
+3A
+Voltage Rating (Max)
+-
+Length of Mating Pin
+-
+Insulation Height
+-
+Length of End Connection Pin
+-
+Contact Material
+Brass
+Contact Plating
+-
+Operating Temperature
+-40℃~+105℃
+Color
+Black
+Name
+2.54-1*20P直针
+Description
+Pin Structure:1x20P Pitch:2.54mm Row Spacing:- Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:1 Number of Pins:20P Current Rating:3A Voltage Rating (Max):- Length of Mating Pin:- Insulation Height:- Length of End Connection
+Device
+2.54-1*20P直针
+Unique ID
+gge45
+3D Model Title
+
+Add into BOM
+no
+Reuse Block
+
+Group ID
+
+Channel ID
+$1I3812
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+H1
+FOOTPRINT
+HDR-TH_5P-P2.54-V-M
+PARTTYPE
+PZ254V-11-05P
+DESCRIPTION
+Pin Structure:1x5P Pitch:2.54mm Row Spacing:- Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:1 Number of Pins:5P Current Rating:3A Voltage Rating (Max):250V Length of Mating Pin:6mm Insulation Height:2.5mm Length of End Con
+Component Kind
+Standard
+Footprint
+HDR-TH_5P-P2.54-V-M
+Designator
+H1
+LCSC Part Name
+1x5P 间距:2.54mm 方针 直插
+Supplier Part
+C492404
+Manufacturer
+XFCN(兴飞)
+Manufacturer Part
+PZ254V-11-05P
+Supplier Footprint
+插件,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/PZ254V-11-05P/502960.html
+Supplier
+LCSC
+Add into BOM
+no
+Pin Structure
+1x5P
+Pitch
+2.54mm
+Row Spacing
+-
+Circluar Pins/Square Pins
+Pin Header
+Mounting Type
+Through Hole
+Number of Rows
+1
+Number of Pins
+5P
+Current Rating
+3A
+Voltage Rating (Max)
+250V
+Length of Mating Pin
+6mm
+Insulation Height
+2.5mm
+Length of End Connection Pin
+3mm
+Contact Material
+Brass
+Contact Plating
+-
+Operating Temperature
+-40℃~+105℃
+Color
+Black
+Name
+PZ254V-11-05P
+Description
+Pin Structure:1x5P Pitch:2.54mm Row Spacing:- Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:1 Number of Pins:5P Current Rating:3A Voltage Rating (Max):250V Length of Mating Pin:6mm Insulation Height:2.5mm Length of End Con
+Device
+PZ254V-11-05P
+Unique ID
+gge46
+3D Model Title
+
+Reuse Block
+
+Group ID
+
+Channel ID
+$1I3830
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+H3
+FOOTPRINT
+HDR-TH_5P-P2.54-V-M
+PARTTYPE
+PZ254V-11-05P
+DESCRIPTION
+Pin Structure:1x5P Pitch:2.54mm Row Spacing:- Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:1 Number of Pins:5P Current Rating:3A Voltage Rating (Max):250V Length of Mating Pin:6mm Insulation Height:2.5mm Length of End Con
+Component Kind
+Standard
+Footprint
+HDR-TH_5P-P2.54-V-M
+Designator
+H3
+LCSC Part Name
+1x5P 间距:2.54mm 方针 直插
+Supplier Part
+C492404
+Manufacturer
+XFCN(兴飞)
+Manufacturer Part
+PZ254V-11-05P
+Supplier Footprint
+插件,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/PZ254V-11-05P/502960.html
+Supplier
+LCSC
+Add into BOM
+no
+Pin Structure
+1x5P
+Pitch
+2.54mm
+Row Spacing
+-
+Circluar Pins/Square Pins
+Pin Header
+Mounting Type
+Through Hole
+Number of Rows
+1
+Number of Pins
+5P
+Current Rating
+3A
+Voltage Rating (Max)
+250V
+Length of Mating Pin
+6mm
+Insulation Height
+2.5mm
+Length of End Connection Pin
+3mm
+Contact Material
+Brass
+Contact Plating
+-
+Operating Temperature
+-40℃~+105℃
+Color
+Black
+Name
+PZ254V-11-05P
+Description
+Pin Structure:1x5P Pitch:2.54mm Row Spacing:- Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:1 Number of Pins:5P Current Rating:3A Voltage Rating (Max):250V Length of Mating Pin:6mm Insulation Height:2.5mm Length of End Con
+Device
+PZ254V-11-05P
+Unique ID
+gge47
+3D Model Title
+
+Reuse Block
+
+Group ID
+
+Channel ID
+$1I3831
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+H4
+FOOTPRINT
+HDR-TH_40P-P2.54-H-R2-C20-S2.54-W10.0
+PARTTYPE
+B-2100R40P-B110
+DESCRIPTION
+Pin Structure:2x20P Pitch:2.54mm Row Spacing:2.54mm Circluar Pins/Square Pins:Pin Header Mounting Type:Right Angle Number of Rows:2 Number of Pins:40P Current Rating:3A Voltage Rating (Max):- Length of Mating Pin:6mm Insulation Height:2.54mm Length of End
+Component Kind
+Standard
+Footprint
+HDR-TH_40P-P2.54-H-R2-C20-S2.54-W10.0
+Designator
+H4
+LCSC Part Name
+2x20P 间距:2.54mm 方针 弯插
+Supplier Part
+C124369
+Manufacturer
+Ckmtw(灿科盟)
+Manufacturer Part
+B-2100R40P-B110
+Supplier Footprint
+弯插,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/B-2100R40P-B110/125644.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+HDR2.54-M-WI-2X20P
+Pin Structure
+2x20P
+Pitch
+2.54mm
+Row Spacing
+2.54mm
+Circluar Pins/Square Pins
+Pin Header
+Mounting Type
+Right Angle
+Number of Rows
+2
+Number of Pins
+40P
+Current Rating
+3A
+Voltage Rating (Max)
+-
+Length of Mating Pin
+6mm
+Insulation Height
+2.54mm
+Length of End Connection Pin
+-
+Contact Material
+Brass
+Contact Plating
+Gold
+Operating Temperature
+-40℃~+105℃
+Color
+Black
+Name
+B-2100R40P-B110
+Description
+Pin Structure:2x20P Pitch:2.54mm Row Spacing:2.54mm Circluar Pins/Square Pins:Pin Header Mounting Type:Right Angle Number of Rows:2 Number of Pins:40P Current Rating:3A Voltage Rating (Max):- Length of Mating Pin:6mm Insulation Height:2.54mm Length of End
+Device
+B-2100R40P-B110
+Unique ID
+gge48
+Reuse Block
+
+Group ID
+
+Channel ID
+$1I3834
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+J2
+FOOTPRINT
+HDR-TH_20P-P2.54-V-M-1
+PARTTYPE
+2.54-1*20P直针
+DESCRIPTION
+Pin Structure:1x20P Pitch:2.54mm Row Spacing:- Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:1 Number of Pins:20P Current Rating:3A Voltage Rating (Max):- Length of Mating Pin:- Insulation Height:- Length of End Connection
+Component Kind
+Standard
+Footprint
+HDR-TH_20P-P2.54-V-M-1
+Designator
+J2
+LCSC Part Name
+1x20P 间距:2.54mm 方针 直插
+Supplier Part
+C50981
+Manufacturer
+BOOMELE(博穆精密)
+Manufacturer Part
+2.54-1*20P直针
+Supplier Footprint
+插件,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/2.54-1*20P%25E7%259B%25B4%25E9%2592%2588/51993.html
+Supplier
+LCSC
+Add into BOM
+no
+Pin Structure
+1x20P
+Pitch
+2.54mm
+Row Spacing
+-
+Circluar Pins/Square Pins
+Pin Header
+Mounting Type
+Through Hole
+Number of Rows
+1
+Number of Pins
+20P
+Current Rating
+3A
+Voltage Rating (Max)
+-
+Length of Mating Pin
+-
+Insulation Height
+-
+Length of End Connection Pin
+-
+Contact Material
+Brass
+Contact Plating
+-
+Operating Temperature
+-40℃~+105℃
+Color
+Black
+Name
+2.54-1*20P直针
+Description
+Pin Structure:1x20P Pitch:2.54mm Row Spacing:- Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:1 Number of Pins:20P Current Rating:3A Voltage Rating (Max):- Length of Mating Pin:- Insulation Height:- Length of End Connection
+Device
+2.54-1*20P直针
+Unique ID
+gge45_0
+3D Model Title
+
+Reuse Block
+
+Group ID
+
+Channel ID
+$1I3869
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+(
+NC1 
+CN2-1 Z-230011020209-1 Passive 
+H4-1 B-2100R40P-B110-1 Passive 
+J2-1 2.54-1*20P直针-1 Passive 
+)
+(
+VDD 
+CN2-2 Z-230011020209-2 Passive 
+CN2-3 Z-230011020209-3 Passive 
+H1-1 PZ254V-11-05P-1 Passive 
+H1-2 PZ254V-11-05P-2 Passive 
+H1-3 PZ254V-11-05P-3 Passive 
+H1-4 PZ254V-11-05P-4 Passive 
+H1-5 PZ254V-11-05P-5 Passive 
+H4-3 B-2100R40P-B110-3 Passive 
+H4-21 B-2100R40P-B110-21 Passive 
+J2-2 2.54-1*20P直针-2 Passive 
+J2-11 2.54-1*20P直针-11 Passive 
+)
+(
+NC4 
+CN2-4 Z-230011020209-4 Passive 
+H4-23 B-2100R40P-B110-23 Passive 
+J2-12 2.54-1*20P直针-12 Passive 
+)
+(
+PA3/EXC 
+CN2-5 Z-230011020209-5 Passive 
+H4-5 B-2100R40P-B110-5 Passive 
+J2-3 2.54-1*20P直针-3 Passive 
+)
+(
+GND_5V 
+CN2-6 Z-230011020209-6 Passive 
+CN2-13 Z-230011020209-13 Passive 
+CN2-20 Z-230011020209-20 Passive 
+J1-7 2.54-1*20P直针-7 Passive 
+J1-13 2.54-1*20P直针-13 Passive 
+J1-20 2.54-1*20P直针-20 Passive 
+H3-1 PZ254V-11-05P-1 Passive 
+H3-2 PZ254V-11-05P-2 Passive 
+H3-3 PZ254V-11-05P-3 Passive 
+H3-4 PZ254V-11-05P-4 Passive 
+H3-5 PZ254V-11-05P-5 Passive 
+H4-13 B-2100R40P-B110-13 Passive 
+H4-14 B-2100R40P-B110-14 Passive 
+H4-25 B-2100R40P-B110-25 Passive 
+H4-26 B-2100R40P-B110-26 Passive 
+H4-39 B-2100R40P-B110-39 Passive 
+H4-40 B-2100R40P-B110-40 Passive 
+J2-7 2.54-1*20P直针-7 Passive 
+J2-13 2.54-1*20P直针-13 Passive 
+J2-20 2.54-1*20P直针-20 Passive 
+)
+(
+PA6/DAC0 
+CN2-7 Z-230011020209-7 Passive 
+H4-7 B-2100R40P-B110-7 Passive 
+J2-4 2.54-1*20P直针-4 Passive 
+)
+(
+PA5/AIN5 
+CN2-8 Z-230011020209-8 Passive 
+H4-27 B-2100R40P-B110-27 Passive 
+J2-14 2.54-1*20P直针-14 Passive 
+)
+(
+PA4/DE 
+CN2-9 Z-230011020209-9 Passive 
+H4-9 B-2100R40P-B110-9 Passive 
+J2-5 2.54-1*20P直针-5 Passive 
+)
+(
+PA7/RE 
+CN2-10 Z-230011020209-10 Passive 
+H4-29 B-2100R40P-B110-29 Passive 
+J2-15 2.54-1*20P直针-15 Passive 
+)
+(
+PB1/SDA 
+CN2-11 Z-230011020209-11 Passive 
+H4-11 B-2100R40P-B110-11 Passive 
+J2-6 2.54-1*20P直针-6 Passive 
+)
+(
+PB0/SCL 
+CN2-12 Z-230011020209-12 Passive 
+H4-31 B-2100R40P-B110-31 Passive 
+J2-16 2.54-1*20P直针-16 Passive 
+)
+(
+PA2/R 
+CN2-14 Z-230011020209-14 Passive 
+H4-33 B-2100R40P-B110-33 Passive 
+J2-17 2.54-1*20P直针-17 Passive 
+)
+(
+PA1/D 
+CN2-15 Z-230011020209-15 Passive 
+H4-15 B-2100R40P-B110-15 Passive 
+J2-8 2.54-1*20P直针-8 Passive 
+)
+(
+PC3/SS 
+CN2-16 Z-230011020209-16 Passive 
+H4-35 B-2100R40P-B110-35 Passive 
+J2-18 2.54-1*20P直针-18 Passive 
+)
+(
+PC2/MOSI 
+CN2-17 Z-230011020209-17 Passive 
+H4-17 B-2100R40P-B110-17 Passive 
+J2-9 2.54-1*20P直针-9 Passive 
+)
+(
+PC1/MISO 
+CN2-18 Z-230011020209-18 Passive 
+H4-37 B-2100R40P-B110-37 Passive 
+J2-19 2.54-1*20P直针-19 Passive 
+)
+(
+PC0/SCK 
+CN2-19 Z-230011020209-19 Passive 
+H4-19 B-2100R40P-B110-19 Passive 
+J2-10 2.54-1*20P直针-10 Passive 
+)
+(
+NC12 
+J1-1 2.54-1*20P直针-1 Passive 
+H4-2 B-2100R40P-B110-2 Passive 
+)
+(
+VDD2 
+J1-2 2.54-1*20P直针-2 Passive 
+H4-4 B-2100R40P-B110-4 Passive 
+)
+(
+PA3/EXC2 
+J1-3 2.54-1*20P直针-3 Passive 
+H4-6 B-2100R40P-B110-6 Passive 
+)
+(
+PA6/DAC02 
+J1-4 2.54-1*20P直针-4 Passive 
+H4-8 B-2100R40P-B110-8 Passive 
+)
+(
+PA4/DE2 
+J1-5 2.54-1*20P直针-5 Passive 
+H4-10 B-2100R40P-B110-10 Passive 
+)
+(
+PB1/SDA2 
+J1-6 2.54-1*20P直针-6 Passive 
+H4-12 B-2100R40P-B110-12 Passive 
+)
+(
+PA1/D2 
+J1-8 2.54-1*20P直针-8 Passive 
+H4-16 B-2100R40P-B110-16 Passive 
+)
+(
+PC2/MOSI2 
+J1-9 2.54-1*20P直针-9 Passive 
+H4-18 B-2100R40P-B110-18 Passive 
+)
+(
+PC0/SCK2 
+J1-10 2.54-1*20P直针-10 Passive 
+H4-20 B-2100R40P-B110-20 Passive 
+)
+(
+VDD3 
+J1-11 2.54-1*20P直针-11 Passive 
+H4-22 B-2100R40P-B110-22 Passive 
+)
+(
+NC42 
+J1-12 2.54-1*20P直针-12 Passive 
+H4-24 B-2100R40P-B110-24 Passive 
+)
+(
+PA5/AIN52 
+J1-14 2.54-1*20P直针-14 Passive 
+H4-28 B-2100R40P-B110-28 Passive 
+)
+(
+PA7/RE2 
+J1-15 2.54-1*20P直针-15 Passive 
+H4-30 B-2100R40P-B110-30 Passive 
+)
+(
+PB0/SCL2 
+J1-16 2.54-1*20P直针-16 Passive 
+H4-32 B-2100R40P-B110-32 Passive 
+)
+(
+PA2/R2 
+J1-17 2.54-1*20P直针-17 Passive 
+H4-34 B-2100R40P-B110-34 Passive 
+)
+(
+PC3/SS2 
+J1-18 2.54-1*20P直针-18 Passive 
+H4-36 B-2100R40P-B110-36 Passive 
+)
+(
+PC1/MISO2 
+J1-19 2.54-1*20P直针-19 Passive 
+H4-38 B-2100R40P-B110-38 Passive 
+)
