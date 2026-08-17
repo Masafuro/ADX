@@ -14,9 +14,11 @@ SPDX-License-Identifier: CC-BY-4.0
 ## 1. 現状 (Hardware & Firmware)
 
 ### 1.1 ADX Core-D (`hardware/ADX_Core-D`)
+- 2026/08/17 : 発注完了
 LN-485ブートローダの開発のための専用ボード（Schematic, BOM, Gerber準備完了）
 
 ### 1.2 Prototyping CARD (`hardware/CARD/Prototyping`)
+- 2026/08/17 : 発注完了
 8748フォームファクタ対応の拡張プロトタイピング基板
 
 ### 1.3 Firmware & Software (`firmware/`)
