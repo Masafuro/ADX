@@ -21,11 +21,18 @@ firmware/
 ├── bootloaders/            # SerialUPDI & custom bootloader sources
 ├── examples/               # Example sketches and reference applications
 └── tests/                  # Hardware verification, bring-up, and diagnostic tests
+    └── ADX_Core-D/         # Hardware bring-up & test suite for ADX Core-D
 ```
 
 ---
 
-## 2. License
+## 2. Hardware Verification & Tests
+
+- [ADX Core-D Verification Suite](./tests/ADX_Core-D/README.md): Hardware bring-up, SerialUPDI/SoftwareSerial communication tests, and verification report for the ATtiny1616-based ADX Core-D board.
+
+---
+
+## 3. License
 
 All software, firmware, and code within this directory are released under the **MIT License**.
 

@@ -7,6 +7,12 @@ SPDX-License-Identifier: CC-BY-4.0
 
 このディレクトリには、**ADX Core-D**（MCU: ATtiny1616）のハードウェア初期疎通確認（Bring-up）、単体機能テスト、出荷検査向けファームウェアおよびその実行検証結果をまとめています。
 
+<p align="center">
+  <img src="./20260823_adx_core-d.webp" alt="ADX Core-D 実機動作確認" width="600">
+  <br>
+  <em>▲ 実機通電および動作確認の様子（ADX Core-D 初版基板）</em>
+</p>
+
 ---
 
 ## 1. テスト一覧

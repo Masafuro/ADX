@@ -52,3 +52,10 @@ ADXを開発していくにあたり、LIN Based RS-485（LN-485）とそのブ�
   - **アナログ / GPIO**: DAC0 (PA6), AIN5 (PA5)
   - **UART / RS-485 信号**: D (PA1), R (PA2), DE (PA4), RE (PA7)
   - **外部クロック / その他**: EXC (PA3), VDD, GND
+
+---
+
+## 8. 実機動作検証
+初版基板の実機通電および機能検証（SerialUPDI書き込み、SoftwareSerial通信、GPIO制御等）を実施済みです。詳細な検証結果および実機写真については、以下を参照してください。
+
+- **ハードウェア検証レポート & 実機写真**: [`firmware/tests/ADX_Core-D/README.md`](../../firmware/tests/ADX_Core-D/README.md)
