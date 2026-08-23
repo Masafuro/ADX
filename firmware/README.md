@@ -28,7 +28,7 @@ firmware/
 
 ## 2. Hardware Verification & Tests
 
-- [ADX Core-D Verification Suite](./tests/ADX_Core-D/README.md): Hardware bring-up, SerialUPDI/SoftwareSerial communication tests, and verification report for the ATtiny1616-based ADX Core-D board.
+- [ADX Core-D Verification Suite](./tests/ADX_Core-D/README.md): Hardware bring-up, SerialUPDI/SoftwareSerial communication, GPIO, and 12 MHz external oscillator verification reports for the ATtiny1616-based ADX Core-D board.
 
 ---
 

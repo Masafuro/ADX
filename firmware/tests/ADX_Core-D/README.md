@@ -20,6 +20,7 @@ SPDX-License-Identifier: CC-BY-4.0
 | テスト名 | 対象機能 | 概要 |
 | :--- | :--- | :--- |
 | [`led_softserial_test`](./led_softserial_test/) | GPIO (PB2, PB3), SoftwareSerial (PB4, PB5) | シリアルコマンドによるLED点灯制御と双方向通信テスト |
+| [`osc_test`](./osc_test/) | EXTCLK (PA3), RTC, 12MHz オシレータ (TFOM12M4RHKCNT2T) | 12MHz外部アクティブ水晶発振器のクロック検出およびRTCパルスカウント検証 |
 
 ---
 
@@ -43,6 +44,7 @@ SPDX-License-Identifier: CC-BY-4.0
 | **UPDIプログラム書き込み** | 成功 | **PASS** | megaTinyCore経由でのSerialUPDI書き込みが正常動作 |
 | **SoftwareSerial通信** | 成功 | **PASS** | 9600 bpsでのコマンド受信・応答送信が正常動作 |
 | **GPIO制御 (PB2, PB3)** | 成功 | **PASS** | LEDの個別/同時点灯・消灯をコマンド制御可能 |
+| **外部オシレーター発振確認 (PA3)** | 成功 | **PASS** | 12MHz発振器のEXTSステータス検出およびRTCパルスカウントが正常動作 |
 | **誤書き込みフェールセーフ** | 成功 | **PASS** | ソフトウェアシリアル用COMポートへのUPDI書き込み試行時、安全にエラー停止 |
 | **UPDIポート通信フェールセーフ** | 成功 | **PASS** | UPDI用COMポートへシリアルモニターで接続しても無反応（ポート分離が確認） |
 
@@ -66,3 +68,14 @@ SPDX-License-Identifier: CC-BY-4.0
   SoftwareSerial側のCOMポートを選択した状態でUPDI書き込みを実行した場合、マイコンやツールチェーンが不正なシーケンスを検知し、適切にエラーで中断・停止することを確認。
 - **UPDIポートの通信分離**:
   UPDI側のCOMポートに対してシリアルモニターを開いて通信を試みた場合、マイコン側からの応答はなく、通信ラインの独立性と安全性を確認。
+
+#### 4. 外部オシレーター (12MHz) 発振確認 ([osc_test](./osc_test/))
+- **検証手順**:
+  1. ジャンパピン（H3）を `osc` 側にショートし、12MHzアクティブ水晶発振器（TFOM12M4RHKCNT2T）の出力を PA3 (EXTCLK) に供給。
+  2. メインCPUクロック（MCLK）を直接外部クロックに切り替えるリスクを避け、RTCのクロックソースを `EXTCLK (PA3)`（`RTC.CLKSEL = 0x03`）に一時設定して検証を実施。
+  3. `CLKCTRL.MCLKSTATUS` の `EXTS` ビット（外部クロック検出ステータス）および `RTC.CNT` のパルスカウント遷移を確認。
+  4. 検証完了後、RTCレジスタを元の設定へ復元。
+- **検証結果**:
+  - `EXTS` ステータス: `検出成功 (STABLE)`
+  - RTCカウンタ値: 10ms間隔で約9,300カウント差分の連続計数動作を確認
+  - 判定: **PASS（正常動作）**（詳細は [`osc_test/result.md`](./osc_test/result.md) を参照）

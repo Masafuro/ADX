@@ -56,6 +56,6 @@ ADXを開発していくにあたり、LIN Based RS-485（LN-485）とそのブ�
 ---
 
 ## 8. 実機動作検証
-初版基板の実機通電および機能検証（SerialUPDI書き込み、SoftwareSerial通信、GPIO制御等）を実施済みです。詳細な検証結果および実機写真については、以下を参照してください。
+初版基板の実機通電および機能検証（SerialUPDI書き込み、SoftwareSerial通信、GPIO制御、12MHz外部オシレーター動作等）を実施済みです。詳細な検証結果および実機写真については、以下を参照してください。
 
 - **ハードウェア検証レポート & 実機写真**: [`firmware/tests/ADX_Core-D/README.md`](../../firmware/tests/ADX_Core-D/README.md)
