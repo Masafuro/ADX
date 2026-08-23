@@ -19,7 +19,8 @@ firmware/
 ├── bsp/                    # Board Support Packages & HAL definitions
 ├── drivers/                # Peripheral drivers (LN-485, DAC, ADC, I2C, SPI)
 ├── bootloaders/            # SerialUPDI & custom bootloader sources
-└── examples/               # Example sketches and reference applications
+├── examples/               # Example sketches and reference applications
+└── tests/                  # Hardware verification, bring-up, and diagnostic tests
 ```
 
 ---
