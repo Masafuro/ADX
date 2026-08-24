@@ -55,6 +55,12 @@ sequenceDiagram
 
 ### 2.2 基板間接続・ジャンパ設定
 
+<p align="center">
+  <img src="./adx_core-d_rs485_no_xdir.webp" alt="ADX Core-D RS-485 テスト実機接続" width="600">
+  <br>
+  <em>▲ ADX Core-D 2台の実機接続（3P端子台 A/B/GND ストレート接続による半二重通信検証）</em>
+</p>
+
 1. **RS-485 バス配線**:
    - 2台の ADX Core-D の 3P 端子台（KF142R-5.08-3P）を配線長 20cm 程度のケーブルでストレート接続します。
      - **A 端子** ⇔ **A 端子**
@@ -105,6 +111,7 @@ sequenceDiagram
 ---
 
 ## 4. テスト結果 (Test Results)
+詳細な検証レポートは [`result.md`](./result.md) を参照してください。
 
 ### 4.1 実行ログ ([`result.txt`](./result.txt))
 

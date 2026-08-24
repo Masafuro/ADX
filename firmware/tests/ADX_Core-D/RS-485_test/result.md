@@ -5,6 +5,18 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # ADX Core-D RS-485 通信テスト結果 (RS-485_test)
 
+<p align="center">
+  <img src="./adx_core-d_rs485_no_xdir.webp" alt="ADX Core-D RS-485 半二重通信テスト実機接続の様子" width="600">
+  <br>
+  <em>▲ 2台のADX Core-Dを3P端子台（A/B/GND）で接続し、Master/Slave双方向通信検証を実施している様子</em>
+</p>
+
+- テスト概要・手順仕様: [`README.md`](./README.md)
+- テストプログラム: [`rs-485_no_xdir.ino`](./rs-485_no_xdir.ino)
+- 実行生ログ: [`result.txt`](./result.txt)
+
+---
+
 ## 1. 実行日時
 - 2026/08/24
 

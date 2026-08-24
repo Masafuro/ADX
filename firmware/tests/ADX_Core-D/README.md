@@ -83,11 +83,18 @@ SPDX-License-Identifier: CC-BY-4.0
   - 判定: **PASS（正常動作）**（詳細は [`osc_test/result.md`](./osc_test/result.md) を参照）
 
 #### 5. RS-485 半二重通信確認 ([RS-485_test](./RS-485_test/))
+
+<p align="center">
+  <img src="./RS-485_test/adx_core-d_rs485_no_xdir.webp" alt="ADX Core-D RS-485 実機通信テスト" width="600">
+  <br>
+  <em>▲ 2台の ADX Core-D を用いた RS-485 半二重通信（Master/Slave 双方向エコーバック）テストの様子</em>
+</p>
+
 - **検証手順**:
   1. 2台の ADX Core-D 基板の端子台（A, B, GND）を接続し、終端抵抗（H4: 100Ω）は無効のままテスト。配線長は20cm程度。
   2. 1台目をマスター（`#define ROLE_MASTER` 有効）、2台目をスレーブ（同マクロ無効）として [`rs-485_no_xdir.ino`](./RS-485_test/rs-485_no_xdir.ino) を書き込み。
   3. PCからマスターの SoftwareSerial（9600 bps）経由でメッセージを送信し、RS-485経由でスレーブが受信・稼働時間を付加してエコーバック応答を返信することを確認。
 - **検証結果**:
   - `Hello`、`hello world`、`hiyoko kawaii` 各コマンドに対するスレーブからの応答受信を確認。
-  - 判定: **PASS（正常動作）**（詳細は [`RS-485_test/README.md`](./RS-485_test/README.md) を参照）
+  - 判定: **PASS（正常動作）**（詳細は [`RS-485_test/README.md`](./RS-485_test/README.md) および [`RS-485_test/result.md`](./RS-485_test/result.md) を参照）
 
