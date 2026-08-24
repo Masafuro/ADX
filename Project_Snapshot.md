@@ -15,7 +15,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ### 1.1 ADX Core-D (`hardware/ADX_Core-D`)
 - 2026/08/17 : 発注完了
-- 2026/08/23 : 基板到着・基本動作検証完了（SerialUPDI書き込み、SoftwareSerial通信、LED点灯、12MHz外部オシレーター動作確認完了）。IDCケーブル未着のためCARD接続検証は待機中。
+- 2026/08/23 : 基板到着・基本動作検証完了（SerialUPDI書き込み、SoftwareSerial通信、LED点灯、12MHz外部オシレーター動作確認完了）。
+- 2026/08/24 : RS-485 半二重通信テスト完了（2台のADX Core-D実機間でのMaster/Slave双方向通信・GPIO手動方向制御の正常動作を確認）。※IDCケーブル未着のためCARD接続検証は待機中。
 LN-485ブートローダの開発のための専用ボード
 
 ### 1.2 Prototyping CARD (`hardware/CARD/Prototyping`)
@@ -25,6 +26,7 @@ LN-485ブートローダの開発のための専用ボード
 
 ### 1.3 Firmware & Software (`firmware/`)
 - 2026/08/23 : ADX Core-D 単体動作確認テスト完了（LED・シリアル通信・オシレータ検証: [`firmware/tests/ADX_Core-D/`](firmware/tests/ADX_Core-D/)）
+- 2026/08/24 : RS-485 半二重通信テスト完了（Master/Slave双方向エコーバック検証: [`firmware/tests/ADX_Core-D/RS-485_test/`](firmware/tests/ADX_Core-D/RS-485_test/)）
 - LN-485通信スタック、SerialUPDI対応ブートローダ、Arduino/C++ BSPの準備
 
 ## 2. その他

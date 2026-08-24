@@ -1,0 +1,9 @@
+[Master Uptime: 32891 ms] Sent to RS-485: Hello
+Recv from RS-485: Slave Uptime: 9502 ms (Req: Hello)
+
+[Master Uptime: 40487 ms] Sent to RS-485: hello world
+Recv from RS-485: Slave Uptime: 17182 ms (Req: hello world)
+
+[Master Uptime: 49125 ms] Sent to RS-485: hiyoko kawaii
+Recv from RS-485: Slave Uptime: 25908 ms (Req: hiyoko kawaii) 
+
