@@ -1,0 +1,31 @@
+# ADX Core-D LN-485 TC-P2 Raw Test Execution Log
+
+
+## Master
+[Master Pattern #7] [TEST: NORMAL] Sent Valid Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Pattern #8] [TEST: NORMAL] Sent Valid Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Pattern #9] [TEST: NORMAL] Sent Valid Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Pattern #10] [TEST: ISFIF] Sent Corrupted Sync (0xAA) + PID(0xC1)
+[Master Pattern #11] [TEST: PERR]  Sent Corrupted Parity PID (0x01)
+[Master Pattern #12] [TEST: NORMAL] Sent Valid Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Pattern #13] [TEST: NORMAL] Sent Valid Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Pattern #14] [TEST: NORMAL] Sent Valid Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Pattern #15] [TEST: NORMAL] Sent Valid Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Pattern #16] [TEST: ISFIF] Sent Corrupted Sync (0xAA) + PID(0xC1)
+[Master Pattern #17] [TEST: PERR]  Sent Corrupted Parity PID (0x01)
+
+
+## Slave
+[Slave Event #19] PID Received: 0xC1 (ID: 0x01) | AutoBAUD: 0x20E4 | BDF: 0 -> [ PASS / OK ]
+[Slave Event #20] STATUS.ISFIF (Inconsistent Sync) DETECTED! -> Cleared & WFB Rearmed
+[Slave Event #21] PID Received: 0xC1 (ID: 0x01) | AutoBAUD: 0x20E1 | BDF: 0 -> [ PASS / OK ]
+[Slave Event #22] PID Received: 0xC1 (ID: 0x01) | AutoBAUD: 0x20E4 | BDF: 0 -> [ PASS / OK ]
+[Slave Event #23] STATUS.ISFIF (Inconsistent Sync) DETECTED! -> Cleared & WFB Rearmed
+[Slave Event #24] PID Received: 0xC1 (ID: 0x01) | AutoBAUD: 0x20E3 | BDF: 0 -> [ PASS / OK ]
+[Slave Event #25] STATUS.ISFIF (Inconsistent Sync) DETECTED! -> Cleared & WFB Rearmed
+[Slave Event #26] PID Received: 0xC1 (ID: 0x01) | AutoBAUD: 0x20E0 | BDF: 0 -> [ PASS / OK ]
+[Slave Event #27] STATUS.ISFIF (Inconsistent Sync) DETECTED! -> Cleared & WFB Rearmed
+[Slave Event #28] PID Received: 0xC1 (ID: 0x01) | AutoBAUD: 0x20E0 | BDF: 0 -> [ PASS / OK ]
+[Slave Event #29] PID Received: 0xC1 (ID: 0x01) | AutoBAUD: 0x20E2 | BDF: 0 -> [ PASS / OK ]
+[Slave Event #30] STATUS.ISFIF (Inconsistent Sync) DETECTED! -> Cleared & WFB Rearmed
+

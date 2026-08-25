@@ -1,0 +1,35 @@
+# ADX Core-D LN-485 TC-P1-02 Raw Test Execution Log
+# (ここに実機シリアルモニタのログを貼り付けてください)
+
+## Master側
+[Master Uptime: 59018 ms] #59 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 60018 ms] #60 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 61018 ms] #61 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 62018 ms] #62 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 63018 ms] #63 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 64018 ms] #64 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 65018 ms] #65 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 66018 ms] #66 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 67018 ms] #67 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 68018 ms] #68 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 69018 ms] #69 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 70018 ms] #70 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+[Master Uptime: 71018 ms] #71 Sent Header: [Break] + [0x55] + [PID: 0xC1]
+
+
+
+## Slave側
+
+[Slave Recv #44] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #45] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #46] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #47] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #48] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #49] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #50] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #51] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #52] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #53] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #54] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #55] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]
+[Slave Recv #56] Raw Bytes (3B): [0x00, 0x55, 0xC1] -> Sync(0x55): OK, PID(0xC1 / ID:0x01) Parity: OK -> [ PASS / OK ]

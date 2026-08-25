@@ -1,0 +1,33 @@
+# ADX Core-D LN-485 TC-P1-01 Raw Test Execution Log
+# (ここに実機シリアルモニタのログを貼り付けてください)
+
+
+## Master側
+[Master Uptime: 60015 ms] #60 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 61015 ms] #61 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 62016 ms] #62 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 63015 ms] #63 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 64016 ms] #64 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 65015 ms] #65 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 66016 ms] #66 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 67015 ms] #67 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 68016 ms] #68 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 69015 ms] #69 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 70016 ms] #70 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 71015 ms] #71 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+[Master Uptime: 72016 ms] #72 Sent LIN Break (14 Tbit LOW + 1 Tbit HIGH)
+
+## Slave側
+[Slave Meas #142] Width: 1471 us (Diff: +15 us, Error: +1.0%) -> [ PASS / OK ]
+[Slave Meas #143] Width: 1467 us (Diff: +11 us, Error: +0.8%) -> [ PASS / OK ]
+[Slave Meas #144] Width: 1468 us (Diff: +12 us, Error: +0.8%) -> [ PASS / OK ]
+[Slave Meas #145] Width: 1467 us (Diff: +11 us, Error: +0.8%) -> [ PASS / OK ]
+[Slave Meas #146] Width: 1467 us (Diff: +11 us, Error: +0.8%) -> [ PASS / OK ]
+[Slave Meas #147] Width: 1467 us (Diff: +11 us, Error: +0.8%) -> [ PASS / OK ]
+[Slave Meas #148] Width: 1472 us (Diff: +16 us, Error: +1.1%) -> [ PASS / OK ]
+[Slave Meas #149] Width: 1466 us (Diff: +10 us, Error: +0.7%) -> [ PASS / OK ]
+[Slave Meas #150] Width: 1467 us (Diff: +11 us, Error: +0.8%) -> [ PASS / OK ]
+[Slave Meas #151] Width: 1472 us (Diff: +16 us, Error: +1.1%) -> [ PASS / OK ]
+[Slave Meas #152] Width: 1471 us (Diff: +15 us, Error: +1.0%) -> [ PASS / OK ]
+[Slave Meas #153] Width: 1472 us (Diff: +16 us, Error: +1.1%) -> [ PASS / OK ]
+[Slave Meas #154] Width: 1471 us (Diff: +15 us, Error: +1.0%) -> [ PASS / OK ]
