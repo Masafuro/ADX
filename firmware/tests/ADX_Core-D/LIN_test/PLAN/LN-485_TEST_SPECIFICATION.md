@@ -68,9 +68,9 @@ flowchart LR
 | | `TC-P2-03` | PID 受信 & パリティ自動計算 | Slave: `RXDATAH.DATA == 0` および `PERR == 0` による PID 取得 | **PASS** |
 | | `TC-P2-04` | Sync エラー検出 & リカバリ | Slave: 不正 Sync (`0xAA`) 送信時の `ISFIF` 検知および `WFB` 復帰 | **PASS** |
 | | `TC-P2-05` | PID パリティエラー検出 | Slave: 不正パリティ送信時の `RXDATAH.PERR == 1` 検知と破棄 | **PASS** |
-| **Phase 3** | `TC-P3-01` | ミニマム・スケジューラ ＆ Master-Pub | Master: 定期巡回ポーリング ＆ Type A ペイロード送信 | 準備中 |
-| | `TC-P3-02` | Slave Subscriber ペイロード受信 | Slave: `DATA==1` 受信、チェックサム検証、データバッファリング | 準備中 |
-| | `TC-P3-03` | コマンド連動 LED 制御 ＆ 不正破棄 | Slave: 受信データに応じた LED 制御、不正チェックサムの検知・破棄 | 準備中 |
+| **Phase 3** | `TC-P3-01` | ミニマム・スケジューラ ＆ Master-Pub | Master: 定期巡回ポーリング ＆ Type A ペイロード送信 | **PASS** |
+| | `TC-P3-02` | Slave Subscriber ペイロード受信 | Slave: `DATA==1` 受信、チェックサム検証、データバッファリング | **PASS** |
+| | `TC-P3-03` | コマンド連動 LED 制御 ＆ 不正破棄 | Slave: 受信データに応じた LED 制御、不正チェックサムの検知・破棄 | **PASS** |
 | **Phase 4** | `TC-P4-01` | Slave Publisher 応答 ＆ ターンアラウンド | Slave: 自担当 PID 受信後のレスポンススペース・DE 制御・データ送信 | 準備中 |
 | | `TC-P4-02` | Master Broker プロミスキャス傍受 ＆ タイムアウト | Master: バス全傍受・PC パススルー・無応答タイムアウト（**★MVP完成**） | 準備中 |
 | | `TC-P4-03` | 双方向対話エコーバック | 全体: PC ⇔ Master Broker ⇔ Slave 間の一連の対話ログ実証 | 準備中 |
@@ -152,7 +152,7 @@ flowchart LR
   1. マスターから PID = `0x81`（ID=0x01, P0=0, P1=1: 正当パリティ）を送信。
   2. スレーブ側で `uint8_t h = USART0.RXDATAH; uint8_t l = USART0.RXDATAL;` を実行。
 * **【合否判定基準 (Criteria)】**:
-  * **【 OK 】**: `(h & USART_DATA_bm) == 0`（PIDフラグ）、`(h & USART_PERR_bm) == 0`（パリティ正常）、`l == 0x81`（ID一致）である。
+  * **【 OK 】**: `(h & 0x01) == 0`（RXDATAH bit 0: PID識別）、`(h & USART_PERR_bm) == 0`（パリティ正常）、`l == 0x81`（ID一致）である。
   * **【 NG 】**: DATAフラグが `1`、PERRが `1`、または `l != 0x81` である。
 
 #### `TC-P2-04` : Sync エラー検出 & リカバリ (`ISFIF`)
@@ -323,10 +323,9 @@ flowchart LR
 | `TC-P2-02` | ハードウェア Auto-baud 補正 | 2026/08/25 | **PASS (OK)** | Tester | BAUD レジスタ 0x20E0〜0x20E4 自動更新を確認 |
 | `TC-P2-03` | PID 受信 & パリティ自動計算 | 2026/08/25 | **PASS (OK)** | Tester | PID 0xC1 取得・パリティ合致を確認 |
 | `TC-P2-04` | Sync エラー検出 & リカバリ | 2026/08/25 | **PASS (OK)** | Tester | 不正Sync (0xAA) で ISFIF 検知・自律復帰を確認 |
-| `TC-P2-05` | PID パリティエラー検出 | 2026/08/25 | **PASS (OK)** | Tester | 不正パリティ PID (0x01) 破棄・自律復帰を確認 |
-| `TC-P3-01` | ミニマム・スケジューラ ＆ Master-Pub | 2026/08/-- | - | - | - |
-| `TC-P3-02` | Slave Subscriber ペイロード受信 | 2026/08/-- | - | - | - |
-| `TC-P3-03` | コマンド連動 LED 制御 ＆ 不正破棄 | 2026/08/-- | - | - | - |
+| `TC-P3-01` | ミニマム・スケジューラ ＆ Master-Pub | 2026/08/26 | **PASS (OK)** | Tester | Type A 巡回送出・DE制御・スレーブ全受信を確認 |
+| `TC-P3-02` | Slave Subscriber ペイロード受信 | 2026/08/26 | **PASS (OK)** | Tester | 1B/4B データ受信・Classic Checksum 完全一致を確認 |
+| `TC-P3-03` | コマンド連動 LED 制御 ＆ 不正破棄 | 2026/08/26 | **PASS (OK)** | Tester | LED 点灯/消灯制御および破損CS時の安全破棄・自律復帰を確認 |
 | `TC-P4-01` | Slave Publisher 応答 ＆ ターンアラウンド | 2026/08/-- | - | - | - |
 | `TC-P4-02` | Master Broker プロミスキャス傍受 ＆ タイムアウト | 2026/08/-- | - | - | ★Master Broker MVP 完成 |
 | `TC-P4-03` | 双方向対話エコーバック | 2026/08/-- | - | - | - |
