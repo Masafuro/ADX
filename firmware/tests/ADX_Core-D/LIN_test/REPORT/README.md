@@ -21,11 +21,10 @@ ADXプロジェクトでは、マルチドロップ型の産業用Arduinoエコ�
 
 ## 2. 関連ドキュメント構成
 
-| ディレクトリ | ドキュメント | 内容概要 |
-| :--- | :--- | :--- |
 | **`REPORT/`** | [**`LN-485_TECHNICAL_INVESTIGATION_REPORT.md`**](./LN-485_TECHNICAL_INVESTIGATION_REPORT.md) | **LN-485 技術調査レポート**<br>・LIN論理層とRS-485差動物理層の対比と適合性<br>・ATtiny1616 ハードウェアLINスレーブエンジン解析<br>・GPIOトグルによるBreak送出仕様と内部クロック基準方針<br>・半二重方向制御（DE/RE）とハードウェアXDIR自動制御 |
 | **`REPORT/`** | [**`LN-485_STEP_BY_STEP_TEST_PLAN.md`**](./LN-485_STEP_BY_STEP_TEST_PLAN.md) | **段階的テスト計画書（ロードマップ）**<br>・なぜ段階的アプローチが必要なのか<br>・Phase 1 〜 Phase 6 の全体概要と設計アーキテクチャ<br>・単一スケッチ（Master/Slave両対応）によるテストコード設計案 |
-| **`PLAN/`** | [**`LN-485_TEST_SPECIFICATION.md`**](../PLAN/LN-485_TEST_SPECIFICATION.md) | **詳細テスト仕様書兼実施計画書**<br>・全19テストケース（`TC-P1-01` 〜 `TC-P6-02`）の定義<br>・各ケースの **【Action（実行手順）】** と **【OK/NG 判定基準】**<br>・実機テスト実施記録テンプレート |
+| **`PLAN/`** | [**`LN-485_TEST_SPECIFICATION.md`**](../PLAN/LN-485_TEST_SPECIFICATION.md) | **詳細テスト仕様書兼実施計画書**<br>・全19テストケース（`TC-P1-01` 〜 `TC-P6-02`）の定義<br>・各ケースの **【Action（実行手順）】** と **【OK/NG 判定基準】**<br>・実機テスト実施記録（Phase 1〜3 PASS反映済み） |
+| **`Phase/`** | [**`Phase別テストファームウェア・結果`**](../Phase/) | **フェーズ別テストスケッチ・実施手順・実機検証結果**<br>・[`SKETCH_DEVELOPMENT_GUIDELINE.md`](../Phase/SKETCH_DEVELOPMENT_GUIDELINE.md)（開発規約）<br>・[`TC-P1-01/`](../Phase/TC-P1-01/), [`TC-P1-02/`](../Phase/TC-P1-02/)（Phase 1: PASS）<br>・[`TC-P2/`](../Phase/TC-P2/)（Phase 2: PASS）<br>・[`TC-P3/`](../Phase/TC-P3/)（Phase 3: PASS） |
 
 ---
 

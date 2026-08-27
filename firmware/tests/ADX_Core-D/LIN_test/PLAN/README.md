@@ -13,7 +13,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 | ドキュメント | 内容概要 |
 | :--- | :--- |
-| [**`LN-485_TEST_SPECIFICATION.md`**](./LN-485_TEST_SPECIFICATION.md) | **LN-485 詳細テスト仕様書兼実施計画書**<br>・テスト環境および共通前提条件<br>・Phase 1 〜 Phase 6（全19テストケース）のテストマトリクス<br>・各テストケースの **【実行手順 (Action)】** と **【合否判定基準 (OK / NG)】**<br>・実機テスト実施記録テンプレート |
+| [**`LN-485_TEST_SPECIFICATION.md`**](./LN-485_TEST_SPECIFICATION.md) | **LN-485 詳細テスト仕様書兼実施計画書**<br>・テスト環境および共通前提条件<br>・Phase 1 〜 Phase 6（全19テストケース）のテストマトリクス<br>・各テストケースの **【実行手順 (Action)】** と **【合否判定基準 (OK / NG)】**<br>・実機テスト実施記録（Phase 1〜3 PASS反映済み） |
+| [**`PHASE4_DEVELOPMENT_PLAN.md`**](./PHASE4_DEVELOPMENT_PLAN.md) | **LN-485 Phase 4 開発計画書**<br>・Type B (Slave-Pub → Master-Sub) 実証 ＆ Master Broker MVP 開発計画<br>・スレーブ側レジスタ直接送信、ターンアラウンド、非ブロッキング・タイムアウト設計方針 |
 
 ---
 

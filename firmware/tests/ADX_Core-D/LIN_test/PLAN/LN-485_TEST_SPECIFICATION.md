@@ -71,9 +71,9 @@ flowchart LR
 | **Phase 3** | `TC-P3-01` | ミニマム・スケジューラ ＆ Master-Pub | Master: 定期巡回ポーリング ＆ Type A ペイロード送信 | **PASS** |
 | | `TC-P3-02` | Slave Subscriber ペイロード受信 | Slave: `DATA==1` 受信、チェックサム検証、データバッファリング | **PASS** |
 | | `TC-P3-03` | コマンド連動 LED 制御 ＆ 不正破棄 | Slave: 受信データに応じた LED 制御、不正チェックサムの検知・破棄 | **PASS** |
-| **Phase 4** | `TC-P4-01` | Slave Publisher 応答 ＆ ターンアラウンド | Slave: 自担当 PID 受信後のレスポンススペース・DE 制御・データ送信 | 準備中 |
-| | `TC-P4-02` | Master Broker プロミスキャス傍受 ＆ タイムアウト | Master: バス全傍受・PC パススルー・無応答タイムアウト（**★MVP完成**） | 準備中 |
-| | `TC-P4-03` | 双方向対話エコーバック | 全体: PC ⇔ Master Broker ⇔ Slave 間の一連の対話ログ実証 | 準備中 |
+| **Phase 4** | `TC-P4-01` | Slave Publisher 応答 ＆ ターンアラウンド | Slave: 自担当 PID 受信後のレスポンススペース・DE 制御・データ送信 | **PASS** |
+| | `TC-P4-02` | Master Broker プロミスキャス傍受 ＆ タイムアウト | Master: バス全傍受・PC パススルー・無応答タイムアウト（**★MVP完成**） | **PASS** |
+| | `TC-P4-03` | 双方向対話エコーバック | 全体: PC ⇔ Master Broker ⇔ Slave 間の一連の対話ログ実証 | **PASS** |
 | **Phase 5** | `TC-P5-01` | Type C スレーブ間ダイレクト通信 | Slave A (Pub) $\rightarrow$ Slave B (Sub) のマスター非介在直接制御実証 | 準備中 |
 | | `TC-P5-02` | Master Broker 傍受 ＆ 分散制御監視 | Master: Type C 通信の交通整理（場作り）とバス全傍受ログ出力 | 準備中 |
 | **Phase 6** | `TC-P6-01` | ハードウェア XDIR 自動方向制御 | Master & Slave: `USART0.CTRLA.RS485` による DE 自動制御の実証 | 準備中 |
@@ -217,11 +217,11 @@ flowchart LR
 ### ■ Phase 4: Type B (Slave Pub → Master Sub) 実証 ＆ Master Broker MVP 完成
 
 #### `TC-P4-01` : Slave Publisher 応答 ＆ ターンアラウンド制御
-* **【検証目的】**: スレーブが自担当の Type B PID を受信した際、レスポンススペース（約 50〜100µs）を置いて `DE=1` へ移行し、応答データ＋チェックサムを送信して `Serial.flush()` 後に `DE=0` へ戻す一連のパブリッシュ処理を確認する。
-* **【開発対象】**: Slave（Publisher 送信エンジン ＆ ターンアラウンド DE 制御）
+* **【検証目的】**: スレーブが Double Buffer Mailbox（2面バッファ・ゼロコピー）に格納された自担当の Type B PID を受信した際、レスポンススペース（約 50〜100µs）を置いて `DE=1` へ移行し、応答データ＋チェックサムを送信して `slaveTxFlush()` 後に `DE=0` へ戻す一連のパブリッシュ処理を確認する。
+* **【開発対象】**: Slave（Double Buffer Mailbox ＆ Publisher 送信エンジン ＆ ターンアラウンド DE 制御）
 * **【実行手順 (Action)】**:
   1. マスターから Type B 要求ヘッダ（ID=0x03: 稼働時間要求）を送出後、マスターは `DE=0` で解放。
-  2. スレーブが PID 受信後、適切なレスポンススペースを経て `DE=1` $\rightarrow$ 稼働時間（4バイト）＋ チェックサムを送信 $\rightarrow$ `flush()` $\rightarrow$ `DE=0` $\rightarrow$ `WFB=1`。
+  2. スレーブが PID 受信後、適切なレスポンススペースを経て `DE=1` $\rightarrow$ 表バッファ（`activeIdx`）の稼働時間（4バイト）＋ チェックサムを送信 $\rightarrow$ `slaveTxFlush()` $\rightarrow$ `DE=0` $\rightarrow$ `WFB=1`。
 * **【合否判定基準 (Criteria)】**:
   * **【 OK 】**: A/B ライン上でマスター送信とスレーブ応答の間に衝突（ショート波形）が一切なく、スレーブの応答末尾バイトまで欠落なく送出される。
   * **【 NG 】**: バス衝突が発生する、またはスレーブの送信完了前に DE が遮断される。
@@ -325,10 +325,9 @@ flowchart LR
 | `TC-P2-04` | Sync エラー検出 & リカバリ | 2026/08/25 | **PASS (OK)** | Tester | 不正Sync (0xAA) で ISFIF 検知・自律復帰を確認 |
 | `TC-P3-01` | ミニマム・スケジューラ ＆ Master-Pub | 2026/08/26 | **PASS (OK)** | Tester | Type A 巡回送出・DE制御・スレーブ全受信を確認 |
 | `TC-P3-02` | Slave Subscriber ペイロード受信 | 2026/08/26 | **PASS (OK)** | Tester | 1B/4B データ受信・Classic Checksum 完全一致を確認 |
-| `TC-P3-03` | コマンド連動 LED 制御 ＆ 不正破棄 | 2026/08/26 | **PASS (OK)** | Tester | LED 点灯/消灯制御および破損CS時の安全破棄・自律復帰を確認 |
-| `TC-P4-01` | Slave Publisher 応答 ＆ ターンアラウンド | 2026/08/-- | - | - | - |
-| `TC-P4-02` | Master Broker プロミスキャス傍受 ＆ タイムアウト | 2026/08/-- | - | - | ★Master Broker MVP 完成 |
-| `TC-P4-03` | 双方向対話エコーバック | 2026/08/-- | - | - | - |
+| `TC-P4-01` | Slave Publisher 応答 ＆ ターンアラウンド | 2026/08/26 | **PASS (OK)** | Tester | Double Buffer Mailbox からの 4B 稼働時間 + CS 送信・DE 制御を確認 |
+| `TC-P4-02` | Master Broker プロミスキャス傍受 ＆ タイムアウト | 2026/08/26 | **PASS (OK)** | Tester | 全傍受および未接続IDでの 15ms タイムアウト自律復帰を確認（★Master Broker MVP 完成） |
+| `TC-P4-03` | 双方向対話エコーバック | 2026/08/26 | **PASS (OK)** | Tester | Slot 0 (LED制御) ＆ Slot 1 (Uptime収集) の連続巡回動作を確認 |
 | `TC-P5-01` | Type C スレーブ間ダイレクト通信 | 2026/08/-- | - | - | - |
 | `TC-P5-02` | Master Broker 傍受 ＆ 分散制御監視 | 2026/08/-- | - | - | - |
 | `TC-P6-01` | ハードウェア XDIR 自動方向制御 | 2026/08/-- | - | - | - |

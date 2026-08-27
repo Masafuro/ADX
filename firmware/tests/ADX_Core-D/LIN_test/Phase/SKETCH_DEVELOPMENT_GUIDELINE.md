@@ -45,7 +45,7 @@ flowchart TD
 
 ## 2. LN-485 スケッチ作成における重要注意事項 (Critical Rules)
 
-LIN プロトコルおよび ATtiny1616 ハードウェア LIN スレーブエンジン（`LINAUTO`）を扱う際は、通常の UART 通信にはない**厳格なハードウェア制約**が存在します。以下の 7 つの注意事項を必ず遵守してください。
+LIN プロトコルおよび ATtiny1616 ハードウェア LIN スレーブエンジン（`LINAUTO`）を扱う際は、通常の UART 通信にはない**厳格なハードウェア制約**が存在します。以下の 8 つの注意事項を必ず遵守してください。
 
 ---
 
@@ -154,6 +154,13 @@ void sendLinBreak(uint32_t baud) {
 * ATtiny1616 の 8 ビット通信モード（`CHSIZE_8BIT_gc`）において、`USART0.RXDATAH` の最下位ビット（bit 0: `DATA8`）は通常のデータ受信時は常に `0` となります（9 ビットモード時のみ使用）。
 * そのため、データ受信判定で `rxHigh & 0x01`（`USART_DATA_bm` 等）を判定条件にしてはならず、**ステートマシン（`STATE_WAIT_HEADER` $\rightarrow$ `STATE_RECEIVE_PAYLOAD`）の状態遷移に基づいてデータを格納** します。
 * また、受信処理は `while (USART0.STATUS & USART_RXCIF_bm)` を用いて FIFO 内の連続バイトを漏れなく即座に読み出します。
+
+---
+
+### ⚠️ 注意事項 8: スレーブ Publisher における Double Buffer Mailbox 実装規約
+* スレーブ側が Publisher としてデータを送出する際は、アプリケーション処理（`loop()`）と通信層（即時応答）の競合（Torn Read）を完全に排除するため、[**`LN-485/double_buffer.md`**](../LN-485/double_buffer.md) に基づく **2面バッファ（Double Buffer）** を使用します。
+* アプリ層は裏バッファ（`nextIdx = activeIdx ^ 1`）に対して通常状態（割り込み許可）でデータを書き込んでチェックサムを計算し、`activeIdx = nextIdx;` で瞬時に切り替えます。
+* 通信層は `activeIdx` の表バッファを直接参照し、`slaveTxByte()` で **Zero-Copy 送信** を行います。
 
 ---
 
