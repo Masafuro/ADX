@@ -20,6 +20,7 @@ SPDX-License-Identifier: CC-BY-4.0
 - 2026/08/25 : LN-485 Phase 1 / Phase 2 実機検証完了（GPIO Break 送出、スレーブ LINAUTO ハードウェア自動ボーレート同期・PIDパリティ検証 PASS）。
 - 2026/08/26 : LN-485 Phase 3 実機検証完了（Type A: Master-Pub → Slave-Sub 実証、Subscriber 受信・Classic Checksum 照合・LED コマンド制御・不正 CS 破棄 PASS）。
 - 2026/08/26 : LN-485 Phase 4 実機検証完了（Type B: Slave-Pub → Master-Sub 実証、Double Buffer Mailbox による完全非同期・Zero-Copy 送信、Master Broker 15ms タイムアウト自律復帰 PASS 【★Master Broker MVP 完成】）。
+- 2026/08/27 : LN-485 Phase 5 実機検証完了（Type C: Slave A Pub → Slave B Sub 実証、3台実機構成でのスレーブ間ダイレクト制御、Master Broker プロミスキャス傍受監視、STATE_IGNORE_PAYLOAD による ISFIF 自爆防止 PASS 【★LN-485 UP/CS 完成】）。
 LN-485ブートローダの開発のための専用ボード
 
 ### 1.2 Prototyping CARD (`hardware/CARD/Prototyping`)
@@ -33,7 +34,8 @@ LN-485ブートローダの開発のための専用ボード
 - 2026/08/25 : LN-485 Phase 1 (Break/UART) ＆ Phase 2 (LINAUTO 自動同期) 実機検証 PASS ([`firmware/tests/ADX_Core-D/LIN_test/Phase/`](firmware/tests/ADX_Core-D/LIN_test/Phase/))
 - 2026/08/26 : LN-485 Phase 3 (Type A: Master-Pub ＆ Slave Subscriber 実装) 実機検証 PASS ([`firmware/tests/ADX_Core-D/LIN_test/Phase/TC-P3/`](firmware/tests/ADX_Core-D/LIN_test/Phase/TC-P3/))
 - 2026/08/26 : LN-485 Phase 4 (Type B: Slave-Pub ＆ Double Buffer Mailbox ＆ Master Broker MVP) 実機検証 PASS ([`firmware/tests/ADX_Core-D/LIN_test/Phase/TC-P4/`](firmware/tests/ADX_Core-D/LIN_test/Phase/TC-P4/))
-- LN-485通信スタック（Phase 5: Type C スレーブ間直接通信へ移行）、SerialUPDI対応ブートローダ、Arduino/C++ BSPの準備
+- 2026/08/27 : LN-485 Phase 5 (Type C: スレーブ間直接通信 ＆ Master傍受監視 ＆ LN-485 UP/CS 完成) 実機検証 PASS ([`firmware/tests/ADX_Core-D/LIN_test/Phase/TC-P5/`](firmware/tests/ADX_Core-D/LIN_test/Phase/TC-P5/))
+- LN-485通信スタック（Phase 6: ハードウェアXDIR自動方向制御・多重ボーレートスイープ・ロバストネス評価へ移行）、SerialUPDI対応ブートローダ、Arduino/C++ BSPの準備
 
 ## 2. その他
 - [History](https://github.dev/Masafuro/ADX/blob/main/Project_Snapshot.md)

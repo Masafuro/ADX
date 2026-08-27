@@ -164,6 +164,27 @@ void sendLinBreak(uint32_t baud) {
 
 ---
 
+### ⚠️ 注意事項 9: 同期エラー (`ISFIF`) 監視位置とデッドロック防止 【Phase 5 知見】
+* ATtiny1616 の `LINAUTO` 仕様上、ノイズ等で同期エラー（`ISFIF`）が発生すると **`RXCIF`（受信完了）フラグは絶対に立ちません**。
+* そのため、`while (USART0.STATUS & USART_RXCIF_bm)` の**内側**に `ISFIF` クリア処理を入れると、エラー発生時に永久にループに入れず受信機能が完全ロック（デッドロック）します。
+* **【絶対遵守ルール】** `ISFIF` の監視・復帰処理は、必ず **`while (STATUS & RXCIF)` の外側（手前）** で常時実行してください。
+  ```cpp
+  // RXCIF を待つ前に常に ISFIF ロックを検知・復帰
+  if (USART0.STATUS & USART_ISFIF_bm) {
+    USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm;
+    slaveState = STATE_WAIT_HEADER;
+  }
+  ```
+
+---
+
+### ⚠️ 注意事項 10: 他ノード宛てメッセージ受信時のペイロード通過待機 (`STATE_IGNORE_PAYLOAD`) 【Phase 5 知見】
+* マルチドロップバスにおいて他ノード宛てのトピック（例: Master $\rightarrow$ Slave B 宛ての ID=0x02）を受信した際、**直ちに `WFB=1`（ブレーク待機）をセットしてはなりません**。
+* 直後に流れてくる他ノードのペイロードデータ（データバイトやCS）をハードウェアがブレーク／Sync信号と誤認し、**100% の確率で `ISFIF` 自爆エラー** を引き起こします。
+* **【絶対遵守ルール】** 自ノードに無関係な ID を受信した際は、`WFB` をセットせず **`STATE_IGNORE_PAYLOAD` へ遷移** させ、一定時間（例: 20ms）のタイムアウトでペイロード通過後に安全に `WFB=1` を再アームしてください。
+
+---
+
 ## 3. スケッチの基本テンプレート (Code Template)
 
 以下は、各 Phase で共通して使用する実証済みのスケッチ基本骨格です。
