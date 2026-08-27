@@ -18,7 +18,7 @@ SPDX-License-Identifier: CC-BY-4.0
 flowchart TD
     subgraph "RS-485_test で確立された共通基盤"
         A["単一スケッチ構造<br/>(#define ROLE_MASTER 切り替え)"]
-        B["USART0 Pin Swap<br/>(Serial.swap(1) -> PA1:TXD / PA2:RXD)"]
+        B["USART0 Pin Swap<br/>(Master: Serial.swap(1) / Slave: PORTMUX)"]
         C["半二重方向制御 (DE/RE)<br/>(PA4:DE, PA7:/RE)"]
         D["送信バッファフラッシュ<br/>(Serial.flush() 待機)"]
         E["デバッグ中継分離<br/>(SoftwareSerial: PB4/PB5)"]
@@ -26,13 +26,20 @@ flowchart TD
     end
 ```
 
-### 1.1 単一スケッチによる Master / Slave 両対応
-* `#define ROLE_MASTER` の有効化／コメントアウトのみで、同一ソースコードからマスター機用とスレーブ機用のバイナリをビルドできる構成を維持します。
-* これにより、マスター／スレーブ間でデータ構造やプロトコル定数の定義が乖離するミスを防ぎます。
+### 1.1 単一スケッチによる Master / Slave (複数ロール) 両対応
+* `#define ROLE_MASTER` や `#define ROLE_SLAVE_A` / `#define ROLE_SLAVE_B` の有効化切り替えにより、同一ソースコードから各ノード用のバイナリをビルドできる構成を維持します。
+* これにより、マスター／スレーブ（Publisher/Subscriber）間でトピック ID 定義やパケット構造、チェックサムアルゴリズムが乖離するミスを完全に防ぎます。
 
-### 1.2 ピン配置リマップ (`Serial.swap(1)`)
+### 1.2 ピン配置リマップ (Master: `Serial.swap(1)` / Slave: `PORTMUX`)
 * ATtiny1616 の USART0 デフォルトピン（PB2:TX, PB3:RX）は、ADX Core-D の LED（PB2:赤, PB3:白）と重複しています。
-* そのため、**`setup()` の冒頭で必ず `Serial.swap(1)` を呼び出し、PA1（TXD）/ PA2（RXD）へリマップ** します。
+* そのため、USART0 を PA1（TXD）/ PA2（RXD）へリマップする必要がありますが、**ノードの役割によってリマップ手法が異なります**：
+  * **Master 機**: Arduino 標準の `Serial` オブジェクトを使用するため、**`Serial.swap(1);`** を使用。
+  * **Slave 機**: `Serial` ライブラリの RX 割り込み競合を避けるため、**`PORTMUX.CTRLB |= PORTMUX_USART0_ALTERNATE_gc;`** レジスタ直接設定を使用（※詳細は注意事項 6 参照）。
+
+> [!TIP]
+> **【将来的な設計改善: 全ノード完全レジスタ直接制御への統一】**
+> 現状のプロトタイプスケッチでは、マスター側のみ手軽さから Arduino 標準の `Serial`（`Serial.swap(1)` / `Serial.begin()` / `Serial.write()`）を利用していますが、**将来的（Phase 6 のハードウェア XDIR 自動方向制御の導入時や、通信スタック／ブートローダの共通ライブラリ化時）には、マスター機も含めて全ノードで `PORTMUX` ＆ `USART0` レジスタ直接制御へ完全統一することが推奨**されます。
+> これにより、`HardwareSerial`（リングバッファ・ISR）がリンクから完全に除外されて Flash/RAM が大幅に削減され、裏側割り込みに起因するジッターや競合リスクを完全に排除した決定論的（Deterministic）な低レイヤドライバへと昇華できます。
 
 ### 1.3 送信バッファのフラッシュ (`Serial.flush()`)
 * RS-485 トランシーバー（SP485EEN）の `DE`（送信イネーブル）を LOW（受信モード）に戻す前には、**必ず `Serial.flush()`（または `TXCIF` 完了待機）を実行** します。
@@ -45,7 +52,7 @@ flowchart TD
 
 ## 2. LN-485 スケッチ作成における重要注意事項 (Critical Rules)
 
-LIN プロトコルおよび ATtiny1616 ハードウェア LIN スレーブエンジン（`LINAUTO`）を扱う際は、通常の UART 通信にはない**厳格なハードウェア制約**が存在します。以下の 8 つの注意事項を必ず遵守してください。
+LIN プロトコルおよび ATtiny1616 ハードウェア LIN スレーブエンジン（`LINAUTO`）を扱う際は、通常の UART 通信にはない**厳格なハードウェア制約**が存在します。以下の 10 の注意事項を必ず遵守してください。
 
 ---
 
@@ -103,9 +110,9 @@ void sendLinBreak(uint32_t baud) {
   PORTA.OUTCLR = PIN1_bm;
   delayMicroseconds(tBit * 14);
   
-  // 4. PA1 を HIGH に駆動 (Break Delimiter: 1 Tbit)
+  // 4. PA1 を HIGH に駆動 (Break Delimiter: 2 Tbit - 安定同期のため推奨)
   PORTA.OUTSET = PIN1_bm;
-  delayMicroseconds(tBit * 1);
+  delayMicroseconds(tBit * 2);
   
   // 5. USART TX を再イネーブル (以降の 0x55, PID 送信に備える)
   USART0.CTRLB |= USART_TXEN_bm;
@@ -257,11 +264,33 @@ void sendLinBreak(uint32_t baud) {
   PORTA.OUTCLR = PIN1_bm;         // Break: LOW (14 Tbit)
   delayMicroseconds(tBit * 14);
   
-  PORTA.OUTSET = PIN1_bm;         // Delimiter: HIGH (1 Tbit)
-  delayMicroseconds(tBit * 1);
+  PORTA.OUTSET = PIN1_bm;         // Delimiter: HIGH (2 Tbit - 安定同期のため推奨)
+  delayMicroseconds(tBit * 2);
   
   USART0.CTRLB |= USART_TXEN_bm; // TX 再有効化
 }
+
+#ifndef ROLE_MASTER
+// --- スレーブ用 レジスタ直接送信 & フラッシュ関数 ---
+void slaveTxByte(uint8_t data) {
+  while (!(USART0.STATUS & USART_DREIF_bm)); // 送信データレジスタ空き待ち
+  USART0.TXDATAL = data;
+}
+
+void slaveTxFlush() {
+  while (!(USART0.STATUS & USART_TXCIF_bm)); // シフトレジスタ送出完了待ち
+  USART0.STATUS = USART_TXCIF_bm;           // TXCIF クリア (= で直接代入)
+}
+
+// --- スレーブ側 受信ステートマシン定義 ---
+enum SlaveRxState {
+  STATE_WAIT_HEADER,
+  STATE_RECEIVE_PAYLOAD,
+  STATE_IGNORE_PAYLOAD
+};
+SlaveRxState slaveState = STATE_WAIT_HEADER;
+uint32_t rxIgnoreStartTime = 0;
+#endif
 
 // ==========================================
 // 初期化ルーチン (setup)
@@ -305,7 +334,21 @@ void loop() {
 #ifdef ROLE_MASTER
   // マスター側処理（スケジューラ / 送信ルーチン）
 #else
-  // スレーブ側処理（LINAUTO 受信ステートマシン / レジスタポーリング）
+  uint32_t now = millis();
+
+  // 1. 他ノード宛てペイロード無視モードのタイムアウト復帰（20ms）
+  if (slaveState == STATE_IGNORE_PAYLOAD && (now - rxIgnoreStartTime > 20)) {
+    USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm;
+    slaveState = STATE_WAIT_HEADER;
+  }
+
+  // 2. ISFIF 同期エラーの常時監視とデッドロック防止復帰
+  if (USART0.STATUS & USART_ISFIF_bm) {
+    USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm;
+    slaveState = STATE_WAIT_HEADER;
+  }
+
+  // 3. 高速ポーリング受信処理
   while (USART0.STATUS & USART_RXCIF_bm) {
     uint8_t rxHigh = USART0.RXDATAH; // ① 先にステータス取得
     uint8_t rxLow  = USART0.RXDATAL; // ② 次にデータ取得
