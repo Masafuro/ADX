@@ -58,12 +58,16 @@ PublicationはPublisherから直接PAL Busへ送信され、Subscriberは共有B
 ## 3. Node
 PAL NetworkにおけるNodeは、単一の通信Endpointではない。
 一つのNodeは、複数のTopicをPublishし、複数のTopicをSubscribeすることができる。
+
+```txt
 Node A
  ├── Publish: Temperature
  ├── Publish: MotorSpeed
  ├── Publish: MotorCurrent
  ├── Subscribe: Position
  └── Subscribe: LimitState
+```
+
 したがって、
 Node = 複数のPublisher / Subscriberを実装する物理デバイス
 として扱う。
