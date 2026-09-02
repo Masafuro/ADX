@@ -5,24 +5,24 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # DROP-Bus 段階的実機開発計画書 (DROP-Bus Phased Development Plan)
 
-本ドキュメントは、**ADX Core-D**（MCU: Microchip ATtiny1616, RS-485: SP485EEN）における自律分散型フィールドネットワーク **DROP-Bus** の実機実装および検証を安全・確実・段階的に進行するための開発ロードマップです。
+本ドキュメントは、**ADX Core-D**（MCU: Microchip ATtiny1616, RS-485: SP485EEN）における自律分散型Pub/Subフィールドネットワーク **DROP-Bus**（Unique ID / Common Subscriber / SYSTEM 0xFF モデル）の実機実装および検証を安全・確実・段階的に進行するための開発ロードマップです。
 
 ---
 
 ## 1. 開発の基本方針と段階的アプローチ (Philosophy & Phased Approach)
 
-DROP-Bus は、「完全水晶レス（単一SKU）」、「厳格な決定論性（ジッター拘束）」、そして「受動的フェイルセーフ（沈黙＝安全）」という3大哲学を持ちます。
+DROP-Bus は、「完全水晶レス（単一SKU）」、「自律分散Pub/Sub（Unique Publisher / Common Subscriber）」、「厳格な決定論性（ジッター拘束）」、「SYSTEMスロット（`0xFF`）による安全点呼・調停」、そして「受動的フェイルセーフ（沈黙＝安全）」というコア哲学を持ちます。
 
 先行の **LN-485（LIN-based RS-485）** 開発において、ATtiny1616 の `LINAUTO` ハードウェア同期、レジスタ直接制御、半二重 DE/RE 切り替え、Double Buffer Mailbox などの低レイヤ技術がすでに実証（PASS）されています。
 
-DROP-Bus の開発では、この実証済み資産を最大限に活用し、**低レイヤのフレーム単体送受信から、自律分散リレー、タイマー連動の安全心中、そして Mediator による物理調停へと段階的に検証範囲を拡張** します。
+DROP-Bus の開発では、この実証済み資産を最大限に活用し、**低レイヤのフレーム単体送受信から、自律分散Pub/Subリレー、タイマー連動の安全心中、SYSTEM `0xFF` によるPing点呼、そして Mediator による物理調停へと段階的に検証範囲を拡張** します。
 
 ```mermaid
 flowchart TD
-    P1["Phase 1: 一体型フレーム送受信 & CRC-16 検証<br/>(Break + 0x55 + LEN + TARGET + SENDER + Data + CRC-16)"]
-    P2["Phase 2: 2ノード自律バトンリレー & 決定論サイクル<br/>(TARGET_ID == MY_ID 契機の自律周回・ジッター計測)"]
+    P1["Phase 1: 一体型フレーム送受信 & CRC-16 検証<br/>(Break + 0x55 + LEN + TARGET_ID + SENDER_ID + Data + CRC-16)"]
+    P2["Phase 2: 自律分散バトンリレー & Pub/Sub 購読<br/>(Unique Publisher / Common Subscriber & Multi-rate スロット)"]
     P3["Phase 3: パッシブ・フェイルセーフ & 自律心中<br/>(TCB0 タイマー満了連動 STO・断線時の即時安全遮断)"]
-    P4["Phase 4: Mediator 介入 & 再送プラグイン<br/>(Break 強制衝突・再点火フレーム・局所リトライ)"]
+    P4["Phase 4: SYSTEM 0xFF 介入 & 再送プラグイン<br/>(起動時 Ping 点呼・Break 強制衝突・再点火・局所リトライ)"]
     P5["Phase 5: ハードウェア XDIR & 高ボーレート評価<br/>(USART0.CTRLA.RS485 自動DE制御・115200 bps)"]
 
     P1 --> P2 --> P3 --> P4 --> P5
@@ -54,17 +54,22 @@ flowchart TD
 
 ---
 
-### Phase 2: 自律バトンリレー ＆ 決定論的サイクルタイム (Autonomous Baton Relay)
+### Phase 2: 自律分散バトンリレー ＆ Pub/Sub 購読 (Autonomous Baton Relay & Pub/Sub)
 
 * **目的:**
-  マスター（司令塔）が存在しない環境において、2台以上のノードが `TARGET_ID == MY_ID` を契機として自律的に発話権（バトン）をパスし続ける「決定論的ラウンドロビン・リレー」を確立する。
+  マスター（司令塔）が存在しない環境において、ノード群が **「Unique Publisher / Common Subscriber」** モデルに基づき自律的にバトンをパスしつつ、共有バスから必要なトピックデータを相互に購読（Subscribe）できることを実証する。
 * **主要検証項目:**
-  1. 受信完了 $\rightarrow$ 自機宛て判定（`TARGET_ID == MY_ID`） $\rightarrow$ ターンアラウンド $\rightarrow$ 次ノード宛てフレーム（`TARGET_ID = NEXT_ID`）送信シーケンス。
-  2. 2ノード（Node 1 $\leftrightarrow$ Node 2）間のピンポン・リレー周回（10,000 周期以上の連続稼働）。
-  3. 1周のサイクルタイム（$T_{\text{cycle}}$）の実測と、理論計算値との誤差・ジッター測定。
-  4. Double Buffer Mailbox との結合（メイン処理がデータを更新してもリレー周期が一切乱れないことの確認）。
+  1. **基本リレー＆Common Subscriber:**
+     - `TARGET_ID == my_slot_id` 契機の即時送信（Unique Publisher）。
+     - 他ノード宛てフレームの傍受と受信メールボックス更新（Common Subscriber）。
+  2. **非対称周波数スケジューリング (Multi-rate Relay):**
+     - 1つの物理ノードが複数スロット（例: `0x01` と `0x03`）を所有し、1サイクル中に複数回発話する不等周期リレー（TDMAスロット配分）の動作確認。
+  3. **連続周回安定性 ＆ ジッター計測:**
+     - 10,000 周期以上の連続周回実証と、サイクルタイム $T_{\text{cycle}}$ のジッター計測。
+  4. **Double Buffer Mailbox 連動:**
+     - アプリ層のセンサ更新と通信層の Zero-Copy 送受信が完全に非干渉であることの確認。
 * **完了基準:**
-  ノード間でバトンが途切れることなく安定して自律周回し、ジッターがマイコン内蔵RC発振器の微小変動範囲内に収束すること。
+  バトンが安定周回し、購読データが破損なく連続受信され、ジッターが理論許容幅内に収まること。
 
 ---
 
@@ -74,27 +79,29 @@ flowchart TD
   DROP-Bus の最重要コア哲学である「沈黙は安全（Silence is Safety）」を実証する。バトンドロップ（断線・ノード脱落・CRC破損）時に、複雑な再送を行わず、ハードウェアタイマーで全ノードが同期して即時安全停止（STO）することを確認する。
 * **主要検証項目:**
   1. 16-bit タイマー `TCB0` を用いた通信途絶監視（タイムアウト設定: $T_{\text{timeout}}$）。
-  2. 正常フレーム（CRC 一致）受信ごとの `TCB0` タイマーリセット処理。
-  3. 自機宛て以外の正常パケット傍受時にもタイマーをリセットする「全傍受生存確認」ロジック。
-  4. 意図的断線・電源遮断時における `TCB0` タイムアウト割り込み発動と、LED / 出力の即時ハードウェア遮断（STO）。
+  2. 正常フレーム（CRC 一致）受信ごとの `TCB0` タイマーリセット処理（全ノード同期）。
+  3. 意図的断線・電源遮断時における `TCB0` タイムアウト割り込み発動と、LED / 出力の即時ハードウェア遮断（STO）。
+  4. CRC 破損パケット受信時におけるタイマー非リセットと安全停止への収束。
 * **完了基準:**
   通信が途絶した瞬間、全残存ノードが $T_{\text{timeout}}$ 以内に例外なく出力を安全遮断し、沈黙を維持すること。
 
 ---
 
-### Phase 4: Mediator 介入 ＆ 再送プラグイン (Mediator & Retry Plugin)
+### Phase 4: SYSTEM 0xFF 介入 ＆ 再送プラグイン (Mediator & Retry Plugin)
 
 * **目的:**
-  論理ロールとしての **Mediator（調停者）** を導入し、バスの強制停止（Break衝突）、リレー再点火（Re-Ignition）、および設定テーブルに基づく局所リトライ（再送プラグイン）を実証する。
+  SYSTEM スロット（`0xFF`）を行使する **Mediator（調停者）** を導入し、起動時 Ping 点呼、バスの強制停止（Break衝突）、リレー再点火（Re-Ignition）、および設定テーブルに基づく局所リトライ（再送プラグイン）を実証する。
 * **主要検証項目:**
-  1. **意図的衝突 (Forced Collision):**
+  1. **起動時 Ping 点呼 (Pre-operational Health Check):**
+     SYSTEM（`0xFF`）が各バトンIDへ Ping を打ち、Pong 応答を確認してから本番リレーへ点火できること。
+  2. **意図的衝突 (Forced Collision):**
      稼働中のリレーに対して Mediator が強制 Break パルスを注入し、全ノードを安全停止（STO）へ誘導できること。
-  2. **再点火フレーム (Re-Ignition):**
-     バスの静寂を検知した Mediator が再点火パケットを送出し、末端ノードのコードを変更することなくリレーを滑らかに再始動できること。
-  3. **再送プラグイン (Retry Plugin):**
-     `DropRetryPolicy_t` の設定テーブルに基づき、特定ノード宛てのエラー時のみ規定時間枠内で再点火を行い、最悪遅延時間（WCET）が拘束されることの実証。
+  3. **再点火フレーム (Re-Ignition):**
+     バスの静寂を検知した Mediator が有効なバトンIDを指定した再点火パケット（Sender: `0xFF`）を送出し、末端ノードのコードを変更することなくリレーを滑らかに再始動できること。
+  4. **再送プラグイン (Retry Plugin):**
+     `DropRetryPolicy_t` の設定テーブルに基づき、特定バトンID宛てのエラー時のみ規定時間枠内で再点火を行い、最悪遅延時間（WCET）が拘束されることの実証。
 * **完了基準:**
-  ホットスワップ・再点火シーケンスが正常に機能し、末端ノードが単一SKUのまま調停・局所復旧が行えること。
+  起動時点呼・ホットスワップ・再点火シーケンスが正常に機能し、末端ノードが単一SKUのまま調停・局所復旧が行えること。
 
 ---
 
@@ -121,11 +128,3 @@ flowchart TD
 | **ホスト環境** | Windows 11 / Linux (Ubuntu) | Arduino IDE / CLI ツールチェーン |
 | **デバッグ中継** | SoftwareSerial (PB4/PB5) $\rightarrow$ USB-UART | RS-485 バスと完全に分離したログモニタ |
 | **観測機材** | ロジックアナライザ / オシロスコープ | 物理波形（Break幅、ターンアラウンド時間、ジッター）の直接計測 |
-
----
-
-## 4. 開発体制と進捗管理方針
-
-* 各フェーズの実装前に **詳細テスト仕様書（[`DROP_TEST_SPECIFICATION.md`](./DROP_TEST_SPECIFICATION.md)）** でテストケース（Action / Criteria）を確定。
-* テストコードは [`Phase/SKETCH_DEVELOPMENT_GUIDELINE.md`](../Phase/SKETCH_DEVELOPMENT_GUIDELINE.md) に準拠し、同一スケッチで全ノードをビルドできる単一SKU構造を維持。
-* 各フェーズの実機検証結果は `Phase/TC-Dx-xx/result.md` に客観的ログとともに記録し、全項目 PASS を確認してから次フェーズへ移行する。
