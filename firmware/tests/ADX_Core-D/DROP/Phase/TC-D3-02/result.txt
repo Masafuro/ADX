@@ -1,0 +1,54 @@
+=== シリアル通信ログ記録 (2026-09-02 21:43:52) ===
+
+============================================================
+ PORT: COM13 (取得行数: 28行)
+============================================================
+[2026-09-02 21:43:30.371] X                             j
+[2026-09-02 21:43:30.437] ADX Core-D DROP-Bus TC-D3-02 Test
+[2026-09-02 21:43:30.440] (Intentional Disconnect & Synchronized STO)
+[2026-09-02 21:43:30.506] ==============================================
+[2026-09-02 21:43:30.574] Node Config: [NODE_ID = 1] SlotID=0x01 -> TargetID=0x02
+[2026-09-02 21:43:30.641] TCB0 Shinju Timer: 250ms Timeout Active.
+[2026-09-02 21:43:30.709] Test Scenario: Node 1 will INTENTIONALLY STOP transmitting at Cycle #200.
+[2026-09-02 21:43:30.776] Pass Criteria: Both nodes trip STO (Red LED ON) within 250ms.
+[2026-09-02 21:43:30.782] [IGNITER] Igniting Relay in 500ms...
+[2026-09-02 21:43:33.592] [RUN] Cycle #50 / 200 running normally...
+[2026-09-02 21:43:35.909] [RUN] Cycle #100 / 200 running normally...
+[2026-09-02 21:43:38.229] [RUN] Cycle #150 / 200 running normally...
+[2026-09-02 21:43:40.563] [RUN] Cycle #200 / 200 running normally...
+[2026-09-02 21:43:40.629] ==============================================
+[2026-09-02 21:43:40.698] ★ [TRIGGER] DISCONNECT INDUCED AT CYCLE #200! ★
+[2026-09-02 21:43:40.764] Node 1 is ceasing transmission to drop baton.
+[2026-09-02 21:43:40.766] Waiting for 250ms silence timeout STO trip...
+[2026-09-02 21:43:40.832] ==============================================
+[2026-09-02 21:43:40.900] ==============================================
+[2026-09-02 21:43:40.967] ★ [STO TRIP] SYNCHRONIZED SHINJU EXECUTED! ★
+[2026-09-02 21:43:40.968] Node ID      : 1
+[2026-09-02 21:43:40.970] Stopped After: Cycle #200
+[2026-09-02 21:43:41.036] Reason       : Bus Silence Timeout (250ms)
+[2026-09-02 21:43:41.103] Elapsed Time : 222 ms after last bus activity
+[2026-09-02 21:43:41.171] Motor Output : FORCED OFF (Safe Torque Off)
+[2026-09-02 21:43:41.173] Red LED (PB2): ON (Latched)
+[2026-09-02 21:43:41.239] Status       : SYNCHRONIZED SHINJU [PASS]
+[2026-09-02 21:43:41.242] ==============================================
+
+
+============================================================
+ PORT: COM15 (取得行数: 14行)
+============================================================
+[2026-09-02 21:43:33.524] [RUN] Cycle #50 / 200 running normally...
+[2026-09-02 21:43:35.839] [RUN] Cycle #100 / 200 running normally...
+[2026-09-02 21:43:38.164] [RUN] Cycle #150 / 200 running normally...
+[2026-09-02 21:43:40.474] [RUN] Cycle #200 / 200 running normally...
+[2026-09-02 21:43:40.741] ==============================================
+[2026-09-02 21:43:40.808] ★ [STO TRIP] SYNCHRONIZED SHINJU EXECUTED! ★
+[2026-09-02 21:43:40.809] Node ID      : 2
+[2026-09-02 21:43:40.875] Stopped After: Cycle #200
+[2026-09-02 21:43:40.941] Reason       : Bus Silence Timeout (250ms)
+[2026-09-02 21:43:40.943] Elapsed Time : 182 ms after last bus activity
+[2026-09-02 21:43:41.009] Motor Output : FORCED OFF (Safe Torque Off)
+[2026-09-02 21:43:41.011] Red LED (PB2): ON (Latched)
+[2026-09-02 21:43:41.077] Status       : SYNCHRONIZED SHINJU [PASS]
+[2026-09-02 21:43:41.107] ==============================================
+
+
