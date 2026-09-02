@@ -17,6 +17,7 @@ SPDX-License-Identifier: CC-BY-4.0
 | 📄 **[`DROP_TEST_SPECIFICATION.md`](./DROP_TEST_SPECIFICATION.md)** | **詳細テストケース仕様書兼実施記録**<br>全15テストケース（`TC-D1-01` 〜 `TC-D5-02`）の詳細手順（Action）、合否判定基準（Pass Criteria）、および実機検証進捗管理表。 |
 | 📄 **[`PHASE1_DEVELOPMENT_PLAN.md`](./PHASE1_DEVELOPMENT_PLAN.md)** | **Phase 1 開発詳細計画書**<br>一体型フレーム送受信、LINAUTO自動同期、CRC-16検証、およびバッファオーバーラン防御の実機開発・検証詳細計画。 |
 | 📄 **[`PHASE2_DEVELOPMENT_PLAN.md`](./PHASE2_DEVELOPMENT_PLAN.md)** | **Phase 2 開発詳細計画書**<br>自律分散バトンリレー、Pub/Sub相互購読、ジッター計測、Double Buffer連動、Multi-rateスロットの実装詳細計画。 |
+| 📄 **[`PHASE3_DEVELOPMENT_PLAN.md`](./PHASE3_DEVELOPMENT_PLAN.md)** | **Phase 3 開発詳細計画書**<br>パッシブ心中フェイルセーフ、TCB0タイマー連動STO、意図的断線、CRC破損時安全停止の実装詳細計画。 |
 
 ---
 
