@@ -15,6 +15,8 @@ SPDX-License-Identifier: CC-BY-4.0
   ATtiny1616 / RS-485 制御における **10大鉄則**、CRC-16 高速計算ルーチン、`TCB0` タイマー連動 STO ロジック、および単一SKU対応のスケッチ基本テンプレート。
 * 📄 **[`PHASE1_COMPLETION_REVIEW_REPORT.md`](./PHASE1_COMPLETION_REVIEW_REPORT.md)**
   **Phase 1 完了レビューレポート**（一体型フレーム送受信・LINAUTO同期・CRC-16検証・バッファ防御 実機検証総括）。全4テストケース ALL PASS 達成記録。
+* 📄 **[`PHASE2_COMPLETION_REVIEW_REPORT.md`](./PHASE2_COMPLETION_REVIEW_REPORT.md)**
+  **Phase 2 完了レビューレポート**（自律分散バトンリレー・Pub/Sub相互購読・ジッター計測・Double Buffer・Multi-rate スロット 実機検証総括）。全4テストケース ALL PASS 達成記録。
 
 ---
 
@@ -27,9 +29,9 @@ SPDX-License-Identifier: CC-BY-4.0
 | 📁 **[`TC-D1-03/`](./TC-D1-03/)** | **Phase 1 (Step 3):** CRC 誤り検出 ＆ 破棄 | `TC-D1-03`: 意図的 CRC 反転破損パケットの検知・破棄、赤LED警告、自律復帰 | **PASS** |
 | 📁 **[`TC-D1-04/`](./TC-D1-04/)** | **Phase 1 (Step 4):** オーバーラン防御 | `TC-D1-04`: `LEN > 64` 不正フレーム受信時の即時アボート・SRAM 保護 | **PASS** |
 | 📁 **[`TC-D2-01/`](./TC-D2-01/)** | **Phase 2 (Step 1):** 2ノード自律ピンポンリレー | `TC-D2-01`: 2ノード基本バトンパス ＆ 相互トピック購読（Common Subscriber）実証 | **PASS** |
-| `TC-D2-02/` | **Phase 2 (Step 2):** 10,000周期周回 ＆ ジッター | `TC-D2-02`: 連続周回安定性 ＆ サイクルタイム $T_{\text{cycle}}$ ジッター計測 | 準備中 |
-| `TC-D2-03/` | **Phase 2 (Step 3):** Double Buffer 連動 | `TC-D2-03`: アプリ層非同期更新 ＆ Zero-Copy 送信の非干渉実証 | 準備中 |
-| `TC-D2-04/` | **Phase 2 (Step 4):** Multi-rate スロット | `TC-D2-04`: 1ノード複数スロット所有による不等周期リレー実証 | 準備中 |
+| 📁 **[`TC-D2-02/`](./TC-D2-02/)** | **Phase 2 (Step 2):** 10,000周期周回 ＆ ジッター | `TC-D2-02`: 連続周回安定性 ＆ サイクルタイム $T_{\text{cycle}}$ ジッター計測 | **PASS** |
+| 📁 **[`TC-D2-03/`](./TC-D2-03/)** | **Phase 2 (Step 3):** Double Buffer 連動 | `TC-D2-03`: アプリ層非同期更新 ＆ Zero-Copy 送信の非干渉実証 | **PASS** |
+| 📁 **[`TC-D2-04/`](./TC-D2-04/)** | **Phase 2 (Step 4):** Multi-rate スロット | `TC-D2-04`: 1ノード複数スロット所有による不等周期リレー実証 | **PASS** |
 | `TC-D3/` | **Phase 3:** パッシブ・フェイルセーフ | `TC-D3-01` 〜 `03`: `TCB0` タイマー生存監視、意図的断線時の安全心中 (STO) | 準備中 |
 | `TC-D4/` | **Phase 4:** SYSTEM `0xFF` ＆ プラグイン | `TC-D4-01` 〜 `04`: Break 衝突停止、再点火、Ping点呼、局所リトライ実証 | 準備中 |
 | `TC-D5/` | **Phase 5:** XDIR ＆ 高ボーレート | `TC-D5-01` 〜 `02`: ハードウェア自動 DE 制御、115.2 kbps 評価 | 準備中 |

@@ -25,8 +25,9 @@ SPDX-License-Identifier: CC-BY-4.0
     - 必ず先に RXDATAH (ステータス/エラー) を読み、次に RXDATAL (データ) を読む (逆順は FIFO 破壊)
  4. 受信ポーリングループ内の低速 I/O 完全排除 (バッファリング ＆ 一括ダンプ)
     - 高速 UART 受信ループ内で SoftwareSerial 出力を行わず、rxBuf[] 格納後に無音検知で一括出力
- 5. ボーレート設定の整数丸め誤差回避
+ 5. ボーレート設定の整数丸め誤差回避 ＆ 送信直前の名目ボーレート強制リセット
     - USART0.BAUD = (uint16_t)((64UL * F_CPU) / (16UL * BAUDRATE)); (除算より先に乗算)
+    - LINAUTO 受信で動的に微調整された BAUD レジスタを、フレーム送信直前に必ず名目（公称）値へリセットし、正帰還累積ドリフトを完全防止
  6. STATUS レジスタ操作における |= の絶対禁止 & ISFIF 常時監視
     - USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm; (直接代入で一括クリア)
     - ISFIF (同期エラー) は while (STATUS & RXCIF) の【外側】で常時監視・復帰
