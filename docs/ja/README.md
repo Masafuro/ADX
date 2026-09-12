@@ -7,13 +7,47 @@ SPDX-License-Identifier: CC-BY-4.0
 
 [ English (../en/README.md) | **日本語** ]
 
-ADX（Advanced Devices eXtended）は、オープンソースハードウェアの扱いやすさと、産業用途に適した信頼性・耐ノイズ性・保守性を両立することを目指した小型制御プラットフォーム・ハードウェア規格です。
+**ADX（Advanced Devices eXtended）**は、筐体適合性と現場据付性を重視したオープンソースのハードウェア規格およびモジュラー制御プラットフォームです。
+
+一般的なプロトタイピング基板は卓上での取り扱いに優れている一方、実際の筐体へ組み込む際には、ネジ締結クリアランスの不足、多方向への配線突出、ピンヘッダ直接スタックによる公差集積といった構造的課題が生じやすい側面があります。ADXは、**8748 Form Factor** と **IDCリボンケーブルによるフレキシブルな拡張バス**を通じてこれらの課題を解決し、Arduino等の親しみやすい開発体験を維持しながら、家庭用3Dプリンタ製ケース、防水ボックス、電工ボックス、スロットインラック等へのスムーズな実装を実現します。
 
 ---
 
-## 1. コア仕様 (Specifications)
+## 1. 主な設計特徴 (Key Design Features)
 
-### 1.1 8748 Form Factor（基板外形規格）
+* **ワッシャー対応の確実なM3ネジ締結**:
+  取付穴（$\Phi 3.3\text{ mm}$）の周囲に $5.0\text{ mm}$ のマージンを確保。標準的なワッシャーを併用でき、基板パターンを痛めることなく適切なトルクで確実に固定可能。
+* **一貫したI/F辺の定義**:
+  外部配線や端子台の引き出し方向を特定の一辺に集約し、筐体側の開口加工や防水・防塵設計を簡素化。
+* **IDCリボンケーブルによる「柔結合」**:
+  拡張基板との接続に20ピンIDCリボンケーブル（ADX Pinout）を採用。剛結合スタックと異なり、寸法公差を吸収しつつ、筐体内での配置自由度（スタック、横並び、L字等）を確保し、デイジーチェーン接続に対応。
+* **多様な筐体への適合性**:
+  市販の防水ボックス（タカチ等）や電工ボックスへの取付、家庭用3Dプリンタでのケース作製、専用ラックへのスロットイン構造に柔軟に対応。
+
+---
+
+## 2. ハードウェアラインナップ (Hardware Lineup)
+
+ADXエコシステムは、共通の8748フォームファクタと20ピン拡張バスを共有する **Coreボード（メインMCU基板）** と **CARD（機能拡張基板）** で構成されます。
+
+### 2.1 Core シリーズ (MCU基板)
+
+| ボード名 | 概要 | 状態・リソース |
+| :--- | :--- | :--- |
+| **ADX CORE-U** | Arduino Unoに近い扱いやすさを持ち、そのまま筐体に組み込める汎用・標準プロトタイピングボード。 | 開発中 |
+| **ADX Core-D** | LN-485（LIN-based RS-485）トランシーバを搭載し、高耐ノイズ・長距離通信環境に適した産業通信ボード。 | [仕様書](../../hardware/ADX_Core-D/proposal.md) / [設計データ](../../hardware/ADX_Core-D/data/) |
+
+### 2.2 CARD シリーズ (拡張基板)
+
+| ボード名 | 概要 | 状態・リソース |
+| :--- | :--- | :--- |
+| **ADX Prototyping CARD** | 8748フォームファクタ準拠、下列20ピンADXバス引き出しおよび上列20ピンユニバーサル試作エリアを備えた拡張基板。 | [仕様書](../../hardware/CARD/Prototyping/proposal.md) / [設計データ](../../hardware/CARD/Prototyping/data/) |
+
+---
+
+## 3. コア仕様 (Specifications)
+
+### 3.1 8748 Form Factor（基板外形規格）
 基板設計（mil単位）と筐体・メカ設計（mm単位）の寸法整合性を高め、製造公差に配慮した小型フォームファクタ規格です。
 詳細は [8748_formfactor.md](8748_formfactor.md) を参照してください。
 
@@ -22,8 +56,8 @@ ADX（Advanced Devices eXtended）は、オープンソースハードウェア�
 * **穴マージン / 取付穴径**: 四隅から `5.0 mm` (`197 mil`) / `Φ3.3 mm` (M3ネジ対応 / `130 mil`)
 * **角部加工**: C3 面取り (`120 mil`)
 
-### 1.2 ADX Pinout（共通 20P 拡張インターフェース）
-マスター／スレーブ共通の20ピン拡張コネクタ規格です。クロック信号へのGNDシールド配置や、制御ピンを配置することによる信号間クロストークの低減を考慮したピン配置を採用しています。
+### 3.2 ADX Pinout（共通 20P 拡張インターフェース）
+マスター／スレーブ共通の20ピン拡張コネクタ規格です。クロック信号へのGNDシールド配置や、制御ピン配置による信号間クロストーク低減を考慮したピン配置を採用しています。
 詳細は [ADX_pinout.md](ADX_pinout.md) を参照してください。
 
 **コネクタ仕様**: 2×10ピン 2.54mmピッチ ピンヘッダ (CN2)
@@ -57,32 +91,7 @@ ADX（Advanced Devices eXtended）は、オープンソースハードウェア�
 
 ---
 
-## 2. 開発ボード (Hardware Lineup)
-
-### 2.1 ADX Core-D (LN-485 & ブートローダ開発基板)
-LIN-based RS-485（LN-485）通信およびブートローダ開発を目的とした開発ボードです。
-
-* **MCU**: Microchip ATtiny1616-MNR (QFN-20, 5V, 20MHz)
-* **通信 (LN-485)**: SP485EEN-L/TR 搭載、5.08mm 3P端子台 (KF142R-5.08-3P)、TVSダイオード保護 (PSM712)、終端抵抗切替ジャンパ
-* **USB / デバッグ**: USB Type-C、WCH CH342K（SerialUPDI 書き込み & UART シリアルモニタ対応）
-* **クロック**: 12MHz 水晶発振器搭載（EXTCLK 供給ジャンパ切替対応）
-* **保護回路**: 1A PTC リセッタブルヒューズ、フェライトビーズ、ESD保護ダイオード
-* **詳細仕様**: [../../hardware/ADX_Core-D/proposal.md](../../hardware/ADX_Core-D/proposal.md)
-* **設計・製造データ**: [../../hardware/ADX_Core-D/data/](../../hardware/ADX_Core-D/data/)
-
-### 2.2 ADX Prototyping CARD (拡張プロトタイピングカード)
-ADX規格コネクタに接続し、周辺回路やセンサの試作・検証を行うための拡張基板です。
-
-* **インターフェース**:
-  - 下列 20ピン: ADX規格 GPIO / バス信号引き出し
-  - 上列 20ピン: ユニバーサルエリア配線用カスタムピン
-* **外形**: 8748 Form Factor 準拠
-* **詳細仕様**: [../../hardware/CARD/Prototyping/proposal.md](../../hardware/CARD/Prototyping/proposal.md)
-* **設計・製造データ**: [../../hardware/CARD/Prototyping/data/](../../hardware/CARD/Prototyping/data/)
-
----
-
-## 3. ディレクトリ構成 (Repository Structure)
+## 4. ディレクトリ構成 (Repository Structure)
 
 ```text
 ADX/
@@ -91,26 +100,22 @@ ADX/
 ├── LICENSES/               # REUSE準拠ライセンス正式条文 (CC-BY-4.0, CERN-OHL-P-2.0, MIT)
 ├── docs/                   # 仕様・ドキュメント（多言語、CC BY 4.0）
 │   ├── en/                 # 英語版ドキュメント
-│   │   ├── README.md
-│   │   ├── 8748_formfactor.md
-│   │   └── ADX_pinout.md
 │   └── ja/                 # 日本語版ドキュメント
-│       ├── README.md
-│       ├── 8748_formfactor.md
-│       └── ADX_pinout.md
 ├── hardware/               # ハードウェア設計データ (CERN-OHL-P-v2)
 │   ├── ADX_Core-D/         # LN-485 ブートローダ開発基板
 │   └── CARD/Prototyping/   # プロトタイピング拡張カード
 ├── firmware/               # ファームウェア・ドライバ・サンプル (MIT)
 ├── logo/                   # ブランドロゴ・アセット
-├── memo/                   # 開発メモ・作業レポート
-│   └── REPORT/             # 提案・計画書
+├── memo/                   # 開発メモ・計画書
+│   ├── what_is_adx.md      # コア思想・背景
+│   ├── PLAN/               # 計画書
+│   └── REPORT/             # 技術レポート・提案書
 └── Project_Snapshot.md     # プロジェクト進捗・概要
 ```
 
 ---
 
-## 4. 関連リンク (Links & Resources)
+## 5. 関連リンク (Links & Resources)
 
 * **Project Snapshot**: [../../Project_Snapshot.md](../../Project_Snapshot.md)
 * **ADX Platform**: [https://adxplatform.com/](https://adxplatform.com/)
@@ -118,7 +123,7 @@ ADX/
 
 ---
 
-## 5. ライセンス (License)
+## 6. ライセンス (License)
 
 ADXプロジェクトは、用途に応じた3層マルチライセンス構成を採用しています：
 

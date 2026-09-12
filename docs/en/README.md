@@ -7,13 +7,47 @@ SPDX-License-Identifier: CC-BY-4.0
 
 [ **English** | [日本語 (../ja/README.md)](../ja/README.md) ]
 
-ADX (Advanced Devices eXtended) is an open-source hardware standard and modular control platform designed to bridge the gap between maker-friendly embedded prototyping and industrial-grade reliability, noise immunity, and electromechanical precision.
+**ADX (Advanced Devices eXtended)** is an open-source hardware standard and modular control platform focused on electromechanical enclosure fit and field installation.
+
+While conventional prototyping boards offer great accessibility on the benchtop, mounting them into real-world enclosures often presents mechanical challenges—such as tight screw clearances, multi-directional cabling, and rigid stacking constraints. ADX addresses these integration challenges through the **8748 Form Factor** and a flexible IDC-based expansion bus, providing reliable M3 screw mounting, a unified wiring interface edge, and tolerance-friendly packaging compatible with 3D-printed enclosures, electrical boxes, and waterproof casings, all while maintaining familiar open-source embedded workflows.
 
 ---
 
-## 1. Specifications
+## 1. Key Design Features
 
-### 1.1 8748 Form Factor (Board Dimensions)
+* **Secure M3 Fastening with Washer Clearance**:
+  Mounting holes ($\Phi 3.3\text{ mm}$) are positioned with $5.0\text{ mm}$ edge margins, ensuring ample clearance for standard washers and reliable torque application without damaging PCB traces.
+* **Unified Interface Edge**:
+  Terminal blocks and external connections are aligned along designated board edges, simplifying enclosure cutouts and sealing.
+* **Flexible Coupling via IDC Ribbon Cable**:
+  Expansion boards connect via a 20-pin IDC ribbon cable (ADX Pinout) rather than rigid pin headers. This absorbs mechanical tolerances, allows flexible internal placement (stacked, planar, or angled), and supports daisy-chaining.
+* **Enclosure Compatibility**:
+  Designed to mount cleanly into off-the-shelf waterproof casings, industrial electrical utility boxes, desktop 3D-printed enclosures, and dedicated slot-in guide rails.
+
+---
+
+## 2. Hardware Lineup
+
+The ADX ecosystem consists of **Core Boards** (main processing units) and **CARDs** (stackable/chainable add-on modules), sharing the same 8748 Form Factor and 20-pin expansion bus.
+
+### 2.1 Core Boards (MCU)
+
+| Board | Description | Status & Resources |
+| :--- | :--- | :--- |
+| **ADX CORE-U** | General-purpose standard board providing familiar Arduino-compatible accessibility with native enclosure integration. | Under Development |
+| **ADX Core-D** | Differential communication board equipped with LN-485 (LIN-based RS-485) transceiver for high-noise and long-distance field buses. | [Proposal](../../hardware/ADX_Core-D/proposal.md) / [Data](../../hardware/ADX_Core-D/data/) |
+
+### 2.2 CARDs (Expansion Modules)
+
+| Board | Description | Status & Resources |
+| :--- | :--- | :--- |
+| **ADX Prototyping CARD** | 8748 Form Factor expansion add-on card with lower 20-pin ADX bus breakout and upper 20-pin prototyping grid. | [Proposal](../../hardware/CARD/Prototyping/proposal.md) / [Data](../../hardware/CARD/Prototyping/data/) |
+
+---
+
+## 3. Specifications
+
+### 3.1 8748 Form Factor (Board Dimensions)
 An electromechanical co-design standard optimizing dimensional alignment between mil-based PCB layout and metric enclosure fabrication, minimizing rounding errors (<15 µm).
 See [8748_formfactor.md](8748_formfactor.md) for full details.
 
@@ -22,7 +56,7 @@ See [8748_formfactor.md](8748_formfactor.md) for full details.
 * **Hole Margin / Diameter:** `5.0 mm` (`197 mil`) from edges / `Φ3.3 mm` (M3 screw / `130 mil`)
 * **Corner Treatment:** C3 Chamfer (`120 mil`)
 
-### 1.2 ADX Pinout (Unified 20-Pin Interface)
+### 3.2 ADX Pinout (Unified 20-Pin Interface)
 A unified 20-pin expansion connector for master and slave modules, featuring dedicated GND shielding for clock/communication lines and static control lines as noise isolation buffers.
 See [ADX_pinout.md](ADX_pinout.md) for full details.
 
@@ -57,60 +91,31 @@ See [ADX_pinout.md](ADX_pinout.md) for full details.
 
 ---
 
-## 2. Hardware Lineup
-
-### 2.1 ADX Core-D (LN-485 & Bootloader Development Board)
-A core board engineered for developing LIN-based RS-485 (LN-485) communication and custom bootloader solutions.
-
-* **MCU:** Microchip ATtiny1616-MNR (QFN-20, 5V, 20MHz)
-* **LN-485 Communication:** SP485EEN-L/TR transceiver, 5.08 mm 3P pluggable terminal block, TVS diode surge protection (PSM712), selectable termination & DE/RE jumpers
-* **USB / Programming:** USB Type-C + WCH CH342K (integrated SerialUPDI flashing & UART debug console)
-* **Clock Source:** Onboard 12 MHz active crystal oscillator (jumper-selectable to EXTCLK)
-* **Protection Circuits:** 1A PTC resettable fuse, ferrite beads, ESD protection diodes
-* **Board Proposal:** [../../hardware/ADX_Core-D/proposal.md](../../hardware/ADX_Core-D/proposal.md)
-* **Manufacturing Data:** [../../hardware/ADX_Core-D/data/](../../hardware/ADX_Core-D/data/)
-
-### 2.2 ADX Prototyping CARD (Stackable Expansion Card)
-A prototyping add-on card connecting directly to the ADX 20-pin header for custom circuit integration.
-
-* **Interface:**
-  - Lower Row (20-pin): Direct breakout of ADX GPIO and system bus
-  - Upper Row (20-pin): Custom prototyping area breakout
-* **Form Factor:** 8748 Form Factor compliant
-* **Card Proposal:** [../../hardware/CARD/Prototyping/proposal.md](../../hardware/CARD/Prototyping/proposal.md)
-* **Manufacturing Data:** [../../hardware/CARD/Prototyping/data/](../../hardware/CARD/Prototyping/data/)
-
----
-
-## 3. Repository Structure
+## 4. Repository Structure
 
 ```text
 ADX/
-├── README.md               # Global portal (Summary & Language Switcher)
+├── README.md               # Global portal & overview (Root)
 ├── LICENSE.md              # Multi-licensing policy & trademark notices
 ├── LICENSES/               # REUSE-compliant license texts (CC-BY-4.0, CERN-OHL-P-2.0, MIT)
 ├── docs/                   # Multilingual documentation (CC BY 4.0)
-│   ├── en/                 # English documentation
-│   │   ├── README.md
-│   │   ├── 8748_formfactor.md
-│   │   └── ADX_pinout.md
+│   ├── en/                 # English documentation (this directory)
 │   └── ja/                 # Japanese documentation
-│       ├── README.md
-│       ├── 8748_formfactor.md
-│       └── ADX_pinout.md
 ├── hardware/               # Hardware design & manufacturing files (CERN-OHL-P-v2)
 │   ├── ADX_Core-D/         # LN-485 bootloader development board
 │   └── CARD/Prototyping/   # Prototyping expansion card
 ├── firmware/               # Drivers, BSP, and sample sketches (MIT)
 ├── logo/                   # Brand assets & logos
-├── memo/                   # Internal development notes & reports
-│   └── REPORT/             # Proposals and planning documents
+├── memo/                   # Development notes & planning
+│   ├── what_is_adx.md      # Core vision & motivation
+│   ├── PLAN/               # Roadmap & revision plans
+│   └── REPORT/             # Technical proposals & evaluation reports
 └── Project_Snapshot.md     # Project roadmap & progress tracker
 ```
 
 ---
 
-## 4. Links & Resources
+## 5. Links & Resources
 
 * **Project Snapshot:** [../../Project_Snapshot.md](../../Project_Snapshot.md)
 * **ADX Platform Official:** [https://adxplatform.com/](https://adxplatform.com/)
@@ -118,12 +123,12 @@ ADX/
 
 ---
 
-## 5. License
+## 6. License
 
 ADX Project is released under a tri-license model:
 
 * **Documentation & Specifications** (`docs/`, `memo/`): [CC BY 4.0](../../LICENSES/CC-BY-4.0.txt) (`CC-BY-4.0`)
-* **Hardware Design & Production Files** (`hardware/`): [CERN-OHL-P-v2](../../LICENSES/CERN-OHL-P-2.0.txt) (`CERN-OHL-P-2.0`)
+* **Hardware Design & Production Files** (`hardware/`): [CERN-OHL-P-v2](../../LICENSES/CERN-OHL-P-2.0.txt) (`CERN-OHL-P-v2`)
 * **Firmware, Drivers & Software** (`firmware/`): [MIT License](../../LICENSES/MIT.txt) (`MIT`)
 
 See [../../LICENSE.md](../../LICENSE.md) for full licensing policy and trademark terms.
