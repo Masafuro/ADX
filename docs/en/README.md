@@ -56,38 +56,37 @@ See [8748_formfactor.md](8748_formfactor.md) for full details.
 * **Hole Margin / Diameter:** `5.0 mm` (`197 mil`) from edges / `Φ3.3 mm` (M3 screw / `130 mil`)
 * **Corner Treatment:** C3 Chamfer (`120 mil`)
 
-### 3.2 ADX Pinout (Unified 20-Pin Interface)
-A unified 20-pin expansion connector for master and slave modules, featuring dedicated GND shielding for clock/communication lines and static control lines as noise isolation buffers.
+### 3.2 ADX Pinout (Unified 20-Pin Interface / v2)
+A unified 20-pin IDC expansion interface (IDC Pins 1–20) standard across master, slave, and daughterboard modules.
+Key enhancements in v2 include 5V/2A power delivery, short-prevention isolation, co-planar GND shielding for EXTCLK, and full GND isolation for analog domains.
 See [ADX_pinout.md](ADX_pinout.md) for full details.
 
-**Connector Specification:** 2×10-pin, 2.54 mm pitch shrouded header (CN2)
+**Connector Specification:** 2×10-pin, 2.54 mm pitch IDC ribbon connector (IDC Pins 1–20)
 
-| Pin | Net Name | GPIO | Analog / Special | Comm / Control | Notes |
-|:---:|:---|:---:|:---|:---|:---|
-| **1** | *N.C.* | - | - | - | Unconnected |
-| **2** | `VDD` | - | - | - | 5V Power Supply |
-| **3** | `VDD` | - | - | - | 5V Power Supply |
-| **4** | *N.C.* | - | - | - | Unconnected |
-| **5** | `PA3/EXTCLK` | PA3 | AIN3 / PTC | **EXTCLK (External Clock)** | Note 1 |
-| **6** | `GND_5V` | - | - | - | GND (EXTCLK Shield) |
-| **7** | `PA6/DAC0` | PA6 | AIN6 / PTC / **DAC0 Out** | - | TCD0 WOC / AC Input |
-| **8** | `PA5/AIN5` | PA5 | AIN5 / PTC / **VREFA** | - | TCA0 WO5 / AC0 Out |
-| **9** | `PA7/RE` | PA7 | - | UART `\RE` Control | Analog line isolation buffer (Note 2) |
-| **10** | `PA4/DE` | PA4 | - | UART `XDIR (DE)` | I2C line isolation buffer (Note 3) |
-| **11** | `PB0/SCL` | PB0 | - | **I2C SCL** | - |
-| **12** | `PB1/SDA` | PB1 | - | **I2C SDA** | - |
-| **13** | `GND_5V` | - | - | - | GND (RxD Shield) |
-| **14** | `PA2/R` | PA2 | - | **UART RxD** (Receive) | - |
-| **15** | `PA1/D` | PA1 | - | **UART TxD** (Transmit) | - |
-| **16** | `PC3/SS` | PC3 | - | **SPI SS** | - |
-| **17** | `PC2/MOSI` | PC2 | - | **SPI MOSI** | - |
-| **18** | `PC1/MISO` | PC1 | - | **SPI MISO** | - |
-| **19** | `PC0/SCK` | PC0 | - | **SPI SCK** | - |
-| **20** | `GND_5V` | - | - | - | GND (SCK Shield) |
+| IDC Pin | Net Name | MCU Pin | Primary Function / Role | Ribbon Cable Structure & Shielding |
+| :--- | :--- | :--- | :--- | :--- |
+| **1** | **VDD** | - | **Power Supply (5V/2A Delivery)** | #1 (Power Zone) |
+| **2** | **VDD** | - | **Power Supply (5V/2A Delivery)** | #2 (Power Zone) |
+| **3** | **VDD** | - | **Enhanced Power (5V/2A Delivery)** | #3 (Power Zone) |
+| **4** | *N.C.* | - | **Isolation (Power/GND Short-Prevention Buffer)** | #4 (Buffer Zone) |
+| **5** | **GND_5V** | - | **GND (EXTCLK Guard ①)** | #5 (GND Shield) |
+| **6** | **PA3/EXTCLK** | PA3 | **EXTCLK** / AIN3 | #6 (EXTCLK Signal) |
+| **7** | **GND_5V** | - | **GND (EXTCLK Guard ②)** | #7 (GND Shield) |
+| **8** | PA6/DAC0 | PA6 | **DAC0** Output / AIN6 | #8 (Analog Zone) |
+| **9** | PA5/AIN5 | PA5 | **VREFA** / AIN5 | #9 (Analog Zone) |
+| **10** | **GND_5V** | - | **GND (Analog/Digital Isolation Guard - New)** | #10 (GND Shield) |
+| **11** | **PB2/TXD_EXT** | PB2 | **UART TxD (Alternate)** | #11 (UART Pair) |
+| **12** | **PB3/RXD_EXT** | PB3 | **UART RxD (Alternate)** | #12 (UART Pair) |
+| **13** | PB0/SCL | PB0 | **I2C SCL** | #13 (I2C Pair) |
+| **14** | PB1/SDA | PB1 | **I2C SDA** | #14 (I2C Pair) |
+| **15** | GND_5V | - | **GND (Inter-bus Shield)** | #15 |
+| **16** | PC3/SS | PC3 | **SPI SS** | #16 (SPI Group) |
+| **17** | PC2/MOSI | PC2 | **SPI MOSI** | #17 (SPI Group) |
+| **18** | PC1/MISO | PC1 | **SPI MISO** | #18 (SPI Group) |
+| **19** | PC0/SCK | PC0 | **SPI SCK** | #19 (SPI Group) |
+| **20** | GND_5V | - | **GND (Termination Shield)** | #20 |
 
-*Note 1: Used as external clock input on master modules; usable as AIN3 analog input on slave modules.*  
-*Note 2: Static logic level during active bus states buffers adjacent AIN5 analog input against crosstalk.*  
-*Note 3: Driver enable line buffers adjacent I2C SCL clock line against switching transients.*
+> * Note: For full MCU peripheral multiplexing (PWM, ADC) and PORTMUX register specifications, refer to [adx_attiny1616_mcu_matrix.md](adx_attiny1616_mcu_matrix.md).
 
 ---
 

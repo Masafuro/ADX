@@ -55,11 +55,12 @@ An electromechanical co-design standard ensuring dimensional alignment between P
 * **Corner Treatment:** C3 chamfer (`120 mil`), 5.0 mm margin from edges
 * **Full Specification:** [English (docs/en/8748_formfactor.md)](docs/en/8748_formfactor.md) | [日本語 (docs/ja/8748_formfactor.md)](docs/ja/8748_formfactor.md)
 
-### 3.2 ADX Pinout
-A 20-pin unified expansion interface (2×10-pin, 2.54 mm pitch IDC) featuring dedicated GND shielding and static control lines for noise isolation across SPI, I2C, UART, and analog signals.
+### 3.2 ADX Pinout (v2)
+A unified 20-pin expansion interface (2×10-pin, 2.54 mm pitch IDC, IDC Pins 1–20) optimized for ribbon cable coupling. Key v2 enhancements include 5V/2A power delivery (3× VDD pins), short-prevention isolation, co-planar GND shielding for EXTCLK and analog domains, and conflict-free UART switching via PORTMUX.
 
-* **Connector:** 2×10-pin 2.54 mm pitch header (CN2)
+* **Connector:** 2×10-pin 2.54 mm pitch IDC ribbon connector (IDC Pins 1–20)
 * **Full Specification:** [English (docs/en/ADX_pinout.md)](docs/en/ADX_pinout.md) | [日本語 (docs/ja/ADX_pinout.md)](docs/ja/ADX_pinout.md)
+* **MCU Peripheral & PORTMUX Matrix:** [English (docs/en/adx_attiny1616_mcu_matrix.md)](docs/en/adx_attiny1616_mcu_matrix.md) | [日本語 (docs/ja/adx_attiny1616_mcu_matrix.md)](docs/ja/adx_attiny1616_mcu_matrix.md)
 
 ---
 
@@ -67,10 +68,12 @@ A 20-pin unified expansion interface (2×10-pin, 2.54 mm pitch IDC) featuring de
 
 * **English Documentation:** [docs/en/README.md](docs/en/README.md)
   * [8748 Form Factor Specification](docs/en/8748_formfactor.md)
-  * [ADX Pinout Specification](docs/en/ADX_pinout.md)
+  * [ADX Pinout Specification (v2)](docs/en/ADX_pinout.md)
+  * [ATtiny1616 Peripheral & PORTMUX Reference](docs/en/adx_attiny1616_mcu_matrix.md)
 * **日本語ドキュメント (Japanese):** [docs/ja/README.md](docs/ja/README.md)
   * [8748 フォームファクタ仕様書](docs/ja/8748_formfactor.md)
-  * [ADX ピンアサイン仕様書](docs/ja/ADX_pinout.md)
+  * [ADX ピンアサイン仕様書 (v2)](docs/ja/ADX_pinout.md)
+  * [ATtiny1616 ペリフェラル＆PORTMUX仕様書](docs/ja/adx_attiny1616_mcu_matrix.md)
 
 ---
 
