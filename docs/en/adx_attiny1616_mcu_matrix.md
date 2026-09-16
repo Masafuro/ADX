@@ -16,7 +16,7 @@ For physical pinout definitions and ribbon cable shielding structure, refer to t
 
 ## 2. PORTMUX Design Rules on ADX Board
 
-The ATtiny1616 provides highly flexible I/O multiplexing via PORTMUX. However, on the ADX board, 7 MCU pins are hard-wired to dedicated onboard circuits (RS-485 transceiver, CH342K USB debug bridge, and UPDI).
+The ATtiny1616 provides highly flexible I/O multiplexing via PORTMUX. However, on the ADX board, 7 MCU pins are hard-wired to dedicated onboard circuits (RS-485 transceiver, BMC boot control / indicator LED, and UPDI).
 Firmware developers must adhere to the following **mandatory and restricted configuration rules**:
 
 ### ① PORTMUX Configuration Guidelines
@@ -52,8 +52,8 @@ Complete multiplexed pin capability matrix based on Microchip Datasheet Table 5-
 | **PB1** | 13 | 10 | **IDC Pin 14** | AIN10 | - | **TCA0 WO1(Def)** | **TWI0 SDA (Def)** / USART0 XCK(Alt) | AC0 AIN | X4/Y4 |
 | **PB2** | 12 | 9 | **IDC Pin 11** | - | - | **TCA0 WO2(Def)** | **USART0 TxD (Alt)** | AC1 OUT / TOSC2 | EVOUT1 |
 | **PB3** | 11 | 8 | **IDC Pin 12** | - | - | **TCA0 WO0(Alt)** | **USART0 RxD (Alt)** | AC0 OUT / TOSC1 | - |
-| **PB4** | 10 | 7 | **Onboard (CH342K TX)** | AIN9 | - | TCA0 WO1(Alt) | - | AC1/2 AIN | X13/Y13 / LUT0-OUT(Alt) |
-| **PB5** | 9 | 6 | **Onboard (CH342K RX)** | AIN8 | - | TCA0 WO2(Alt) | - | CLKOUT / AC1/2 AIN | X12/Y12 |
+| **PB4** | 10 | 7 | **Onboard (Red LED)** | AIN9 | - | TCA0 WO1(Alt) | - | AC1/2 AIN | X13/Y13 / LUT0-OUT(Alt) |
+| **PB5** | 9 | 6 | **Onboard (BOOT_REQ)** | AIN8 | - | TCA0 WO2(Alt) | - | CLKOUT / AC1/2 AIN | X12/Y12 |
 | **PC0** | 15 | 12 | **IDC Pin 19** | - | AIN6 | **TCB0 WO(Alt)** / **TCD0 WOC** | **SPI0 SCK (Alt)** | - | X6/Y6 |
 | **PC1** | 16 | 13 | **IDC Pin 18** | - | AIN7 | **TCD0 WOD** | **SPI0 MISO (Alt)** | - | X7/Y7 / LUT1-OUT(Alt) |
 | **PC2** | 17 | 14 | **IDC Pin 17** | - | AIN8 | - | **SPI0 MOSI (Alt)** | - | EVOUT2 / X8/Y8 |
@@ -117,10 +117,10 @@ ATtiny1616 integrates 3 independent timer peripherals (TCA0, TCBn, TCD0), provid
 
 | Pin Name | Connection & Circuit | Hardware Role | Firmware Constraints |
 | :--- | :--- | :--- | :--- |
-| **PA0** | UPDI Programming / RESET | Hardware Debugger | Do not reconfigure fuse to standard GPIO (prevents lockout). |
+| **PA0** | UPDI Programming / RESET | Hardware Debugger (Onboard THT breakout) | Do not reconfigure fuse to standard GPIO (prevents lockout). |
 | **PA1** | SP485EEN DI (TxD) | RS-485 Transmit | Functional as USART0 TxD when `PORTMUX.CTRLB.USART0 = 0`. |
 | **PA2** | SP485EEN RO (RxD) | RS-485 Receive | Functional as USART0 RxD when `PORTMUX.CTRLB.USART0 = 0`. |
 | **PA4** | SP485EEN DE (Driver Enable) | Transmit Enable | Functional as hardware auto-direction control (`XDIR`). |
 | **PA7** | SP485EEN /RE (Receiver Enable) | Receive Enable | Controlled via software GPIO (Active Low). |
-| **PB4** | CH342K UART RX (MCU TX) | Debug Log Output | Serial monitoring via SoftwareSerial or equivalent. |
-| **PB5** | CH342K UART TX (MCU RX) | Command Reception | Command terminal input via SoftwareSerial. |
+| **PB4** | Onboard Red LED | Active HIGH Indicator | Software GPIO output. Usage is open (recommended as bootloader waiting indicator). |
+| **PB5** | Onboard BMC BOOT_REQ | Boot Request Input (Pull-down & series resistor) | Sampled at startup. If HIGH, enters bootloader mode indefinitely; if LOW, starts user sketch immediately. |

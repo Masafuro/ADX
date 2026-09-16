@@ -16,7 +16,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## 2. ADX ボードにおける PORTMUX デザインルール (Design Rules)
 
-ATtiny1616 は柔軟なピン再配置機能（PORTMUX）を備えていますが、ADX ボードではオンボード回路（RS-485 トランシーバー、CH342K USBデバッグ回路、UPDI）に計7ピンが専用接続されています。
+ATtiny1616 は柔軟なピン再配置機能（PORTMUX）を備えていますが、ADX ボードではオンボード回路（RS-485 トランシーバー、BMCブート制御 / インジケータLED、UPDI）に計7ピンが専用接続されています。
 そのため、ファームウェア開発時は以下の **必須設定・禁止設定** を遵守する必要があります。
 
 ### ① PORTMUX 設定ガイドライン一覧
@@ -52,8 +52,8 @@ ATtiny1616 は柔軟なピン再配置機能（PORTMUX）を備えています�
 | **PB1** | 13 | 10 | **IDC Pin 14** | AIN10 | - | **TCA0 WO1(Def)** | **TWI0 SDA (Def)** / USART0 XCK(Alt) | AC0 AIN | X4/Y4 |
 | **PB2** | 12 | 9 | **IDC Pin 11** | - | - | **TCA0 WO2(Def)** | **USART0 TxD (Alt)** | AC1 OUT / TOSC2 | EVOUT1 |
 | **PB3** | 11 | 8 | **IDC Pin 12** | - | - | **TCA0 WO0(Alt)** | **USART0 RxD (Alt)** | AC0 OUT / TOSC1 | - |
-| **PB4** | 10 | 7 | **オンボード (CH342K TX)** | AIN9 | - | TCA0 WO1(Alt) | - | AC1/2 AIN | X13/Y13 / LUT0-OUT(Alt) |
-| **PB5** | 9 | 6 | **オンボード (CH342K RX)** | AIN8 | - | TCA0 WO2(Alt) | - | CLKOUT / AC1/2 AIN | X12/Y12 |
+| **PB4** | 10 | 7 | **オンボード (赤色LED)** | AIN9 | - | TCA0 WO1(Alt) | - | AC1/2 AIN | X13/Y13 / LUT0-OUT(Alt) |
+| **PB5** | 9 | 6 | **オンボード (BOOT_REQ)** | AIN8 | - | TCA0 WO2(Alt) | - | CLKOUT / AC1/2 AIN | X12/Y12 |
 | **PC0** | 15 | 12 | **IDC Pin 19** | - | AIN6 | **TCB0 WO(Alt)** / **TCD0 WOC** | **SPI0 SCK (Alt)** | - | X6/Y6 |
 | **PC1** | 16 | 13 | **IDC Pin 18** | - | AIN7 | **TCD0 WOD** | **SPI0 MISO (Alt)** | - | X7/Y7 / LUT1-OUT(Alt) |
 | **PC2** | 17 | 14 | **IDC Pin 17** | - | AIN8 | - | **SPI0 MOSI (Alt)** | - | EVOUT2 / X8/Y8 |
@@ -123,10 +123,10 @@ IDC に引き出されていない 7 ピン（オンボード専用回路）の�
 
 | ピン名 | 接続先・用途 | 状態・制約 | ファームウェア上の注意点 |
 | :--- | :--- | :--- | :--- |
-| **PA0** | UPDI プログラミング / RESET | デバッグ専用 | ヒューズ設定で GPIO 化しないこと（書き込み不可リスク防止）。 |
+| **PA0** | UPDI プログラミング / RESET | デバッグ専用（オンボードTHT引き出し） | ヒューズ設定で GPIO 化しないこと（書き込み不可リスク防止）。 |
 | **PA1** | SP485EEN DI (TxD) | オンボード RS-485 送信 | `PORTMUX.CTRLB.USART0 = 0` 時に USART0 送信ピンとして機能。 |
 | **PA2** | SP485EEN RO (RxD) | オンボード RS-485 受信 | `PORTMUX.CTRLB.USART0 = 0` 時に USART0 受信ピンとして機能。 |
 | **PA4** | SP485EEN DE (Driver Enable) | 送信イネーブル | USART0 の `XDIR` 自動方向制御ピンとして機能。 |
 | **PA7** | SP485EEN /RE (Receiver Enable) | 受信イネーブル | GPIO 出力として制御（Lowで受信有効、Highで受信停止）。 |
-| **PB4** | CH342K UART RX (MCU送信) | デバッグログ出力 | SoftwareSerial 等を用いて PC モニタへログ出力。 |
-| **PB5** | CH342K UART TX (MCU受信) | デバッグコマンド受信 | SoftwareSerial 等を用いて PC からのコマンドを受信。 |
+| **PB4** | オンボード赤色LED | Active HIGH (Highで点灯) | GPIO 出力。用途はオープン（ブートローダー待機中のインジケータ等に推奨）。 |
+| **PB5** | オンボードBMC BOOT_REQ | ブートリクエスト入力（プルダウン＋直列抵抗実装） | 起動時にサンプリング。HIGH ならタイムアウトなしでブートローダー突入、LOW なら即座に通常スケッチ実行。 |

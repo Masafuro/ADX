@@ -1,7 +1,7 @@
 # ADX マイコンボード ピンアウト仕様書 (v2)
 
 ## 1. 概要
-本ドキュメントは、Microchip社製 ATtiny1616-MNR を搭載したマイコンボード「ADX」のIDC 2x10 コネクタ（回路図上のリファレンス例: CN2）のピンアウト、およびオンボードペリフェラル（RS-485、CH342K、UPDI）と PORTMUX 機能の接続関係を定義する仕様書（v2）です。本規格では、コネクタ端子番号を **「IDC Pin 1〜20」** と表記します。
+本ドキュメントは、Microchip社製 ATtiny1616-MNR を搭載したマイコンボード「ADX」のIDC 2x10 コネクタ（回路図上のリファレンス例: CN2）のピンアウト、およびオンボードペリフェラル（RS-485、BMCブート制御、オンボードLED、UPDI）と PORTMUX 機能の接続関係を定義する仕様書（v2）です。本規格では、コネクタ端子番号を **「IDC Pin 1〜20」** と表記します。
 
 ## 2. ATtiny1616 ピン占有構造と PORTMUX 切り替え仕様
 
@@ -13,10 +13,10 @@
   - `PA2`: USART0 Default RxD (RO)
   - `PA4`: USART0 Default XDIR (DE - Driver Enable)
   - `PA7`: GPIO制御 (RE - Receiver Enable)
-- **CH342K / UPDI デバッグ回路（3ピン）**:
-  - `PA0`: UPDI / RESET (書き込み・デバッグ専用)
-  - `PB4`: Software Serial (CH342K TX/RX通信用)
-  - `PB5`: Software Serial (CH342K TX/RX通信用)
+- **オンボード管理・インジケータ・デバッグ回路（3ピン）**:
+  - `PA0`: UPDI / RESET (オンボードTHT引き出し、書き込み・デバッグ専用)
+  - `PB4`: オンボードLED (赤色、Active HIGH)
+  - `PB5`: BOOT_REQ (オンボードBMCからのブートリクエスト入力、プルダウン・保護抵抗実装)
 
 ### ② PORTMUX レジスタによる UART 排他切替制御
 USART0 モジュールは `PORTMUX.CTRLB` レジスタの設定により、通信ピンの位置を動的にハードウェア切替可能です。

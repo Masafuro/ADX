@@ -8,7 +8,7 @@ SPDX-License-Identifier: CC-BY-4.0
 [ **English** | [日本語 (../ja/ADX_pinout.md)](../ja/ADX_pinout.md) ]
 
 ## 1. Overview
-This document defines the 2×10-pin IDC connector pinout (schematic reference designator: `CN2`) and the onboard peripheral/PORTMUX routing specifications (v2) for the ADX microcomputer board powered by the Microchip ATtiny1616-MNR. Connector pin numbers are standardized as **"IDC Pin 1–20"**.
+This document defines the 2×10-pin IDC connector pinout (schematic reference designator: `CN2`) and the onboard peripheral (RS-485, BMC boot control, onboard LED, UPDI) and PORTMUX routing specifications (v2) for the ADX microcomputer board powered by the Microchip ATtiny1616-MNR. Connector pin numbers are standardized as **"IDC Pin 1–20"**.
 
 ---
 
@@ -22,10 +22,10 @@ Out of the 18 MCU GPIOs, the following 7 pins are exclusively dedicated to onboa
   - `PA2`: USART0 Default RxD (RO)
   - `PA4`: USART0 Default XDIR (DE - Driver Enable)
   - `PA7`: GPIO Control (RE - Receiver Enable)
-- **CH342K / UPDI Debug Circuit (3 pins)**:
-  - `PA0`: UPDI / RESET (Programming and hardware debugging)
-  - `PB4`: Software Serial (CH342K TX/RX communication)
-  - `PB5`: Software Serial (CH342K TX/RX communication)
+- **Onboard Management, Indicator & Debug Circuit (3 pins)**:
+  - `PA0`: UPDI / RESET (Onboard THT breakout, programming and hardware debugging)
+  - `PB4`: Onboard LED (Red, Active HIGH)
+  - `PB5`: BOOT_REQ (Bootloader request input from onboard BMC, pull-down & series protection resistor equipped)
 
 ### ② Hardware UART Routing via PORTMUX
 The USART0 module can dynamically switch its pin routing between onboard and external interfaces via the `PORTMUX.CTRLB` register:
