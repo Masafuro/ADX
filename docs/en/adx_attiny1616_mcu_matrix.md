@@ -27,8 +27,8 @@ Firmware developers must adhere to the following **mandatory and restricted conf
 | **PORTMUX.CTRLB** | **TWI0** (bit 4) | I2C (TWI0) Communication Pins | **Mandatory Default** | `0` | Default routes I2C to IDC connector pins **PB0/PB1 (IDC Pins 13, 14)**. Alternate pins (PA1/PA2) conflict directly with RS-485 and are strictly prohibited. |
 | **PORTMUX.CTRLB** | **USART0** (bit 0) | USART0 Communication Pins | **Application Dependent** | `0` / `1` | `0`: Connects to onboard **RS-485 transceiver (PA1/PA2)**.<br>`1`: Connects to IDC external **UART (PB2/PB3: IDC Pins 11, 12)**. |
 | **PORTMUX.CTRLC** | **TCA00–05** | TCA0 PWM Waveform Output | **Flexible** | See Table | Selectable per pin in Normal or Split mode. |
-| **PORTMUX.CTRLD** | **TCB0** (bit 0) | TCB0 PWM Output | **Flexible** | `0` / `1` | `0`: Routes to **IDC Pin 9 (PA5)**.<br>`1`: Routes to **IDC Pin 19 (PC0)**. |
-| **PORTMUX.CTRLD** | **TCB1** (bit 1) | TCB1 PWM Output | **Default** | `0` | Default routes to **IDC Pin 6 (PA3)**. |
+| **PORTMUX.CTRLD** | **TCB0** (bit 0) | TCB0 PWM Output | **Flexible** | `0` / `1` | `0`: Routes to **IDC Pin 7 (PA5)**<br>`1`: Routes to **IDC Pin 19 (PC0)** |
+| **PORTMUX.CTRLD** | **TCB1** (bit 1) | TCB1 PWM Output | **Default** | `0` | Default routes to **IDC Pin 9 (PA3)**. |
 | **PORTMUX.CTRLA** | **LUT0/1** (bit 4,5) | CCL Output Pins | **Application Dependent** | `0` / `1` | Select alternative pin locations to avoid contention with dedicated circuits. |
 | **PORTMUX.CTRLA** | **EVOUT0–2** | Event System Output | **Flexible** | `0` / `1` | Exports internal event system clocks/signals externally (EVOUT1: PB2 / Pin 11, EVOUT2: PC2 / Pin 17). |
 
@@ -43,10 +43,10 @@ Complete multiplexed pin capability matrix based on Microchip Datasheet Table 5-
 | **PA0** | 19 | 16 | **Onboard (UPDI/RESET)** | AIN0 | - | - | - | RESET / UPDI | LUT0-IN0 |
 | **PA1** | 20 | 17 | **Onboard (RS-485 TxD)** | AIN1 | - | - | USART0 TxD (Def) / SPI MOSI(Def) / *TWI SDA(Alt)* | - | LUT0-IN1 |
 | **PA2** | 1 | 18 | **Onboard (RS-485 RxD)** | AIN2 | - | - | USART0 RxD (Def) / SPI MISO(Def) / *TWI SCL(Alt)* | - | EVOUT0 / LUT0-IN2 |
-| **PA3** | 2 | 19 | **IDC Pin 6** | AIN3 | - | TCA0 WO3(Def) / **TCB1 WO** | USART0 XCK (Def) / SPI SCK (Def) | **EXTCLK** | - |
+| **PA3** | 2 | 19 | **IDC Pin 9** | AIN3 | - | TCA0 WO3(Def) / **TCB1 WO** | USART0 XCK (Def) / SPI SCK (Def) | **EXTCLK** | - |
 | **PA4** | 5 | 2 | **Onboard (RS-485 DE)** | AIN4 | AIN0 | TCA0 WO4(Def) / **TCD0 WOA** | USART0 XDIR (Def) / SPI SS (Def) | - | X0/Y0 / LUT0-OUT(Def) |
-| **PA5** | 6 | 3 | **IDC Pin 9** | AIN5 | AIN1 | TCA0 WO5(Def) / **TCB0 WO(Def)** / **TCD0 WOB** | - | **VREFA** / AC0 OUT / AC2 AINN0 | X1/Y1 |
-| **PA6** | 7 | 4 | **IDC Pin 8** | AIN6 | AIN2 | - | - | **DAC0 OUT** / AC0-2 AIN | X2/Y2 |
+| **PA5** | 6 | 3 | **IDC Pin 7** | AIN5 | AIN1 | TCA0 WO5(Def) / **TCB0 WO(Def)** / **TCD0 WOB** | - | **VREFA** / AC0 OUT / AC2 AINN0 | X1/Y1 |
+| **PA6** | 7 | 4 | **IDC Pin 6** | AIN6 | AIN2 | - | - | **DAC0 OUT** / AC0-2 AIN | X2/Y2 |
 | **PA7** | 8 | 5 | **Onboard (RS-485 RE)** | AIN7 | AIN3 | - | - | AC0-2 AIN | X3/Y3 / LUT1-OUT(Def) |
 | **PB0** | 14 | 11 | **IDC Pin 13** | AIN11 | - | **TCA0 WO0(Def)** | **TWI0 SCL (Def)** / USART0 XDIR(Alt) | AC0/1 AIN | X5/Y5 |
 | **PB1** | 13 | 10 | **IDC Pin 14** | AIN10 | - | **TCA0 WO1(Def)** | **TWI0 SDA (Def)** / USART0 XCK(Alt) | AC0 AIN | X4/Y4 |
@@ -71,8 +71,8 @@ ATtiny1616 integrates 3 independent timer peripherals (TCA0, TCBn, TCD0), provid
 
 | IDC Pin | MCU Pin | Compatible Timer Channels | PORTMUX Setting | Features & Notes |
 | :---: | :---: | :--- | :--- | :--- |
-| **Pin 6** | PA3 | **TCB1 WO**<br>TCA0 WO3 (Def) | `PORTMUX.CTRLD.TCB1 = 0`<br>`PORTMUX.CTRLC.TCA03 = 0` | 16-bit PWM (TCB1) / Shared with EXTCLK |
-| **Pin 9** | PA5 | **TCB0 WO (Def)**<br>**TCD0 WOB**<br>TCA0 WO5 (Def) | `PORTMUX.CTRLD.TCB0 = 0`<br>Enable TCD0 control register<br>`PORTMUX.CTRLC.TCA05 = 0` | 16-bit PWM (TCB0) / **High-Frequency 12-bit PWM (TCD0)** / 16-bit PWM (TCA0) |
+| **Pin 7** | PA5 | **TCB0 WO (Def)**<br>**TCD0 WOB**<br>TCA0 WO5 (Def) | `PORTMUX.CTRLD.TCB0 = 0`<br>Enable TCD0 control register<br>`PORTMUX.CTRLC.TCA05 = 0` | 16-bit PWM (TCB0) / **High-Frequency 12-bit PWM (TCD0)** / 16-bit PWM (TCA0) |
+| **Pin 9** | PA3 | **TCB1 WO**<br>TCA0 WO3 (Def) | `PORTMUX.CTRLD.TCB1 = 0`<br>`PORTMUX.CTRLC.TCA03 = 0` | 16-bit PWM (TCB1) / Shared with EXTCLK |
 | **Pin 11** | PB2 | **TCA0 WO2 (Def)** | `PORTMUX.CTRLC.TCA02 = 0` | 16-bit PWM (TCA0 Normal) / 8-bit PWM (Split) / Shared with UART TxD |
 | **Pin 12** | PB3 | **TCA0 WO0 (Alt)** | `PORTMUX.CTRLC.TCA00 = 1` | 8-bit PWM (TCA0 Split mode) / Shared with UART RxD |
 | **Pin 13** | PB0 | **TCA0 WO0 (Def)** | `PORTMUX.CTRLC.TCA00 = 0` | 16-bit PWM (TCA0 Normal) / 8-bit PWM (Split) / Shared with I2C SCL |
@@ -82,7 +82,7 @@ ATtiny1616 integrates 3 independent timer peripherals (TCA0, TCBn, TCD0), provid
 | **Pin 19** | PC0 | **TCD0 WOC**<br>**TCB0 WO (Alt)** | Enable TCD0 control register<br>`PORTMUX.CTRLD.TCB0 = 1` | **High-Frequency 12-bit PWM (TCD0)** / 16-bit PWM (TCB0) / Shared with SPI SCK |
 
 > **About TCD0 (Timer Type D):**
-> Operates at up to 48 MHz (via PLL or unprescaled asynchronous clock source). IDC connector breaks out **IDC Pin 9 (WOB)**, **IDC Pin 18 (WOD)**, and **IDC Pin 19 (WOC)**, ideal for high-resolution PWM, power electronic regulation, and half-bridge drive signals.
+> Operates at up to 48 MHz (via PLL or unprescaled asynchronous clock source). IDC connector breaks out **IDC Pin 7 (WOB)**, **IDC Pin 18 (WOD)**, and **IDC Pin 19 (WOC)**, ideal for high-resolution PWM, power electronic regulation, and half-bridge drive signals.
 
 ---
 
@@ -90,9 +90,9 @@ ATtiny1616 integrates 3 independent timer peripherals (TCA0, TCBn, TCD0), provid
 
 | IDC Pin | MCU Pin | Analog Capability | Description |
 | :---: | :---: | :--- | :--- |
-| **Pin 6** | PA3 | **ADC0 AIN3** | 10-bit general ADC input (when EXTCLK is unused) |
-| **Pin 8** | PA6 | **DAC0 OUT**<br>ADC0 AIN6 / ADC1 AIN2<br>AC0/1/2 AIN | **8-bit DAC Output Pin** (Internal DAC true analog output)<br>Analog comparator inputs |
-| **Pin 9** | PA5 | **VREFA** (External Voltage Ref)<br>ADC0 AIN5 / ADC1 AIN1<br>AC0 OUT | **External Reference Voltage Input (VREFA)**<br>Analog comparator AC0 output |
+| **Pin 6** | PA6 | **DAC0 OUT**<br>ADC0 AIN6 / ADC1 AIN2<br>AC0/1/2 AIN | **8-bit DAC Output Pin** (Internal DAC true analog output)<br>Analog comparator inputs |
+| **Pin 7** | PA5 | **VREFA** (External Voltage Ref)<br>ADC0 AIN5 / ADC1 AIN1<br>AC0 OUT | **External Reference Voltage Input (VREFA)**<br>Analog comparator AC0 output |
+| **Pin 9** | PA3 | **ADC0 AIN3** | 10-bit general ADC input (when EXTCLK is unused) |
 | **Pin 13** | PB0 | ADC0 AIN11 / AC0,1 AIN | 10-bit ADC input / Comparator input (Shared with I2C SCL) |
 | **Pin 14** | PB1 | ADC0 AIN10 / AC0 AIN | 10-bit ADC input / Comparator input (Shared with I2C SDA) |
 | **Pin 16** | PC3 | **ADC1 AIN9** | ADC1 10-bit ADC input (Shared with SPI SS) |
@@ -106,7 +106,7 @@ ATtiny1616 integrates 3 independent timer peripherals (TCA0, TCBn, TCD0), provid
 
 | IDC Pin | MCU Pin | Special Feature | Configuration | Description |
 | :---: | :---: | :--- | :--- | :--- |
-| **Pin 6** | PA3 | **EXTCLK** | CLKCTRL | External oscillator clock input (System clock source) |
+| **Pin 9** | PA3 | **EXTCLK** | CLKCTRL | External oscillator clock input (System clock source) |
 | **Pin 11** | PB2 | **EVOUT1** | `PORTMUX.CTRLA.EVOUT1 = 1` | Event system output (Timer events or frequency monitoring) |
 | **Pin 17** | PC2 | **EVOUT2** | `PORTMUX.CTRLA.EVOUT2 = 1` | Event system output |
 | All I/O | PA/PB/PC | **Pin Interrupts** | `PORTx.PINnCTRL` | Pin change interrupt on all GPIOs (PB2 and PC2 support fully asynchronous detection) |

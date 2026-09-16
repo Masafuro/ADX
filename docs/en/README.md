@@ -65,16 +65,16 @@ See [ADX_pinout.md](ADX_pinout.md) for full details.
 
 | IDC Pin | Net Name | MCU Pin | Primary Function / Role | Ribbon Cable Structure & Shielding |
 | :--- | :--- | :--- | :--- | :--- |
-| **1** | **VDD** | - | **Power Supply (5V/2A Delivery)** | #1 (Power Zone) |
-| **2** | **VDD** | - | **Power Supply (5V/2A Delivery)** | #2 (Power Zone) |
-| **3** | **VDD** | - | **Enhanced Power (5V/2A Delivery)** | #3 (Power Zone) |
-| **4** | *N.C.* | - | **Isolation (Power/GND Short-Prevention Buffer)** | #4 (Buffer Zone) |
-| **5** | **GND_5V** | - | **GND (EXTCLK Guard ①)** | #5 (GND Shield) |
-| **6** | **PA3/EXTCLK** | PA3 | **EXTCLK** / AIN3 | #6 (EXTCLK Signal) |
-| **7** | **GND_5V** | - | **GND (EXTCLK Guard ②)** | #7 (GND Shield) |
-| **8** | PA6/DAC0 | PA6 | **DAC0** Output / AIN6 | #8 (Analog Zone) |
-| **9** | PA5/AIN5 | PA5 | **VREFA** / AIN5 | #9 (Analog Zone) |
-| **10** | **GND_5V** | - | **GND (Analog/Digital Isolation Guard - New)** | #10 (GND Shield) |
+| **1** | **VDD** | - | **Power Supply (5V/2A Delivery)** | #1 (Power Zone: 2×2 Block) |
+| **2** | **VDD** | - | **Power Supply (5V/2A Delivery)** | #2 (Power Zone: 2×2 Block) |
+| **3** | **VDD** | - | **Power Supply (5V/2A Delivery)** | #3 (Power Zone: 2×2 Block) |
+| **4** | **VDD** | - | **Enhanced Power (5V/2A Delivery)** | #4 (Power Zone: 2×2 Block) |
+| **5** | *N.C.* | - | **Isolation (Power/Signal Short-Prevention Buffer)** | #5 (Buffer Zone) |
+| **6** | PA6/DAC0 | PA6 | **DAC0** Output / AIN6 | #6 (Analog Zone) |
+| **7** | PA5/AIN5 | PA5 | **VREFA** / AIN5 | #7 (Analog Zone) |
+| **8** | **GND_5V** | - | **GND (EXTCLK Guard ①)** | #8 (GND Shield) |
+| **9** | **PA3/EXTCLK** | PA3 | **EXTCLK** / AIN3 | #9 (EXTCLK Signal Line) |
+| **10** | **GND_5V** | - | **GND (EXTCLK Guard ② / Digital Bus Isolation)** | #10 (GND Shield) |
 | **11** | **PB2/TXD_EXT** | PB2 | **UART TxD (Alternate)** | #11 (UART Pair) |
 | **12** | **PB3/RXD_EXT** | PB3 | **UART RxD (Alternate)** | #12 (UART Pair) |
 | **13** | PB0/SCL | PB0 | **I2C SCL** | #13 (I2C Pair) |

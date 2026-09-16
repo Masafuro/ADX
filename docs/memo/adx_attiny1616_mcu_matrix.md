@@ -20,8 +20,8 @@ ATtiny1616 は柔軟なピン再配置機能（PORTMUX）を備えています�
 | **PORTMUX.CTRLB** | **TWI0** (bit 4) | I2C (TWI0) 通信ピン | **Default 必須** | `0` | Default で IDC コネクタの **PB0/PB1 (IDC Pin 13, 14)** に接続。Alternate（PA1/PA2）は RS-485 と衝突するため使用禁止。 |
 | **PORTMUX.CTRLB** | **USART0** (bit 0) | USART0 通信ピン | **用途切替** | `0` / `1` | `0`: オンボード **RS-485 (PA1/PA2)** に接続<br>`1`: IDC 外部 **UART (PB2/PB3: IDC Pin 11, 12)** に接続 |
 | **PORTMUX.CTRLC** | **TCA00〜05** | TCA0 PWM 出力 | **任意** | 表参照 | モード（Normal / Split）および使用ピンに応じて動的設定可能。 |
-| **PORTMUX.CTRLD** | **TCB0** (bit 0) | TCB0 PWM 出力 | **任意** | `0` / `1` | `0`: **IDC Pin 9 (PA5)**<br>`1`: **IDC Pin 19 (PC0)** |
-| **PORTMUX.CTRLD** | **TCB1** (bit 1) | TCB1 PWM 出力 | **Default** | `0` | Default で **IDC Pin 6 (PA3)** に接続。 |
+| **PORTMUX.CTRLD** | **TCB0** (bit 0) | TCB0 PWM 出力 | **任意** | `0` / `1` | `0`: **IDC Pin 7 (PA5)**<br>`1`: **IDC Pin 19 (PC0)** |
+| **PORTMUX.CTRLD** | **TCB1** (bit 1) | TCB1 PWM 出力 | **Default** | `0` | Default で **IDC Pin 9 (PA3)** に接続。 |
 | **PORTMUX.CTRLA** | **LUT0/1** (bit 4,5) | CCL 出力ピン | **用途に応じる** | `0` / `1` | オンボード回路との競合を避けて選択。 |
 | **PORTMUX.CTRLA** | **EVOUT0〜2** | イベント出力 | **任意** | `0` / `1` | IDC 外部へ内部イベントクロック等を出力可能（EVOUT1: PB2 / Pin 11, EVOUT2: PC2 / Pin 17）。 |
 
@@ -36,10 +36,10 @@ ATtiny1616 は柔軟なピン再配置機能（PORTMUX）を備えています�
 | **PA0** | 19 | 16 | **オンボード (UPDI/RESET)** | AIN0 | - | - | - | RESET / UPDI | LUT0-IN0 |
 | **PA1** | 20 | 17 | **オンボード (RS-485 TxD)** | AIN1 | - | - | USART0 TxD (Def) / SPI MOSI(Def) / *TWI SDA(Alt)* | - | LUT0-IN1 |
 | **PA2** | 1 | 18 | **オンボード (RS-485 RxD)** | AIN2 | - | - | USART0 RxD (Def) / SPI MISO(Def) / *TWI SCL(Alt)* | - | EVOUT0 / LUT0-IN2 |
-| **PA3** | 2 | 19 | **IDC Pin 6** | AIN3 | - | TCA0 WO3(Def) / **TCB1 WO** | USART0 XCK (Def) / SPI SCK (Def) | **EXTCLK** | - |
+| **PA3** | 2 | 19 | **IDC Pin 9** | AIN3 | - | TCA0 WO3(Def) / **TCB1 WO** | USART0 XCK (Def) / SPI SCK (Def) | **EXTCLK** | - |
 | **PA4** | 5 | 2 | **オンボード (RS-485 DE)** | AIN4 | AIN0 | TCA0 WO4(Def) / **TCD0 WOA** | USART0 XDIR (Def) / SPI SS (Def) | - | X0/Y0 / LUT0-OUT(Def) |
-| **PA5** | 6 | 3 | **IDC Pin 9** | AIN5 | AIN1 | TCA0 WO5(Def) / **TCB0 WO(Def)** / **TCD0 WOB** | - | **VREFA** / AC0 OUT / AC2 AINN0 | X1/Y1 |
-| **PA6** | 7 | 4 | **IDC Pin 8** | AIN6 | AIN2 | - | - | **DAC0 OUT** / AC0-2 AIN | X2/Y2 |
+| **PA5** | 6 | 3 | **IDC Pin 7** | AIN5 | AIN1 | TCA0 WO5(Def) / **TCB0 WO(Def)** / **TCD0 WOB** | - | **VREFA** / AC0 OUT / AC2 AINN0 | X1/Y1 |
+| **PA6** | 7 | 4 | **IDC Pin 6** | AIN6 | AIN2 | - | - | **DAC0 OUT** / AC0-2 AIN | X2/Y2 |
 | **PA7** | 8 | 5 | **オンボード (RS-485 RE)** | AIN7 | AIN3 | - | - | AC0-2 AIN | X3/Y3 / LUT1-OUT(Def) |
 | **PB0** | 14 | 11 | **IDC Pin 13** | AIN11 | - | **TCA0 WO0(Def)** | **TWI0 SCL (Def)** / USART0 XDIR(Alt) | AC0/1 AIN | X5/Y5 |
 | **PB1** | 13 | 10 | **IDC Pin 14** | AIN10 | - | **TCA0 WO1(Def)** | **TWI0 SDA (Def)** / USART0 XCK(Alt) | AC0 AIN | X4/Y4 |
@@ -66,8 +66,8 @@ ATtiny1616 には 3 種類の独立したタイマー（TCA0, TCBn, TCD0）が�
 
 | IDC ピン | マイコンピン | 対応タイマー・PWMチャネル | PORTMUX 設定条件 | 備考・特徴 |
 | :---: | :---: | :--- | :--- | :--- |
-| **Pin 6** | PA3 | **TCB1 WO**<br>TCA0 WO3 (Def) | `PORTMUX.CTRLD.TCB1 = 0`<br>`PORTMUX.CTRLC.TCA03 = 0` | 16-bit PWM (TCB1) / EXTCLK兼用 |
-| **Pin 9** | PA5 | **TCB0 WO (Def)**<br>**TCD0 WOB**<br>TCA0 WO5 (Def) | `PORTMUX.CTRLD.TCB0 = 0`<br>TCD0 制御レジスタ有効化<br>`PORTMUX.CTRLC.TCA05 = 0` | 16-bit PWM (TCB0) / **高周波 12-bit PWM (TCD0)** / 16-bit PWM (TCA0) |
+| **Pin 7** | PA5 | **TCB0 WO (Def)**<br>**TCD0 WOB**<br>TCA0 WO5 (Def) | `PORTMUX.CTRLD.TCB0 = 0`<br>TCD0 制御レジスタ有効化<br>`PORTMUX.CTRLC.TCA05 = 0` | 16-bit PWM (TCB0) / **高周波 12-bit PWM (TCD0)** / 16-bit PWM (TCA0) |
+| **Pin 9** | PA3 | **TCB1 WO**<br>TCA0 WO3 (Def) | `PORTMUX.CTRLD.TCB1 = 0`<br>`PORTMUX.CTRLC.TCA03 = 0` | 16-bit PWM (TCB1) / EXTCLK兼用 |
 | **Pin 11** | PB2 | **TCA0 WO2 (Def)** | `PORTMUX.CTRLC.TCA02 = 0` | 16-bit PWM (TCA0 Normal) / 8-bit PWM (Split) / UART TxD兼用 |
 | **Pin 12** | PB3 | **TCA0 WO0 (Alt)** | `PORTMUX.CTRLC.TCA00 = 1` | 8-bit PWM (TCA0 Split mode) / UART RxD兼用 |
 | **Pin 13** | PB0 | **TCA0 WO0 (Def)** | `PORTMUX.CTRLC.TCA00 = 0` | 16-bit PWM (TCA0 Normal) / 8-bit PWM (Split) / I2C SCL兼用 |
@@ -77,7 +77,7 @@ ATtiny1616 には 3 種類の独立したタイマー（TCA0, TCBn, TCD0）が�
 | **Pin 19** | PC0 | **TCD0 WOC**<br>**TCB0 WO (Alt)** | TCD0 制御レジスタ有効化<br>`PORTMUX.CTRLD.TCB0 = 1` | **高周波 12-bit PWM (TCD0)** / 16-bit PWM (TCB0) / SPI SCK兼用 |
 
 > **TCD0 (Timer Type D) について:**
-> 最大48MHz（PLLまたは非同期クロック）で駆動可能な高周波タイマーです。IDC コネクタからは **IDC Pin 9 (WOB)**、**IDC Pin 18 (WOD)**、**IDC Pin 19 (WOC)** の計3チャンネルを取り出すことができ、高分解能PWMや電源制御・ハーフブリッジ駆動等に適しています。
+> 最大48MHz（PLLまたは非同期クロック）で駆動可能な高周波タイマーです。IDC コネクタからは **IDC Pin 7 (WOB)**、**IDC Pin 18 (WOD)**、**IDC Pin 19 (WOC)** の計3チャンネルを取り出すことができ、高分解能PWMや電源制御・ハーフブリッジ駆動等に適しています。
 
 ---
 
@@ -87,9 +87,9 @@ IDC コネクタには、高精度なアナログ入出力機能が集約され�
 
 | IDC ピン | マイコンピン | アナログ機能 | 説明 |
 | :---: | :---: | :--- | :--- |
-| **Pin 6** | PA3 | **ADC0 AIN3** | 汎用 10-bit ADC 入力（外部クロック未使用時） |
-| **Pin 8** | PA6 | **DAC0 OUT**<br>ADC0 AIN6 / ADC1 AIN2<br>AC0/1/2 AIN | **8-bit DAC 出力**（内蔵DACのアナログ電圧出力ピン）<br>アナログコンパレータ入力 |
-| **Pin 9** | PA5 | **VREFA** (外部参照電圧)<br>ADC0 AIN5 / ADC1 AIN1<br>AC0 OUT | **外部基準電圧入力 (VREFA)**<br>アナログコンパレータ AC0 出力 |
+| **Pin 6** | PA6 | **DAC0 OUT**<br>ADC0 AIN6 / ADC1 AIN2<br>AC0/1/2 AIN | **8-bit DAC 出力**（内蔵DACのアナログ電圧出力ピン）<br>アナログコンパレータ入力 |
+| **Pin 7** | PA5 | **VREFA** (外部参照電圧)<br>ADC0 AIN5 / ADC1 AIN1<br>AC0 OUT | **外部基準電圧入力 (VREFA)**<br>アナログコンパレータ AC0 出力 |
+| **Pin 9** | PA3 | **ADC0 AIN3** | 汎用 10-bit ADC 入力（外部クロック未使用時） |
 | **Pin 13** | PB0 | ADC0 AIN11 / AC0,1 AIN | 10-bit ADC 入力 / コンパレータ入力（I2C SCL兼用） |
 | **Pin 14** | PB1 | ADC0 AIN10 / AC0 AIN | 10-bit ADC 入力 / コンパレータ入力（I2C SDA兼用） |
 | **Pin 16** | PC3 | **ADC1 AIN9** | ADC1 10-bit ADC 入力（SPI SS兼用） |
@@ -103,7 +103,7 @@ IDC コネクタには、高精度なアナログ入出力機能が集約され�
 
 | IDC ピン | マイコンピン | 特殊機能 | PORTMUX / 設定 | 説明 |
 | :---: | :---: | :--- | :--- | :--- |
-| **Pin 6** | PA3 | **EXTCLK** | CLKCTRL 設定 | 外部クロック発振器入力（システムクロック源） |
+| **Pin 9** | PA3 | **EXTCLK** | CLKCTRL 設定 | 外部クロック発振器入力（システムクロック源） |
 | **Pin 11** | PB2 | **EVOUT1** | `PORTMUX.CTRLA.EVOUT1 = 1` | イベントシステム出力（タイマーイベントや周波数のモニタ出力） |
 | **Pin 17** | PC2 | **EVOUT2** | `PORTMUX.CTRLA.EVOUT2 = 1` | イベントシステム出力 |
 | 全信号ピン | PA/PB/PC | **外部割り込み** | `PORTx.PINnCTRL` | 全GPIOでピン変化割り込み対応（※PB2/PC2は完全非同期検知に対応） |
