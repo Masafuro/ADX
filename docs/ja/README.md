@@ -32,10 +32,14 @@ ADXエコシステムは、共通の8748フォームファクタと20ピン拡�
 
 ### 2.1 Core シリーズ (MCU基板)
 
-| ボード名 | 概要 | 状態・リソース |
-| :--- | :--- | :--- |
-| **ADX CORE-U** | Arduino Unoに近い扱いやすさを持ち、そのまま筐体に組み込める汎用・標準プロトタイピングボード。 | 開発中 |
-| **ADX Core-D** | LN-485（LIN-based RS-485）トランシーバを搭載し、高耐ノイズ・長距離通信環境に適した産業通信ボード。 | [仕様書](../../hardware/ADX_Core-D/proposal.md) / [設計データ](../../hardware/ADX_Core-D/data/) |
+| ボード名 | グレード | 概要 | 状態・リソース |
+| :--- | :--- | :--- | :--- |
+| **ADX CORE-I** | Production (両絶縁) | 電源・通信（LN-485）を完全絶縁し、外部機器や異電源システムとの安全な自由接続を実現するADXの本命標準ボード。 | 設計・開発中 |
+| **ADX CORE-S-P** | Professional (非絶縁) | コスト極限・超低価格製造（$5〜7/台）を追求したプロ・DIY専用ボード。共通GND構造のため自己責任製造・運用。 | [詳細・レビュー](../../hardware/CORE-S-P/README.md) |
+| **ADX Core-D** | Development (非絶縁) | LN-485（LIN-based RS-485）トランシーバを搭載し、ブートローダ・ファームウェア開発・評価に特化したボード。 | [仕様書](../../hardware/Core-D/proposal.md) / [設計データ](../../hardware/Core-D/data/) |
+| **ADX CORE-U** | Production | Arduino Unoに近い扱いやすさを持ち、そのまま筐体に組み込める汎用・標準プロトタイピングボード。 | 開発中 |
+
+> ※ モデル名の命名規則および「通常版」と「-P（Professional）版」の分類基準については、[ハードウェア命名規則仕様書](hardware_naming_rules.md) を参照してください。
 
 ### 2.2 CARD シリーズ (拡張基板)
 
@@ -85,6 +89,10 @@ ADXエコシステムは、共通の8748フォームファクタと20ピン拡�
 | **18** | PC1/MISO | PC1 | **SPI MISO** | #18 (SPI群) |
 | **19** | PC0/SCK | PC0 | **SPI SCK** | #19 (SPI群) |
 | **20** | GND_5V | - | **GND (終端シールド)** | #20 |
+
+### 3.3 ハードウェア命名規則・グレード分類基準
+ADXエコシステムにおけるハードウェア型番の命名規則、および「一般・製品グレード」と「プロ専用・自己責任DIYグレード（`-P`）」の安全判定基準を定めています。
+詳細は [hardware_naming_rules.md](hardware_naming_rules.md) を参照してください。
 
 > ※ 全ピンのPWM出力、ADC、PORTMUXレジスタ仕様の詳細は [adx_attiny1616_mcu_matrix.md](adx_attiny1616_mcu_matrix.md) を参照してください。
 

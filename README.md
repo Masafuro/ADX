@@ -32,10 +32,12 @@ The ADX ecosystem consists of **Core Boards** (main processing units) and **CARD
 
 ### 2.1 Core Boards (MCU)
 
-| Board | Description | Status & Resources |
-| :--- | :--- | :--- |
-| **ADX CORE-U** | General-purpose standard board providing familiar Arduino-compatible accessibility with native enclosure integration. | Under Development |
-| **ADX Core-D** | Differential communication board equipped with LN-485 (LIN-based RS-485) transceiver for high-noise and long-distance field buses. | [Proposal](hardware/ADX_Core-D/proposal.md) / [Data](hardware/ADX_Core-D/data/) |
+| Board | Grade | Description | Status & Resources |
+| :--- | :--- | :--- | :--- |
+| **ADX CORE-I** | Production (Isolated) | Dual-isolated (power & communication) flagship controller for safe, unconstrained field bus integration. | In Design |
+| **ADX CORE-S-P** | Professional (Non-isolated) | Ultra-low-cost ($5–7/pc) reference board for skilled developers and internal machinery. Self-fabrication (DIY) model. | [Details & Review](hardware/CORE-S-P/README.md) |
+| **ADX Core-D** | Development (Non-isolated) | Differential communication board equipped with LN-485 transceiver for bootloader and firmware development. | [Proposal](hardware/Core-D/proposal.md) / [Data](hardware/Core-D/data/) |
+| **ADX CORE-U** | Production | General-purpose standard board providing familiar Arduino-compatible accessibility with native enclosure integration. | Under Development |
 
 ### 2.2 CARDs (Expansion Modules)
 
