@@ -108,6 +108,7 @@ graph LR
 - **発注時プレビュー確認**:
   - DFM/DFA プレビュー画面で、`3-MCU`（QFN-20）、`5-BMC`（SOIC-8）、`4-RS485`（SOIC-8）、`1-DCDC`（ESOP-8）、`0-D1/1-D2`（SS54）、`1-C7`（固体電解）の向きがシルクマークと合致していることを最終確認してください（本レビューで整合性確認済み）。
   - `H1`, `H2`, `H3` は「Do Not Place (DNP)」として自動認識または手動で DNP を選択してください。
+  - **※発注直前の全確認項目・修正操作手順**: [`component_placements_checklist.md`](../component_placements_checklist.md) を開き、1点ずつチェックしてください。
 
 ---
 
