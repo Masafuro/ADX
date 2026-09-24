@@ -7,41 +7,45 @@ SPDX-License-Identifier: CC-BY-4.0
 
 [ **English** | [日本語 (../ja/README.md)](../ja/README.md) ]
 
-**ADX (Advanced Devices eXtended)** is an open-source hardware standard and modular control platform focused on electromechanical enclosure fit and field installation.
+**ADX (Advanced Devices eXtended)** is an open-source hardware standard and modular control ecosystem designed around the principle of **"Enclosure-Friendly"** engineering.
 
-While conventional prototyping boards offer great accessibility on the benchtop, mounting them into real-world enclosures often presents mechanical challenges—such as tight screw clearances, multi-directional cabling, and rigid stacking constraints. ADX addresses these integration challenges through the **8748 Form Factor** and a flexible IDC-based expansion bus, providing reliable M3 screw mounting, a unified wiring interface edge, and tolerance-friendly packaging compatible with 3D-printed enclosures, electrical boxes, and waterproof casings, all while maintaining familiar open-source embedded workflows.
+While conventional prototyping boards excel on the workbench, transitioning them into actual enclosures, installations, or field deployments often brings physical frustration—mounting screws colliding with traces, lack of washer clearance, multi-directional cable protrusions, and rigid shield stacking that cannot absorb real-world mechanical tolerances. 
+
+ADX bridges the gap between desktop prototyping and physical deployment through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a flexible 20-pin IDC ribbon bus. From robust, daisy-chainable field networking reminiscent of professional audio equipment to 5V high-power battery-integrated enclosed devices, ADX explores what is possible when hardware is built to fit cleanly inside 3D-printed enclosures, off-the-shelf waterproof cases, and electrical utility boxes.
 
 ---
 
 ## 1. Key Design Features
 
-* **Secure M3 Fastening with Washer Clearance**:
-  Mounting holes ($\Phi 3.3\text{ mm}$) are positioned with $5.0\text{ mm}$ edge margins, ensuring ample clearance for standard washers and reliable torque application without damaging PCB traces.
+* **Enclosure-Friendly Mechanical Alignment (8748 Form Factor)**:
+  `87.0 mm × 48.0 mm` outline with standardized M3 mounting holes (`77.0 mm × 38.0 mm` pitch) featuring generous $5.0\text{ mm}$ edge margins to accommodate standard screw washers without biting into PCB traces.
 * **Unified Interface Edge**:
-  Terminal blocks and external connections are aligned along designated board edges, simplifying enclosure cutouts and sealing.
-* **Flexible Coupling via IDC Ribbon Cable**:
-  Expansion boards connect via a 20-pin IDC ribbon cable (ADX Pinout) rather than rigid pin headers. This absorbs mechanical tolerances, allows flexible internal placement (stacked, planar, or angled), and supports daisy-chaining.
-* **Enclosure Compatibility**:
-  Designed to mount cleanly into off-the-shelf waterproof casings, industrial electrical utility boxes, desktop 3D-printed enclosures, and dedicated slot-in guide rails.
+  Terminal blocks, external ports, and connectors are aligned along designated board edges, making panel cutouts and environmental sealing clean and straightforward.
+* **Tolerance-Absorbing IDC Ribbon Coupling**:
+  Expansion boards (CARDs) couple via a 20-pin IDC ribbon cable rather than rigid stacking pin headers. This absorbs enclosure manufacturing tolerances, allows flexible internal placement (stacked, coplanar, or folded), and eliminates pin-bending stress.
+* **Single-Directional Protected Power Flow**:
+  Strict architectural power routing: core power is fed through designated, protected input gateways, while the 20-pin IDC expansion bus serves strictly as an outbound power delivery bus (5V / 2A+), preventing hazardous cross-feed and back-power collisions.
 
 ---
 
 ## 2. Hardware Lineup
 
-The ADX ecosystem consists of **Core Boards** (main processing units) and **CARDs** (stackable/chainable add-on modules), sharing the same 8748 Form Factor and 20-pin expansion bus.
+The ADX platform is anchored by two complementary Core MCU boards sharing the 8748 Form Factor, accompanied by flexible expansion CARDs:
 
 ### 2.1 Core Boards (MCU)
 
-| Board | Description | Status & Resources |
-| :--- | :--- | :--- |
-| **ADX CORE-U** | General-purpose standard board providing familiar Arduino-compatible accessibility with native enclosure integration. | Under Development |
-| **ADX Core-D** | Differential communication board equipped with LN-485 (LIN-based RS-485) transceiver for high-noise and long-distance field buses. | [Proposal](../../hardware/ADX_Core-D/proposal.md) / [Data](../../hardware/ADX_Core-D/data/) |
+| Board | Role & Power Architecture | Communication & Features | Target Applications & Status |
+| :--- | :--- | :--- | :--- |
+| **ADX CORE-S**<br>*(Standard / Field-Ready)* | **DC 12V / 24V Wide Input**<br>Onboard step-down DC-DC (TPS5430), switched 5V power gating via dedicated BMC supervisor (ATtiny412). | **Daisy-Chainable LN-485 (RS-485)**<br>Hardware LIN-assisted differential bus for multi-node networks, robust against field noise and long runs. | Architectural lighting, stage & interactive art installations, outdoor exhibits, multi-drop field sensing.<br>*(In Review / Pre-production)* |
+| **ADX CORE-U**<br>*(Universal / Utility)* | **DC 5V High-Power (2A+)**<br>DCDC omitted to reinvest in rock-solid protection: **eFuse + 12V Overvoltage Protection (OVP)**. Single DC jack with physical interlock. | **USB Type-C (UPDI / Dual UART)**<br>WCH CH342K for seamless flashing and debugging. Native 5V ATtiny1616 logic. | Enclosure-integrated standalone devices, robotics & servo control, battery-powered portable IoT via CARDs.<br>*(rev0 Conceptualized)* |
+| *ADX Core-D*<br>*(R&D Testbed)* | *DC 5V USB / Terminal* | *LN-485 protocol and bootloader verification board. Validated across Phases 1–5.* | *Internal R&D testbed (Not for production).* |
 
 ### 2.2 CARDs (Expansion Modules)
 
 | Board | Description | Status & Resources |
 | :--- | :--- | :--- |
-| **ADX Prototyping CARD** | 8748 Form Factor expansion add-on card with lower 20-pin ADX bus breakout and upper 20-pin prototyping grid. | [Proposal](../../hardware/CARD/Prototyping/proposal.md) / [Data](../../hardware/CARD/Prototyping/data/) |
+| **ADX Prototyping CARD** | 8748 Form Factor companion board with lower 20-pin ADX bus breakout and upper 20-pin prototyping grid. | [Proposal](../../hardware/CARD/Prototyping/proposal.md) / [Data](../../hardware/CARD/Prototyping/data/) |
+| **ADX Battery / Power CARD** | External battery regulation (LiPo / Dry Cell) feeding 5V into CORE-U for fully enclosed battery-powered systems. | Conceptual Planning |
 
 ---
 
