@@ -14,7 +14,7 @@
 #include <avr/io.h>
 #include <util/delay_basic.h>
 
-#define BAUD_RATE 115200L
+#define BAUD_RATE 19200L
 #define BAUD_SETTING_16 (((16000000UL / 6) * 64) / (16L * BAUD_RATE))
 #define BAUD_SETTING_20 (((20000000UL / 6) * 64) / (16L * BAUD_RATE))
 
@@ -42,10 +42,10 @@ static inline void rs485_tx_end(void) {
   // Critical Invariant: Re-arm Wait-For-Break (WFB) and clear all error flags.
   USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm;
 
-  // Drain RX FIFO
+  // Drain RX FIFO completely (read both H and L)
   while (USART0.STATUS & USART_RXCIF_bm) {
-    uint8_t dummy = USART0.RXDATAL;
-    (void)dummy;
+    (void)USART0.RXDATAH;
+    (void)USART0.RXDATAL;
   }
 }
 
@@ -82,6 +82,8 @@ static uint8_t getch_header(void) {
 
     if (++loop == 0) {
       VPORTB.IN |= (1 << 2); // Toggle RED LED (PB2) at ~2Hz heartbeat
+      // Safe Guard: Periodically re-arm WFB so any corrupted sync state recovers immediately!
+      USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm;
     }
   }
 
