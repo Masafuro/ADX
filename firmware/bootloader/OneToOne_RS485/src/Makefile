@@ -28,11 +28,17 @@ TARGET_HEX   = optiboot_core_d_rs485.hex
 BLANK_ELF    = blank_app.elf
 BLANK_HEX    = blank_app.hex
 COMBINED_HEX = optiboot_core_d_with_blank.hex
-TEST_APP_ELF = test_blink_white_led.elf
-TEST_APP_HEX = test_blink_white_led.hex
+
+TEST_WHITE_ELF     = test_blink_white_led.elf
+TEST_WHITE_HEX     = test_blink_white_led.hex
+TEST_ALT_ELF       = test_blink_alternate_led.elf
+TEST_ALT_HEX       = test_blink_alternate_led.hex
+TEST_SERIAL_ELF    = test_rs485_serial.elf
+TEST_SERIAL_HEX    = test_rs485_serial.hex
+
 RELEASE_DIR  = ../releases
 
-all: $(TARGET_HEX) $(COMBINED_HEX) $(TEST_APP_HEX) check_size
+all: $(TARGET_HEX) $(COMBINED_HEX) $(TEST_WHITE_HEX) $(TEST_ALT_HEX) $(TEST_SERIAL_HEX) check_size
 
 $(TARGET_ELF): optiboot_x.c pin_defs_x.h stk500.h
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
@@ -52,10 +58,26 @@ $(COMBINED_HEX): $(TARGET_HEX) $(BLANK_HEX)
 	python3 merge_hex.py $(TARGET_HEX) $(BLANK_HEX) $@
 	cp $@ $(RELEASE_DIR)/$@
 
-$(TEST_APP_ELF): test_blink_white_led.c
+$(TEST_WHITE_ELF): test_blink_white_led.c
 	$(CC) -mmcu=$(MCU) -Os -DF_CPU=3333333UL -nostartfiles -Wl,-section-start=.text=0x200 -o $@ $<
 
-$(TEST_APP_HEX): $(TEST_APP_ELF)
+$(TEST_WHITE_HEX): $(TEST_WHITE_ELF)
+	$(OBJCOPY) -O ihex $< $@
+	mkdir -p $(RELEASE_DIR)
+	cp $@ $(RELEASE_DIR)/$@
+
+$(TEST_ALT_ELF): test_blink_alternate_led.c
+	$(CC) -mmcu=$(MCU) -Os -DF_CPU=3333333UL -nostartfiles -Wl,-section-start=.text=0x200 -o $@ $<
+
+$(TEST_ALT_HEX): $(TEST_ALT_ELF)
+	$(OBJCOPY) -O ihex $< $@
+	mkdir -p $(RELEASE_DIR)
+	cp $@ $(RELEASE_DIR)/$@
+
+$(TEST_SERIAL_ELF): test_rs485_serial.c
+	$(CC) -mmcu=$(MCU) -Os -DF_CPU=3333333UL -nostartfiles -Wl,-section-start=.text=0x200 -o $@ $<
+
+$(TEST_SERIAL_HEX): $(TEST_SERIAL_ELF)
 	$(OBJCOPY) -O ihex $< $@
 	mkdir -p $(RELEASE_DIR)
 	cp $@ $(RELEASE_DIR)/$@
@@ -66,4 +88,4 @@ check_size: $(TARGET_ELF)
 	@echo "======================================================="
 
 clean:
-	rm -f $(TARGET_ELF) $(TARGET_HEX) $(BLANK_ELF) $(BLANK_HEX) $(COMBINED_HEX) $(TEST_APP_ELF) $(TEST_APP_HEX)
+	rm -f $(TARGET_ELF) $(TARGET_HEX) $(BLANK_ELF) $(BLANK_HEX) $(COMBINED_HEX) $(TEST_WHITE_ELF) $(TEST_WHITE_HEX) $(TEST_ALT_ELF) $(TEST_ALT_HEX) $(TEST_SERIAL_ELF) $(TEST_SERIAL_HEX)
