@@ -466,8 +466,11 @@
     </div>
 
     <div class="btn-row">
-      <button class="btn-secondary" id="btnLoadTestFirmware">
-        💡 テスト用「白色LED点滅」バイナリを自動読み込み
+      <button class="btn-secondary" id="btnLoadTestFirmware" title="通常の白色LED点滅 (500ms周期)">
+        ⚪ テスト①: 白色LED点滅 (500ms)
+      </button>
+      <button class="btn-secondary" id="btnLoadTestAlternate" title="赤LEDと白LEDが交互に点滅 (200ms周期・書き換え証明用)">
+        🚨 テスト②: 赤白LED交互点滅 (200ms・証明用)
       </button>
     </div>
   </div>
@@ -533,11 +536,18 @@
 </div>
 
 <script>
-// Built-in test firmware: test_blink_white_led.hex (56 bytes, 0x0200~)
-const BUILTIN_TEST_HEX = `:1002000088E08093210484E0809321048093260475
+// Built-in test firmwares (56 bytes each, 0x0200~)
+const BUILTIN_TEST_WHITE_HEX = `:1002000088E08093210484E0809321048093260475
 :1002100088E08093250425E136E195E021503040C7
 :100220009040E1F78093260425E136E195E02150E6
 :0802300030409040E1F7EDCFF2
+:0400000300000200F7
+:00000001FF`;
+
+const BUILTIN_TEST_ALTERNATE_HEX = `:100200008CE08093210494E088E09093250480930F
+:10021000260425ED38E042E0215030404040E1F72F
+:10022000909326048093250425ED38E042E0215088
+:0802300030404040E1F7E9CF46
 :0400000300000200F7
 :00000001FF`;
 
@@ -577,6 +587,7 @@ const fileInfo = document.getElementById('fileInfo');
 const fileName = document.getElementById('fileName');
 const fileStats = document.getElementById('fileStats');
 const btnLoadTestFirmware = document.getElementById('btnLoadTestFirmware');
+const btnLoadTestAlternate = document.getElementById('btnLoadTestAlternate');
 const progressBar = document.getElementById('progressBar');
 const progressPct = document.getElementById('progressPct');
 const progressStageName = document.getElementById('progressStageName');
@@ -673,9 +684,13 @@ function loadFirmwareData(hexText, name) {
   }
 }
 
-// Built-in Test Firmware Button
+// Built-in Test Firmware Buttons
 btnLoadTestFirmware.addEventListener('click', () => {
-  loadFirmwareData(BUILTIN_TEST_HEX, "test_blink_white_led.hex (ビルトイン)");
+  loadFirmwareData(BUILTIN_TEST_WHITE_HEX, "test_blink_white_led.hex (白色LED点滅 500ms)");
+});
+
+btnLoadTestAlternate.addEventListener('click', () => {
+  loadFirmwareData(BUILTIN_TEST_ALTERNATE_HEX, "test_blink_alternate_led.hex (赤白LED交互点滅 200ms)");
 });
 
 // Drag and drop handlers
@@ -1031,7 +1046,11 @@ btnFlash.addEventListener('click', async () => {
     log("  🎉 [SUCCESS] Application successfully flashed over RS-485!", 'pass');
     log("=================================================================", 'pass');
     log(">>> Core-D is now launching the application.", 'pass');
-    log(">>> Check the onboard WHITE LED (PB3) — it should be blinking (500ms cycle)!", 'pass');
+    if (fileName.textContent.includes("alternate") || fileName.textContent.includes("赤白")) {
+      log(">>> 🚨 Check the onboard LEDs — RED (PB2) and WHITE (PB3) are alternating (200ms cycle)!", 'pass');
+    } else {
+      log(">>> ⚪ Check the onboard WHITE LED (PB3) — it should be blinking (500ms cycle)!", 'pass');
+    }
     log("=================================================================", 'pass');
 
   } catch (err) {
