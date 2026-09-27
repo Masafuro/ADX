@@ -103,6 +103,9 @@ int main(void) {
   VPORTB.DIR |= (1 << 2);
   VPORTB.OUT &= ~(1 << 2);
 
+  // Route USART0 to alternate pins: PA1 (TXD) and PA2 (RXD)
+  PORTMUX.CTRLB = PORTMUX_USART0_ALTERNATE_gc;
+
   // Initialize USART0 (Standard Asynchronous, no interrupts, no hardware XDIR)
   if ((FUSE_OSCCFG & FUSE_FREQSEL_gm) == FREQSEL_16MHZ_gc) {
     USART0.BAUD = BAUD_SETTING_16;
@@ -207,14 +210,10 @@ void putch(uint8_t ch) {
 uint8_t getch(void) {
   uint8_t ch, flags;
   uint16_t loop = 0;
-  uint8_t loop_h = 0;
 
   while (!(USART0.STATUS & USART_RXCIF_bm)) {
     if (++loop == 0) {
-      if (++loop_h >= 4) {
-        loop_h = 0;
-        VPORTB.IN |= (1 << 2); // Toggle RED LED (PB2)
-      }
+      VPORTB.IN |= (1 << 2); // Toggle RED LED (PB2) at ~2Hz
     }
   }
 
