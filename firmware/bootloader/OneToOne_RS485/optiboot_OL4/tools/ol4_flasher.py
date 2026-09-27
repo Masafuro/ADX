@@ -190,7 +190,7 @@ class LN485MasterBroker:
                 elapsed = time.time() - start
                 print(f"[STAGE 1: PASS] Power-on detected in {elapsed:.2f}s (probe #{probes})!")
                 # Inter-stage settlement delay (ensure slave finishes TXCIF and WFB re-arm)
-                time.sleep(0.080)
+                time.sleep(0.150)
                 return True
             time.sleep(0.02)
         print("[STAGE 1: FAIL] Timeout waiting for Core-D.")
@@ -403,6 +403,7 @@ def main():
                     all_ok = False
                     break
 
+                time.sleep(0.020)  # Brief quiet bus settlement before verify read
                 readback = broker.read_page(curr_addr)
                 t_page = (time.time() - t_w0) * 1000.0
                 if readback == page_bytes:

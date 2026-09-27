@@ -14,7 +14,7 @@
  */
 
 #define OL4_MAJVER 1
-#define OL4_MINVER 1
+#define OL4_MINVER 2
 
 // Protected Identifiers (PIDs)
 #define PID_PING        0x80  // ID 0x00: Master-Pub -> Slave-Pub: Ping / Keep-Alive

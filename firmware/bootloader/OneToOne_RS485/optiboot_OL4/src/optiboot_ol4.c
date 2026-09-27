@@ -260,17 +260,18 @@ int main(void) {
 
       uint16_t crc = 0xFFFF;
       uint8_t *p = (uint8_t *)(MAPPED_PROGMEM_START + address.word + offset);
+      uint8_t len = CHUNK_SIZE;
 
       response_space();
       rs485_tx_start();
       putch(STATUS_OK);
       putch(CHUNK_SIZE); // Length = 8
 
-      for (uint8_t i = 0; i < CHUNK_SIZE; i++) {
+      do {
         uint8_t b = *(p++);
         crc = crc16_update(crc, b);
         putch(b);
-      }
+      } while (--len);
 
       putch((uint8_t)(crc >> 8));
       putch((uint8_t)(crc & 0xFF));
