@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ADX Core-D 1-to-1 RS-485 Web Flasher</title>
+  <title>ADX Core-D RS-485 Web Flasher & Serial Monitor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22,6 +22,7 @@
       --amber-glow: rgba(245, 158, 11, 0.25);
       --rose: #f43f5e;
       --rose-glow: rgba(244, 63, 94, 0.25);
+      --purple: #a855f7;
       --console-bg: #05080f;
     }
 
@@ -45,15 +46,15 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px 16px 48px;
+      padding: 20px 16px 48px;
     }
 
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 920px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
     header {
@@ -142,11 +143,11 @@
       backdrop-filter: blur(16px);
       border: 1px solid var(--bg-card-border);
       border-radius: 16px;
-      padding: 24px;
+      padding: 20px 24px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     .card-title {
@@ -160,17 +161,66 @@
       gap: 8px;
     }
 
+    /* Tab Navigation */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid var(--bg-card-border);
+    }
+
+    .tab-btn {
+      flex: 1;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.18), rgba(16, 185, 129, 0.18));
+      color: var(--cyan);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      box-shadow: 0 2px 12px rgba(0, 240, 255, 0.15);
+    }
+
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .tab-pane.active {
+      display: flex;
+    }
+
     .btn-row {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     button {
       font-family: 'Outfit', sans-serif;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
-      padding: 12px 22px;
+      padding: 10px 18px;
       border-radius: 10px;
       border: none;
       cursor: pointer;
@@ -221,7 +271,7 @@
     .drop-zone {
       border: 2px dashed rgba(255, 255, 255, 0.15);
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -246,26 +296,28 @@
     }
 
     .drop-icon {
-      font-size: 28px;
-      margin-bottom: 8px;
-      color: var(--cyan);
+      font-size: 26px;
+      margin-bottom: 6px;
     }
 
     .file-info {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 16px;
-      background: rgba(0, 240, 255, 0.05);
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      border-radius: 10px;
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
       font-size: 13px;
-      font-family: 'JetBrains Mono', monospace;
     }
 
     .file-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
       color: var(--cyan);
-      font-weight: 600;
+      background: rgba(0, 240, 255, 0.1);
+      padding: 3px 8px;
+      border-radius: 4px;
     }
 
     .progress-box {
@@ -278,16 +330,14 @@
       display: flex;
       justify-content: space-between;
       font-size: 13px;
-      font-weight: 500;
     }
 
     .progress-track {
-      width: 100%;
-      height: 10px;
+      height: 12px;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 6px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .progress-bar {
@@ -301,81 +351,165 @@
 
     .stage-steps {
       display: flex;
-      justify-content: space-between;
+      gap: 6px;
       margin-top: 4px;
-      position: relative;
+      flex-wrap: wrap;
     }
 
     .stage-pill {
-      font-size: 11px;
       font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
       padding: 3px 8px;
       border-radius: 4px;
       background: rgba(255, 255, 255, 0.04);
       color: var(--text-muted);
-      border: 1px solid transparent;
-      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .stage-pill.active {
-      color: #05080f;
-      background: var(--cyan);
-      font-weight: 600;
-      box-shadow: 0 0 10px var(--cyan-glow);
+      background: rgba(0, 240, 255, 0.15);
+      color: var(--cyan);
+      border-color: rgba(0, 240, 255, 0.4);
     }
 
     .stage-pill.completed {
+      background: rgba(16, 185, 129, 0.15);
       color: var(--emerald);
-      border-color: rgba(16, 185, 129, 0.3);
-      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.4);
     }
 
+    /* Communication Consoles */
     .console-card {
       background: var(--console-bg);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 12px;
-      overflow: hidden;
+      border: 1px solid var(--bg-card-border);
+      border-radius: 14px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
+      gap: 10px;
     }
 
     .console-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.02);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      align-items: center;
       font-size: 12px;
+      font-weight: 600;
       color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.5px;
     }
 
     .console-body {
-      height: 200px;
-      overflow-y: auto;
-      padding: 12px 16px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11.5px;
-      line-height: 1.6;
-      color: #cbd5e1;
+      font-size: 12px;
+      height: 220px;
+      overflow-y: auto;
+      background: #020408;
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
     }
 
     .log-line {
+      line-height: 1.5;
       word-break: break-all;
     }
-    .log-info { color: #94a3b8; }
-    .log-pass { color: var(--emerald); font-weight: 600; }
-    .log-warn { color: var(--amber); }
-    .log-fail { color: var(--rose); font-weight: 600; }
-    .log-tx { color: #38bdf8; }
-    .log-rx { color: #a78bfa; }
+    .log-info  { color: #94a3b8; }
+    .log-pass  { color: var(--emerald); }
+    .log-warn  { color: var(--amber); }
+    .log-fail  { color: var(--rose); font-weight: 600; }
+
+    /* Serial Monitor Specific */
+    .monitor-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .select-styled {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      color: var(--text-main);
+      padding: 6px 10px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      outline: none;
+      cursor: pointer;
+    }
+    .select-styled option {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .monitor-screen {
+      background: #020408;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.6;
+      height: 380px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .monitor-send-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .send-input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .send-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .rx-text   { color: #10b981; }
+    .tx-text   { color: #00f0ff; }
+    .sys-text  { color: #94a3b8; font-style: italic; }
 
     .guide-box {
-      background: rgba(245, 158, 11, 0.05);
+      background: rgba(245, 158, 11, 0.08);
       border: 1px solid rgba(245, 158, 11, 0.25);
       border-radius: 10px;
       padding: 12px 16px;
@@ -404,6 +538,7 @@
       .btn-row { flex-direction: column; }
       button { width: 100%; justify-content: center; }
       .stage-steps { display: none; }
+      .monitor-send-bar { flex-direction: column; align-items: stretch; }
     }
   </style>
 </head>
@@ -415,8 +550,8 @@
     <div class="brand">
       <div class="logo-badge">ADX</div>
       <div class="title-group">
-        <h1>Core-D RS-485 Flasher <span class="version-tag">M5 Web</span></h1>
-        <p>ATtiny1616 1-to-1 RS-485 Bootloader Programming Tool</p>
+        <h1>Core-D RS-485 Tool <span class="version-tag">M5 Web</span></h1>
+        <p>1-to-1 RS-485 Web Flasher & Serial Monitor</p>
       </div>
     </div>
     <div class="port-status-pill">
@@ -431,11 +566,11 @@
     Google Chrome または Microsoft Edge（デスクトップ版、または Android 端末の Chrome）をご使用ください。
   </div>
 
-  <!-- Step 1: Serial Connection -->
+  <!-- Common Step 1: Serial Connection -->
   <div class="card">
     <div class="card-title">1. シリアルポート接続 (USB-RS485)</div>
     <p style="font-size: 13px; color: var(--text-muted);">
-      PC に接続された USB-RS485 ドングルを選択して接続します。通信速度は 115,200 bps に自動設定されます。
+      PC またはスマホ（USB-OTG）に接続された USB-RS485 ドングルを選択して接続します。
     </p>
     <div class="btn-row">
       <button class="btn-primary" id="btnConnect">
@@ -446,82 +581,157 @@
     </div>
   </div>
 
-  <!-- Step 2: Firmware Selection -->
-  <div class="card">
-    <div class="card-title">2. ファームウェア選択 (.hex)</div>
-    
-    <div class="drop-zone" id="dropZone">
-      <input type="file" id="fileInput" accept=".hex">
-      <div class="drop-icon">📂</div>
-      <p style="font-weight: 600; margin-bottom: 4px;">Intel HEX ファイルをここにドラッグ＆ドロップ</p>
-      <p style="font-size: 12px; color: var(--text-muted);">またはクリックしてファイルを選択</p>
-    </div>
+  <!-- Mode Selection Tabs -->
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tabBtnFlasher">
+      ⚡ ファームウェア書き込み (Flasher)
+    </button>
+    <button class="tab-btn" id="tabBtnMonitor">
+      📟 RS-485 シリアルモニター (Serial Monitor)
+    </button>
+  </div>
 
-    <div class="file-info" id="fileInfo" style="display: none;">
-      <div>
-        <span class="file-badge" id="fileName">firmware.hex</span>
-        <span style="color: var(--text-muted); margin-left: 8px;" id="fileStats">56 bytes (0x0200 - 0x0237)</span>
+  <!-- TAB 1: FLASHER PANE -->
+  <div class="tab-pane active" id="paneFlasher">
+    <!-- Step 2: Firmware Selection -->
+    <div class="card">
+      <div class="card-title">2. ファームウェア選択 (.hex)</div>
+      
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept=".hex">
+        <div class="drop-icon">📂</div>
+        <p style="font-weight: 600; margin-bottom: 4px;">Intel HEX ファイルをここにドラッグ＆ドロップ</p>
+        <p style="font-size: 12px; color: var(--text-muted);">またはクリックしてファイルを選択</p>
       </div>
-      <span style="color: var(--emerald); font-weight: 600;">READY</span>
+
+      <div class="file-info" id="fileInfo" style="display: none;">
+        <div>
+          <span class="file-badge" id="fileName">firmware.hex</span>
+          <span style="color: var(--text-muted); margin-left: 8px;" id="fileStats">0 bytes</span>
+        </div>
+        <span style="color: var(--emerald); font-weight: 600;">READY</span>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary" id="btnLoadTestFirmware" title="通常の白色LED点滅 (500ms周期)">
+          ⚪ テスト①: 白色LED点滅 (500ms)
+        </button>
+        <button class="btn-secondary" id="btnLoadTestAlternate" title="赤LEDと白LEDが交互に点滅 (200ms周期・書き換え証明用)">
+          🚨 テスト②: 赤白LED交互点滅 (200ms)
+        </button>
+        <button class="btn-secondary" id="btnLoadTestSerial" title="115200bpsでのRS-485送信 & エコーバックテスト">
+          📡 テスト③: RS-485 シリアル出力 & エコー
+        </button>
+      </div>
     </div>
 
-    <div class="btn-row">
-      <button class="btn-secondary" id="btnLoadTestFirmware" title="通常の白色LED点滅 (500ms周期)">
-        ⚪ テスト①: 白色LED点滅 (500ms)
-      </button>
-      <button class="btn-secondary" id="btnLoadTestAlternate" title="赤LEDと白LEDが交互に点滅 (200ms周期・書き換え証明用)">
-        🚨 テスト②: 赤白LED交互点滅 (200ms・証明用)
-      </button>
+    <!-- Step 3: Flash Execution & Progress -->
+    <div class="card">
+      <div class="card-title">3. 書き込み実行 & ステータス</div>
+
+      <div class="guide-box">
+        <span>⚡</span>
+        <div>
+          <strong>書き込みのタイミングについて:</strong><br>
+          下記の「書き込み開始」をクリック後、画面が <code>[POLLING]</code> になったら、<strong>Core-D の電源を ON にしてください（またはリセット）</strong>。赤色 LED（PB2）の点滅を自動検知して書き込みを開始します。
+        </div>
+      </div>
+
+      <div class="progress-box">
+        <div class="progress-header">
+          <span id="progressStageName">待機中</span>
+          <span id="progressPct" style="font-family: 'JetBrains Mono', monospace;">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="stage-steps">
+          <span class="stage-pill" id="pill-0">0:INIT</span>
+          <span class="stage-pill" id="pill-1">1:POLL</span>
+          <span class="stage-pill" id="pill-2">2:SYNC</span>
+          <span class="stage-pill" id="pill-3">3:IDENT</span>
+          <span class="stage-pill" id="pill-4">4:WRITE</span>
+          <span class="stage-pill" id="pill-5">5:VERIFY</span>
+          <span class="stage-pill" id="pill-6">6:BOOT</span>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top: 8px;">
+        <button class="btn-action" id="btnFlash" disabled>
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/></svg>
+          ファームウェア書き込み開始
+        </button>
+      </div>
+    </div>
+
+    <!-- Flasher Communication Console -->
+    <div class="console-card">
+      <div class="console-header">
+        <span>FLASHER LOG CONSOLE</span>
+        <button class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="btnClearConsole">クリア</button>
+      </div>
+      <div class="console-body" id="consoleBody">
+        <div class="log-line log-info">[INFO] ADX Core-D Web Flasher loaded. Connect USB-RS485 adapter to start.</div>
+      </div>
     </div>
   </div>
 
-  <!-- Step 3: Flash Execution & Progress -->
-  <div class="card">
-    <div class="card-title">3. 書き込み実行 & ステータス</div>
+  <!-- TAB 2: SERIAL MONITOR PANE -->
+  <div class="tab-pane" id="paneMonitor">
+    <div class="card">
+      <div class="card-title">📟 RS-485 リアルタイム・シリアルモニター</div>
 
-    <div class="guide-box">
-      <span>⚡</span>
-      <div>
-        <strong>書き込みのタイミングについて:</strong><br>
-        下記の「書き込み開始」をクリック後、画面が <code>[POLLING]</code> になったら、<strong>Core-D の電源を ON にしてください（またはリセット）</strong>。赤色 LED（PB2）の点滅を自動検知して書き込みを開始します。
+      <div class="monitor-toolbar">
+        <div class="toolbar-group">
+          <label style="font-size: 12px; color: var(--text-muted);">ボーレート:</label>
+          <select id="monitorBaudSelect" class="select-styled">
+            <option value="115200" selected>115,200 bps</option>
+            <option value="57600">57,600 bps</option>
+            <option value="38400">38,400 bps</option>
+            <option value="19200">19,200 bps</option>
+            <option value="9600">9,600 bps</option>
+          </select>
+          <label style="font-size: 12px; color: var(--text-muted); margin-left: 6px;">表示:</label>
+          <select id="monitorFormatSelect" class="select-styled">
+            <option value="text" selected>Text (UTF-8)</option>
+            <option value="hex">HEX Dump</option>
+          </select>
+        </div>
+        <div class="toolbar-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="checkTimestamp" checked> タイムスタンプ
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="checkAutoScroll" checked> 自動スクロール
+          </label>
+          <button class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="btnClearMonitor">クリア</button>
+          <button class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="btnSaveMonitorLog">ログ保存</button>
+        </div>
       </div>
-    </div>
 
-    <div class="progress-box">
-      <div class="progress-header">
-        <span id="progressStageName">待機中</span>
-        <span id="progressPct" style="font-family: 'JetBrains Mono', monospace;">0%</span>
+      <div class="monitor-screen" id="serialMonitorOutput">
+        <div class="sys-text">[SYSTEM] Serial Monitor ready. Connect port to view RS-485 traffic.</div>
       </div>
-      <div class="progress-track">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
-      <div class="stage-steps">
-        <span class="stage-pill" id="pill-0">0:INIT</span>
-        <span class="stage-pill" id="pill-1">1:POLL</span>
-        <span class="stage-pill" id="pill-2">2:SYNC</span>
-        <span class="stage-pill" id="pill-3">3:IDENT</span>
-        <span class="stage-pill" id="pill-4">4:WRITE</span>
-        <span class="stage-pill" id="pill-5">5:VERIFY</span>
-        <span class="stage-pill" id="pill-6">6:BOOT</span>
-      </div>
-    </div>
 
-    <div class="btn-row" style="margin-top: 8px;">
-      <button class="btn-action" id="btnFlash" disabled>
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/></svg>
-        ファームウェア書き込み開始
-      </button>
-    </div>
-  </div>
+      <div class="monitor-send-bar">
+        <input type="text" class="send-input" id="serialSendInput" placeholder="送信メッセージを入力 (Enterで送信)...">
+        <select id="serialEolSelect" class="select-styled" title="改行コード">
+          <option value="crlf" selected>CRLF (\r\n)</option>
+          <option value="lf">LF (\n)</option>
+          <option value="cr">CR (\r)</option>
+          <option value="none">改行なし</option>
+        </select>
+        <button class="btn-action" id="btnSendSerial" style="padding: 10px 18px;">
+          送信
+        </button>
+      </div>
 
-  <!-- Realtime Terminal Console -->
-  <div class="console-card">
-    <div class="console-header">
-      <span>COMMUNICATION CONSOLE (115,200 BPS 8N1)</span>
-      <button class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="btnClearConsole">クリア</button>
-    </div>
-    <div class="console-body" id="consoleBody">
-      <div class="log-line log-info">[INFO] ADX Core-D Web Flasher loaded. Connect USB-RS485 adapter to start.</div>
+      <div class="toolbar-group" style="font-size: 12px;">
+        <span style="color: var(--text-muted);">クイック送信:</span>
+        <button class="btn-secondary" style="padding: 3px 10px; font-size: 11px;" onclick="sendQuickText('PING')">PING</button>
+        <button class="btn-secondary" style="padding: 3px 10px; font-size: 11px;" onclick="sendQuickText('STATUS')">STATUS</button>
+        <button class="btn-secondary" style="padding: 3px 10px; font-size: 11px;" onclick="sendQuickText('HELLO')">HELLO</button>
+      </div>
     </div>
   </div>
 
@@ -536,7 +746,7 @@
 </div>
 
 <script>
-// Built-in test firmwares (56 bytes each, 0x0200~)
+// Built-in test firmwares
 const BUILTIN_TEST_WHITE_HEX = `:1002000088E08093210484E0809321048093260475
 :1002100088E08093250425E136E195E021503040C7
 :100220009040E1F78093260425E136E195E02150E6
@@ -548,6 +758,52 @@ const BUILTIN_TEST_ALTERNATE_HEX = `:100200008CE08093210494E088E09093250480930F
 :10021000260425ED38E042E0215030404040E1F72F
 :10022000909326048093250425ED38E042E0215088
 :0802300030404040E1F7E9CF46
+:0400000300000200F7
+:00000001FF`;
+
+const BUILTIN_TEST_SERIAL_HEX = `:1002000020E82093050429E02A95F1F7FC0181916B
+:10021000811110C08091040886FFFCCF80910408F2
+:1002200080648093040889E08A95F1F780E88093E0
+:10023000060408959091040895FFFCCF809302086E
+:10024000E6CF8CE08093210484E08093260488E04C
+:100250008093250482E08093010480E88093010468
+:100260008093060483E790E0809308089093090840
+:1002700080EC809306088EEB93E80E9400018CEEE0
+:1002800093E80E94000188E194E80E94000180EC5C
+:1002900093E80E94000110E000E098E0C92E2AE0F7
+:1002A000E22EF12C30E3B32E40E8D42EC092270486
+:1002B00084E494E80E9400010F5F1F4F21F4B98687
+:1002C00021E030E01BC0FE013196C80130E020E0A3
+:1002D0004F012F5F3F4FB7010E94CB01805D81939B
+:1002E000CB010097B1F7FE013996C9010197D401FE
+:1002F000A80FB91F4C9141930097C1F789E090E096
+:100300008C0F9D1F280F391FF9011082CE0109960D
+:100310000E9400018091280483FF05C084E694E8D0
+:100320000E94000104C087E794E80E94000184E174
+:10033000882E912C8091040887FF23C0A09000088C
+:100340008BE894E80E940001D0920504F9E0FA9548
+:10035000F1F78091040885FFFCCFA09202088091FC
+:10036000040886FFFCCF8091040880648093040811
+:1003700089E08A95F1F7D092060480EA94E80E9419
+:100380000001E2ECF2EA3197F1F700C0F1E08F1AD8
+:10039000910881F68BCFAA1BBB1B51E107C0AA1F96
+:1003A000BB1FA617B70710F0A61BB70B881F991F16
+:0E03B0005A95A9F780959095BC01CD0108954E
+:1003BE000D0A3D3D3D3D3D3D3D3D3D3D3D3D3D3DC2
+:1003CE003D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D4F
+:1003DE003D3D3D3D3D3D3D3D3D3D3D0D0A00202019
+:1003EE0041445820436F72652D442052532D3438AA
+:1003FE00352053657269616C204D6F6E69746F7232
+:10040E00205265616479210D0A00202042617564D5
+:10041E00726174653A20313135323030206270733A
+:10042E00207C204C45443A2050423320285768699E
+:10043E007465290D0A005B41445820436F72652D87
+:10044E00445D2048656172746265617420706163F9
+:10045E006B6574202300207C205768697465204CDE
+:10046E0045443A204F4E0D0A00207C20576869748F
+:10047E0065204C45443A204F46460D0A003E3E3E0E
+:10048E00204563686F2072656365697665643A20FE
+:06049E002700270D0A00F3
 :0400000300000200F7
 :00000001FF`;
 
@@ -573,7 +829,11 @@ let writer = null;
 let rxBuffer = [];
 let readResolve = null;
 let isReading = false;
+let isFlashing = false;
 let parsedFirmware = null;
+let currentBaudRate = 115200;
+
+const textDecoder = new TextDecoder('utf-8');
 
 // UI Elements
 const statusDot = document.getElementById('statusDot');
@@ -588,11 +848,30 @@ const fileName = document.getElementById('fileName');
 const fileStats = document.getElementById('fileStats');
 const btnLoadTestFirmware = document.getElementById('btnLoadTestFirmware');
 const btnLoadTestAlternate = document.getElementById('btnLoadTestAlternate');
+const btnLoadTestSerial = document.getElementById('btnLoadTestSerial');
 const progressBar = document.getElementById('progressBar');
 const progressPct = document.getElementById('progressPct');
 const progressStageName = document.getElementById('progressStageName');
 const consoleBody = document.getElementById('consoleBody');
 const btnClearConsole = document.getElementById('btnClearConsole');
+
+// Tab Elements
+const tabBtnFlasher = document.getElementById('tabBtnFlasher');
+const tabBtnMonitor = document.getElementById('tabBtnMonitor');
+const paneFlasher = document.getElementById('paneFlasher');
+const paneMonitor = document.getElementById('paneMonitor');
+
+// Serial Monitor Elements
+const monitorBaudSelect = document.getElementById('monitorBaudSelect');
+const monitorFormatSelect = document.getElementById('monitorFormatSelect');
+const checkTimestamp = document.getElementById('checkTimestamp');
+const checkAutoScroll = document.getElementById('checkAutoScroll');
+const btnClearMonitor = document.getElementById('btnClearMonitor');
+const btnSaveMonitorLog = document.getElementById('btnSaveMonitorLog');
+const serialMonitorOutput = document.getElementById('serialMonitorOutput');
+const serialSendInput = document.getElementById('serialSendInput');
+const serialEolSelect = document.getElementById('serialEolSelect');
+const btnSendSerial = document.getElementById('btnSendSerial');
 
 // Check Web Serial API support
 if (!('serial' in navigator)) {
@@ -600,7 +879,25 @@ if (!('serial' in navigator)) {
   btnConnect.disabled = true;
 }
 
-// Logging Utility
+// Tab Switching
+tabBtnFlasher.addEventListener('click', () => {
+  tabBtnFlasher.classList.add('active');
+  tabBtnMonitor.classList.remove('active');
+  paneFlasher.classList.add('active');
+  paneMonitor.classList.remove('active');
+});
+
+tabBtnMonitor.addEventListener('click', () => {
+  tabBtnMonitor.classList.add('active');
+  tabBtnFlasher.classList.remove('active');
+  paneMonitor.classList.add('active');
+  paneFlasher.classList.remove('active');
+  if (checkAutoScroll.checked) {
+    serialMonitorOutput.scrollTop = serialMonitorOutput.scrollHeight;
+  }
+});
+
+// Logging Utility (Flasher Console)
 function log(msg, type = 'info') {
   const line = document.createElement('div');
   line.className = `log-line log-${type}`;
@@ -646,11 +943,11 @@ function parseIntelHex(text) {
       const byteCount = parseInt(line.substring(1, 3), 16);
       const addr = parseInt(line.substring(3, 7), 16);
       const recType = parseInt(line.substring(7, 9), 16);
-      if (recType === 0x00) { // Data Record
+      if (recType === 0x00) {
         for (let i = 0; i < byteCount; i++) {
           data[addr + i] = parseInt(line.substring(9 + i * 2, 11 + i * 2), 16);
         }
-      } else if (recType === 0x01) { // EOF
+      } else if (recType === 0x01) {
         break;
       }
     } catch (e) {
@@ -693,6 +990,10 @@ btnLoadTestAlternate.addEventListener('click', () => {
   loadFirmwareData(BUILTIN_TEST_ALTERNATE_HEX, "test_blink_alternate_led.hex (赤白LED交互点滅 200ms)");
 });
 
+btnLoadTestSerial.addEventListener('click', () => {
+  loadFirmwareData(BUILTIN_TEST_SERIAL_HEX, "test_rs485_serial.hex (シリアル出力 & エコー 115200bps)");
+});
+
 // Drag and drop handlers
 dropZone.addEventListener('dragover', (e) => {
   e.preventDefault();
@@ -730,12 +1031,18 @@ async function startReadLoop() {
         const { value, done } = await reader.read();
         if (done) break;
         if (value) {
-          for (let i = 0; i < value.length; i++) {
-            rxBuffer.push(value[i]);
-          }
-          if (readResolve) {
-            readResolve();
-            readResolve = null;
+          if (isFlashing) {
+            // Flasher mode: STK500 response handling
+            for (let i = 0; i < value.length; i++) {
+              rxBuffer.push(value[i]);
+            }
+            if (readResolve) {
+              readResolve();
+              readResolve = null;
+            }
+          } else {
+            // Monitor mode: display incoming stream in real time
+            appendMonitorData(value);
           }
         }
       }
@@ -754,28 +1061,30 @@ async function startReadLoop() {
 btnConnect.addEventListener('click', async () => {
   try {
     port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 115200, dataBits: 8, stopBits: 1, parity: "none" });
+    await port.open({ baudRate: currentBaudRate, dataBits: 8, stopBits: 1, parity: "none" });
     writer = port.writable.getWriter();
     startReadLoop();
 
     statusDot.className = 'status-dot connected';
-    statusText.textContent = 'CONNECTED (115200)';
+    statusText.textContent = `CONNECTED (${currentBaudRate})`;
     btnConnect.disabled = true;
     btnDisconnect.disabled = false;
     if (parsedFirmware) btnFlash.disabled = false;
 
-    log("[PORT] Serial port connected at 115,200 bps (8N1).", 'pass');
+    log(`[PORT] Serial port connected at ${currentBaudRate} bps (8N1).`, 'pass');
+    appendMonitorSys(`[SYSTEM] Serial port connected at ${currentBaudRate} bps (8N1).`);
   } catch (err) {
     log(`[PORT] Connection failed: ${err.message}`, 'fail');
+    appendMonitorSys(`[ERROR] Connection failed: ${err.message}`);
   }
 });
 
 // Disconnect Serial Port
 btnDisconnect.addEventListener('click', async () => {
-  await disconnectPort();
+  await disconnectPort(true);
 });
 
-async function disconnectPort() {
+async function disconnectPort(fullReset = true) {
   isReading = false;
   if (reader) {
     try { await reader.cancel(); } catch (_) {}
@@ -786,16 +1095,153 @@ async function disconnectPort() {
   if (port) {
     try { await port.close(); } catch (_) {}
   }
-  port = null;
-  writer = null;
-  reader = null;
+  if (fullReset) {
+    port = null;
+    writer = null;
+    reader = null;
 
-  statusDot.className = 'status-dot';
-  statusText.textContent = 'DISCONNECTED';
-  btnConnect.disabled = false;
-  btnDisconnect.disabled = true;
-  btnFlash.disabled = true;
-  log("[PORT] Serial port closed.", 'info');
+    statusDot.className = 'status-dot';
+    statusText.textContent = 'DISCONNECTED';
+    btnConnect.disabled = false;
+    btnDisconnect.disabled = true;
+    btnFlash.disabled = true;
+    log("[PORT] Serial port closed.", 'info');
+    appendMonitorSys("[SYSTEM] Serial port disconnected.");
+  }
+}
+
+// Baud Rate Switcher for Serial Monitor
+monitorBaudSelect.addEventListener('change', async (e) => {
+  const newBaud = parseInt(e.target.value);
+  if (newBaud === currentBaudRate) return;
+  currentBaudRate = newBaud;
+
+  if (port) {
+    appendMonitorSys(`[SYSTEM] Switching baud rate to ${currentBaudRate} bps...`);
+    await disconnectPort(false);
+    try {
+      await port.open({ baudRate: currentBaudRate, dataBits: 8, stopBits: 1, parity: "none" });
+      writer = port.writable.getWriter();
+      startReadLoop();
+      statusText.textContent = `CONNECTED (${currentBaudRate})`;
+      appendMonitorSys(`[SYSTEM] Serial port re-opened at ${currentBaudRate} bps.`);
+    } catch (err) {
+      appendMonitorSys(`[ERROR] Failed to switch baud rate: ${err.message}`);
+    }
+  }
+});
+
+// Serial Monitor Functions
+function appendMonitorSys(msg) {
+  const div = document.createElement('div');
+  div.className = 'sys-text';
+  div.textContent = msg;
+  serialMonitorOutput.appendChild(div);
+  if (checkAutoScroll.checked) {
+    serialMonitorOutput.scrollTop = serialMonitorOutput.scrollHeight;
+  }
+}
+
+function appendMonitorTx(text) {
+  const span = document.createElement('span');
+  span.className = 'tx-text';
+  const timeStr = checkTimestamp.checked ? `[${getTimestamp()}] ` : '';
+  span.textContent = `${timeStr}-> ${text}`;
+  serialMonitorOutput.appendChild(span);
+  if (checkAutoScroll.checked) {
+    serialMonitorOutput.scrollTop = serialMonitorOutput.scrollHeight;
+  }
+}
+
+function appendMonitorData(uint8Array) {
+  const mode = monitorFormatSelect.value;
+  const timeStr = checkTimestamp.checked ? `[${getTimestamp()}] ` : '';
+
+  if (mode === 'hex') {
+    let hexStr = '';
+    for (let i = 0; i < uint8Array.length; i++) {
+      hexStr += uint8Array[i].toString(16).padStart(2, '0').toUpperCase() + ' ';
+    }
+    const span = document.createElement('span');
+    span.className = 'rx-text';
+    span.textContent = `${timeStr}${hexStr}\n`;
+    serialMonitorOutput.appendChild(span);
+  } else {
+    const text = textDecoder.decode(uint8Array, { stream: true });
+    const span = document.createElement('span');
+    span.className = 'rx-text';
+    span.textContent = text;
+    serialMonitorOutput.appendChild(span);
+  }
+
+  if (checkAutoScroll.checked) {
+    serialMonitorOutput.scrollTop = serialMonitorOutput.scrollHeight;
+  }
+}
+
+function getTimestamp() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const s = String(now.getSeconds()).padStart(2, '0');
+  const ms = String(now.getMilliseconds()).padStart(3, '0');
+  return `${h}:${m}:${s}.${ms}`;
+}
+
+btnClearMonitor.addEventListener('click', () => {
+  serialMonitorOutput.innerHTML = '';
+});
+
+btnSaveMonitorLog.addEventListener('click', () => {
+  const text = serialMonitorOutput.innerText;
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `adx_serial_log_${Date.now()}.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+// Send Serial Data
+async function sendMonitorText() {
+  if (!port || !writer) {
+    alert("シリアルポートが接続されていません。上部の「シリアルポートを選択して接続」を行ってください。");
+    return;
+  }
+  const text = serialSendInput.value;
+  if (!text) return;
+
+  const eolType = serialEolSelect.value;
+  let eol = "";
+  if (eolType === "crlf") eol = "\r\n";
+  else if (eolType === "lf") eol = "\n";
+  else if (eolType === "cr") eol = "\r";
+
+  const fullText = text + eol;
+  const encoder = new TextEncoder();
+  const data = encoder.encode(fullText);
+
+  try {
+    await writer.write(data);
+    appendMonitorTx(fullText);
+    serialSendInput.value = '';
+  } catch (err) {
+    appendMonitorSys(`[ERROR] Send failed: ${err.message}`);
+  }
+}
+
+btnSendSerial.addEventListener('click', sendMonitorText);
+serialSendInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    sendMonitorText();
+  }
+});
+
+function sendQuickText(cmd) {
+  serialSendInput.value = cmd;
+  sendMonitorText();
 }
 
 // STK500 Communication Primitives
@@ -831,7 +1277,7 @@ async function readUntilSync(timeoutMs = 500) {
   while (true) {
     const idx = rxBuffer.indexOf(STK_INSYNC);
     if (idx !== -1) {
-      rxBuffer.splice(0, idx + 1); // Discard up to and including 0x14
+      rxBuffer.splice(0, idx + 1);
       return true;
     }
     if (rxBuffer.length > 32) {
@@ -869,21 +1315,19 @@ async function sendCmd(cmdBytes, expectPayloadLen = 0, timeoutMs = 500) {
 btnFlash.addEventListener('click', async () => {
   if (!port || !parsedFirmware) return;
 
+  isFlashing = true;
   btnFlash.disabled = true;
   btnDisconnect.disabled = true;
   setProgress(0, "Stage 0: バス初期化中...", 0);
+  appendMonitorSys("[SYSTEM] --- Flasher started (Serial Monitor suspended) ---");
 
   try {
-    // -------------------------------------------------------------
     // Stage 0: Init & Bus Stabilization
-    // -------------------------------------------------------------
     log("[STAGE 0: INIT] Stabilizing RS-485 bus...", 'info');
     await sleep(100);
     clearRxBuffer();
 
-    // -------------------------------------------------------------
     // Stage 1: Polling & Power-on Detection
-    // -------------------------------------------------------------
     setProgress(5, "Stage 1: 電源投入待ち (Core-D を ON にしてください)...", 1);
     log("[STAGE 1: POLLING] Waiting for Core-D to power on / reset...", 'warn');
     log(">>> Power on or reset the Core-D NOW (Red LED PB2 will blink) <<<", 'warn');
@@ -911,9 +1355,7 @@ btnFlash.addEventListener('click', async () => {
     const elapsedSec = ((Date.now() - pollStart) / 1000).toFixed(1);
     log(`[STAGE 1: PASS] Power-on detected! Initial response received in ${elapsedSec}s.`, 'pass');
 
-    // -------------------------------------------------------------
     // Stage 2: Bus Settling & Clean Handshake Confirmation
-    // -------------------------------------------------------------
     setProgress(15, "Stage 2: バス安定化 & ハンドシェイク確認...", 2);
     log("[STAGE 2: HANDSHAKE] Settling bus (50ms) and confirming clean 2-way sync...", 'info');
     await sleep(50);
@@ -940,20 +1382,16 @@ btnFlash.addEventListener('click', async () => {
     }
     log("[STAGE 2: PASS] Handshake verified! Clean 2-way sync confirmed.", 'pass');
 
-    // -------------------------------------------------------------
     // Stage 3: Device Identification & Enter ProgMode
-    // -------------------------------------------------------------
     setProgress(25, "Stage 3: デバイス識別中...", 3);
     log("[STAGE 3: IDENTIFY] Reading bootloader version and device signature...", 'info');
 
-    // Read version
     const minor = await sendCmd([STK_GET_PARAMETER, 0x82], 1, 200);
     const major = await sendCmd([STK_GET_PARAMETER, 0x81], 1, 200);
     if (major && minor) {
       log(`    Bootloader Version: Optiboot ${major[0]}.${minor[0]}`, 'info');
     }
 
-    // Read signature
     const sig = await sendCmd([STK_READ_SIGN], 3, 300);
     if (sig) {
       const sigHex = sig.map(b => '0x' + b.toString(16).padStart(2, '0').toUpperCase()).join(' ');
@@ -963,13 +1401,10 @@ btnFlash.addEventListener('click', async () => {
       }
     }
 
-    // Enter ProgMode
     await sendCmd([STK_ENTER_PROGMODE], 0, 300);
     log("[STAGE 3: PASS] Entered programming mode successfully.", 'pass');
 
-    // -------------------------------------------------------------
     // Stage 4: Flash Programming (64B per Page)
-    // -------------------------------------------------------------
     const startPage = Math.floor(parsedFirmware.minAddr / PAGE_SIZE) * PAGE_SIZE;
     const endPage = Math.floor((parsedFirmware.maxAddr + PAGE_SIZE) / PAGE_SIZE) * PAGE_SIZE;
     const totalPages = (endPage - startPage) / PAGE_SIZE;
@@ -983,16 +1418,14 @@ btnFlash.addEventListener('click', async () => {
         pageBuf.push(parsedFirmware.data[pageAddr + i] !== undefined ? parsedFirmware.data[pageAddr + i] : 0xFF);
       }
 
-      // Load Address
       const addrLow = pageAddr & 0xFF;
       const addrHigh = (pageAddr >> 8) & 0xFF;
       const loadRes = await sendCmd([STK_LOAD_ADDRESS, addrLow, addrHigh], 0, 300);
       if (loadRes === null) throw new Error(`Stage 4 失敗: アドレス 0x${pageAddr.toString(16).toUpperCase()} のロードに失敗しました。`);
 
-      // Prog Page
       const lenHigh = (PAGE_SIZE >> 8) & 0xFF;
       const lenLow = PAGE_SIZE & 0xFF;
-      const progPacket = [STK_PROG_PAGE, lenHigh, lenLow, 0x46, ...pageBuf]; // 'F' = 0x46
+      const progPacket = [STK_PROG_PAGE, lenHigh, lenLow, 0x46, ...pageBuf];
       const progRes = await sendCmd(progPacket, 0, 1000);
       if (progRes === null) throw new Error(`Stage 4 失敗: ページ 0x${pageAddr.toString(16).toUpperCase()} の書き込みに失敗しました。`);
 
@@ -1001,9 +1434,7 @@ btnFlash.addEventListener('click', async () => {
     }
     log("[STAGE 4: PASS] All pages programmed to flash successfully.", 'pass');
 
-    // -------------------------------------------------------------
     // Stage 5: Read-back Verification
-    // -------------------------------------------------------------
     log(`[STAGE 5: VERIFY] Verifying ${totalPages} page(s) against HEX binary...`, 'info');
 
     for (let pageIdx = 0; pageIdx < totalPages; pageIdx++) {
@@ -1013,12 +1444,10 @@ btnFlash.addEventListener('click', async () => {
         expectedBuf.push(parsedFirmware.data[pageAddr + i] !== undefined ? parsedFirmware.data[pageAddr + i] : 0xFF);
       }
 
-      // Load Address
       const addrLow = pageAddr & 0xFF;
       const addrHigh = (pageAddr >> 8) & 0xFF;
       await sendCmd([STK_LOAD_ADDRESS, addrLow, addrHigh], 0, 300);
 
-      // Read Page
       const lenHigh = (PAGE_SIZE >> 8) & 0xFF;
       const lenLow = PAGE_SIZE & 0xFF;
       const readBuf = await sendCmd([STK_READ_PAGE, lenHigh, lenLow, 0x46], PAGE_SIZE, 1000);
@@ -1035,9 +1464,7 @@ btnFlash.addEventListener('click', async () => {
     }
     log("[STAGE 5: PASS] 100% verified! Flash contents match HEX file perfectly.", 'pass');
 
-    // -------------------------------------------------------------
     // Stage 6: Leave ProgMode & App Launch
-    // -------------------------------------------------------------
     setProgress(100, "Stage 6: アプリケーション起動完了！", 6);
     log("[STAGE 6: LAUNCH] Exiting bootloader to launch application...", 'info');
     await sendCmd([STK_LEAVE_PROGMODE], 0, 300);
@@ -1046,18 +1473,25 @@ btnFlash.addEventListener('click', async () => {
     log("  🎉 [SUCCESS] Application successfully flashed over RS-485!", 'pass');
     log("=================================================================", 'pass');
     log(">>> Core-D is now launching the application.", 'pass');
+
     if (fileName.textContent.includes("alternate") || fileName.textContent.includes("赤白")) {
       log(">>> 🚨 Check the onboard LEDs — RED (PB2) and WHITE (PB3) are alternating (200ms cycle)!", 'pass');
+    } else if (fileName.textContent.includes("serial") || fileName.textContent.includes("シリアル")) {
+      log(">>> 📡 Application running! Switch to 'Serial Monitor' tab to see live RS-485 output!", 'pass');
     } else {
       log(">>> ⚪ Check the onboard WHITE LED (PB3) — it should be blinking (500ms cycle)!", 'pass');
     }
     log("=================================================================", 'pass');
 
+    appendMonitorSys("[SYSTEM] --- Flasher finished! App launched. Monitoring resumed. ---");
+
   } catch (err) {
     log(`[ERROR] ${err.message}`, 'fail');
     setProgress(0, "エラー発生", -1);
+    appendMonitorSys(`[ERROR] Flasher error: ${err.message}`);
     alert(`書き込みエラー:\n${err.message}`);
   } finally {
+    isFlashing = false;
     btnFlash.disabled = false;
     btnDisconnect.disabled = false;
   }
