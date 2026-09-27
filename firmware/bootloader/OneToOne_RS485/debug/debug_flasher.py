@@ -162,7 +162,18 @@ class OptibootDebugger:
             print("[STAGE 2: FAIL] Failed to enter programming mode.")
             return False
 
-    def test_page_write_and_read(self, page_addr: int, data: bytes) -> bool:
+    def probe_health(self):
+        print("\n  [HEALTH CHECK] Probing if Core-D is still alive in bootloader...")
+        for i in range(3):
+            time.sleep(0.05)
+            ok, _, raw = self.send_cmd(bytes([STK_GET_SYNC]), 0, timeout=0.3)
+            if ok:
+                print(f"  [HEALTH: ALIVE] Core-D responded to sync probe #{i+1}! It is NOT dead, but sync was lost.")
+                return True
+        print("  [HEALTH: DEAD] Core-D did NOT respond to sync probes. It likely reset or crashed.")
+        return False
+
+    def test_page_write_and_read(self, page_addr: int, data: bytes, delay: float = 0.02) -> bool:
         """
         Tests programming a single 64-byte page and then immediately reading it back.
         """
@@ -171,33 +182,37 @@ class OptibootDebugger:
         addr_high = (page_addr >> 8) & 0xFF
 
         # 1. Load Address for Write
-        time.sleep(0.01)
+        time.sleep(delay)
         ok, _, _ = self.send_cmd(bytes([STK_LOAD_ADDRESS, addr_low, addr_high]), 0, timeout=0.3)
         if not ok:
             print(f"  [ERROR] Load address failed for write at 0x{page_addr:04X}")
+            self.probe_health()
             return False
 
         # 2. Program Page
-        time.sleep(0.01)
+        time.sleep(delay)
         prog_packet = bytes([STK_PROG_PAGE, 0x00, PAGE_SIZE, ord('F')]) + data
         ok, _, _ = self.send_cmd(prog_packet, 0, timeout=1.0)
         if not ok:
             print(f"  [ERROR] Write page failed at 0x{page_addr:04X}")
+            self.probe_health()
             return False
 
         # 3. Load Address for Read
-        time.sleep(0.01)
+        time.sleep(delay)
         ok, _, _ = self.send_cmd(bytes([STK_LOAD_ADDRESS, addr_low, addr_high]), 0, timeout=0.3)
         if not ok:
             print(f"  [ERROR] Load address failed for read at 0x{page_addr:04X}")
+            self.probe_health()
             return False
 
         # 4. Read Page
-        time.sleep(0.01)
+        time.sleep(delay)
         read_cmd = bytes([STK_READ_PAGE, 0x00, PAGE_SIZE, ord('F')])
         ok, read_buf, _ = self.send_cmd(read_cmd, PAGE_SIZE, timeout=1.0)
         if not ok:
             print(f"  [ERROR] Read page failed at 0x{page_addr:04X}")
+            self.probe_health()
             return False
 
         # 5. Verify
@@ -211,24 +226,26 @@ class OptibootDebugger:
                     print(f"    Offset +{i:02d} (0x{page_addr+i:04X}): Expected 0x{data[i]:02X}, Read 0x{read_buf[i]:02X}")
             return False
 
-    def test_page_read_only(self, page_addr: int) -> Optional[bytes]:
+    def test_page_read_only(self, page_addr: int, delay: float = 0.02) -> Optional[bytes]:
         """
         Reads a 64-byte page without writing.
         """
         addr_low = page_addr & 0xFF
         addr_high = (page_addr >> 8) & 0xFF
 
-        time.sleep(0.01)
+        time.sleep(delay)
         ok, _, _ = self.send_cmd(bytes([STK_LOAD_ADDRESS, addr_low, addr_high]), 0, timeout=0.3)
         if not ok:
             print(f"  [ERROR] Load address failed for read at 0x{page_addr:04X}")
+            self.probe_health()
             return None
 
-        time.sleep(0.01)
+        time.sleep(delay)
         read_cmd = bytes([STK_READ_PAGE, 0x00, PAGE_SIZE, ord('F')])
         ok, read_buf, raw = self.send_cmd(read_cmd, PAGE_SIZE, timeout=1.0)
         if not ok:
             print(f"  [ERROR] Read page failed at 0x{page_addr:04X}")
+            self.probe_health()
             return None
         return read_buf
 
@@ -264,6 +281,7 @@ def main():
     parser.add_argument("--start", default="0x0200", help="Start address (hex, default 0x0200)")
     parser.add_argument("--pages", type=int, default=11, help="Number of 64B pages to test (default 11)")
     parser.add_argument("--single-page", default=None, help="Test only a single page (hex, e.g. 0x0440)")
+    parser.add_argument("--delay", type=float, default=0.02, help="Quiet delay between packets in seconds (default 0.02 = 20ms)")
     args = parser.parse_args()
 
     dbg = OptibootDebugger(args.port, args.baud)
@@ -280,18 +298,18 @@ def main():
         if args.single_page is not None:
             target_addr = int(args.single_page, 16)
             print(f"\n=== TARGET TEST: SINGLE PAGE 0x{target_addr:04X} ===")
-            read_data = dbg.test_page_read_only(target_addr)
+            read_data = dbg.test_page_read_only(target_addr, delay=args.delay)
             if read_data:
                 print(f"Read {len(read_data)} bytes: {hex_dump(read_data[:16])} ...")
             dbg.leave_progmode()
             return
 
         if args.read_only:
-            print(f"\n=== MODE: READ-ONLY AUDIT ({args.pages} pages from 0x{start_addr:04X}) ===")
+            print(f"\n=== MODE: READ-ONLY AUDIT ({args.pages} pages from 0x{start_addr:04X}, delay={args.delay*1000:.0f}ms) ===")
             for p_idx in range(args.pages):
                 curr_addr = start_addr + p_idx * PAGE_SIZE
                 print(f"Auditing page {p_idx+1}/{args.pages} @ 0x{curr_addr:04X}...")
-                read_buf = dbg.test_page_read_only(curr_addr)
+                read_buf = dbg.test_page_read_only(curr_addr, delay=args.delay)
                 if read_buf is None:
                     print(f"!!! HALTED AT PAGE 0x{curr_addr:04X} !!!")
                     break
@@ -320,13 +338,13 @@ def main():
             start_p = (min_addr // PAGE_SIZE) * PAGE_SIZE
             end_p = ((max_addr + PAGE_SIZE) // PAGE_SIZE) * PAGE_SIZE
             total_pages = (end_p - start_p) // PAGE_SIZE
-            print(f"[PLAN] Total pages: {total_pages} (0x{start_p:04X} ~ 0x{end_p:04X})")
+            print(f"[PLAN] Total pages: {total_pages} (0x{start_p:04X} ~ 0x{end_p:04X}, delay={args.delay*1000:.0f}ms)")
 
             print("\n=== MODE: FULL WRITE & VERIFY PER PAGE ===")
             for p_idx in range(total_pages):
                 curr_addr = start_p + p_idx * PAGE_SIZE
                 page_bytes = bytes([hex_data.get(curr_addr + i, 0xFF) for i in range(PAGE_SIZE)])
-                success = dbg.test_page_write_and_read(curr_addr, page_bytes)
+                success = dbg.test_page_write_and_read(curr_addr, page_bytes, delay=args.delay)
                 if not success:
                     print(f"!!! HALTED AT PAGE 0x{curr_addr:04X} !!!")
                     break
