@@ -56,7 +56,7 @@ def crc16_ccitt(data: bytes, initial: int = 0xFFFF) -> int:
 
 class DebugListener:
     """Background listener for Core-D CH342K Soft-UART telemetry on COM21."""
-    def __init__(self, port: str, baudrate: int = 38400, log_path: str = "com21_telemetry.log"):
+    def __init__(self, port: str, baudrate: int = 9600, log_path: str = "com21_telemetry.log"):
         self.port = port
         self.baudrate = baudrate
         self.log_path = log_path
@@ -110,7 +110,8 @@ class DebugListener:
                     else:
                         line_buf += ch
             except Exception:
-                break
+                time.sleep(0.5)
+                continue
 
     def get_messages(self) -> List[str]:
         """Fetch all queued messages received since last call."""
@@ -467,7 +468,7 @@ def main():
     parser.add_argument("--port", default="COM19", help="RS-485 Serial port under test (default: COM19)")
     parser.add_argument("--baud", type=int, default=19200, help="RS-485 Baud rate (default: 19200)")
     parser.add_argument("--debug-port", default=None, help="CH342K Debug Telemetry port, e.g. COM21 (default: None)")
-    parser.add_argument("--debug-baud", type=int, default=38400, help="Debug telemetry baud rate (default: 38400)")
+    parser.add_argument("--debug-baud", type=int, default=9600, help="Debug telemetry baud rate (default: 9600)")
     parser.add_argument("--count", type=int, default=30, help="Number of benchmark trials (default: 30)")
     parser.add_argument("--delim-us", type=float, default=0.0, help="Delimiter delay in microseconds (default: 0.0)")
     parser.add_argument("--switch-us", type=float, default=0.0, help="Switch recovery delay in microseconds (default: 0.0)")

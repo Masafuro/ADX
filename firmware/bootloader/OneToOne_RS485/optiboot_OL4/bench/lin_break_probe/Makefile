@@ -18,7 +18,7 @@ $(TARGET_ELF): lin_break_probe.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
 $(TARGET_HEX): $(TARGET_ELF)
-	$(OBJCOPY) -j .text -j .data -O ihex $< $@
+	$(OBJCOPY) -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .userrow $< $@
 
 check_size: $(TARGET_ELF)
 	@echo "================== LIN BREAK PROBE BINARY SIZE =================="
@@ -26,4 +26,4 @@ check_size: $(TARGET_ELF)
 	@echo "================================================================="
 
 clean:
-	rm -f $(TARGET_ELF) $(TARGET_HEX)
+	rm -f $(TARGET_ELF) $(TARGET_HEX) test_full.hex test_rodata.hex

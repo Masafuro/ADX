@@ -10,7 +10,7 @@
  *     PA7: RS-485 /RE (Receiver Enable, Active LOW via VPORTA)
  *
  *   [Channel 2: CH342K Independent Debug Telemetry - COM21]
- *     PB4: Soft-UART TXD (38,400 bps, 8N1) -> PC COM21
+ *     PB4: Soft-UART TXD (9,600 bps, 8N1) -> PC COM21
  *     PB2: Onboard RED LED (Status indicator, Active HIGH via VPORTB)
  *
  *   [Channel 3: SerialUPDI Programming - COM20]
@@ -31,32 +31,36 @@ static uint16_t frame_count = 0;
 static uint16_t isfif_count = 0;
 
 // =========================================================================
-// Channel 2: CH342K Independent Soft-UART TX on PB4 @ 38,400 bps
-// F_CPU = 3.333 MHz (OSC20M / 6). 1 bit = 26.04 us ≒ 86.8 cycles.
+// Channel 2: CH342K Independent Soft-UART TX on PB4 @ 9,600 bps
+// F_CPU = 3.333333 MHz (OSC20M / 6).
+// 1 bit = 104.167 us = 347.2 cycles.
+// _delay_loop_2(n) consumes 4 * n cycles.
 // =========================================================================
-static void dbg_putch(char c) {
+static void dbg_putch(uint8_t c) {
   // Start bit: LOW
   VPORTB.OUT &= ~(1 << 4);
-  _delay_loop_1(27); // 81 cycles + loop overhead ≒ 87 cycles
+  _delay_loop_2(86); // 86 * 4 = 344 cycles (~103.2 us)
 
   // 8 Data bits (LSB first)
   for (uint8_t i = 0; i < 8; i++) {
-    if (c & (1 << i)) {
+    if (c & 0x01) {
       VPORTB.OUT |= (1 << 4);
     } else {
       VPORTB.OUT &= ~(1 << 4);
     }
-    _delay_loop_1(26);
+    c >>= 1;
+    _delay_loop_2(83); // 332 cycles + loop overhead (~15 cycles) ≒ 347 cycles
   }
 
   // Stop bit: HIGH
   VPORTB.OUT |= (1 << 4);
-  _delay_loop_1(28);
+  _delay_loop_2(86); // 344 cycles (~103.2 us)
 }
 
 static void dbg_print(const char *str) {
-  while (*str) {
-    dbg_putch(*str++);
+  uint8_t safety = 128; // Guard against unterminated string
+  while (*str && safety--) {
+    dbg_putch((uint8_t)*str++);
   }
 }
 
@@ -105,9 +109,9 @@ static inline void rs485_tx_end(void) {
   }
 
   // Telemetry: Report post-transmission physical status to COM21
-  dbg_print(" [TX_DONE] RXD_pin=");
+  dbg_print(" [TX_DONE] RXD=");
   dbg_putch(rxd_after ? '1' : '0');
-  dbg_print(" STATUS=0x");
+  dbg_print(" ST=0x");
   dbg_print_hex8(USART0.STATUS);
   dbg_print("\r\n");
 }
@@ -144,12 +148,12 @@ static uint8_t getch_header(void) {
     // 1. Monitor ISFIF (Sync error)
     if (USART0.STATUS & USART_ISFIF_bm) {
       isfif_count++;
-      dbg_print("[SYNC_ERR] ISFIF=1, BAUD=0x");
+      USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm;
+      dbg_print("[SYNC_ERR] ISFIF=1 BAUD=0x");
       dbg_print_hex16(USART0.BAUD);
-      dbg_print(" STATUS=0x");
+      dbg_print(" ST=0x");
       dbg_print_hex8(USART0.STATUS);
       dbg_print("\r\n");
-      USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm;
     }
 
     // 2. Frame Reception Complete (Break + Sync 0x55 + PID)
@@ -166,25 +170,25 @@ static uint8_t getch_header(void) {
       dbg_print_hex8(ch);
       dbg_print(" BAUD=0x");
       dbg_print_hex16(USART0.BAUD);
-      dbg_print(" STATUS=0x");
+      dbg_print(" ST=0x");
       dbg_print_hex8(USART0.STATUS);
       return ch;
     }
 
-    // 3. Heartbeat LED & Periodic Idle Telemetry (~2Hz)
+    // 3. Heartbeat LED & Periodic Idle Telemetry (~1Hz)
     if (++hb_loop == 0) {
       VPORTB.IN |= (1 << 2); // Toggle RED LED
       idle_ticks++;
 
-      // Log idle state to COM21 every ~1 second (every 2nd heartbeat)
-      if ((idle_ticks & 0x01) == 0) {
-        dbg_print("[IDLE] STATUS=0x");
+      // Log idle state to COM21 every ~1.5 second (every 4th loop)
+      if ((idle_ticks & 0x03) == 0) {
+        dbg_print("[IDLE] ST=0x");
         dbg_print_hex8(USART0.STATUS);
-        dbg_print(" RXD_pin=");
+        dbg_print(" RXD=");
         dbg_putch((VPORTA.IN & (1 << 2)) ? '1' : '0');
-        dbg_print(" Frames=0x");
+        dbg_print(" F=0x");
         dbg_print_hex16(frame_count);
-        dbg_print(" ISFIF=0x");
+        dbg_print(" ISF=0x");
         dbg_print_hex16(isfif_count);
         dbg_print("\r\n");
       }
@@ -235,14 +239,13 @@ int main(void) {
   // Arm Break detection
   USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm;
 
-  // Initial Boot Telemetry to COM21
-  dbg_print("\r\n==================================================\r\n");
-  dbg_print(" [BOOT] Core-D LN-485 Diagnostic Probe v2.0 (Fact-Finder)\r\n");
-  dbg_print("  RSTCTRL.RSTFR = 0x"); dbg_print_hex8(RSTCTRL.RSTFR); dbg_print("\r\n");
-  dbg_print("  Initial BAUD  = 0x"); dbg_print_hex16(USART0.BAUD); dbg_print("\r\n");
-  dbg_print("  Initial STATUS= 0x"); dbg_print_hex8(USART0.STATUS); dbg_print("\r\n");
-  dbg_print("  RXD Pin Level = "); dbg_putch((VPORTA.IN & (1 << 2)) ? '1' : '0'); dbg_print("\r\n");
-  dbg_print("==================================================\r\n");
+  // Initial Boot Telemetry to COM21 @ 9600 bps
+  dbg_print("\r\n=== [BOOT] Core-D LN-485 Diagnostic Probe (9600bps Soft-UART) ===\r\n");
+  dbg_print(" RSTFR=0x"); dbg_print_hex8(RSTCTRL.RSTFR);
+  dbg_print(" BAUD=0x"); dbg_print_hex16(USART0.BAUD);
+  dbg_print(" ST=0x"); dbg_print_hex8(USART0.STATUS);
+  dbg_print(" RXD="); dbg_putch((VPORTA.IN & (1 << 2)) ? '1' : '0');
+  dbg_print("\r\n===================================================================\r\n");
 
   for (;;) {
     // Wait for Break + Sync(0x55) + PID

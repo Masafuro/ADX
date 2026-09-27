@@ -2,7 +2,7 @@
 """
 COM21 Independent Telemetry Monitor (CH342K Soft-UART on Core-D PB4)
 =====================================================================
-Monitors internal telemetry output from Core-D (PB4 @ 38,400 bps, 8N1).
+Monitors internal telemetry output from Core-D (PB4 @ 9,600 bps, 8N1).
 Logs raw bytes, parsed text, and microsecond-precision timestamps.
 """
 
@@ -21,7 +21,7 @@ except ImportError:
 def main():
     parser = argparse.ArgumentParser(description="Core-D COM21 Telemetry Monitor")
     parser.add_argument("--port", default="COM21", help="Serial port (default: COM21)")
-    parser.add_argument("--baud", type=int, default=38400, help="Baud rate (default: 38400)")
+    parser.add_argument("--baud", type=int, default=9600, help="Baud rate (default: 9600)")
     parser.add_argument("--log", default="com21_telemetry.log", help="Log file path (default: com21_telemetry.log)")
     args = parser.parse_args()
 
@@ -42,6 +42,7 @@ def main():
         )
     except Exception as e:
         print(f"[ERROR] Failed to open {args.port}: {e}")
+        print("Tip: Ensure no other application (or script) is holding this port open.")
         sys.exit(1)
 
     with open(args.log, "a", encoding="utf-8") as f_log:
@@ -49,22 +50,34 @@ def main():
         line_buf = ""
         try:
             while True:
-                data = ser.read(ser.in_waiting or 1)
+                try:
+                    data = ser.read(ser.in_waiting or 1)
+                except Exception as e:
+                    print(f"\n[WARN] Serial read error ({e}). Port may be busy or reset. Reconnecting...")
+                    time.sleep(1.0)
+                    try:
+                        ser.close()
+                        ser.open()
+                    except Exception:
+                        pass
+                    continue
+
                 if not data:
                     continue
                 
-                # Decode line by line or character by character
+                # Decode line by line
                 text = data.decode("latin1", errors="replace")
                 for ch in text:
                     if ch == '\r':
                         continue
                     if ch == '\n':
-                        now_str = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-                        log_line = f"[{now_str}] {line_buf}"
-                        print(log_line)
-                        f_log.write(log_line + "\n")
-                        f_log.flush()
-                        line_buf = ""
+                        if line_buf:
+                            now_str = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                            log_line = f"[{now_str}] {line_buf}"
+                            print(log_line)
+                            f_log.write(log_line + "\n")
+                            f_log.flush()
+                            line_buf = ""
                     else:
                         line_buf += ch
 
