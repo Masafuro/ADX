@@ -1,27 +1,29 @@
 #!/usr/bin/env python3
 """
-LIN Break & LINAUTO Synchronization Benchmark Tool (v1.3 - 19,200 bps Standard)
-================================================================================
+LIN Break & LINAUTO Synchronization Benchmark Tool (v1.4 - Dual-Channel Telemetry Edition)
+==========================================================================================
 Target: ADX Core-D (ATtiny1616-MNR, SP485EEN)
-Communicates over RS-485 via USB-UART adapter (e.g. COM19) at 19,200 bps.
-Break generated at half-baud (9,600 bps: 1042us LOW = 18 bits @ 19200bps).
-Delimiter: 104us HIGH (2 bits @ 19200bps).
+Channel 1 (RS-485 under test): COM19 @ 19,200 bps
+Channel 2 (Debug Telemetry):  COM21 @ 38,400 bps (CH342K Soft-UART on PB4)
 
 Features:
-  1. STAGE 1: Power-on / Reset auto-detection (with interactive prompt).
-  2. Microsecond-accurate physical transmission completion wait (1050us for 9600bps 0x00).
-  3. Standard LN-485 Frame Header parsing [STATUS, LEN=7, PID, frame_count, isfif_count, auto_baud].
-  4. Real-time telemetry displaying Frame#, ISFIF#, and auto_baud lock (ideal: 0x02B6 = 694).
+  1. Microsecond-accurate Break + Sync + PID transmission over RS-485 (COM19).
+  2. Simultaneous non-blocking telemetry capture from Core-D internal state (COM21).
+  3. Real-time correlation of RS-485 Frame timeouts with internal USART0.STATUS, BAUD, and RXD pin levels.
+  4. Automatic logging of full dual-channel session to file.
 
 Usage:
+  python test_lin_break.py --port COM19 --debug-port COM21 --count 30
   python test_lin_break.py --port COM19 --count 30
-  python test_lin_break.py --port COM19 --sweep
 """
 
 import sys
 import os
 import time
+import queue
+import threading
 import argparse
+from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 
 try:
@@ -50,6 +52,88 @@ def crc16_ccitt(data: bytes, initial: int = 0xFFFF) -> int:
             else:
                 crc = (crc << 1) & 0xFFFF
     return crc
+
+
+class DebugListener:
+    """Background listener for Core-D CH342K Soft-UART telemetry on COM21."""
+    def __init__(self, port: str, baudrate: int = 38400, log_path: str = "com21_telemetry.log"):
+        self.port = port
+        self.baudrate = baudrate
+        self.log_path = log_path
+        self.ser: Optional[serial.Serial] = None
+        self.running = False
+        self.thread: Optional[threading.Thread] = None
+        self.msg_queue: queue.Queue = queue.Queue()
+        self.f_log = None
+
+    def start(self):
+        try:
+            self.ser = serial.Serial(
+                port=self.port,
+                baudrate=self.baudrate,
+                bytesize=serial.EIGHTBITS,
+                parity=serial.PARITY_NONE,
+                stopbits=serial.STOPBITS_ONE,
+                timeout=0.05
+            )
+            self.running = True
+            self.f_log = open(self.log_path, "a", encoding="utf-8")
+            self.f_log.write(f"\n--- Benchmark Session Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} ---\n")
+            self.f_log.flush()
+            self.thread = threading.Thread(target=self._worker, daemon=True)
+            self.thread.start()
+            print(f"[DEBUG] Telemetry listener started on {self.port} @ {self.baudrate} bps -> {self.log_path}")
+        except Exception as e:
+            print(f"[WARN] Could not open debug port {self.port}: {e}")
+            self.ser = None
+
+    def _worker(self):
+        line_buf = ""
+        while self.running and self.ser and self.ser.is_open:
+            try:
+                data = self.ser.read(self.ser.in_waiting or 1)
+                if not data:
+                    continue
+                text = data.decode("latin1", errors="replace")
+                for ch in text:
+                    if ch == '\r':
+                        continue
+                    if ch == '\n':
+                        if line_buf:
+                            now_str = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+                            msg = f"[{now_str}] {line_buf}"
+                            self.msg_queue.put(msg)
+                            if self.f_log:
+                                self.f_log.write(msg + "\n")
+                                self.f_log.flush()
+                            line_buf = ""
+                    else:
+                        line_buf += ch
+            except Exception:
+                break
+
+    def get_messages(self) -> List[str]:
+        """Fetch all queued messages received since last call."""
+        msgs = []
+        while not self.msg_queue.empty():
+            try:
+                msgs.append(self.msg_queue.get_nowait())
+            except queue.Empty:
+                break
+        return msgs
+
+    def stop(self):
+        self.running = False
+        if self.ser and self.ser.is_open:
+            try:
+                self.ser.close()
+            except Exception:
+                pass
+        if self.f_log:
+            try:
+                self.f_log.close()
+            except Exception:
+                pass
 
 
 class LinBreakTester:
@@ -95,11 +179,8 @@ class LinBreakTester:
         self.ser.write(b'\x00')
         self.ser.flush()
 
-        # Wait for 10 bits @ 9600bps to physically leave the USB-UART shift register:
         if delimiter_delay_us > 0:
             high_precision_delay_us(delimiter_delay_us)
-        else:
-            high_precision_delay_us(1050.0)  # 1050us physical completion
 
         # 2. Switch back to normal baudrate (19200 bps)
         self.ser.baudrate = self.baudrate
@@ -164,7 +245,7 @@ class LinBreakTester:
         # 3. Other unexpected status
         return False, f"STATUS_0x{status:02X}", None, rtt_ms, raw_rx
 
-    def wait_for_power_on(self, max_wait_sec: float = 30.0) -> bool:
+    def wait_for_power_on(self, max_wait_sec: float = 30.0, dbg_listener: Optional[DebugListener] = None) -> bool:
         """STAGE 1: Probe loop waiting for Core-D power on or reset."""
         print(f"[STAGE 1] Waiting for Core-D power on/reset (up to {max_wait_sec:.1f}s at {self.baudrate} bps)...")
         print(">>> POWER ON OR RESET CORE-D NOW <<<")
@@ -180,6 +261,13 @@ class LinBreakTester:
                 delimiter_delay_us=0.0,
                 switch_delay_us=0.0
             )
+
+            # Check debug telemetry
+            if dbg_listener:
+                msgs = dbg_listener.get_messages()
+                for m in msgs:
+                    print(f"      |-> [COM21] {m}")
+
             if ok:
                 elapsed = time.perf_counter() - t_start
                 print(f"\n[STAGE 1: PASS] Power-on detected in {elapsed:.2f}s (probe #{probe_count}, RTT={rtt:.1f}ms)!")
@@ -209,24 +297,37 @@ def run_benchmark(
     delimiter_delay_us: float = 0.0,
     switch_delay_us: float = 0.0,
     slot_interval_ms: float = 40.0,
-    skip_stage1: bool = False
+    skip_stage1: bool = False,
+    debug_port: Optional[str] = None,
+    debug_baud: int = 38400
 ) -> float:
     print("=" * 72)
     print(f" LIN Break & LINAUTO Benchmark @ {baudrate} bps (count={count})")
     print(f" Port={port}, Break=9600bps (1042us), Delimiter=104us")
+    if debug_port:
+        print(f" Dual-Channel Mode: Debug Telemetry on {debug_port} @ {debug_baud} bps")
     print(f" Timing: delim_delay={delimiter_delay_us:.0f}us, switch_delay={switch_delay_us:.0f}us, interval={slot_interval_ms:.0f}ms")
     print("=" * 72)
+
+    dbg_listener = None
+    if debug_port:
+        dbg_listener = DebugListener(port=debug_port, baudrate=debug_baud)
+        dbg_listener.start()
 
     tester = LinBreakTester(port=port, baudrate=baudrate)
     try:
         tester.open()
     except Exception as e:
         print(f"[ERROR] Failed to open {port}: {e}")
+        if dbg_listener:
+            dbg_listener.stop()
         return 0.0
 
     if not skip_stage1:
-        if not tester.wait_for_power_on(max_wait_sec=30.0):
+        if not tester.wait_for_power_on(max_wait_sec=30.0, dbg_listener=dbg_listener):
             tester.close()
+            if dbg_listener:
+                dbg_listener.stop()
             return 0.0
 
     success_count = 0
@@ -273,9 +374,23 @@ def run_benchmark(
             raw_str = raw.hex() if raw else 'empty'
             print(f"{i:>4} | {target_type:>8} | {'FAIL':>8} | {rtt:>8.2f} | {'-':>7} | {'-':>7} | {'-':>8} | rx={len(raw)}B ({raw_str})")
 
+        # Display any debug telemetry received from COM21 for this trial
+        if dbg_listener:
+            time.sleep(0.01) # Short settle for UART
+            msgs = dbg_listener.get_messages()
+            for m in msgs:
+                print(f"      |-> [COM21] {m}")
+
         time.sleep(slot_interval_ms / 1000.0)
 
     tester.close()
+    if dbg_listener:
+        time.sleep(0.2)
+        # Flush remaining messages
+        msgs = dbg_listener.get_messages()
+        for m in msgs:
+            print(f"      |-> [COM21] {m}")
+        dbg_listener.stop()
 
     # Summary Statistics
     print("\n" + "=" * 72)
@@ -298,7 +413,7 @@ def run_benchmark(
     return success_rate
 
 
-def run_sweep(port: str, baudrate: int = 19200):
+def run_sweep(port: str, baudrate: int = 19200, debug_port: Optional[str] = None, debug_baud: int = 38400):
     """Parameter sweep across delay configurations at 19,200 bps."""
     print("\n" + "#" * 72)
     print(f" AUTOMATIC PARAMETER SWEEP BENCHMARK @ {baudrate} bps")
@@ -331,7 +446,9 @@ def run_sweep(port: str, baudrate: int = 19200):
             delimiter_delay_us=d_us,
             switch_delay_us=s_us,
             slot_interval_ms=int_ms,
-            skip_stage1=True
+            skip_stage1=True,
+            debug_port=debug_port,
+            debug_baud=debug_baud
         )
         sweep_results.append((label, rate))
         time.sleep(0.1)
@@ -347,8 +464,10 @@ def run_sweep(port: str, baudrate: int = 19200):
 
 def main():
     parser = argparse.ArgumentParser(description="LIN Break & LINAUTO Benchmark Tool (19200 bps)")
-    parser.add_argument("--port", default="COM19", help="Serial port (default: COM19)")
-    parser.add_argument("--baud", type=int, default=19200, help="Baud rate (default: 19200)")
+    parser.add_argument("--port", default="COM19", help="RS-485 Serial port under test (default: COM19)")
+    parser.add_argument("--baud", type=int, default=19200, help="RS-485 Baud rate (default: 19200)")
+    parser.add_argument("--debug-port", default=None, help="CH342K Debug Telemetry port, e.g. COM21 (default: None)")
+    parser.add_argument("--debug-baud", type=int, default=38400, help="Debug telemetry baud rate (default: 38400)")
     parser.add_argument("--count", type=int, default=30, help="Number of benchmark trials (default: 30)")
     parser.add_argument("--delim-us", type=float, default=0.0, help="Delimiter delay in microseconds (default: 0.0)")
     parser.add_argument("--switch-us", type=float, default=0.0, help="Switch recovery delay in microseconds (default: 0.0)")
@@ -359,7 +478,7 @@ def main():
     args = parser.parse_args()
 
     if args.sweep:
-        run_sweep(port=args.port, baudrate=args.baud)
+        run_sweep(port=args.port, baudrate=args.baud, debug_port=args.debug_port, debug_baud=args.debug_baud)
     else:
         run_benchmark(
             port=args.port,
@@ -368,7 +487,9 @@ def main():
             delimiter_delay_us=args.delim_us,
             switch_delay_us=args.switch_us,
             slot_interval_ms=args.interval_ms,
-            skip_stage1=args.skip_stage1
+            skip_stage1=args.skip_stage1,
+            debug_port=args.debug_port,
+            debug_baud=args.debug_baud
         )
 
 

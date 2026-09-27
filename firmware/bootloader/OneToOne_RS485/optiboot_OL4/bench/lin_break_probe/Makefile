@@ -7,7 +7,7 @@ SIZE         = /home/ubuntu/.arduino15/packages/DxCore/tools/avr-gcc/7.3.0-atmel
 OPTIMIZE     = -Os -fno-split-wide-types -mrelax
 CFLAGS       = -g -Wall $(OPTIMIZE) -mmcu=$(MCU)
 
-LDFLAGS      = -Wl,-section-start=.text=0 -Wl,--relax -nostartfiles -nostdlib
+LDFLAGS      = -Wl,-section-start=.text=0 -Wl,--relax -nostartfiles -nostdlib -lgcc
 
 TARGET_ELF   = lin_break_probe.elf
 TARGET_HEX   = lin_break_probe.hex
