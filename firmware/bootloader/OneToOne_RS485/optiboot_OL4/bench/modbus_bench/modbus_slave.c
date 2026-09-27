@@ -146,9 +146,12 @@ int main(void) {
     (void)USART0.RXDATAL;
   }
 
+  // Initialize variables
+  transaction_count = 0;
+
   // Initial Boot Announcement
   dbg_print("\r\n===================================================\r\n");
-  dbg_print(" [BOOT] Core-D MODBUS-RTU Bench Slave v1.0\r\n");
+  dbg_print(" [BOOT] Core-D MODBUS-RTU Bench Slave v1.1\r\n");
   dbg_print(" USART0: Normal UART @ 19,200 bps (BAUD=");
   dbg_print_hex16(USART0.BAUD);
   dbg_print(")\r\n===================================================\r\n");
@@ -162,30 +165,20 @@ int main(void) {
     // 1. Check for incoming byte
     if (USART0.STATUS & USART_RXCIF_bm) {
       (void)USART0.RXDATAH;
-      uint8_t b = USART0.RXDATAL;
+      rx_buf[0] = USART0.RXDATAL;
+      rx_len = 1;
 
-      if (rx_len < sizeof(rx_buf)) {
-        rx_buf[rx_len++] = b;
-      }
-
-      // Inter-character / Silent interval detector (t3.5 timeout @ 19200bps = 1.8ms)
-      // At 3.333MHz, 1.8ms is ~6,000 cycles. We busy-wait up to ~2.5ms for the next byte.
-      for (;;) {
-        uint16_t wait_gap = 1200; // ~2.5ms gap timeout
-        while (!(USART0.STATUS & USART_RXCIF_bm) && --wait_gap) {
-          _delay_loop_1(5); // ~6 cycles per loop
+      // Receive remaining 5 bytes with 20ms per-byte timeout (resilient to USB jitter)
+      while (rx_len < 6) {
+        uint16_t timeout = 12000; // ~20ms timeout
+        while (!(USART0.STATUS & USART_RXCIF_bm) && --timeout) {
+          _delay_loop_1(5);
         }
-
-        if (wait_gap > 0) {
-          // Next character arrived within t3.5! Append to buffer.
-          (void)USART0.RXDATAH;
-          if (rx_len < sizeof(rx_buf)) {
-            rx_buf[rx_len++] = USART0.RXDATAL;
-          }
-        } else {
-          // Gap exceeded t3.5 (Silent interval detected)! Frame is complete.
-          break;
+        if (timeout == 0) {
+          break; // Timeout!
         }
+        (void)USART0.RXDATAH;
+        rx_buf[rx_len++] = USART0.RXDATAL;
       }
 
       // 2. Validate Frame: Master Request should be 6 bytes:
@@ -238,7 +231,7 @@ int main(void) {
           }
         }
       } else {
-        dbg_print("[MODBUS ERR] Unexpected len=");
+        dbg_print("[MODBUS ERR] Incomplete len=");
         dbg_print_hex8(rx_len);
         dbg_print("\r\n");
       }
