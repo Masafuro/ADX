@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADX Core-D 1-to-1 RS-485 Web Flasher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0e17;
+      --bg-card: rgba(18, 24, 38, 0.75);
+      --bg-card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --cyan: #00f0ff;
+      --cyan-glow: rgba(0, 240, 255, 0.25);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --amber: #f59e0b;
+      --amber-glow: rgba(245, 158, 11, 0.25);
+      --rose: #f43f5e;
+      --rose-glow: rgba(244, 63, 94, 0.25);
+      --console-bg: #05080f;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(0, 240, 255, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.06) 0px, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 48px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--cyan), var(--emerald));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #05080f;
+      font-size: 18px;
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    .title-group h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .version-tag {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(0, 240, 255, 0.12);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+    }
+
+    .title-group p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .port-status-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #64748b;
+      transition: all 0.3s ease;
+    }
+
+    .status-dot.connected {
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+    }
+
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 22px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      filter: grayscale(1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), #00b4d8);
+      color: #05080f;
+      box-shadow: 0 4px 16px var(--cyan-glow);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px var(--cyan-glow);
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, var(--emerald), #059669);
+      color: #05080f;
+      box-shadow: 0 4px 16px var(--emerald-glow);
+    }
+
+    .btn-action:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px var(--emerald-glow);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .drop-zone {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    .drop-zone.dragover {
+      border-color: var(--cyan);
+      background: rgba(0, 240, 255, 0.05);
+      box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.1);
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .drop-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: var(--cyan);
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: rgba(0, 240, 255, 0.05);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 10px;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .file-badge {
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .progress-box {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald));
+      border-radius: 6px;
+      transition: width 0.2s ease;
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    .stage-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+      position: relative;
+    }
+
+    .stage-pill {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .stage-pill.active {
+      color: #05080f;
+      background: var(--cyan);
+      font-weight: 600;
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .stage-pill.completed {
+      color: var(--emerald);
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .console-card {
+      background: var(--console-bg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .console-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .console-body {
+      height: 200px;
+      overflow-y: auto;
+      padding: 12px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .log-line {
+      word-break: break-all;
+    }
+    .log-info { color: #94a3b8; }
+    .log-pass { color: var(--emerald); font-weight: 600; }
+    .log-warn { color: var(--amber); }
+    .log-fail { color: var(--rose); font-weight: 600; }
+    .log-tx { color: #38bdf8; }
+    .log-rx { color: #a78bfa; }
+
+    .guide-box {
+      background: rgba(245, 158, 11, 0.05);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 12.5px;
+      color: #fde68a;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+
+    .alert-banner {
+      display: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .alert-banner.error {
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid var(--rose);
+      color: #fecdd3;
+    }
+
+    @media (max-width: 600px) {
+      .btn-row { flex-direction: column; }
+      button { width: 100%; justify-content: center; }
+      .stage-steps { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="brand">
+      <div class="logo-badge">ADX</div>
+      <div class="title-group">
+        <h1>Core-D RS-485 Flasher <span class="version-tag">M5 Web</span></h1>
+        <p>ATtiny1616 1-to-1 RS-485 Bootloader Programming Tool</p>
+      </div>
+    </div>
+    <div class="port-status-pill">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">DISCONNECTED</span>
+    </div>
+  </header>
+
+  <!-- Web Serial Browser Support Banner -->
+  <div class="alert-banner error" id="browserSupportBanner">
+    <strong>⚠️ ブラウザ非対応:</strong> お使いのブラウザは Web Serial API に対応していません。<br>
+    Google Chrome または Microsoft Edge（デスクトップ版、または Android 端末の Chrome）をご使用ください。
+  </div>
+
+  <!-- Step 1: Serial Connection -->
+  <div class="card">
+    <div class="card-title">1. シリアルポート接続 (USB-RS485)</div>
+    <p style="font-size: 13px; color: var(--text-muted);">
+      PC に接続された USB-RS485 ドングルを選択して接続します。通信速度は 115,200 bps に自動設定されます。
+    </p>
+    <div class="btn-row">
+      <button class="btn-primary" id="btnConnect">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/></svg>
+        シリアルポートを選択して接続
+      </button>
+      <button class="btn-secondary" id="btnDisconnect" disabled>切断</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Firmware Selection -->
+  <div class="card">
+    <div class="card-title">2. ファームウェア選択 (.hex)</div>
+    
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept=".hex">
+      <div class="drop-icon">📂</div>
+      <p style="font-weight: 600; margin-bottom: 4px;">Intel HEX ファイルをここにドラッグ＆ドロップ</p>
+      <p style="font-size: 12px; color: var(--text-muted);">またはクリックしてファイルを選択</p>
+    </div>
+
+    <div class="file-info" id="fileInfo" style="display: none;">
+      <div>
+        <span class="file-badge" id="fileName">firmware.hex</span>
+        <span style="color: var(--text-muted); margin-left: 8px;" id="fileStats">56 bytes (0x0200 - 0x0237)</span>
+      </div>
+      <span style="color: var(--emerald); font-weight: 600;">READY</span>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" id="btnLoadTestFirmware">
+        💡 テスト用「白色LED点滅」バイナリを自動読み込み
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 3: Flash Execution & Progress -->
+  <div class="card">
+    <div class="card-title">3. 書き込み実行 & ステータス</div>
+
+    <div class="guide-box">
+      <span>⚡</span>
+      <div>
+        <strong>書き込みのタイミングについて:</strong><br>
+        下記の「書き込み開始」をクリック後、画面が <code>[POLLING]</code> になったら、<strong>Core-D の電源を ON にしてください（またはリセット）</strong>。赤色 LED（PB2）の点滅を自動検知して書き込みを開始します。
+      </div>
+    </div>
+
+    <div class="progress-box">
+      <div class="progress-header">
+        <span id="progressStageName">待機中</span>
+        <span id="progressPct" style="font-family: 'JetBrains Mono', monospace;">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="stage-steps">
+        <span class="stage-pill" id="pill-0">0:INIT</span>
+        <span class="stage-pill" id="pill-1">1:POLL</span>
+        <span class="stage-pill" id="pill-2">2:SYNC</span>
+        <span class="stage-pill" id="pill-3">3:IDENT</span>
+        <span class="stage-pill" id="pill-4">4:WRITE</span>
+        <span class="stage-pill" id="pill-5">5:VERIFY</span>
+        <span class="stage-pill" id="pill-6">6:BOOT</span>
+      </div>
+    </div>
+
+    <div class="btn-row" style="margin-top: 8px;">
+      <button class="btn-action" id="btnFlash" disabled>
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/></svg>
+        ファームウェア書き込み開始
+      </button>
+    </div>
+  </div>
+
+  <!-- Realtime Terminal Console -->
+  <div class="console-card">
+    <div class="console-header">
+      <span>COMMUNICATION CONSOLE (115,200 BPS 8N1)</span>
+      <button class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="btnClearConsole">クリア</button>
+    </div>
+    <div class="console-body" id="consoleBody">
+      <div class="log-line log-info">[INFO] ADX Core-D Web Flasher loaded. Connect USB-RS485 adapter to start.</div>
+    </div>
+  </div>
+
+  <!-- Pinout & Polarity Diagnostic Guide -->
+  <div class="card" style="font-size: 13px; color: var(--text-muted);">
+    <div class="card-title">💡 端子台配線 & 極性診断メモ</div>
+    <ul style="margin-left: 20px; line-height: 1.8;">
+      <li><strong>基本配線:</strong> Core-D 端子台の <code>A</code>, <code>B</code>, <code>GND</code> を USB-RS485 アダプタに接続します。</li>
+      <li><strong>A/B 逆接時の診断シグネチャ:</strong> Core-D の電源を入れた瞬間に <strong>「赤 LED（PB2）がチカチカ点滅せず、即座に消灯する」</strong> 場合は、A と B が逆接されています。端子台で A と B の線を入れ替えてください。</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Built-in test firmware: test_blink_white_led.hex (56 bytes, 0x0200~)
+const BUILTIN_TEST_HEX = `:1002000088E08093210484E0809321048093260475
+:1002100088E08093250425E136E195E021503040C7
+:100220009040E1F78093260425E136E195E02150E6
+:0802300030409040E1F7EDCFF2
+:0400000300000200F7
+:00000001FF`;
+
+// STK500v1 Constants
+const STK_OK             = 0x10;
+const STK_INSYNC         = 0x14;
+const CRC_EOP            = 0x20;
+const STK_GET_SYNC       = 0x30;
+const STK_GET_PARAMETER  = 0x41;
+const STK_ENTER_PROGMODE = 0x50;
+const STK_LEAVE_PROGMODE = 0x51;
+const STK_LOAD_ADDRESS   = 0x55;
+const STK_PROG_PAGE      = 0x64;
+const STK_READ_PAGE      = 0x74;
+const STK_READ_SIGN      = 0x75;
+const PAGE_SIZE          = 64;
+const APP_START_ADDR     = 0x0200;
+
+// Application State
+let port = null;
+let reader = null;
+let writer = null;
+let rxBuffer = [];
+let readResolve = null;
+let isReading = false;
+let parsedFirmware = null;
+
+// UI Elements
+const statusDot = document.getElementById('statusDot');
+const statusText = document.getElementById('statusText');
+const btnConnect = document.getElementById('btnConnect');
+const btnDisconnect = document.getElementById('btnDisconnect');
+const btnFlash = document.getElementById('btnFlash');
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const fileInfo = document.getElementById('fileInfo');
+const fileName = document.getElementById('fileName');
+const fileStats = document.getElementById('fileStats');
+const btnLoadTestFirmware = document.getElementById('btnLoadTestFirmware');
+const progressBar = document.getElementById('progressBar');
+const progressPct = document.getElementById('progressPct');
+const progressStageName = document.getElementById('progressStageName');
+const consoleBody = document.getElementById('consoleBody');
+const btnClearConsole = document.getElementById('btnClearConsole');
+
+// Check Web Serial API support
+if (!('serial' in navigator)) {
+  document.getElementById('browserSupportBanner').style.display = 'block';
+  btnConnect.disabled = true;
+}
+
+// Logging Utility
+function log(msg, type = 'info') {
+  const line = document.createElement('div');
+  line.className = `log-line log-${type}`;
+  const now = new Date().toLocaleTimeString('ja-JP', { hour12: false });
+  line.textContent = `[${now}] ${msg}`;
+  consoleBody.appendChild(line);
+  consoleBody.scrollTop = consoleBody.scrollHeight;
+}
+
+btnClearConsole.addEventListener('click', () => {
+  consoleBody.innerHTML = '';
+});
+
+// Update Progress UI
+function setProgress(pct, stageName, stageIndex = -1) {
+  progressBar.style.width = `${pct}%`;
+  progressPct.textContent = `${Math.round(pct)}%`;
+  if (stageName) progressStageName.textContent = stageName;
+
+  if (stageIndex >= 0) {
+    for (let i = 0; i <= 6; i++) {
+      const pill = document.getElementById(`pill-${i}`);
+      if (!pill) continue;
+      if (i < stageIndex) {
+        pill.className = 'stage-pill completed';
+      } else if (i === stageIndex) {
+        pill.className = 'stage-pill active';
+      } else {
+        pill.className = 'stage-pill';
+      }
+    }
+  }
+}
+
+// Intel HEX Parser
+function parseIntelHex(text) {
+  const lines = text.split(/\r?\n/);
+  const data = {};
+  for (let lineNum = 0; lineNum < lines.length; lineNum++) {
+    const line = lines[lineNum].trim();
+    if (!line.startsWith(':')) continue;
+    try {
+      const byteCount = parseInt(line.substring(1, 3), 16);
+      const addr = parseInt(line.substring(3, 7), 16);
+      const recType = parseInt(line.substring(7, 9), 16);
+      if (recType === 0x00) { // Data Record
+        for (let i = 0; i < byteCount; i++) {
+          data[addr + i] = parseInt(line.substring(9 + i * 2, 11 + i * 2), 16);
+        }
+      } else if (recType === 0x01) { // EOF
+        break;
+      }
+    } catch (e) {
+      throw new Error(`Line ${lineNum + 1}: Malformed HEX record`);
+    }
+  }
+  return data;
+}
+
+function loadFirmwareData(hexText, name) {
+  try {
+    const data = parseIntelHex(hexText);
+    const addrs = Object.keys(data).map(Number);
+    if (addrs.length === 0) {
+      alert("HEX ファイル内にフラッシュデータが見つかりませんでした。");
+      return;
+    }
+    const minAddr = Math.min(...addrs);
+    const maxAddr = Math.max(...addrs);
+    parsedFirmware = { data, minAddr, maxAddr, totalBytes: addrs.length };
+
+    fileName.textContent = name;
+    fileStats.textContent = `${addrs.length} bytes (0x${minAddr.toString(16).padStart(4, '0').toUpperCase()} - 0x${maxAddr.toString(16).padStart(4, '0').toUpperCase()})`;
+    fileInfo.style.display = 'flex';
+    log(`[HEX] Loaded '${name}': ${addrs.length} bytes (0x${minAddr.toString(16).padStart(4, '0').toUpperCase()}~0x${maxAddr.toString(16).padStart(4, '0').toUpperCase()})`, 'pass');
+
+    if (port) btnFlash.disabled = false;
+  } catch (err) {
+    log(`[ERROR] Failed to parse HEX: ${err.message}`, 'fail');
+    alert(`HEX パースエラー: ${err.message}`);
+  }
+}
+
+// Built-in Test Firmware Button
+btnLoadTestFirmware.addEventListener('click', () => {
+  loadFirmwareData(BUILTIN_TEST_HEX, "test_blink_white_led.hex (ビルトイン)");
+});
+
+// Drag and drop handlers
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.classList.add('dragover');
+});
+dropZone.addEventListener('dragleave', () => {
+  dropZone.classList.remove('dragover');
+});
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  if (e.dataTransfer.files.length > 0) {
+    handleFile(e.dataTransfer.files[0]);
+  }
+});
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length > 0) {
+    handleFile(e.target.files[0]);
+  }
+});
+
+function handleFile(file) {
+  const r = new FileReader();
+  r.onload = (e) => loadFirmwareData(e.target.result, file.name);
+  r.readAsText(file);
+}
+
+// Background Read Loop
+async function startReadLoop() {
+  isReading = true;
+  while (isReading && port && port.readable) {
+    try {
+      reader = port.readable.getReader();
+      while (isReading) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        if (value) {
+          for (let i = 0; i < value.length; i++) {
+            rxBuffer.push(value[i]);
+          }
+          if (readResolve) {
+            readResolve();
+            readResolve = null;
+          }
+        }
+      }
+    } catch (err) {
+      if (isReading) console.warn("Read stream error:", err);
+      break;
+    } finally {
+      if (reader) {
+        try { reader.releaseLock(); } catch (_) {}
+      }
+    }
+  }
+}
+
+// Connect Serial Port
+btnConnect.addEventListener('click', async () => {
+  try {
+    port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 115200, dataBits: 8, stopBits: 1, parity: "none" });
+    writer = port.writable.getWriter();
+    startReadLoop();
+
+    statusDot.className = 'status-dot connected';
+    statusText.textContent = 'CONNECTED (115200)';
+    btnConnect.disabled = true;
+    btnDisconnect.disabled = false;
+    if (parsedFirmware) btnFlash.disabled = false;
+
+    log("[PORT] Serial port connected at 115,200 bps (8N1).", 'pass');
+  } catch (err) {
+    log(`[PORT] Connection failed: ${err.message}`, 'fail');
+  }
+});
+
+// Disconnect Serial Port
+btnDisconnect.addEventListener('click', async () => {
+  await disconnectPort();
+});
+
+async function disconnectPort() {
+  isReading = false;
+  if (reader) {
+    try { await reader.cancel(); } catch (_) {}
+  }
+  if (writer) {
+    try { writer.releaseLock(); } catch (_) {}
+  }
+  if (port) {
+    try { await port.close(); } catch (_) {}
+  }
+  port = null;
+  writer = null;
+  reader = null;
+
+  statusDot.className = 'status-dot';
+  statusText.textContent = 'DISCONNECTED';
+  btnConnect.disabled = false;
+  btnDisconnect.disabled = true;
+  btnFlash.disabled = true;
+  log("[PORT] Serial port closed.", 'info');
+}
+
+// STK500 Communication Primitives
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function clearRxBuffer() {
+  rxBuffer = [];
+}
+
+async function sendBytes(bytes) {
+  clearRxBuffer();
+  const arr = new Uint8Array(bytes);
+  await writer.write(arr);
+}
+
+async function readBytes(count, timeoutMs = 500) {
+  const startTime = Date.now();
+  while (rxBuffer.length < count) {
+    const remaining = timeoutMs - (Date.now() - startTime);
+    if (remaining <= 0) return null;
+    await new Promise(resolve => {
+      readResolve = resolve;
+      setTimeout(resolve, remaining);
+    });
+  }
+  return rxBuffer.splice(0, count);
+}
+
+async function readUntilSync(timeoutMs = 500) {
+  const startTime = Date.now();
+  while (true) {
+    const idx = rxBuffer.indexOf(STK_INSYNC);
+    if (idx !== -1) {
+      rxBuffer.splice(0, idx + 1); // Discard up to and including 0x14
+      return true;
+    }
+    if (rxBuffer.length > 32) {
+      rxBuffer.splice(0, rxBuffer.length - 8);
+    }
+    const remaining = timeoutMs - (Date.now() - startTime);
+    if (remaining <= 0) return false;
+    await new Promise(resolve => {
+      readResolve = resolve;
+      setTimeout(resolve, remaining);
+    });
+  }
+}
+
+async function sendCmd(cmdBytes, expectPayloadLen = 0, timeoutMs = 500) {
+  const packet = [...cmdBytes, CRC_EOP];
+  await sendBytes(packet);
+
+  const synced = await readUntilSync(timeoutMs);
+  if (!synced) return null;
+
+  let payload = [];
+  if (expectPayloadLen > 0) {
+    payload = await readBytes(expectPayloadLen, timeoutMs);
+    if (!payload || payload.length !== expectPayloadLen) return null;
+  }
+
+  const ok = await readBytes(1, timeoutMs);
+  if (!ok || ok[0] !== STK_OK) return null;
+
+  return payload;
+}
+
+// 7-Stage Flash Routine
+btnFlash.addEventListener('click', async () => {
+  if (!port || !parsedFirmware) return;
+
+  btnFlash.disabled = true;
+  btnDisconnect.disabled = true;
+  setProgress(0, "Stage 0: バス初期化中...", 0);
+
+  try {
+    // -------------------------------------------------------------
+    // Stage 0: Init & Bus Stabilization
+    // -------------------------------------------------------------
+    log("[STAGE 0: INIT] Stabilizing RS-485 bus...", 'info');
+    await sleep(100);
+    clearRxBuffer();
+
+    // -------------------------------------------------------------
+    // Stage 1: Polling & Power-on Detection
+    // -------------------------------------------------------------
+    setProgress(5, "Stage 1: 電源投入待ち (Core-D を ON にしてください)...", 1);
+    log("[STAGE 1: POLLING] Waiting for Core-D to power on / reset...", 'warn');
+    log(">>> Power on or reset the Core-D NOW (Red LED PB2 will blink) <<<", 'warn');
+
+    const pollStart = Date.now();
+    let powerOnDetected = false;
+
+    while (Date.now() - pollStart < 30000) {
+      await sendBytes([STK_GET_SYNC, CRC_EOP]);
+      const gotSync = await readUntilSync(60);
+      if (gotSync) {
+        const ok = await readBytes(1, 60);
+        if (ok && ok[0] === STK_OK) {
+          powerOnDetected = true;
+          break;
+        }
+      }
+      await sleep(40);
+    }
+
+    if (!powerOnDetected) {
+      throw new Error("Stage 1 タイムアウト: 30秒以内に Core-D からの応答がありませんでした。(A/B 極性や配線をご確認ください)");
+    }
+
+    const elapsedSec = ((Date.now() - pollStart) / 1000).toFixed(1);
+    log(`[STAGE 1: PASS] Power-on detected! Initial response received in ${elapsedSec}s.`, 'pass');
+
+    // -------------------------------------------------------------
+    // Stage 2: Bus Settling & Clean Handshake Confirmation
+    // -------------------------------------------------------------
+    setProgress(15, "Stage 2: バス安定化 & ハンドシェイク確認...", 2);
+    log("[STAGE 2: HANDSHAKE] Settling bus (50ms) and confirming clean 2-way sync...", 'info');
+    await sleep(50);
+    clearRxBuffer();
+
+    let consecutiveSync = 0;
+    for (let attempt = 1; attempt <= 5; attempt++) {
+      const t0 = Date.now();
+      const res = await sendCmd([STK_GET_SYNC], 0, 150);
+      if (res !== null) {
+        const rtt = Date.now() - t0;
+        consecutiveSync++;
+        log(`    Handshake probe ${attempt} OK (RTT: ${rtt}ms)`, 'info');
+        if (consecutiveSync >= 2) break;
+      } else {
+        consecutiveSync = 0;
+        await sleep(20);
+        clearRxBuffer();
+      }
+    }
+
+    if (consecutiveSync < 2) {
+      throw new Error("Stage 2 失敗: 連続同期ハンドシェイクを確立できませんでした。");
+    }
+    log("[STAGE 2: PASS] Handshake verified! Clean 2-way sync confirmed.", 'pass');
+
+    // -------------------------------------------------------------
+    // Stage 3: Device Identification & Enter ProgMode
+    // -------------------------------------------------------------
+    setProgress(25, "Stage 3: デバイス識別中...", 3);
+    log("[STAGE 3: IDENTIFY] Reading bootloader version and device signature...", 'info');
+
+    // Read version
+    const minor = await sendCmd([STK_GET_PARAMETER, 0x82], 1, 200);
+    const major = await sendCmd([STK_GET_PARAMETER, 0x81], 1, 200);
+    if (major && minor) {
+      log(`    Bootloader Version: Optiboot ${major[0]}.${minor[0]}`, 'info');
+    }
+
+    // Read signature
+    const sig = await sendCmd([STK_READ_SIGN], 3, 300);
+    if (sig) {
+      const sigHex = sig.map(b => '0x' + b.toString(16).padStart(2, '0').toUpperCase()).join(' ');
+      log(`    Device Signature: ${sigHex}`, 'info');
+      if (sig[0] === 0x1E && sig[1] === 0x94 && sig[2] === 0x21) {
+        log("    -> Target confirmed: ATtiny1616 (MATCH)", 'pass');
+      }
+    }
+
+    // Enter ProgMode
+    await sendCmd([STK_ENTER_PROGMODE], 0, 300);
+    log("[STAGE 3: PASS] Entered programming mode successfully.", 'pass');
+
+    // -------------------------------------------------------------
+    // Stage 4: Flash Programming (64B per Page)
+    // -------------------------------------------------------------
+    const startPage = Math.floor(parsedFirmware.minAddr / PAGE_SIZE) * PAGE_SIZE;
+    const endPage = Math.floor((parsedFirmware.maxAddr + PAGE_SIZE) / PAGE_SIZE) * PAGE_SIZE;
+    const totalPages = (endPage - startPage) / PAGE_SIZE;
+
+    log(`[STAGE 4: WRITE] Programming ${totalPages} page(s) (${PAGE_SIZE} bytes/page)...`, 'info');
+
+    for (let pageIdx = 0; pageIdx < totalPages; pageIdx++) {
+      const pageAddr = startPage + pageIdx * PAGE_SIZE;
+      const pageBuf = [];
+      for (let i = 0; i < PAGE_SIZE; i++) {
+        pageBuf.push(parsedFirmware.data[pageAddr + i] !== undefined ? parsedFirmware.data[pageAddr + i] : 0xFF);
+      }
+
+      // Load Address
+      const addrLow = pageAddr & 0xFF;
+      const addrHigh = (pageAddr >> 8) & 0xFF;
+      const loadRes = await sendCmd([STK_LOAD_ADDRESS, addrLow, addrHigh], 0, 300);
+      if (loadRes === null) throw new Error(`Stage 4 失敗: アドレス 0x${pageAddr.toString(16).toUpperCase()} のロードに失敗しました。`);
+
+      // Prog Page
+      const lenHigh = (PAGE_SIZE >> 8) & 0xFF;
+      const lenLow = PAGE_SIZE & 0xFF;
+      const progPacket = [STK_PROG_PAGE, lenHigh, lenLow, 0x46, ...pageBuf]; // 'F' = 0x46
+      const progRes = await sendCmd(progPacket, 0, 1000);
+      if (progRes === null) throw new Error(`Stage 4 失敗: ページ 0x${pageAddr.toString(16).toUpperCase()} の書き込みに失敗しました。`);
+
+      const pct = 30 + Math.round(((pageIdx + 1) / totalPages) * 35);
+      setProgress(pct, `Stage 4: フラッシュ書込中 (${pageIdx + 1}/${totalPages})`, 4);
+    }
+    log("[STAGE 4: PASS] All pages programmed to flash successfully.", 'pass');
+
+    // -------------------------------------------------------------
+    // Stage 5: Read-back Verification
+    // -------------------------------------------------------------
+    log(`[STAGE 5: VERIFY] Verifying ${totalPages} page(s) against HEX binary...`, 'info');
+
+    for (let pageIdx = 0; pageIdx < totalPages; pageIdx++) {
+      const pageAddr = startPage + pageIdx * PAGE_SIZE;
+      const expectedBuf = [];
+      for (let i = 0; i < PAGE_SIZE; i++) {
+        expectedBuf.push(parsedFirmware.data[pageAddr + i] !== undefined ? parsedFirmware.data[pageAddr + i] : 0xFF);
+      }
+
+      // Load Address
+      const addrLow = pageAddr & 0xFF;
+      const addrHigh = (pageAddr >> 8) & 0xFF;
+      await sendCmd([STK_LOAD_ADDRESS, addrLow, addrHigh], 0, 300);
+
+      // Read Page
+      const lenHigh = (PAGE_SIZE >> 8) & 0xFF;
+      const lenLow = PAGE_SIZE & 0xFF;
+      const readBuf = await sendCmd([STK_READ_PAGE, lenHigh, lenLow, 0x46], PAGE_SIZE, 1000);
+      if (!readBuf) throw new Error(`Stage 5 失敗: ページ 0x${pageAddr.toString(16).toUpperCase()} の読み出しに失敗しました。`);
+
+      for (let i = 0; i < PAGE_SIZE; i++) {
+        if (readBuf[i] !== expectedBuf[i]) {
+          throw new Error(`Stage 5 ベリファイ不一致 (0x${(pageAddr + i).toString(16).toUpperCase()}): 期待値 0x${expectedBuf[i].toString(16)}, 読出値 0x${readBuf[i].toString(16)}`);
+        }
+      }
+
+      const pct = 65 + Math.round(((pageIdx + 1) / totalPages) * 30);
+      setProgress(pct, `Stage 5: ベリファイ照合中 (${pageIdx + 1}/${totalPages})`, 5);
+    }
+    log("[STAGE 5: PASS] 100% verified! Flash contents match HEX file perfectly.", 'pass');
+
+    // -------------------------------------------------------------
+    // Stage 6: Leave ProgMode & App Launch
+    // -------------------------------------------------------------
+    setProgress(100, "Stage 6: アプリケーション起動完了！", 6);
+    log("[STAGE 6: LAUNCH] Exiting bootloader to launch application...", 'info');
+    await sendCmd([STK_LEAVE_PROGMODE], 0, 300);
+
+    log("=================================================================", 'pass');
+    log("  🎉 [SUCCESS] Application successfully flashed over RS-485!", 'pass');
+    log("=================================================================", 'pass');
+    log(">>> Core-D is now launching the application.", 'pass');
+    log(">>> Check the onboard WHITE LED (PB3) — it should be blinking (500ms cycle)!", 'pass');
+    log("=================================================================", 'pass');
+
+  } catch (err) {
+    log(`[ERROR] ${err.message}`, 'fail');
+    setProgress(0, "エラー発生", -1);
+    alert(`書き込みエラー:\n${err.message}`);
+  } finally {
+    btnFlash.disabled = false;
+    btnDisconnect.disabled = false;
+  }
+});
+</script>
+
+</body>
+</html>

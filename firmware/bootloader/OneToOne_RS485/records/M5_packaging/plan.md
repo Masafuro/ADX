@@ -3,79 +3,125 @@ Copyright (c) 2026 ADX Project Contributors
 SPDX-License-Identifier: MIT
 -->
 
-# Milestone 5 計画書: Windows 11 向け配布パッケージ化 & ワンクリック自動化
+# Milestone 5 計画書: Web Serial API による単一 HTML 型ファームウェア配布システムの構築
 
 ## 1. 概要と目的
 
-### 1.1 背景
-Milestone 4（RS-485 経由でのファームウェア書き込み・二重起動実証）の成功により、ハードウェア・ブートローダー・プロトコルの基本技術は 100% 確立されました。
-しかし、現場の作業者や外部開発者が日常的に使用するツールとしては、以下の課題が残っています：
-1. PowerShell やコマンドプロンプトで長いコマンド（`python adx_rs485_flash.py COM19 ...`）を手打ちする必要がある。
-2. 接続されている USB-RS485 アダプタの COM ポート番号をデバイスマネージャー等で事前に調べる必要がある。
-3. Python 環境や `pyserial` ライブラリの有無による環境依存トラブルが起きやすい。
+### 1.1 背景と課題
+Milestone 4（RS-485 経由でのファームウェア書き込み・二重起動実証）の成功により、Core-D（ATtiny1616）と PC 間の Over-The-Wire（OTW）技術は 100% 確立されました。
 
-### 1.2 目的
-Windows 11 ホスト環境において、**「HEX ファイルのドラッグ＆ドロップ」** または **「ダブルクリック（ワンクリック）」** だけで、COM ポート自動検出から安全な書き込み・ベリファイ・アプリ起動までを完結させる、使いやすく堅牢な配布パッケージを完成させます。
+しかし、現場の作業員、外部開発者、あるいはエンドユーザーが日常的にファームウェア更新を行う環境を想定すると、従来の CLI（Python / bat）方式には以下の **「現場特有の壁」** が立ちはだかります：
+1. **OS ごとの差異と環境依存**:
+   - Python のインストール、PATH 設定、`pip install pyserial` などの依存関係でつまずきやすい。
+   - 会社支給 PC 等では管理者権限がなく、外部ツールのインストールが禁止されている場合が多い。
+2. **現場のオフライン環境**:
+   - RS-485 が使われるプラント、工場、FA 設備、屋外機器は、**インターネット接続がない（あるいは PC のネット接続がセキュリティ上禁止されている）** ケースが標準である。
+3. **二重管理の無駄**:
+   - CLI ツール（Python）と GUI / Web ツールで別々に書き込みロジックを実装・保守すると、仕様変更やバグ修正のたびに二重の検証コストが発生する。
 
----
+### 1.2 目的と革新的アプローチ
+本マイルストーンでは、**Web Serial API を活用した「単一の HTML/JS アプリケーション（`index.html`）」に書き込みロジックを完全集約** します。
 
-## 2. 開発スコープ（In Scope / Out of Scope）
-
-明確なスコープを設定し、過剰な複雑化を防ぎます。
-
-### 2.1 スコープ内 (In Scope)
-1. **COM ポート自動検出 & 対話的選択機能の実装 (`scripts/adx_rs485_flash.py`)**:
-   - 引数なしで実行した場合、接続中のシリアルポートを自動列挙。
-   - USB-RS485 ドングル（CH340/CH341, FTDI, CP210x, Prolific 等）を自動判定。
-   - 1 つだけ検出された場合は自動選択、複数検出時は番号選択メニューを表示。
-2. **Windows 11 向けワンクリック・ランチャー (`adx_flash.bat`)**:
-   - `.hex` ファイルをバッチファイルにドラッグ＆ドロップして即時書き込み。
-   - 単体ダブルクリック時は、同一フォルダ内の最新 `.hex` ファイルを自動検出して実行。
-   - Python のインストール確認、および `pyserial` の未導入時自動インストール案内。
-   - 実行後に画面が勝手に閉じず、結果を確認できる `pause` 制御。
-3. **配布用リリースキットの整備 (`dist/` または `releases/v1.0.0/`)**:
-   - 誰でも ZIP 展開するだけで即座に使える自己完結型パッケージ。
-   - ランチャー、スクリプト、ファームウェア、簡単な操作説明書（`README.txt`）。
-4. **エンドユーザー向け操作手順書 (`docs/USER_GUIDE.md`)**:
-   - 初心者でも迷わない結線図（A/B/GND）、書き込み手順、LED 診断ルール。
-
-### 2.2 スコープ外 (Out of Scope - 将来課題として切り離す項目)
-- **PyInstaller による単一 `.exe` 化**:
-  - Windows Defender による誤検知（False Positive）リスクや、Python インストーラとのバージョン衝突を避けるため、M5 では「軽量 Python スクリプト＋親切な bat ランチャー」を標準とします（`.exe` 化は将来の要望に応じて検討）。
-- **マルチノード（1-to-N）アドレス指定プロトコル**:
-  - 本プロジェクトの要件は「1-to-1 接続」であり、マルチドロップ拡張は Phase 2 の別プロジェクト扱いとします。
+本 ADX リポジトリが **公開 GitHub リポジトリ（Public Repository）** である特性を最大限に活かし、**「オンライン（GitHub Pages）」と「完全オフライン（現場 localhost）」の 2 つの運用形態を、たった 1 つの HTML ファイルで両立** させます。
 
 ---
 
-## 3. マイルストーン 5 の検証ステップ (Gate 方式)
+## 2. システムアーキテクチャ
+
+すべてのプロトコルロジック（STK500v1、7 ステージシーケンス、Intel HEX パース、UI 制御）を **単一の HTML ファイル（外部ライブラリ依存ゼロ）** に凝縮します。
 
 ```mermaid
 flowchart TD
-    Gate5_1["Gate 5.1: スクリプト自動検出 & 対話機能強化<br/>(adx_rs485_flash.py)"]
-    Gate5_2["Gate 5.2: ドラッグ＆ドロップ対応 bat ランチャー作成<br/>(adx_flash.bat)"]
-    Gate5_3["Gate 5.3: Windows 11 実機でのワンクリック動作検証<br/>(実機白LED点滅確認)"]
-    Gate5_4["Gate 5.4: 配布パッケージング & USER_GUIDE 整備<br/>(README.txt, docs/)"]
+    subgraph SingleSource["単一ソースコード (Single Source of Truth)"]
+        HTML["index.html<br/>(HTML5 + Vanilla CSS + Vanilla JS)<br/>- Web Serial API クライアント<br/>- STK500v1 (7ステージシーケンス)<br/>- Intel HEX パーサー & D&D UI<br/>- A/B 極性診断ガイド"]
+    end
+
+    subgraph ModeOnline["【運用形態 ①: オンライン / 一般ユーザー・スマホ】"]
+        GHP["GitHub Pages (HTTPS)<br/>https://masafuro.github.io/ADX/..."]
+        DeviceA["Windows / Mac / Linux PC<br/>(Chrome / Edge)"]
+        DeviceB["Android スマートフォン / タブレット<br/>(USB-OTG ドングル接続)"]
+        GHP --> DeviceA
+        GHP --> DeviceB
+    end
+
+    subgraph ModeOffline["【運用形態 ②: オフライン / ネットなし工場現場】"]
+        Bat["run_local_flasher.bat<br/>(ダブルクリック起動)"]
+        PySrv["Python 標準 http.server (127.0.0.1:8000)<br/>※pyserial 等の pip 不要"]
+        LocalChrome["現場 PC の Chrome / Edge<br/>http://localhost:8000"]
+        Bat --> PySrv --> LocalChrome
+    end
+
+    HTML -. "公開デプロイ" .-> GHP
+    HTML -. "ローカル展開" .-> LocalChrome
+
+    DeviceA --> Hardware["ADX Core-D (RS-485 差動 A/B)"]
+    DeviceB --> Hardware
+    LocalChrome --> Hardware
+```
+
+### 2.1 2 つの運用形態の詳細
+
+| 項目 | ① オンライン形態 (GitHub Pages) | ② オフライン現場形態 (Localhost Web サーバー) |
+| :--- | :--- | :--- |
+| **主な用途** | 開発室、一般ユーザー、Android スマホでの現場保守 | インターネット接続が禁止・遮断された工場・現場 PC |
+| **アクセス方法** | ブラウザで GitHub Pages の URL を開くだけ | `run_local_flasher.bat` をダブルクリック |
+| **インストール作業** | **完全ゼロ**（ダウンロードすら不要） | **完全ゼロ**（ZIP を解凍して bat を叩くだけ） |
+| **Python 依存** | **完全不要** | **標準モジュールのみ**（`pyserial` 等の pip 不要） |
+| **セキュリティ基準** | HTTPS による Secure Context 適合 | `http://localhost` による Secure Context 適合 |
+| **対応デバイス** | Windows, Mac, Linux, **Android (USB-OTG)** | Windows PC（現場端末） |
+
+---
+
+## 3. 開発スコープ（In Scope / Out of Scope）
+
+### 3.1 スコープ内 (In Scope)
+1. **単一 HTML Web Serial フラッシャー (`index.html`) の開発**:
+   - Web Serial API（`navigator.serial`）によるシリアルポートオープン（115,200 bps, 8N1）。
+   - M4 で実証した **7 ステージ通信シーケンス（Stage 0〜6）** の完全移植。
+   - ブラウザ内での Intel HEX パーサー実装（ドラッグ＆ドロップ対応、およびビルトインのテストバイナリ選択機能）。
+   - 高級感のあるモダン UI（レスポンシブ、プログレスバー、送受信 HEX ログコンソール、A/B 結線診断ガイド）。
+2. **オフライン現場用ワンクリック・ランチャー (`run_local_flasher.bat`) の作成**:
+   - Python 標準の `http.server` を `127.0.0.1:8000` でバックグラウンド起動。
+   - デフォルトブラウザ（Chrome / Edge）で自動的に `http://localhost:8000` を開く。
+   - ブラウザ終了時またはバッチ終了時にローカルサーバーを自動停止。
+3. **GitHub Pages 公開用ディレクトリの整備**:
+   - リポジトリの `docs/` 配下に配置し、GitHub Pages から即座に配信できる構成を構築。
+4. **マニュアル & 配布キットの整備**:
+   - 現場用クイックメモ（`README.txt`）およびオンライン用ユーザーガイド（`docs/USER_GUIDE.md`）。
+
+### 3.2 スコープ外 (Out of Scope)
+- **iOS (iPhone/iPad) 対応**:
+  - Apple の WebKit セキュリティポリシーにより Web Serial API が禁止されているため対象外（Android のみをスマホ対応とする）。
+- **スタンドアロン `.exe` 化 (PyInstaller 等)**:
+  - セキュリティソフトによる誤検知リスクがあるため、本 Web Serial アプローチで代替しスコープ外とする。
+
+---
+
+## 4. マイルストーン 5 の検証ステップ (Gate 方式)
+
+```mermaid
+flowchart TD
+    Gate5_1["Gate 5.1: Web Serial フラッシャー (index.html) の実装<br/>(STK500v1 + 7ステージ + D&D UI)"]
+    Gate5_2["Gate 5.2: GitHub Pages への配備 & オンライン実機検証<br/>(HTTPS 経由での Chrome + COM19 実証)"]
+    Gate5_3["Gate 5.3: オフライン起動ランチャー (run_local_flasher.bat) 開発<br/>(localhost 経由での現場オフライン動作検証)"]
+    Gate5_4["Gate 5.4: 配布キット & ユーザーガイドの最終整備<br/>(docs/USER_GUIDE.md, README.md)"]
 
     Gate5_1 --> Gate5_2 --> Gate5_3 --> Gate5_4
 ```
 
 | ステップ | 作業内容 | 合格判定基準 (Exit Criteria) |
 | :--- | :--- | :--- |
-| **Gate 5.1** | `adx_rs485_flash.py` に COM 自動検出 & 対話的選択を実装 | ポート引数なしで実行し、COM19 が自動検出されること |
-| **Gate 5.2** | Windows 11 用 `adx_flash.bat` ランチャーを実装 | ドラッグ＆ドロップ引数およびダブルクリック起動の構文テスト合格 |
-| **Gate 5.3** | Windows 11 実機でのワンクリック書き込みテスト | **エクスプローラーから hex をドラッグ＆ドロップ $\rightarrow$ Core-D 電源ON $\rightarrow$ 白LED点滅！** |
-| **Gate 5.4** | 配布キット (`releases/ADX_CoreD_RS485_Flasher/`) と手順書の完成 | 第三者が手順書を見て 1 人で作業できる状態であること |
+| **Gate 5.1** | `index.html`（HTML/CSS/JS 単一ファイル）を実装 | シンタックスエラーなく UI、HEX パース、Web Serial 制御ロジックが完成すること |
+| **Gate 5.2** | GitHub Pages（HTTPS）へ配備し、オンライン実機検証 | **GitHub Pages の URL を Chrome で開いて Core-D へ書き込み成功 $\rightarrow$ 白LED点滅！** |
+| **Gate 5.3** | `run_local_flasher.bat` を開発し、オフライン実機検証 | バッチ実行により `http://localhost` でブラウザが開き、オフラインでも書き込み成功すること |
+| **Gate 5.4** | 操作マニュアル (`docs/USER_GUIDE.md`) & ドキュメント最終整備 | 第三者が手順書を見て 1 人で作業できる状態であること |
 
 ---
 
-## 4. 成果物一覧
+## 5. 成果物一覧
 
-1. `scripts/adx_rs485_flash.py` (自動検出強化版)
-2. `adx_flash.bat` (Windows 向けドラッグ＆ドロップランチャー)
-3. `releases/ADX_CoreD_RS485_Flasher/` (配布パッケージ)
-   - `adx_flash.bat`
-   - `adx_rs485_flash.py`
-   - `firmware_blink_test.hex`
-   - `README.txt` (現場用クイックメモ)
-4. `docs/USER_GUIDE.md` (正式な図解入りユーザーマニュアル)
-5. `records/M5_packaging/result.md` (M5 検証結果レポート)
+1. **`firmware/bootloader/OneToOne_RS485/tools/web_flasher/index.html`** (Web Serial フラッシャー本体)
+2. **`firmware/bootloader/OneToOne_RS485/tools/web_flasher/run_local_flasher.bat`** (オフライン現場用ランチャー)
+3. **`docs/flasher/index.html`** (GitHub Pages 公開用デプロイ)
+4. **`docs/USER_GUIDE.md`** (図解入りユーザーマニュアル)
+5. **`records/M5_packaging/result.md`** (M5 検証結果レポート)
