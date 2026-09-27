@@ -319,15 +319,16 @@ def main():
         if args.hex:
             hex_path = args.hex
             if not os.path.exists(hex_path):
-                # Try relative to script directory
                 script_dir = os.path.dirname(os.path.abspath(__file__))
-                candidate = os.path.join(script_dir, "..", "releases", os.path.basename(hex_path))
-                if os.path.exists(candidate):
-                    hex_path = candidate
-                else:
-                    candidate = os.path.join(script_dir, hex_path)
-                    if os.path.exists(candidate):
-                        hex_path = candidate
+                candidates = [
+                    os.path.join(script_dir, "..", "releases", os.path.basename(hex_path)),
+                    os.path.join(script_dir, "..", "optiboot_O4", "releases", os.path.basename(hex_path)),
+                    os.path.join(script_dir, hex_path),
+                ]
+                for c in candidates:
+                    if os.path.exists(c):
+                        hex_path = c
+                        break
 
             hex_data = parse_intel_hex(hex_path)
             print(f"[HEX] Loaded {len(hex_data)} bytes from {hex_path}")
