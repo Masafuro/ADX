@@ -16,11 +16,15 @@ TARGET_ELF   = optiboot_ol4_core_d.elf
 TARGET_HEX   = optiboot_ol4_core_d.hex
 BLANK_ELF    = blank_app.elf
 BLANK_HEX    = blank_app.hex
+DEMO_ELF     = demo_app.elf
+DEMO_HEX     = demo_app.hex
+RS485_ELF    = rs485_app.elf
+RS485_HEX    = rs485_app.hex
 COMBINED_HEX = optiboot_ol4_with_blank.hex
 
 RELEASE_DIR  = ../releases
 
-all: $(TARGET_HEX) $(COMBINED_HEX) check_size
+all: $(TARGET_HEX) $(BLANK_HEX) $(DEMO_HEX) $(RS485_HEX) $(COMBINED_HEX) check_size
 
 $(TARGET_ELF): optiboot_ol4.c ln485_protocol.h
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
@@ -35,6 +39,22 @@ $(BLANK_ELF): blank_app.c
 
 $(BLANK_HEX): $(BLANK_ELF)
 	$(OBJCOPY) -O ihex $< $@
+
+$(DEMO_ELF): demo_app.c
+	$(CC) -mmcu=$(MCU) -Os -nostartfiles -Wl,-section-start=.text=0x400 -o $@ $<
+
+$(DEMO_HEX): $(DEMO_ELF)
+	$(OBJCOPY) -O ihex $< $@
+	mkdir -p $(RELEASE_DIR)
+	cp $@ $(RELEASE_DIR)/$@
+
+$(RS485_ELF): rs485_app.c
+	$(CC) -mmcu=$(MCU) -Os -nostartfiles -Wl,-section-start=.text=0x400 -o $@ $<
+
+$(RS485_HEX): $(RS485_ELF)
+	$(OBJCOPY) -O ihex $< $@
+	mkdir -p $(RELEASE_DIR)
+	cp $@ $(RELEASE_DIR)/$@
 
 $(COMBINED_HEX): $(TARGET_HEX) $(BLANK_HEX)
 	python3 merge_hex.py $(TARGET_HEX) $(BLANK_HEX) $@

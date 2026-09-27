@@ -3,167 +3,146 @@ Copyright (c) 2026 ADX Project Contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Optiboot_OL4 通信プロトコル仕様書 (Specification)
+# Optiboot_OL4 RS-485 高信頼ブートローダー仕様書 (Specification v2.0)
 
-本ドキュメントは、**ADX Core-D**（Microchip ATtiny1616-MNR）向け 1-to-1 LN-485 ブートローダー **Optiboot_OL4** の通信仕様、フレームフォーマット、シーケンス、およびメモリマップを定義します。
+本ドキュメントは、**ADX Core-D**（Microchip ATtiny1616-MNR）向け 1-to-1 RS-485 高信頼ブートローダー **Optiboot_OL4 (v2.0)** の通信仕様、フレームフォーマット、シーケンス、およびメモリマップを定義します。
 
 ---
 
-## 1. システム全体構成 & メモリマップ
+## 1. 設計思想と基本方針
 
-### 1.1 メモリマップ (`BOOTEND = 0x04`)
-ATtiny1616 の 16KB Flash メモリ（0x0000 〜 0x3FFF）を以下のように分割します。
+本ブートローダーは、現場・産業用 RS-485 配線における過酷な電気的ノイズ環境に耐えうる**「完全な決定論的信頼性と文鎮化（Brick）防止」**を最優先に設計されています。
+
+1. **9,600 bps の絶対的物理マージン**:
+   - 1 ビット幅 104.2 µs。内蔵オシレータの温度ドリフトや USB シリアルのジッターを完全に許容。
+   - 4 KB のファームウェア書き込みは **約 5 秒** で完了。
+2. **Flash ページ単位（64 バイト）の CRC-16 検証**:
+   - 全ての書き込みパケットに CRC-16 を付与。
+   - マイコン側で 1 ビットでも誤りを検知した場合、**Flash 書き込みを物理的にブロックして NAK を返信**。
+3. **Stop-and-Wait ARQ（自動再送制御）**:
+   - ホスト側は ACK が返るまで自動再送。100% 健全なデータ以外は Flash に 1 バイトたりとも書き込まれない。
+4. **ハードウェア自己防衛（BOOTEND 保護）**:
+   - ブートローダー自身（0x0000〜0x03FF）への上書き要求は、マイコン側ハードウェア判定で物理的に拒絶。
+
+---
+
+## 2. メモリマップ & ハードウェア設定
+
+### 2.1 メモリマップ (`BOOTEND = 0x04`)
 
 ```text
 +-----------------------+ 0x0000
-|   Optiboot_OL4        | 1024 Bytes (1 KB)
-|   (BOOT セクション)   | FUSE.BOOTEND = 0x04
+|   Optiboot_OL4        | 1024 Bytes (1 KB / 16 ページ)
+|   (BOOT セクション)   | FUSE.BOOTEND = 0x04 (書込保護)
 +-----------------------+ 0x0400
 |                       |
-|   ユーザーアプリ      | 15,360 Bytes (15 KB / 93.75%)
-|   (APP セクション)    |
+|   ユーザーアプリ      | 15,360 Bytes (15 KB / 240 ページ)
+|   (APP セクション)    | ページ番号: 0x10 〜 0xFF
 |                       |
 +-----------------------+ 0x3FFF
 ```
 
 * リセット直後は MCU ハードウェアにより `0x0000`（Optiboot_OL4）から起動します。
-* ブートローダー終了時、またはタイムアウト時は `0x0400`（ユーザーアプリ先頭）へジャンプします。
+* 起動後 **1.0 秒間** RS-485 から接続要求（`CMD_PING`）がない場合、直ちに `0x0400`（ユーザーアプリ先頭）へジャンプします。
 
-### 1.2 ハードウェアピンアサイン
+### 2.2 ハードウェアピンアサイン (Core-D)
 
 | ピン | 機能 | レジスタ設定 | 動作モード |
 | :--- | :--- | :--- | :--- |
-| **PA1** | USART0 TXD | `PORTMUX.CTRLB = PORTMUX_USART0_ALTERNATE_gc;`<br>`VPORTA.DIR \|= (1 << 1);` | 通常 High（アイドル） |
-| **PA2** | USART0 RXD | 同上 / `VPORTA.DIR &= ~(1 << 2);` | LINAUTO 自動ボーレート検出 |
-| **PA3** | RS-485 DE | `VPORTA.DIR \|= (1 << 3);` | Active HIGH（送信時のみ 1） |
-| **PA7** | RS-485 /RE | `VPORTA.DIR \|= (1 << 7);` | Active LOW（受信待機時 0, 送信時 1 で自爆遮断） |
-| **PB2** | 赤色 LED | `VPORTB.DIR \|= (1 << 2);` | Active HIGH（待機時 2Hz 点滅, 通信時消灯/同期） |
+| **PA1** | USART0 TXD | `PORTMUX.CTRLB = PORTMUX_USART0_ALTERNATE_gc;`<br>`VPORTA.DIR \|= (1 << 1);` | 送信時 Active |
+| **PA2** | USART0 RXD | `VPORTA.DIR &= ~(1 << 2);` | 受信待機 |
+| **PA4** | RS-485 DE | `VPORTA.DIR \|= (1 << 4);` | Driver Enable (Active HIGH) |
+| **PA7** | RS-485 /RE | `VPORTA.DIR \|= (1 << 7);` | Receiver Enable (Active LOW, 送信時1で自爆遮断) |
+| **PB2** | 赤色 LED | `VPORTB.DIR \|= (1 << 2);` | 待機時 2Hz 点滅, 通信時点灯 |
+
+### 2.3 トランシーバ切替タイミング（黄金比）
+* **送信前**: DE=1, /RE=1 設定後、**1 ms** 待機（トランシーバ立上り安定化）。
+* **送信後**: `USART0.STATUS & USART_TXCIF_bm`（最後のストップビット送出完了）を待機し、**1 ms** バス解放ディレイを設けてから DE=0, /RE=0（受信モード復帰）。
 
 ---
 
-## 2. 物理層 & 通信パラメータ
+## 3. 通信プロトコル仕様 (Stop-and-Wait ARQ)
 
-* **通信方式**: 半二重差動通信（RS-485, SP485EEN トランシーバー）
-* **基本ボーレート**: **115200 bps**（8N1）
-* **自動校正**: ATtiny1616 内蔵 `LINAUTO` エンジンによる Sync（`0x55`）キャリブレーション
-* **レスポンススペース（Response Space）**: **50 µs 〜 100 µs**（ターンアラウンド待機）
-* **ブレーク信号（Break）**: **14 Tbit 以上のドミナント（LOW）** ＋ **2 Tbit デリミタ（HIGH）**
-
----
-
-## 3. ホスト側 LIN Break 生成方式（Baud-Rate Trick）
-
-標準的な USB-RS485 シリアルドングル（CH340, FTDI, CP2102 等）の「Auto-Direction 回路」を正常に駆動しつつハードウェア Break を生成するため、**ボーレート一時変更手法（Baud-Rate Trick）** を採用します。
+### 3.1 リクエストパケット (Host -> Core-D)
 
 ```text
-[Host TX シーケンス]
-  1. ボーレートを 57600 bps に切り替え
-  2. 0x00 を 1 バイト送信 (スタート 0 + データ 00000000 = 計 9 bit LOW)
-     --> 115200 bps 側の Core-D から見ると【18 Tbit の連続 LOW (Break)】として観測される！
-  3. 送信完了 (t_wait = 180µs)
-  4. ボーレートを 115200 bps に復帰
-  5. 0x55 (Sync キャラクタ) を送信
++------+------+------+---------+------+------------------+---------+------+
+| STX  | SEQ  | CMD  | PAGE_NO | LEN  | PAYLOAD (0..64B) | CRC-16  | ETX  |
+| 0x02 | 1B   | 1B   | 1B      | 1B   | LEN Bytes        | 2B(H/L) | 0x03 |
++------+------+------+---------+------+------------------+---------+------+
 ```
+* **STX**: `0x02`
+* **SEQ**: シーケンス番号 (`0x00`〜`0xFF`)
+* **CMD**: コマンドコード
+* **PAGE_NO**: 対象 Flash ページ番号 (`0x10`〜`0xFF`, 1ページ = 64バイト)
+* **LEN**: ペイロード長 (`0` または `64`)
+* **PAYLOAD**: 生データバイト列
+* **CRC-16**: `STX` から `PAYLOAD` 末尾までの CRC-16-CCITT (Poly: 0x1021, Init: 0xFFFF)
+* **ETX**: `0x03`
 
-これにより、OS 固有の API やドングルの回路特性に依存せず、**100% 確実に RS-485 バス上へ規格適合 Break が出力**されます。
+### 3.2 レスポンスパケット (Core-D -> Host) : 8 バイト固定
+
+```text
++------+------+------+---------+---------+---------+----------+------+
+| STX  | SEQ  | RESP | PAGE_NO | STATUS  | EXTRA   | CHECKSUM | ETX  |
+| 0x02 | 1B   | 1B   | 1B      | 1B      | 1B      | 1B       | 0x03 |
++------+------+------+---------+---------+---------+----------+------+
+```
+* **RESP**: `0x06` (`RESP_ACK`) または `0x15` (`RESP_NAK`)
+* **STATUS**:
+  * `0x00`: `STATUS_OK`
+  * `0x01`: `STATUS_ERR_CRC` (CRC不一致、再送要求)
+  * `0x02`: `STATUS_ERR_PROTECTED` (0x00〜0x0F のブートローダー領域への書き込み拒絶)
+  * `0x03`: `STATUS_ERR_UNKNOWN_CMD`
+* **EXTRA**: コマンド固有データ（バージョン、シグネチャ、エラー詳細等）
+* **CHECKSUM**: `(STX + SEQ + RESP + PAGE_NO + STATUS + EXTRA) & 0xFF`
+* **ETX**: `0x03`
 
 ---
 
-## 4. フレームフォーマット & PID 定義
+## 4. コマンドセット定義
 
-すべての通信は、ホスト（Master Broker）が送出する **LIN ヘッダ** から始まります。
-
-### 4.1 LIN ヘッダ構成 (Host -> Bus)
-```text
-+-------------------+-----------------+---------------+
-| Break (18 Tbit L) | Sync (0x55)     | PID (1 Byte)  |
-+-------------------+-----------------+---------------+
-```
-* **PID (Protected Identifier)**: 6ビットのコマンド ID（ID0〜ID5）＋ 2ビットのパリティ（P0, P1）
-  * $P_0 = ID_0 \oplus ID_1 \oplus ID_2 \oplus ID_4$
-  * $P_1 = \neg (ID_1 \oplus ID_3 \oplus ID_4 \oplus ID_5)$
-
-### 4.2 コマンド PID 定義表
-
-| PID (Hex) | 6bit ID | コマンド名 | 通信パターン | 説明 |
-| :---: | :---: | :--- | :---: | :--- |
-| **`0x80`** | `0x00` | `CMD_PING` | Master-Pub $\rightarrow$ Slave-Pub | 生存確認・状態取得（ACK 応答） |
-| **`0xC1`** | `0x01` | `CMD_GET_INFO` | Master-Header $\rightarrow$ Slave-Pub | デバイス ID・シグネチャ・バージョン取得 |
-| **`0x42`** | `0x02` | `CMD_SET_ADDR` | Master-Pub $\rightarrow$ Slave-Pub | Flash アドレス設定（2バイト Target Addr） |
-| **`0x03`** | `0x03` | `CMD_WRITE_PAGE` | Master-Pub $\rightarrow$ Slave-Pub | 64B Flash ページ書き込み（データ + CRC16） |
-| **`0xC4`** | `0x04` | `CMD_READ_PAGE` | Master-Header $\rightarrow$ Slave-Pub | 64B Flash ページ読み出し要求 |
-| **`0x85`** | `0x05` | `CMD_REBOOT` | Master-Pub (No Resp) | アプリケーション（0x0400）へ起動ジャンプ |
+| CMD | コマンド名 | LEN | 説明 | 応答 STATUS / EXTRA |
+| :---: | :--- | :---: | :--- | :--- |
+| **`0x01`** | `CMD_PING` | 0 | 生存確認 ＆ ブートモード維持 | `ACK`, EXTRA=`OL4_VERSION` (0x20 = v2.0) |
+| **`0x02`** | `CMD_GET_CHIP_INFO` | 0 | チップ識別 | `ACK`, EXTRA=`0x21` (ATtiny1616 Sig2) |
+| **`0x10`** | `CMD_WRITE_PAGE` | 64 | Flash 1 ページ (64B) 書き込み | CRC正常: `ACK`<br>CRC異常: `NAK` (`STATUS_ERR_CRC`)<br>保護違反: `NAK` (`STATUS_ERR_PROTECTED`) |
+| **`0x11`** | `CMD_VERIFY_PAGE` | 0 | 指定ページの CRC16 取得 | `ACK`, PAGE_NOの Flash 内容の CRC16 上位/下位 |
+| **`0x20`** | `CMD_BOOT_APP` | 0 | アプリケーション起動ジャンプ | `ACK` 返信後、ユーザーアプリ (`0x0400`) へジャンプ |
 
 ---
 
-## 5. ペイロード構造 & CRC16
+## 5. シーケンス図 (書き込みフロー)
 
-### 5.1 ペイロードフレーム
-* **Master-Publish ペイロード**:
-  ```text
-  [Length (1B)] + [Payload (N Bytes)] + [CRC16_H] + [CRC16_L]
-  ```
-* **Slave-Publish 応答ペイロード**:
-  ```text
-  [Status (1B)] + [Length (1B)] + [Payload (N Bytes)] + [CRC16_H] + [CRC16_L]
-  ```
-  * `Status`:
-    * `0x00`: OK
-    * `0x01`: CRC_ERROR
-    * `0x02`: ADDR_ERROR
-    * `0x03`: FLASH_ERROR
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Host as PC (Uploader)
+    participant Bus as RS-485 Bus
+    participant CoreD as ADX Core-D (Bootloader)
 
-### 5.2 CRC-16-CCITT 仕様
-* 多項式: $x^{16} + x^{12} + x^5 + 1$ (`0x1021`)
-* 初期値: `0xFFFF`
-* 反転: なし
+    Note over CoreD: 電源ON / リセット (1.0s 待機開始)
+    Host->>CoreD: CMD_PING (SEQ=1, LEN=0)
+    CoreD-->>Host: RESP_ACK (SEQ=1, EXTRA=0x20)
+    Note over CoreD: ブートローダーモード確定 (LED点灯)
 
----
+    Host->>CoreD: CMD_GET_CHIP_INFO (SEQ=2)
+    CoreD-->>Host: RESP_ACK (SEQ=2, EXTRA=0x21: ATtiny1616)
 
-## 6. 代表的トランザクション・シーケンス
+    loop ページ単位書き込み (Page 0x10 〜 0x1F)
+        Host->>CoreD: CMD_WRITE_PAGE (Page=0x10, LEN=64, CRC16)
+        alt CRC16 完全一致
+            Note over CoreD: Flash ページ消去・書込 (NVMCTRL)
+            CoreD-->>Host: RESP_ACK (Page=0x10, STATUS_OK)
+        else ノイズ等による CRC 不一致
+            Note over CoreD: Flash 書込を絶対ブロック！
+            CoreD-->>Host: RESP_NAK (Page=0x10, STATUS_ERR_CRC)
+            Host->>CoreD: [再送] CMD_WRITE_PAGE (Page=0x10)
+            CoreD-->>Host: RESP_ACK (Page=0x10, STATUS_OK)
+        end
+    end
 
-### 6.1 PING (生存確認・コールドスタート脱出)
-```text
-Host                                                Core-D
- │                                                    │
- ├──[Break] + [0x55] + [PID 0x80] ───────────────────>│ (LINAUTO 同期 & WFB 解除)
- │                                                    │ (50µs レスポンススペース)
- │<── [Status: 0x00] + [Len: 0x00] + [CRC16] ────────┤ (DE=1 送信後、TXCIF 待機して DE=0)
- │                                                    │
+    Host->>CoreD: CMD_BOOT_APP (SEQ=N)
+    CoreD-->>Host: RESP_ACK
+    Note over CoreD: 0x0400 へジャンプ (ユーザーアプリ起動)
 ```
-
-### 6.2 WRITE_PAGE (64バイト書き込み)
-```text
-Host                                                Core-D
- │                                                    │
- ├──[Break] + [0x55] + [PID 0x03] ───────────────────>│
- ├──[Len: 64] + [Data: 64B] + [CRC16] ───────────────>│ (受信完了 & CRC 検証)
- │                                                    │ (バス解放 DE=0 のまま Flash Erase & Write)
- │                                                    │ (書き込み完了後、50µs 待機)
- │<── [Status: 0x00] + [Len: 0x00] + [CRC16] ────────┤
- │                                                    │
-```
-
-### 6.3 READ_PAGE (64バイト読み出し)
-```text
-Host                                                Core-D
- │                                                    │
- ├──[Break] + [0x55] + [PID 0xC4] ───────────────────>│ (ヘッダのみ送信)
- │                                                    │ (50µs レスポンススペース)
- │<── [Status: 0x00] + [Len: 64] + [64B] + [CRC16] ──┤ (DE=1 送信後、TXCIF 待機して DE=0)
- │                                                    │
-```
-
----
-
-## 7. スレーブ（Core-D）の堅牢性・自律復帰設計
-
-1. **`WFB` (Wait For Break) 常時アーム**:
-   * アイドル時および通信終了後は常に `USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm;` を代入。
-   * Break がない限り一切の受信 FIFO は動作せず、バス上のノイズを完全に無視。
-2. **ウォッチドッグ（WDT）によるフェイルセーフ**:
-   * コールドスタート時は 8 秒 WDT を起動。ホストからの通信がない場合は自動的に `0x0400` へジャンプ。
-   * 通信確立後は WDT を安全値（またはリフレッシュ）で管理し、異常時は即座にクリーンリセット。
-3. **自爆エコーの完全物理遮断**:
-   * 送信時は `DE=1, /RE=1` でローカルレシーバを物理遮断。
-   * 送信完了（`TXCIF`）後に `DE=0, /RE=0` に復帰し、RX FIFO のゴミを掃討。

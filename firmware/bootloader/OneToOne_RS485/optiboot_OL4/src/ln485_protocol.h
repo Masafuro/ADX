@@ -3,38 +3,38 @@
 
 #include <stdint.h>
 
-/*
- * Optiboot_OL4 Protocol Constants & PID Definitions
- * Target: ATtiny1616 (ADX Core-D)
- *
- * PID Parity Calculation:
- *   P0 = ID0 ^ ID1 ^ ID2 ^ ID4
- *   P1 = !(ID1 ^ ID3 ^ ID4 ^ ID5)
- *   PID = (P1 << 7) | (P0 << 6) | (ID & 0x3F)
- */
+#define OL4_MAJVER 2
+#define OL4_MINVER 0
 
-#define OL4_MAJVER 1
-#define OL4_MINVER 2
+#define PKT_STX               0x02
+#define PKT_ETX               0x03
 
-// Protected Identifiers (PIDs)
-#define PID_PING        0x80  // ID 0x00: Master-Pub -> Slave-Pub: Ping / Keep-Alive
-#define PID_GET_INFO    0xC1  // ID 0x01: Master-Header -> Slave-Pub: Device Info & Signature
-#define PID_SET_ADDR    0x42  // ID 0x02: Master-Pub -> Slave-Pub: Load 16-bit Flash Address
-#define PID_WRITE_CHUNK 0x03  // ID 0x03: Master-Pub -> Slave-Pub: Write 8-byte Flash Chunk
-#define PID_COMMIT_PAGE 0xC4  // ID 0x04: Master-Pub -> Slave-Pub: Erase & Write Page Buffer to Flash
-#define PID_READ_CHUNK  0x85  // ID 0x05: Master-Pub -> Slave-Pub: Read 8-byte Flash Chunk
-#define PID_REBOOT      0x06  // ID 0x06: Master-Pub: Reboot to Application (0x0400)
+// Commands (Host -> Core-D)
+#define CMD_PING              0x01
+#define CMD_GET_CHIP_INFO     0x02
+#define CMD_WRITE_PAGE        0x10
+#define CMD_VERIFY_PAGE       0x11
+#define CMD_BOOT_APP          0x20
 
-// Response Status Codes
-#define STATUS_OK           0x00
-#define STATUS_ERR_CRC      0x01
-#define STATUS_ERR_ADDR     0x02
-#define STATUS_ERR_FLASH    0x03
-#define STATUS_ERR_UNKNOWN  0xFF
+// Responses (Core-D -> Host)
+#define RESP_ACK              0x06
+#define RESP_NAK              0x15
 
-#define FLASH_PAGE_SIZE     64
-#define CHUNK_SIZE          8
-#define CHUNKS_PER_PAGE     8
-#define APP_START_ADDR      0x0400
+// Status Codes
+#define STATUS_OK             0x00
+#define STATUS_ERR_CRC        0x01
+#define STATUS_ERR_PROTECTED  0x02
+#define STATUS_ERR_UNKNOWN    0x03
+
+// Flash Parameters (ATtiny1616)
+#define FLASH_PAGE_SIZE       64
+#define APP_START_ADDR        0x0400
+#define APP_START_PAGE        0x10  // 0x0400 / 64 = 16 (0x10)
+#define FLASH_TOTAL_PAGES     256   // 16KB / 64 = 256 (0x00 - 0xFF)
+
+// Signature for ATtiny1616
+#define CHIP_SIG0             0x1E
+#define CHIP_SIG1             0x94
+#define CHIP_SIG2             0x21
 
 #endif // LN485_PROTOCOL_H
