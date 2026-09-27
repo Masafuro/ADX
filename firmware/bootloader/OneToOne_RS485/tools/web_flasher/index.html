@@ -668,7 +668,13 @@
     <div class="console-card">
       <div class="console-header">
         <span>FLASHER LOG CONSOLE</span>
-        <button class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="btnClearConsole">クリア</button>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <label style="font-size: 11px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--text-dim); user-select: none;">
+            <input type="checkbox" id="checkVerboseHex" style="cursor: pointer;">
+            詳細Rawパケットログ (HEX)
+          </label>
+          <button class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="btnClearConsole">クリア</button>
+        </div>
       </div>
       <div class="console-body" id="consoleBody">
         <div class="log-line log-info">[INFO] ADX Core-D Web Flasher loaded. Connect USB-RS485 adapter to start.</div>
@@ -854,6 +860,7 @@ const progressPct = document.getElementById('progressPct');
 const progressStageName = document.getElementById('progressStageName');
 const consoleBody = document.getElementById('consoleBody');
 const btnClearConsole = document.getElementById('btnClearConsole');
+const checkVerboseHex = document.getElementById('checkVerboseHex');
 
 // Tab Elements
 const tabBtnFlasher = document.getElementById('tabBtnFlasher');
@@ -1294,19 +1301,50 @@ async function readUntilSync(timeoutMs = 500) {
 
 async function sendCmd(cmdBytes, expectPayloadLen = 0, timeoutMs = 500) {
   const packet = [...cmdBytes, CRC_EOP];
+  const t0 = Date.now();
   await sendBytes(packet);
 
   const synced = await readUntilSync(timeoutMs);
-  if (!synced) return null;
+  if (!synced) {
+    if (checkVerboseHex.checked) {
+      const txHex = packet.map(b => b.toString(16).padStart(2, '0').toUpperCase()).join(' ');
+      const rxDump = rxBuffer.map(b => b.toString(16).padStart(2, '0').toUpperCase()).join(' ');
+      log(`  [RAW TIMEOUT] TX: ${txHex} -> NO SYNC within ${timeoutMs}ms (rxBuf: [${rxDump}])`, 'fail');
+    }
+    return null;
+  }
 
   let payload = [];
   if (expectPayloadLen > 0) {
     payload = await readBytes(expectPayloadLen, timeoutMs);
-    if (!payload || payload.length !== expectPayloadLen) return null;
+    if (!payload || payload.length !== expectPayloadLen) {
+      if (checkVerboseHex.checked) {
+        log(`  [RAW PAYLOAD FAIL] Expected ${expectPayloadLen}B, got ${payload ? payload.length : 0}B`, 'fail');
+      }
+      return null;
+    }
   }
 
   const ok = await readBytes(1, timeoutMs);
-  if (!ok || ok[0] !== STK_OK) return null;
+  if (!ok || ok[0] !== STK_OK) {
+    if (checkVerboseHex.checked) {
+      log(`  [RAW OK FAIL] Expected STK_OK (0x10), got ${ok ? '0x' + ok[0].toString(16).toUpperCase() : 'null'}`, 'fail');
+    }
+    return null;
+  }
+
+  if (checkVerboseHex.checked) {
+    const txHex = packet.map(b => b.toString(16).padStart(2, '0').toUpperCase()).join(' ');
+    let rxHex = '14 ';
+    if (payload.length > 8) {
+      rxHex += payload.slice(0, 4).map(b => b.toString(16).padStart(2, '0').toUpperCase()).join(' ') + ' ... ' +
+               payload.slice(-4).map(b => b.toString(16).padStart(2, '0').toUpperCase()).join(' ') + ' 10';
+    } else {
+      rxHex += payload.map(b => b.toString(16).padStart(2, '0').toUpperCase()).join(' ') + (payload.length > 0 ? ' ' : '') + '10';
+    }
+    const rtt = Date.now() - t0;
+    log(`  [RAW] TX: ${txHex} -> RX: ${rxHex} (${rtt}ms)`, 'info');
+  }
 
   return payload;
 }
@@ -1449,7 +1487,10 @@ btnFlash.addEventListener('click', async () => {
       await sleep(10); // RS-485 turn-around quiet time
       const addrLow = pageAddr & 0xFF;
       const addrHigh = (pageAddr >> 8) & 0xFF;
-      await sendCmd([STK_LOAD_ADDRESS, addrLow, addrHigh], 0, 300);
+      const loadRes = await sendCmd([STK_LOAD_ADDRESS, addrLow, addrHigh], 0, 300);
+      if (loadRes === null) {
+        throw new Error(`Stage 5 失敗: ページ 0x${pageAddr.toString(16).toUpperCase()} のアドレスロードに失敗しました。`);
+      }
 
       await sleep(10); // RS-485 turn-around quiet time
       const lenHigh = (PAGE_SIZE >> 8) & 0xFF;
