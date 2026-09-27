@@ -283,11 +283,36 @@ def main():
             read_data = dbg.test_page_read_only(target_addr)
             if read_data:
                 print(f"Read {len(read_data)} bytes: {hex_dump(read_data[:16])} ...")
+            dbg.leave_progmode()
+            return
+
+        if args.read_only:
+            print(f"\n=== MODE: READ-ONLY AUDIT ({args.pages} pages from 0x{start_addr:04X}) ===")
+            for p_idx in range(args.pages):
+                curr_addr = start_addr + p_idx * PAGE_SIZE
+                print(f"Auditing page {p_idx+1}/{args.pages} @ 0x{curr_addr:04X}...")
+                read_buf = dbg.test_page_read_only(curr_addr)
+                if read_buf is None:
+                    print(f"!!! HALTED AT PAGE 0x{curr_addr:04X} !!!")
+                    break
+            dbg.leave_progmode()
             return
 
         if args.hex:
-            hex_data = parse_intel_hex(args.hex)
-            print(f"[HEX] Loaded {len(hex_data)} bytes from {args.hex}")
+            hex_path = args.hex
+            if not os.path.exists(hex_path):
+                # Try relative to script directory
+                script_dir = os.path.dirname(os.path.abspath(__file__))
+                candidate = os.path.join(script_dir, "..", "releases", os.path.basename(hex_path))
+                if os.path.exists(candidate):
+                    hex_path = candidate
+                else:
+                    candidate = os.path.join(script_dir, hex_path)
+                    if os.path.exists(candidate):
+                        hex_path = candidate
+
+            hex_data = parse_intel_hex(hex_path)
+            print(f"[HEX] Loaded {len(hex_data)} bytes from {hex_path}")
 
             addrs = list(hex_data.keys())
             min_addr = min(addrs)
@@ -297,27 +322,17 @@ def main():
             total_pages = (end_p - start_p) // PAGE_SIZE
             print(f"[PLAN] Total pages: {total_pages} (0x{start_p:04X} ~ 0x{end_p:04X})")
 
-            if args.read_only:
-                print("\n=== MODE: READ-ONLY AUDIT ===")
-                for p_idx in range(total_pages):
-                    curr_addr = start_p + p_idx * PAGE_SIZE
-                    print(f"Auditing page {p_idx+1}/{total_pages} @ 0x{curr_addr:04X}...")
-                    read_buf = dbg.test_page_read_only(curr_addr)
-                    if read_buf is None:
-                        print(f"!!! HALTED AT PAGE 0x{curr_addr:04X} !!!")
-                        break
-            else:
-                print("\n=== MODE: FULL WRITE & VERIFY PER PAGE ===")
-                for p_idx in range(total_pages):
-                    curr_addr = start_p + p_idx * PAGE_SIZE
-                    page_bytes = bytes([hex_data.get(curr_addr + i, 0xFF) for i in range(PAGE_SIZE)])
-                    success = dbg.test_page_write_and_read(curr_addr, page_bytes)
-                    if not success:
-                        print(f"!!! HALTED AT PAGE 0x{curr_addr:04X} !!!")
-                        break
+            print("\n=== MODE: FULL WRITE & VERIFY PER PAGE ===")
+            for p_idx in range(total_pages):
+                curr_addr = start_p + p_idx * PAGE_SIZE
+                page_bytes = bytes([hex_data.get(curr_addr + i, 0xFF) for i in range(PAGE_SIZE)])
+                success = dbg.test_page_write_and_read(curr_addr, page_bytes)
+                if not success:
+                    print(f"!!! HALTED AT PAGE 0x{curr_addr:04X} !!!")
+                    break
 
-        dbg.leave_progmode()
-        print("\n[FINISH] Test session ended.")
+            dbg.leave_progmode()
+            print("\n[FINISH] Test session ended.")
 
     except KeyboardInterrupt:
         print("\n[ABORT] User interrupted.")
