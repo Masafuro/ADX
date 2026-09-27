@@ -90,9 +90,11 @@ uint16_t crc16_update(uint16_t crc, uint8_t data) {
 
 int main(void) __attribute__((naked)) __attribute__((section(".init9")));
 int main(void) {
-  uint8_t ch, rx_high;
+  uint8_t ch;
   register addr16_t address;
-  uint8_t buffer[FLASH_PAGE_SIZE];
+
+  // Zero out __zero_reg__ (r1) as required by avr-gcc ABI in naked functions
+  __asm__ __volatile__("clr r1\n\t");
 
   // State 0: Reset Cause Evaluation
   ch = RSTCTRL.RSTFR;
@@ -143,13 +145,6 @@ int main(void) {
   for (;;) {
     // Wait for Break + Sync(0x55) + PID
     ch = getch();
-    rx_high = USART0.RXDATAH; // Check for parity or framing errors
-
-    // Parity Error check (LIN Protected ID)
-    if (rx_high & USART_PERR_bm) {
-      USART0.STATUS = USART_WFB_bm | USART_ISFIF_bm | USART_BDF_bm;
-      continue;
-    }
 
     // Command Dispatch
     if (ch == PID_PING) {
@@ -165,27 +160,35 @@ int main(void) {
       rs485_tx_end();
 
     } else if (ch == PID_GET_INFO) {
-      // Return Device Signature & Version
+      // Return Device Signature & Version directly without stack buffers
       uint16_t crc = 0xFFFF;
-      uint8_t info[5] = {
-        SIGROW_DEVICEID0,
-        SIGROW_DEVICEID1,
-        SIGROW_DEVICEID2,
-        (uint8_t)(optiboot_version >> 8),
-        (uint8_t)(optiboot_version & 0xFF)
-      };
-
-      for (uint8_t i = 0; i < 5; i++) {
-        crc = crc16_update(crc, info[i]);
-      }
+      uint8_t b;
 
       response_space();
       rs485_tx_start();
       putch(STATUS_OK);
       putch(5); // Length = 5
-      for (uint8_t i = 0; i < 5; i++) {
-        putch(info[i]);
-      }
+
+      b = SIGROW_DEVICEID0;
+      crc = crc16_update(crc, b);
+      putch(b);
+
+      b = SIGROW_DEVICEID1;
+      crc = crc16_update(crc, b);
+      putch(b);
+
+      b = SIGROW_DEVICEID2;
+      crc = crc16_update(crc, b);
+      putch(b);
+
+      b = OL4_MAJVER;
+      crc = crc16_update(crc, b);
+      putch(b);
+
+      b = OL4_MINVER;
+      crc = crc16_update(crc, b);
+      putch(b);
+
       putch((uint8_t)(crc >> 8));
       putch((uint8_t)(crc & 0xFF));
       rs485_tx_end();
@@ -195,7 +198,7 @@ int main(void) {
       getch(); // Length (2)
       address.bytes[0] = getch();
       address.bytes[1] = getch();
-      getch(); // CRC H (ignored for brevity, or verified)
+      getch(); // CRC H
       getch(); // CRC L
 
       response_space();
@@ -207,14 +210,16 @@ int main(void) {
       rs485_tx_end();
 
     } else if (ch == PID_WRITE_PAGE) {
-      // Write 64B Page: [Len(64)] + [Data 64B] + [CRCH] + [CRCL]
+      // Write 64B Page directly into Page Buffer without stack array
       uint16_t calc_crc = 0xFFFF;
-      getch(); // Length (64)
+      uint8_t len = getch(); // Length (64)
+      uint8_t *p = (uint8_t *)(MAPPED_PROGMEM_START + address.word);
 
-      for (uint8_t i = 0; i < FLASH_PAGE_SIZE; i++) {
-        buffer[i] = getch();
-        calc_crc = crc16_update(calc_crc, buffer[i]);
-      }
+      do {
+        uint8_t b = getch();
+        *(p++) = b;
+        calc_crc = crc16_update(calc_crc, b);
+      } while (--len);
 
       uint16_t rx_crc = ((uint16_t)getch() << 8);
       rx_crc |= getch();
@@ -229,12 +234,6 @@ int main(void) {
         putch(0x00);
         rs485_tx_end();
         continue;
-      }
-
-      // Load buffer into Page Buffer in data space (MAPPED_PROGMEM_START + address)
-      uint8_t *p = (uint8_t *)(MAPPED_PROGMEM_START + address.word);
-      for (uint8_t i = 0; i < FLASH_PAGE_SIZE; i++) {
-        *(p++) = buffer[i];
       }
 
       // Execute Page Erase & Write while bus is safely released (DE=0, /RE=0)
@@ -252,22 +251,22 @@ int main(void) {
       rs485_tx_end();
 
     } else if (ch == PID_READ_PAGE) {
-      // Read 64B Page from Flash
+      // Read 64B Page from Flash directly
       uint16_t crc = 0xFFFF;
       uint8_t *p = (uint8_t *)(MAPPED_PROGMEM_START + address.word);
-
-      for (uint8_t i = 0; i < FLASH_PAGE_SIZE; i++) {
-        buffer[i] = *(p++);
-        crc = crc16_update(crc, buffer[i]);
-      }
+      uint8_t len = FLASH_PAGE_SIZE;
 
       response_space();
       rs485_tx_start();
       putch(STATUS_OK);
       putch(FLASH_PAGE_SIZE);
-      for (uint8_t i = 0; i < FLASH_PAGE_SIZE; i++) {
-        putch(buffer[i]);
-      }
+
+      do {
+        uint8_t b = *(p++);
+        crc = crc16_update(crc, b);
+        putch(b);
+      } while (--len);
+
       putch((uint8_t)(crc >> 8));
       putch((uint8_t)(crc & 0xFF));
       rs485_tx_end();
