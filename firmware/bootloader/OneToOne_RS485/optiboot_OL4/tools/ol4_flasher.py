@@ -44,8 +44,25 @@ STATUS_ERR_UNKNOWN = 0xFF
 PAGE_SIZE = 64
 
 # LN-485 Master Schedule Slot Durations (seconds)
-SLOT_CONTROL = 0.025  # 25ms (50Hz) for PING, GET_INFO, SET_ADDR, READ_PAGE
-SLOT_WRITE   = 0.060  # 60ms (16.6Hz) for WRITE_PAGE (NVM erase/write: ~25ms + slack)
+# User Strategy: Expanding Master polling cycles guarantees deterministic stability.
+SLOT_CONTROL  = 0.040  # 40ms (25Hz) for PING, GET_INFO, SET_ADDR, READ_PAGE
+SLOT_WRITE    = 0.100  # 100ms (10Hz) for WRITE_PAGE (NVM erase/write: ~25ms + 75ms slack)
+PAGE_INTERVAL = 0.030  # 30ms quiet bus settlement interval between full page cycles
+
+
+def status_str(status: int) -> str:
+    if status == STATUS_OK:
+        return "OK"
+    elif status == STATUS_ERR_CRC:
+        return "CRC_ERROR"
+    elif status == STATUS_ERR_ADDR:
+        return "ADDR_ERROR"
+    elif status == STATUS_ERR_FLASH:
+        return "FLASH_ERROR"
+    elif status == STATUS_ERR_UNKNOWN:
+        return "TIMEOUT"
+    else:
+        return f"0x{status:02X}"
 
 
 def crc16_ccitt(data: bytes, initial: int = 0xFFFF) -> int:
@@ -169,52 +186,96 @@ class LN485MasterBroker:
                 elapsed = time.time() - start
                 print(f"[STAGE 1: PASS] Power-on detected in {elapsed:.2f}s (probe #{probes})!")
                 # Inter-stage settlement delay (ensure slave finishes TXCIF and WFB re-arm)
-                time.sleep(0.050)
+                time.sleep(0.080)
                 return True
             time.sleep(0.02)
         print("[STAGE 1: FAIL] Timeout waiting for Core-D.")
         return False
 
-    def get_info(self) -> Optional[Tuple[str, str]]:
-        """Queries Device Signature and Bootloader Version."""
-        ok, status, payload = self.execute_slot(PID_GET_INFO, b"", slot_duration=SLOT_CONTROL)
-        if ok and len(payload) >= 5:
-            sig = f"0x{payload[0]:02X} 0x{payload[1]:02X} 0x{payload[2]:02X}"
-            ver = f"{payload[3]}.{payload[4]}"
-            print(f"  [DEVICE INFO] Signature: {sig} | Optiboot_OL4 Version: {ver}")
-            return sig, ver
-        else:
-            print(f"  [ERROR] Failed to read device info (status=0x{status:02X})")
-            return None
+    def get_info(self, max_retries: int = 3) -> Optional[Tuple[str, str]]:
+        """Queries Device Signature and Bootloader Version with visible retry telemetry."""
+        status = STATUS_ERR_UNKNOWN
+        for attempt in range(1, max_retries + 1):
+            ok, status, payload = self.execute_slot(PID_GET_INFO, b"", slot_duration=SLOT_CONTROL)
+            if ok and len(payload) >= 5:
+                sig = f"0x{payload[0]:02X} 0x{payload[1]:02X} 0x{payload[2]:02X}"
+                ver = f"{payload[3]}.{payload[4]}"
+                if attempt > 1:
+                    print(f"  [DEVICE INFO] Signature: {sig} | Optiboot_OL4 Version: {ver} (recovered on retry #{attempt})")
+                else:
+                    print(f"  [DEVICE INFO] Signature: {sig} | Optiboot_OL4 Version: {ver}")
+                return sig, ver
+            else:
+                if attempt < max_retries:
+                    print(f"  [INFO RETRY #{attempt}/{max_retries}] get_info failed ({status_str(status)}), retrying slot...")
+                    time.sleep(0.03)
 
-    def set_address(self, addr: int) -> bool:
-        """Sets target Flash address."""
+        print(f"  [ERROR] Failed to read device info after {max_retries} attempts ({status_str(status)})")
+        return None
+
+    def set_address(self, addr: int, max_retries: int = 2) -> bool:
+        """Sets target Flash address with visible retry telemetry."""
         payload = bytes([2, addr & 0xFF, (addr >> 8) & 0xFF, 0x00, 0x00])
-        ok, status, _ = self.execute_slot(PID_SET_ADDR, payload, slot_duration=SLOT_CONTROL)
-        return ok
+        status = STATUS_ERR_UNKNOWN
+        for attempt in range(1, max_retries + 1):
+            ok, status, _ = self.execute_slot(PID_SET_ADDR, payload, slot_duration=SLOT_CONTROL)
+            if ok:
+                if attempt > 1:
+                    print(f"    [RETRY OK] set_address 0x{addr:04X} succeeded on attempt #{attempt}")
+                return True
+            else:
+                if attempt < max_retries:
+                    print(f"    [ADDR RETRY #{attempt}/{max_retries}] set_address 0x{addr:04X} failed ({status_str(status)}), retrying...")
+                    time.sleep(0.02)
 
-    def write_page(self, addr: int, data: bytes) -> bool:
-        """Writes a 64-byte Flash page with CRC16."""
+        print(f"  [ERROR] Failed to set address 0x{addr:04X} ({status_str(status)})")
+        return False
+
+    def write_page(self, addr: int, data: bytes, max_retries: int = 2) -> bool:
+        """Writes a 64-byte Flash page with CRC16 and visible retry telemetry."""
         if not self.set_address(addr):
-            print(f"  [ERROR] Failed to set address 0x{addr:04X}")
             return False
 
         crc = crc16_ccitt(data)
         packet = bytes([PAGE_SIZE]) + data + bytes([(crc >> 8) & 0xFF, crc & 0xFF])
+        status = STATUS_ERR_UNKNOWN
 
-        # Flash erase/write takes ~25ms, allocate 60ms slot duration
-        ok, status, _ = self.execute_slot(PID_WRITE_PAGE, packet, slot_duration=SLOT_WRITE, timeout=0.15)
-        return ok
+        for attempt in range(1, max_retries + 1):
+            # Flash erase/write takes ~25ms, allocate 100ms slot duration
+            ok, status, _ = self.execute_slot(PID_WRITE_PAGE, packet, slot_duration=SLOT_WRITE, timeout=0.5)
+            if ok:
+                if attempt > 1:
+                    print(f"    [RETRY OK] write_page 0x{addr:04X} succeeded on attempt #{attempt}")
+                return True
+            else:
+                if attempt < max_retries:
+                    print(f"    [WRITE RETRY #{attempt}/{max_retries}] write_page 0x{addr:04X} failed ({status_str(status)}), retrying slot...")
+                    # Re-send set_address before re-writing page
+                    self.set_address(addr)
+                    time.sleep(0.03)
 
-    def read_page(self, addr: int) -> Optional[bytes]:
-        """Reads a 64-byte Flash page."""
+        print(f"  [ERROR] Write page failed at 0x{addr:04X} ({status_str(status)})")
+        return False
+
+    def read_page(self, addr: int, max_retries: int = 2) -> Optional[bytes]:
+        """Reads a 64-byte Flash page with visible retry telemetry."""
         if not self.set_address(addr):
-            print(f"  [ERROR] Failed to set address 0x{addr:04X}")
             return None
 
-        ok, status, payload = self.execute_slot(PID_READ_PAGE, b"", slot_duration=SLOT_CONTROL)
-        if ok and len(payload) == PAGE_SIZE:
-            return payload
+        status = STATUS_ERR_UNKNOWN
+        for attempt in range(1, max_retries + 1):
+            ok, status, payload = self.execute_slot(PID_READ_PAGE, b"", slot_duration=SLOT_CONTROL)
+            if ok and len(payload) == PAGE_SIZE:
+                if attempt > 1:
+                    print(f"    [RETRY OK] read_page 0x{addr:04X} succeeded on attempt #{attempt}")
+                return payload
+            else:
+                if attempt < max_retries:
+                    print(f"    [READ RETRY #{attempt}/{max_retries}] read_page 0x{addr:04X} failed ({status_str(status)}), retrying slot...")
+                    self.set_address(addr)
+                    time.sleep(0.02)
+
+        print(f"  [ERROR] Read page failed at 0x{addr:04X} ({status_str(status)})")
         return None
 
     def reboot(self):
@@ -310,6 +371,9 @@ def main():
                     print(" [VERIFY MISMATCH]")
                     all_ok = False
                     break
+
+                # Inter-page settlement delay (ensures slave is completely settled in WFB)
+                time.sleep(PAGE_INTERVAL)
 
             if all_ok:
                 t_total = time.time() - t_total_start
