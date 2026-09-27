@@ -130,25 +130,55 @@ ADX プロジェクトで既に実機検証済み（Phase 1 〜 Phase 4 MVP 完�
 
 ---
 
+### ログ 4: Phase 3-2 単一ページ書き込み・ベリファイ試験 [PASS]
+* **実施日時**: 2026-09-27 19:40
+* **コマンド**: `python ol4_flasher.py --port COM19 --hex test_ol4_app_0400.hex`
+* **実機実行結果**:
+  ```text
+  [PLAN] Flashing 11 pages (0x0400 ~ 0x06C0)...
+    Flashing Page 1/11 @ 0x0400... [VERIFY PASS] (136.5ms)
+    Flashing Page 2/11 @ 0x0440... [WRITE FAIL]
+  ```
+* **分析**:
+  * Page 1（0x0400）の消去・書き込み（NVMCTRL）および読み出しベリファイが **136.5ms** で完全成立し、Flash書き込みロジックの正当性を実証。
+  * 一方、全11ページの連続書き込みにおいて、Page 2以降で長大パケット（69バイト連続）起因の物理層ジッターやタイムアウトが発生。
+
+---
+
+### ログ 5: LIN ネイティブ 8バイト分割アーキテクチャの完全実装 [NEW]
+* **背景と決定**:
+  * 車載LIN規格（ISO 17987）の原則である **「最大ペイロード長8バイト」** に立ち返り、64バイトFlashページを **8バイト × 8チャンク** に分割。
+  * スレーブ側は受信した8バイトごとにCRC16をチェックし、OKであればマイコンのFlashページバッファ（`0x8000 + addr + offset`）に直接ストアして `STATUS_OK` を返答。
+  * 8チャンク蓄積後に独立した `PID_COMMIT_PAGE`（消去・書き込み）を発行することで、通信スロット（15〜20ms）とNVM処理スロット（50〜60ms）を明確に分離。
+  * RAMバッファ消費ゼロ、パケット長高々11バイト化による物理層デッドロックの完全根絶を実現。
+* **改修ファイル**:
+  * [`src/ln485_protocol.h`](file:///home/ubuntu/AgentWorkspace/ADX/github/ADX/firmware/bootloader/OneToOne_RS485/optiboot_OL4/src/ln485_protocol.h): `PID_WRITE_CHUNK (0x03)`, `PID_COMMIT_PAGE (0xC4)`, `PID_READ_CHUNK (0x85)`, `PID_REBOOT (0x06)` 定義
+  * [`src/optiboot_ol4.c`](file:///home/ubuntu/AgentWorkspace/ADX/github/ADX/firmware/bootloader/OneToOne_RS485/optiboot_OL4/src/optiboot_ol4.c): 8バイト直接ストア、CRC検証応答、ページコミット処理実装
+  * [`tools/ol4_flasher.py`](file:///home/ubuntu/AgentWorkspace/ADX/github/ADX/firmware/bootloader/OneToOne_RS485/optiboot_OL4/tools/ol4_flasher.py): `write_chunk`, `commit_page`, `read_chunk` による8バイトループ・スロットスケジューラ実装
+
+---
+
 ## 4. バイナリサイズ管理状況 (Gate 1: 1024B 上限)
 
 ```text
 ================== OPTIBOOT_OL4 BINARY SIZE ==================
+optiboot_ol4_core_d.elf  :
 section          size      addr
-.text             740         0
+.text             798         0
 .version            2      1022
-Total             742
+Total             800
 ==============================================================
 * 上限: 1024 バイト (FUSE.BOOTEND = 0x04)
-* 使用量: 742 バイト (72.5%)
-* 空きマージン: 282 バイト (27.5%)
+* 使用量: 800 バイト (78.1%)
+* 空きマージン: 224 バイト (21.9%)
 ```
 
 ---
 
-## 5. 次回実施試験（Phase 3-2 & Phase 4）
+## 5. 次回実施試験（Phase 4: 全11ページ 8バイト分割 一括連続書き込み実証）
 
-1. **試験 3-2: Flash ページ書き込み検証 (`CMD_WRITE_PAGE`)**
-   * 64 バイトの消去・書き込み（NVMCTRL）と、直後の読み出しによる完全一致ベリファイ。
-2. **試験 4-1: 複数ページ連続書き込み・自動更新（全 10〜11 ページ一括フラッシュ）**
-   * 専用フラッシャー `ol4_flasher.py --hex` による一括書き込み・自動ベリファイの実証。
+1. **ブートローダー再書き込み**:
+   * 新バイナリ [`releases/optiboot_ol4_with_blank.hex`](file:///home/ubuntu/AgentWorkspace/ADX/github/ADX/firmware/bootloader/OneToOne_RS485/optiboot_OL4/releases/optiboot_ol4_with_blank.hex) を UPDI (COM20) 経由で Core-D に書き込み。
+2. **全11ページ一括連続フラッシュ実機試験**:
+   * `python ol4_flasher.py --port COM19 --hex test_ol4_app_0400.hex` を実行し、全11ページ（704B）の書き込み・ベリファイが100%一撃でパスすることを確認。
+

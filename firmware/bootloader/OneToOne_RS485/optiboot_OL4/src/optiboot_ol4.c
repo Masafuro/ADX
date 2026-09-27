@@ -210,39 +210,40 @@ int main(void) {
       putch(0x00);
       rs485_tx_end();
 
-    } else if (ch == PID_WRITE_PAGE) {
-      // Write 64B Page directly into Page Buffer via getch_payload (WFB untouched!)
+    } else if (ch == PID_WRITE_CHUNK) {
+      // Write 8-byte chunk directly into Page Buffer via getch_payload (WFB untouched!)
       uint16_t calc_crc = 0xFFFF;
-      uint8_t len = getch_payload(); // Length (64)
-      uint8_t *p = (uint8_t *)(MAPPED_PROGMEM_START + address.word);
+      uint8_t offset = getch_payload();
+      calc_crc = crc16_update(calc_crc, offset);
 
-      do {
+      uint8_t *p = (uint8_t *)(MAPPED_PROGMEM_START + address.word + offset);
+      for (uint8_t i = 0; i < CHUNK_SIZE; i++) {
         uint8_t b = getch_payload();
         *(p++) = b;
         calc_crc = crc16_update(calc_crc, b);
-      } while (--len);
+      }
 
       uint16_t rx_crc = ((uint16_t)getch_payload() << 8);
       rx_crc |= getch_payload();
 
-      if (calc_crc != rx_crc) {
-        // CRC Mismatch: report error and reject write
-        response_space();
-        rs485_tx_start();
+      response_space();
+      rs485_tx_start();
+      if (calc_crc == rx_crc) {
+        putch(STATUS_OK);
+      } else {
         putch(STATUS_ERR_CRC);
-        putch(0x00);
-        putch(0x00);
-        putch(0x00);
-        rs485_tx_end();
-        continue;
       }
+      putch(0x00);
+      putch(0x00);
+      putch(0x00);
+      rs485_tx_end();
 
-      // Execute Page Erase & Write while bus is safely released (DE=0, /RE=0)
+    } else if (ch == PID_COMMIT_PAGE) {
+      // Execute Page Erase & Write (NVMCTRL) while bus is safely released
       _PROTECTED_WRITE_SPM(NVMCTRL.CTRLA, NVMCTRL_CMD_PAGEERASEWRITE_gc);
       while (NVMCTRL.STATUS & (NVMCTRL_FBUSY_bm | NVMCTRL_EEBUSY_bm))
         ;
 
-      // Reply OK
       response_space();
       rs485_tx_start();
       putch(STATUS_OK);
@@ -251,22 +252,25 @@ int main(void) {
       putch(0x00);
       rs485_tx_end();
 
-    } else if (ch == PID_READ_PAGE) {
-      // Read 64B Page from Flash directly
+    } else if (ch == PID_READ_CHUNK) {
+      // Read 8-byte chunk from Flash directly
+      uint8_t offset = getch_payload();
+      getch_payload(); // CRC H (dummy or check)
+      getch_payload(); // CRC L
+
       uint16_t crc = 0xFFFF;
-      uint8_t *p = (uint8_t *)(MAPPED_PROGMEM_START + address.word);
-      uint8_t len = FLASH_PAGE_SIZE;
+      uint8_t *p = (uint8_t *)(MAPPED_PROGMEM_START + address.word + offset);
 
       response_space();
       rs485_tx_start();
       putch(STATUS_OK);
-      putch(FLASH_PAGE_SIZE);
+      putch(CHUNK_SIZE); // Length = 8
 
-      do {
+      for (uint8_t i = 0; i < CHUNK_SIZE; i++) {
         uint8_t b = *(p++);
         crc = crc16_update(crc, b);
         putch(b);
-      } while (--len);
+      }
 
       putch((uint8_t)(crc >> 8));
       putch((uint8_t)(crc & 0xFF));

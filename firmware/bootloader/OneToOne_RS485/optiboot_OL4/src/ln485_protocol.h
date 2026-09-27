@@ -20,9 +20,10 @@
 #define PID_PING        0x80  // ID 0x00: Master-Pub -> Slave-Pub: Ping / Keep-Alive
 #define PID_GET_INFO    0xC1  // ID 0x01: Master-Header -> Slave-Pub: Device Info & Signature
 #define PID_SET_ADDR    0x42  // ID 0x02: Master-Pub -> Slave-Pub: Load 16-bit Flash Address
-#define PID_WRITE_PAGE  0x03  // ID 0x03: Master-Pub -> Slave-Pub: Write 64-byte Flash Page
-#define PID_READ_PAGE   0xC4  // ID 0x04: Master-Header -> Slave-Pub: Read 64-byte Flash Page
-#define PID_REBOOT      0x85  // ID 0x05: Master-Pub: Reboot to Application (0x0400)
+#define PID_WRITE_CHUNK 0x03  // ID 0x03: Master-Pub -> Slave-Pub: Write 8-byte Flash Chunk
+#define PID_COMMIT_PAGE 0xC4  // ID 0x04: Master-Pub -> Slave-Pub: Erase & Write Page Buffer to Flash
+#define PID_READ_CHUNK  0x85  // ID 0x05: Master-Pub -> Slave-Pub: Read 8-byte Flash Chunk
+#define PID_REBOOT      0x06  // ID 0x06: Master-Pub: Reboot to Application (0x0400)
 
 // Response Status Codes
 #define STATUS_OK           0x00
@@ -32,6 +33,8 @@
 #define STATUS_ERR_UNKNOWN  0xFF
 
 #define FLASH_PAGE_SIZE     64
+#define CHUNK_SIZE          8
+#define CHUNKS_PER_PAGE     8
 #define APP_START_ADDR      0x0400
 
 #endif // LN485_PROTOCOL_H

@@ -27,12 +27,13 @@ except ImportError:
     sys.exit(1)
 
 # Protocol PIDs
-PID_PING        = 0x80  # ID 0x00
-PID_GET_INFO    = 0xC1  # ID 0x01
-PID_SET_ADDR    = 0x42  # ID 0x02
-PID_WRITE_PAGE  = 0x03  # ID 0x03
-PID_READ_PAGE   = 0xC4  # ID 0x04
-PID_REBOOT      = 0x85  # ID 0x05
+PID_PING        = 0x80  # ID 0x00: Ping / Keep-Alive
+PID_GET_INFO    = 0xC1  # ID 0x01: Device Info & Signature
+PID_SET_ADDR    = 0x42  # ID 0x02: Load 16-bit Flash Address
+PID_WRITE_CHUNK = 0x03  # ID 0x03: Write 8-byte Flash Chunk
+PID_COMMIT_PAGE = 0xC4  # ID 0x04: Erase & Write Page Buffer to Flash
+PID_READ_CHUNK  = 0x85  # ID 0x05: Read 8-byte Flash Chunk
+PID_REBOOT      = 0x06  # ID 0x06: Reboot to Application (0x0400)
 
 # Status Codes
 STATUS_OK          = 0x00
@@ -41,13 +42,17 @@ STATUS_ERR_ADDR    = 0x02
 STATUS_ERR_FLASH   = 0x03
 STATUS_ERR_UNKNOWN = 0xFF
 
-PAGE_SIZE = 64
+PAGE_SIZE       = 64
+CHUNK_SIZE      = 8
+CHUNKS_PER_PAGE = 8
 
 # LN-485 Master Schedule Slot Durations (seconds)
-# User Strategy: Expanding Master polling cycles guarantees deterministic stability.
-SLOT_CONTROL  = 0.040  # 40ms (25Hz) for PING, GET_INFO, SET_ADDR, READ_PAGE
-SLOT_WRITE    = 0.100  # 100ms (10Hz) for WRITE_PAGE (NVM erase/write: ~25ms + 75ms slack)
-PAGE_INTERVAL = 0.030  # 30ms quiet bus settlement interval between full page cycles
+# 115200bps: 8 bytes + frame overhead takes ~1.5ms.
+# 20ms slot gives huge margin (>85% slack time) to guarantee deterministic stability.
+SLOT_CONTROL  = 0.020  # 20ms for PING, GET_INFO, SET_ADDR
+SLOT_CHUNK    = 0.020  # 20ms for WRITE_CHUNK, READ_CHUNK
+SLOT_COMMIT   = 0.060  # 60ms for COMMIT_PAGE (NVM erase/write: ~25ms + 35ms slack)
+PAGE_INTERVAL = 0.020  # 20ms quiet bus settlement interval between full page cycles
 
 
 def status_str(status: int) -> str:
@@ -231,52 +236,88 @@ class LN485MasterBroker:
         print(f"  [ERROR] Failed to set address 0x{addr:04X} ({status_str(status)})")
         return False
 
-    def write_page(self, addr: int, data: bytes, max_retries: int = 2) -> bool:
-        """Writes a 64-byte Flash page with CRC16 and visible retry telemetry."""
-        if not self.set_address(addr):
-            return False
+    def write_chunk(self, offset: int, chunk: bytes, max_retries: int = 2) -> bool:
+        """Writes an 8-byte chunk directly to the Flash page buffer with CRC16 verification."""
+        assert len(chunk) == CHUNK_SIZE
+        payload = bytes([offset]) + chunk
+        crc = crc16_ccitt(payload)
+        packet = payload + bytes([(crc >> 8) & 0xFF, crc & 0xFF])
 
-        crc = crc16_ccitt(data)
-        packet = bytes([PAGE_SIZE]) + data + bytes([(crc >> 8) & 0xFF, crc & 0xFF])
         status = STATUS_ERR_UNKNOWN
-
         for attempt in range(1, max_retries + 1):
-            # Flash erase/write takes ~25ms, allocate 100ms slot duration
-            ok, status, _ = self.execute_slot(PID_WRITE_PAGE, packet, slot_duration=SLOT_WRITE, timeout=0.5)
+            ok, status, _ = self.execute_slot(PID_WRITE_CHUNK, packet, slot_duration=SLOT_CHUNK, timeout=0.15)
             if ok:
-                if attempt > 1:
-                    print(f"    [RETRY OK] write_page 0x{addr:04X} succeeded on attempt #{attempt}")
                 return True
             else:
                 if attempt < max_retries:
-                    print(f"    [WRITE RETRY #{attempt}/{max_retries}] write_page 0x{addr:04X} failed ({status_str(status)}), retrying slot...")
-                    # Re-send set_address before re-writing page
-                    self.set_address(addr)
-                    time.sleep(0.03)
+                    print(f"    [CHUNK RETRY #{attempt}/{max_retries}] offset={offset} failed ({status_str(status)}), retrying...")
+                    time.sleep(0.01)
 
-        print(f"  [ERROR] Write page failed at 0x{addr:04X} ({status_str(status)})")
+        print(f"  [ERROR] write_chunk failed at offset {offset} ({status_str(status)})")
         return False
 
-    def read_page(self, addr: int, max_retries: int = 2) -> Optional[bytes]:
-        """Reads a 64-byte Flash page with visible retry telemetry."""
-        if not self.set_address(addr):
-            return None
-
+    def commit_page(self, max_retries: int = 2) -> bool:
+        """Executes Flash page erase and write (NVMCTRL) on Core-D."""
         status = STATUS_ERR_UNKNOWN
         for attempt in range(1, max_retries + 1):
-            ok, status, payload = self.execute_slot(PID_READ_PAGE, b"", slot_duration=SLOT_CONTROL)
-            if ok and len(payload) == PAGE_SIZE:
-                if attempt > 1:
-                    print(f"    [RETRY OK] read_page 0x{addr:04X} succeeded on attempt #{attempt}")
+            ok, status, _ = self.execute_slot(PID_COMMIT_PAGE, b"", slot_duration=SLOT_COMMIT, timeout=0.25)
+            if ok:
+                return True
+            else:
+                if attempt < max_retries:
+                    print(f"    [COMMIT RETRY #{attempt}/{max_retries}] commit_page failed ({status_str(status)}), retrying...")
+                    time.sleep(0.02)
+
+        print(f"  [ERROR] commit_page failed ({status_str(status)})")
+        return False
+
+    def read_chunk(self, offset: int, max_retries: int = 2) -> Optional[bytes]:
+        """Reads an 8-byte chunk from Flash with CRC16 verification."""
+        packet = bytes([offset, 0x00, 0x00])  # offset + dummy CRC
+        status = STATUS_ERR_UNKNOWN
+        for attempt in range(1, max_retries + 1):
+            ok, status, payload = self.execute_slot(PID_READ_CHUNK, packet, slot_duration=SLOT_CHUNK, timeout=0.15)
+            if ok and len(payload) == CHUNK_SIZE:
                 return payload
             else:
                 if attempt < max_retries:
-                    print(f"    [READ RETRY #{attempt}/{max_retries}] read_page 0x{addr:04X} failed ({status_str(status)}), retrying slot...")
-                    self.set_address(addr)
-                    time.sleep(0.02)
+                    print(f"    [READ RETRY #{attempt}/{max_retries}] offset={offset} failed ({status_str(status)}), retrying...")
+                    time.sleep(0.01)
 
-        print(f"  [ERROR] Read page failed at 0x{addr:04X} ({status_str(status)})")
+        print(f"  [ERROR] read_chunk failed at offset {offset} ({status_str(status)})")
         return None
+
+    def write_page(self, addr: int, data: bytes) -> bool:
+        """Writes a 64-byte Flash page in 8x 8-byte chunks followed by a page commit."""
+        assert len(data) == PAGE_SIZE
+        if not self.set_address(addr):
+            return False
+
+        for chunk_idx in range(CHUNKS_PER_PAGE):
+            offset = chunk_idx * CHUNK_SIZE
+            chunk_data = data[offset:offset + CHUNK_SIZE]
+            if not self.write_chunk(offset, chunk_data):
+                return False
+
+        if not self.commit_page():
+            return False
+
+        return True
+
+    def read_page(self, addr: int) -> Optional[bytes]:
+        """Reads a 64-byte Flash page in 8x 8-byte chunks."""
+        if not self.set_address(addr):
+            return None
+
+        result = bytearray()
+        for chunk_idx in range(CHUNKS_PER_PAGE):
+            offset = chunk_idx * CHUNK_SIZE
+            chunk = self.read_chunk(offset)
+            if chunk is None:
+                return None
+            result.extend(chunk)
+
+        return bytes(result)
 
     def reboot(self):
         """Sends REBOOT command to launch application."""
