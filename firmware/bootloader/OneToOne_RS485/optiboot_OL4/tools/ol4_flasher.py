@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """
-Optiboot_OL4 - Host Diagnostic & Flasher Tool
-=============================================
-Communicates with ADX Core-D via LN-485 (LIN-based RS-485) protocol.
-Supports dynamic Break generation via Baud-Rate Trick, CRC16 verification,
-and full hex flash programming.
+Optiboot_OL4 - LN-485 Master Broker Diagnostic & Flasher Tool
+============================================================
+Communicates with ADX Core-D as an LN-485 Master Broker.
+Enforces deterministic schedule slots (25ms control, 60ms flash write),
+atomic frame transmissions (Header + Payload in single flush),
+and CRC16-CCITT verification.
 
 Usage:
     python ol4_flasher.py --port COM19 --probe
     python ol4_flasher.py --port COM19 --info
     python ol4_flasher.py --port COM19 --read-page 0x0400
-    python ol4_flasher.py --port COM19 --hex ../releases/test_rs485_serial.hex
+    python ol4_flasher.py --port COM19 --hex ../releases/test_ol4_app_0400.hex
 """
 
 import sys
@@ -42,6 +43,10 @@ STATUS_ERR_UNKNOWN = 0xFF
 
 PAGE_SIZE = 64
 
+# LN-485 Master Schedule Slot Durations (seconds)
+SLOT_CONTROL = 0.025  # 25ms (50Hz) for PING, GET_INFO, SET_ADDR, READ_PAGE
+SLOT_WRITE   = 0.060  # 60ms (16.6Hz) for WRITE_PAGE (NVM erase/write: ~25ms + slack)
+
 
 def crc16_ccitt(data: bytes, initial: int = 0xFFFF) -> int:
     crc = initial
@@ -59,8 +64,8 @@ def hex_dump(data: bytes) -> str:
     return " ".join(f"{b:02X}" for b in data)
 
 
-class OL4Flasher:
-    def __init__(self, port_name: str, baud_rate: int = 115200, timeout: float = 0.5):
+class LN485MasterBroker:
+    def __init__(self, port_name: str, baud_rate: int = 115200, timeout: float = 0.3):
         self.port_name = port_name
         self.baud_rate = baud_rate
         self.timeout = timeout
@@ -76,7 +81,7 @@ class OL4Flasher:
             stopbits=serial.STOPBITS_ONE,
             timeout=self.timeout
         )
-        time.sleep(0.1)
+        time.sleep(0.05)
         self.ser.reset_input_buffer()
         self.ser.reset_output_buffer()
         print(f"[INIT] Connected successfully to {self.port_name}.")
@@ -86,54 +91,63 @@ class OL4Flasher:
             self.ser.close()
             print("[INFO] Serial port closed.")
 
-    def send_header(self, pid: int):
-        """Sends Break (18 Tbit LOW via Baud Trick) + Sync(0x55) + PID."""
-        trick_baud = self.baud_rate // 2 # 57600 bps for 115200 bps
+    def execute_slot(self, pid: int, payload: bytes = b"", slot_duration: float = SLOT_CONTROL, timeout: float = 0.25) -> Tuple[bool, int, bytes]:
+        """
+        Executes an atomic LN-485 transaction within a strict Master Schedule Slot:
+          1. Sends Break (18 Tbit LOW via 57600bps 0x00).
+          2. Sends [0x55, PID] + payload atomically in a single write/flush.
+          3. Receives Slave response [Status, Len, Payload, CRC16].
+          4. Strictly waits for the remainder of slot_duration (Slack Time conservation).
+        """
+        t_start = time.perf_counter()
+        self.ser.reset_input_buffer()
+
+        # 1. Hardware Break via Baud-Rate Trick
+        trick_baud = self.baud_rate // 2  # 57600 bps
         self.ser.baudrate = trick_baud
         self.ser.write(b'\x00')
         self.ser.flush()
 
+        # 2. Atomic Frame: Sync + PID + Payload in ONE write
         self.ser.baudrate = self.baud_rate
-        self.ser.write(bytes([0x55, pid]))
+        frame_bytes = bytes([0x55, pid]) + payload
+        self.ser.write(frame_bytes)
         self.ser.flush()
 
-    def receive_response(self, timeout: float = 0.5) -> Tuple[bool, int, bytes]:
-        """
-        Receives Slave response: [Status: 1B] + [Length: 1B] + [Payload: N Bytes] + [CRC16: 2B]
-        Returns: (success, status_code, payload)
-        """
+        # 3. Receive Slave Response
         self.ser.timeout = timeout
-        # 1. Read Status + Length (2 bytes)
         hdr = self.ser.read(2)
         if len(hdr) < 2:
-            return False, STATUS_ERR_UNKNOWN, b""
+            ok, status, data = False, STATUS_ERR_UNKNOWN, b""
+        else:
+            status = hdr[0]
+            length = hdr[1]
+            rest = self.ser.read(length + 2)
+            if len(rest) < (length + 2):
+                ok, data = False, b""
+            else:
+                data = rest[:length]
+                rx_crc = (rest[length] << 8) | rest[length + 1]
+                if length > 0:
+                    calc_crc = crc16_ccitt(data)
+                    if calc_crc != rx_crc:
+                        ok, status = False, STATUS_ERR_CRC
+                    else:
+                        ok = (status == STATUS_OK)
+                else:
+                    ok = (status == STATUS_OK)
 
-        status = hdr[0]
-        length = hdr[1]
+        # 4. Enforce Slot Duration (Slack Time Conservation)
+        t_elapsed = time.perf_counter() - t_start
+        if t_elapsed < slot_duration:
+            time.sleep(slot_duration - t_elapsed)
 
-        # 2. Read Payload + CRC16
-        rest = self.ser.read(length + 2)
-        if len(rest) < (length + 2):
-            return False, status, b""
+        return ok, status, data
 
-        payload = rest[:length]
-        rx_crc = (rest[length] << 8) | rest[length + 1]
-
-        # 3. Verify CRC16 if length > 0
-        if length > 0:
-            calc_crc = crc16_ccitt(payload)
-            if calc_crc != rx_crc:
-                print(f"  [CRC ERROR] Expected 0x{calc_crc:04X}, received 0x{rx_crc:04X}")
-                return False, STATUS_ERR_CRC, payload
-
-        return (status == STATUS_OK), status, payload
-
-    def ping(self, timeout: float = 0.3) -> bool:
+    def ping(self) -> bool:
         """Sends CMD_PING and expects STATUS_OK."""
-        self.ser.reset_input_buffer()
         t0 = time.time()
-        self.send_header(PID_PING)
-        ok, status, _ = self.receive_response(timeout=timeout)
+        ok, status, _ = self.execute_slot(PID_PING, b"", slot_duration=SLOT_CONTROL)
         rtt_ms = (time.time() - t0) * 1000.0
         if ok:
             print(f"  [PING PASS] Core-D responded with STATUS_OK (RTT={rtt_ms:.1f}ms)")
@@ -150,37 +164,33 @@ class OL4Flasher:
         probes = 0
         while time.time() - start < max_wait_sec:
             probes += 1
-            self.ser.reset_input_buffer()
-            self.send_header(PID_PING)
-            ok, status, _ = self.receive_response(timeout=0.08)
+            ok, status, _ = self.execute_slot(PID_PING, b"", slot_duration=SLOT_CONTROL, timeout=0.06)
             if ok:
                 elapsed = time.time() - start
                 print(f"[STAGE 1: PASS] Power-on detected in {elapsed:.2f}s (probe #{probes})!")
+                # Inter-stage settlement delay (ensure slave finishes TXCIF and WFB re-arm)
+                time.sleep(0.050)
                 return True
-            time.sleep(0.04)
+            time.sleep(0.02)
         print("[STAGE 1: FAIL] Timeout waiting for Core-D.")
         return False
 
     def get_info(self) -> Optional[Tuple[str, str]]:
         """Queries Device Signature and Bootloader Version."""
-        self.ser.reset_input_buffer()
-        self.send_header(PID_GET_INFO)
-        ok, status, payload = self.receive_response(timeout=0.3)
+        ok, status, payload = self.execute_slot(PID_GET_INFO, b"", slot_duration=SLOT_CONTROL)
         if ok and len(payload) >= 5:
             sig = f"0x{payload[0]:02X} 0x{payload[1]:02X} 0x{payload[2]:02X}"
             ver = f"{payload[3]}.{payload[4]}"
             print(f"  [DEVICE INFO] Signature: {sig} | Optiboot_OL4 Version: {ver}")
             return sig, ver
-        return None
+        else:
+            print(f"  [ERROR] Failed to read device info (status=0x{status:02X})")
+            return None
 
     def set_address(self, addr: int) -> bool:
         """Sets target Flash address."""
-        self.ser.reset_input_buffer()
-        self.send_header(PID_SET_ADDR)
         payload = bytes([2, addr & 0xFF, (addr >> 8) & 0xFF, 0x00, 0x00])
-        self.ser.write(payload)
-        self.ser.flush()
-        ok, status, _ = self.receive_response(timeout=0.2)
+        ok, status, _ = self.execute_slot(PID_SET_ADDR, payload, slot_duration=SLOT_CONTROL)
         return ok
 
     def write_page(self, addr: int, data: bytes) -> bool:
@@ -192,13 +202,8 @@ class OL4Flasher:
         crc = crc16_ccitt(data)
         packet = bytes([PAGE_SIZE]) + data + bytes([(crc >> 8) & 0xFF, crc & 0xFF])
 
-        self.ser.reset_input_buffer()
-        self.send_header(PID_WRITE_PAGE)
-        self.ser.write(packet)
-        self.ser.flush()
-
-        # Writing flash takes ~25ms
-        ok, status, _ = self.receive_response(timeout=0.2)
+        # Flash erase/write takes ~25ms, allocate 60ms slot duration
+        ok, status, _ = self.execute_slot(PID_WRITE_PAGE, packet, slot_duration=SLOT_WRITE, timeout=0.15)
         return ok
 
     def read_page(self, addr: int) -> Optional[bytes]:
@@ -207,9 +212,7 @@ class OL4Flasher:
             print(f"  [ERROR] Failed to set address 0x{addr:04X}")
             return None
 
-        self.ser.reset_input_buffer()
-        self.send_header(PID_READ_PAGE)
-        ok, status, payload = self.receive_response(timeout=0.3)
+        ok, status, payload = self.execute_slot(PID_READ_PAGE, b"", slot_duration=SLOT_CONTROL)
         if ok and len(payload) == PAGE_SIZE:
             return payload
         return None
@@ -217,9 +220,7 @@ class OL4Flasher:
     def reboot(self):
         """Sends REBOOT command to launch application."""
         print("[REBOOT] Requesting Core-D reboot into application...")
-        self.ser.reset_input_buffer()
-        self.send_header(PID_REBOOT)
-        self.receive_response(timeout=0.1)
+        self.execute_slot(PID_REBOOT, b"", slot_duration=SLOT_CONTROL, timeout=0.05)
 
 
 def parse_intel_hex(hex_path: str) -> Dict[int, int]:
@@ -241,7 +242,7 @@ def parse_intel_hex(hex_path: str) -> Dict[int, int]:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Optiboot_OL4 (LN-485) Host Flasher")
+    parser = argparse.ArgumentParser(description="Optiboot_OL4 (LN-485 Master Broker) Host Flasher")
     parser.add_argument("--port", default="COM19", help="Serial port (e.g. COM19)")
     parser.add_argument("--baud", type=int, default=115200, help="Baud rate (default 115200)")
     parser.add_argument("--probe", action="store_true", help="Send PING probe")
@@ -251,23 +252,26 @@ def main():
     parser.add_argument("--reboot", action="store_true", help="Reboot to application")
     args = parser.parse_args()
 
-    flasher = OL4Flasher(args.port, args.baud)
+    broker = LN485MasterBroker(args.port, args.baud)
     try:
-        flasher.connect()
+        broker.connect()
 
-        if not flasher.poll_power_on():
+        if not broker.poll_power_on():
             return
 
         if args.probe:
-            flasher.ping()
+            broker.ping()
 
         if args.info or args.hex:
-            flasher.get_info()
+            info = broker.get_info()
+            if not info and args.hex:
+                print("[ABORT] Cannot proceed with flashing because device info query failed.")
+                return
 
         if args.read_page:
             target_addr = int(args.read_page, 16)
             print(f"\n[READ PAGE] Address 0x{target_addr:04X}...")
-            data = flasher.read_page(target_addr)
+            data = broker.read_page(target_addr)
             if data:
                 print(f"Read 64 bytes: {hex_dump(data[:16])} ...")
 
@@ -286,18 +290,19 @@ def main():
 
             print(f"[PLAN] Flashing {total_pages} pages (0x{start_p:04X} ~ 0x{end_p:04X})...")
             all_ok = True
+            t_total_start = time.time()
             for p_idx in range(total_pages):
                 curr_addr = start_p + p_idx * PAGE_SIZE
                 page_bytes = bytes([hex_data.get(curr_addr + i, 0xFF) for i in range(PAGE_SIZE)])
 
                 print(f"  Flashing Page {p_idx+1}/{total_pages} @ 0x{curr_addr:04X}...", end="", flush=True)
                 t_w0 = time.time()
-                if not flasher.write_page(curr_addr, page_bytes):
+                if not broker.write_page(curr_addr, page_bytes):
                     print(" [WRITE FAIL]")
                     all_ok = False
                     break
 
-                readback = flasher.read_page(curr_addr)
+                readback = broker.read_page(curr_addr)
                 t_page = (time.time() - t_w0) * 1000.0
                 if readback == page_bytes:
                     print(f" [VERIFY PASS] ({t_page:.1f}ms)")
@@ -307,16 +312,17 @@ def main():
                     break
 
             if all_ok:
-                print("\n[SUCCESS] All pages written and verified with CRC16 successfully!")
-                flasher.reboot()
+                t_total = time.time() - t_total_start
+                print(f"\n[SUCCESS] All {total_pages} pages written and verified with CRC16 successfully in {t_total:.2f}s!")
+                broker.reboot()
 
         if args.reboot and not args.hex:
-            flasher.reboot()
+            broker.reboot()
 
     except KeyboardInterrupt:
         print("\n[ABORT] Interrupted by user.")
     finally:
-        flasher.close()
+        broker.close()
 
 
 if __name__ == '__main__':

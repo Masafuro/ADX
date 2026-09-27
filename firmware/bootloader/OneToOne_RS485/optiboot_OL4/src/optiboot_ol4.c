@@ -38,7 +38,8 @@ typedef union {
 
 // Forward declarations
 void putch(uint8_t ch);
-uint8_t getch(void);
+uint8_t getch_header(void);
+uint8_t getch_payload(void);
 void watchdogConfig(uint8_t x);
 static void rs485_tx_start(void);
 static void rs485_tx_end(void);
@@ -143,8 +144,8 @@ int main(void) {
 
   // Main Command Dispatch Loop
   for (;;) {
-    // Wait for Break + Sync(0x55) + PID
-    ch = getch();
+    // Wait for Break + Sync(0x55) + PID (WFB=1 armed, ISFIF checked, LED toggles)
+    ch = getch_header();
 
     // Command Dispatch
     if (ch == PID_PING) {
@@ -194,12 +195,12 @@ int main(void) {
       rs485_tx_end();
 
     } else if (ch == PID_SET_ADDR) {
-      // Load 16-bit Target Flash Address: [Len(2)] + [AddrL] + [AddrH] + [CRCH] + [CRCL]
-      getch(); // Length (2)
-      address.bytes[0] = getch();
-      address.bytes[1] = getch();
-      getch(); // CRC H
-      getch(); // CRC L
+      // Load 16-bit Target Flash Address via getch_payload (WFB untouched!)
+      getch_payload(); // Length (2)
+      address.bytes[0] = getch_payload();
+      address.bytes[1] = getch_payload();
+      getch_payload(); // CRC H
+      getch_payload(); // CRC L
 
       response_space();
       rs485_tx_start();
@@ -210,19 +211,19 @@ int main(void) {
       rs485_tx_end();
 
     } else if (ch == PID_WRITE_PAGE) {
-      // Write 64B Page directly into Page Buffer without stack array
+      // Write 64B Page directly into Page Buffer via getch_payload (WFB untouched!)
       uint16_t calc_crc = 0xFFFF;
-      uint8_t len = getch(); // Length (64)
+      uint8_t len = getch_payload(); // Length (64)
       uint8_t *p = (uint8_t *)(MAPPED_PROGMEM_START + address.word);
 
       do {
-        uint8_t b = getch();
+        uint8_t b = getch_payload();
         *(p++) = b;
         calc_crc = crc16_update(calc_crc, b);
       } while (--len);
 
-      uint16_t rx_crc = ((uint16_t)getch() << 8);
-      rx_crc |= getch();
+      uint16_t rx_crc = ((uint16_t)getch_payload() << 8);
+      rx_crc |= getch_payload();
 
       if (calc_crc != rx_crc) {
         // CRC Mismatch: report error and reject write
@@ -299,7 +300,8 @@ void putch(uint8_t ch) {
   USART0.TXDATAL = ch;
 }
 
-uint8_t getch(void) {
+// Header Reception: Waits for Break + Sync(0x55) + PID with WFB=1 and LED blinking
+uint8_t getch_header(void) {
   uint16_t loop = 0;
 
   // Monitor for sync field inconsistency flag (ISFIF)
@@ -316,7 +318,18 @@ uint8_t getch(void) {
 
   VPORTB.OUT &= ~(1 << 2); // LED OFF when data arrives
 
-  // Read order: RXDATAH first, then RXDATAL
+  (void)USART0.RXDATAH;
+  uint8_t ch = USART0.RXDATAL;
+
+  __asm__ __volatile__("wdr\n\t"); // Reset watchdog
+  return ch;
+}
+
+// Payload Reception: Pure UART byte reception without touching WFB!
+uint8_t getch_payload(void) {
+  while (!(USART0.STATUS & USART_RXCIF_bm))
+    ;
+
   (void)USART0.RXDATAH;
   uint8_t ch = USART0.RXDATAL;
 
