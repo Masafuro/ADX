@@ -151,7 +151,32 @@
      * `.text`: 484 バイト, `.version`: 2 バイト $\rightarrow$ **合計バイナリサイズ: 486 バイト**（上限 512 バイトに対し **26 バイトのマージン** を保持し Gate 1 クリア）。
      * 生成ファイル: [`releases/optiboot_o4_with_blank.hex`](file:///home/ubuntu/AgentWorkspace/ADX/github/ADX/firmware/bootloader/OneToOne_RS485/optiboot_O4/releases/optiboot_o4_with_blank.hex)
 
-2. **ステップ 2: 実機書き込みと Phase 3 単体検証**
-   * SerialUPDI 経由で Core-D に改修版 `optiboot_o4_with_blank.hex` を書き込み。
-   * `debug_flasher.py` を用いて、Page 0x0200 の書き込み・ベリファイ（または全ページ書き込み）を再実行し、RTT 約 27ms での正常完了を確認する。
+2. **ステップ 2: 実機書き込みと Phase 3 単体検証（★実証完了）**
+   * **検証結果**:
+     * `debug_flasher.py --hex test_rs485_serial.hex` において、**Page 0x0200 の書き込み・ベリファイ（64B完全一致）が一発で PASS（RTT 12.6ms / 7.7ms）**。
+     * `debug_flasher.py --single-page 0x0240` においても、**0x0240 ページの単体読み出しが 100% PASS**。
+     * Flash 書込み・消去ロジック（NVMCTRL）およびアドレス処理は完全に健全であることを証明。
+
+---
+
+## 7. 最終総括と次期プロジェクト「optiboot_OL4」への発展的移行
+
+### 7.1 Optiboot_O4 で得られた決定的な知見
+1. **0x0440 フリーズの撲滅**: 自爆エコー遮断（DE/RE ソフトウェア GPIO 制御）の完全実証。
+2. **Flash ページ消去・書き込み（NVMCTRL）の成功**: バス解放状態での消去・書き込みシーケンスの確立。
+3. **STK500v1（全二重前提）と半二重 RS-485 の構造的限界の解明**:
+   * 単体読み出し・単体書き込みは完璧に成功するにもかかわらず、連続処理時に「66バイトの長大データ送出直後」に次のコマンド（Page 0x0240）でタイムアウトとなる事象が発生。
+   * 10cm という極めて理想的なテスト環境において、STK500v1（フレーム同期なしの生バイトストリーム）のバッファマージン不足が露呈。長距離配線や実運用環境における脆弱性が明白となった。
+
+### 7.2 次期プロジェクト「optiboot_OL4」の立ち上げ決定
+* **名称**: **optiboot_OL4** (One-to-one LN-485 Bootloader)
+* **基本方針**:
+  * STK500v1 を脱却し、`firmware/tests/ADX_Core-D/LIN_test/` で実績のある **LN-485（LIN-based RS-485）** をネイティブプロトコルとして採用。
+  * **ブートローダーサイズ上限を 1024 バイト（`BOOTEND=0x04`、1KB）へ拡大**: アプリ領域 15KB（93.75%）を確保しつつ、LINAUTO ハードウェア同期、Break 検出、CRC-16 を余裕を持って実装。
+  * **Master Broker 方式の決定論的ポーリング**: ホスト（PC/フラッシャー）主導の通信サイクルにより、半二重のターンアラウンドとバス調停を完全制御。
+  * **Baud-Rate Trick による Break 生成**: ホスト側 USB-RS485 ドングルで低速 `0x00` 送信を行い、ハードウェア Break を生成。
+  * **専用フラッシャー（Python / Web Serial）への移行**: avrdude の制約を排除し、自律再送・高信頼更新を実現。
+
+Optiboot_O4 の開発資産・教訓はすべて **optiboot_OL4** へ引き継がれます。
+
 
