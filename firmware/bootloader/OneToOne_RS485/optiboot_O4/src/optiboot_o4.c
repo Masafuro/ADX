@@ -171,12 +171,24 @@ int main(void) {
         *(address.bptr++) = getch();
       } while (--length);
 
-      verifySpace(); // Sends STK_INSYNC and starts RS-485 TX
+      // Verify command terminator (CRC_EOP) without enabling transmitter yet
+      if (getch() != CRC_EOP) {
+        watchdogConfig(WDT_PERIOD_8CLK_gc);
+        while (1)
+          ;
+      }
 
-      // Issue Page Erase & Write command to NVM controller
+      // Perform Flash Page Erase & Write while bus is safely released (DE=0, /RE=0)
       _PROTECTED_WRITE_SPM(NVMCTRL.CTRLA, NVMCTRL_CMD_PAGEERASEWRITE_gc);
       while (NVMCTRL.STATUS & (NVMCTRL_FBUSY_bm | NVMCTRL_EEBUSY_bm))
         ;
+
+      // Cleanly reply STK_INSYNC followed by STK_OK after write operation is complete
+      rs485_tx_start();
+      putch(STK_INSYNC);
+      putch(STK_OK);
+      rs485_tx_end();
+      continue;
     } else if (ch == STK_READ_PAGE) {
       // Read Flash Page (64 bytes)
       getch(); // length high
