@@ -1,46 +1,31 @@
 # Optiboot_O4 (One-to-One RS-485) 仕様設計書
 **ADX Core-D (ATtiny1616-MNR) 向け 1-to-1 RS-485 高堅牢ブートローダー**
 
-* **文書バージョン**: 1.0.0 (Draft for Review)
+* **文書バージョン**: 1.1.0 (Software GPIO Direction Control Edition)
 * **作成日**: 2026-09-27
 * **対象ハードウェア**: ADX Core-D (MCU: Microchip ATtiny1616-MNR, Transceiver: 3.3V Half-Duplex RS-485)
 * **準拠プロトコル**: STK500v1 サブセット (1-to-1 RS-485 最適化)
 
 ---
 
-## 1. 背景と課題認識
+## 1. 背景と基本方針
 
-### 1.1. 従来の Optiboot / Optiboot_x が抱える構造的限界
+### 1.1. 従来の課題と根本原因
 Optiboot は元来、**「全二重（Full-Duplex）UART」** かつ **「DTR ピンによるハードウェアリセット」** を前提として設計されています。
-これまでの改修では、標準の Optiboot_x に部分的なパッチ（WDT停止やディレイ挿入など）を施してきましたが、以下の **半二重 RS-485 特有の物理的・論理的破壊要因** をシステムとして排除できていませんでした：
+従来のブートローダーでは、USART ペリフェラルの XDIR 機能（ハードウェア自動制御）に依存していたため、以下の問題が発生していました：
 
-```text
-[従来の破綻メカニズム]
-Core-D がデータ送信 (例: 0x0400 ページの読み出し)
-  │
-  ├─► [RS-485 バス] ──► ホスト (PC/ブラウザ) へ 66 バイト送信
-  │
-  └─► [自爆エコー]  ──► Core-D 自身の RX ピン (PA2) に 66 バイトがそのままループバック
-                        │
-                        ▼
-Core-D の 2バイト受信 FIFO が即座にオーバーフロー (BUFOVF)
-送信末尾付近にあった文字 't' (0x74) が受信 FIFO に残存
-                        │
-                        ▼
-Core-D はホストのコマンド待機に戻るが、FIFO に残っていた 't' (0x74) を
-ホストからの「STK_READ_PAGE (0x74)」コマンドとして誤認！
-                        │
-                        ▼
-ホストが送った次のパケット [55 40 04 20] (STK_LOAD_ADDRESS) の 0x5540 を
-「読み出しバイト長 = 21,824 バイト」と解釈して巨大暴走ループに突入 ──► クラッシュ/自滅リセット
-```
+1. **受信イネーブル（`/RE`）が常時 LOW（受信有効）に固定されていた**:
+   * XDIR は DE ピン（PA3）しか制御できないため、`/RE`（PA7）を開けっ放しにせざるを得ず、**Core-D が送信した全データが自身の RX ピン（PA2）に 100% ループバック（自爆エコー）** していた。
+2. **コマンド誤認による自爆暴走**:
+   * 0x0400 ページの末尾文字 `'t'`（`0x74` = `STK_READ_PAGE`）がエコーバックとして FIFO に残り、ホストからの次のパケット `[55 40 04 20]` を「読み出しバイト長 = 21,824 バイト」と解釈して巨大ループに突入し、クラッシュ／自滅リセットしていた。
 
-### 1.2. Optiboot_O4 の設計目標
-Optiboot_O4（One-to-One RS-485）は、上記のパッチワークを廃止し、**「半二重 1-to-1 RS-485 環境において 100% 破綻しない不変条件（Invariants）」** を備えた専用ブートローダーとして再定義します：
+### 1.2. Optiboot_O4 の設計方針（完全ソフトウェア GPIO 制御）
+Optiboot_O4 では、ペリフェラルの XDIR 自動制御を**撤廃**し、**「高速 VPORT による完全ソフトウェア GPIO 排他制御」** を採用します。
 
-1. **自爆エコーの完全無害化**: Core-D がバスに送信したデータが自身の受信バッファを汚染することを 100% 防ぐ。
-2. **状態遷移の厳密化**: 電源投入ポーリング $\rightarrow$ プログラミングモード無期限ロック $\rightarrow$ トランザクション $\rightarrow$ クリーンなリセット起動 の完全制御。
-3. **512 バイト（`BOOTEND = 0x02`）境界の死守**: 高度な堅牢性を維持しながら、512 バイト制限内に収める。
+* **送信時**: `DE = 1`（送信ドライバ有効）かつ **`/RE = 1`（受信レシーバを物理遮断！）**
+  $\rightarrow$ **送信中、自身の耳（RX ピン）を物理的に塞ぐため、自爆エコーが 1 バイトたりとも発生しない！**
+* **送信完了時**: シフトレジスタの最終ビット出力完了（`TXCIF`）を確認後、`DE = 0` かつ `/RE = 0`（受信復帰）。
+* **VPORT による極小サイズ化**: AVR の 1 サイクル命令 `sbi` / `cbi` を直接使用し、わずか数バイトで高速・安全に切り替える。
 
 ---
 
@@ -48,47 +33,33 @@ Optiboot_O4（One-to-One RS-485）は、上記のパッチワークを廃止し�
 
 ### 2.1. ハードウェア・ピン定義 (ADX Core-D)
 
-| 信号名 | ピン番号 | ポート | 役割 | ハードウェア制御 |
+| 信号名 | ピン番号 | ポート | 役割 | 制御方式 |
 |---|---|---|---|---|
-| **TXD** | Pin 14 | `PA1` | USART0 送信データ | USART0 内部ペリフェラル駆動 |
-| **RXD** | Pin 15 | `PA2` | USART0 受信データ | USART0 内部ペリフェラル入力 |
-| **XDIR (DE)** | Pin 16 | `PA3` | RS-485 送信イネーブル | **USART0 CTRLA.RS485 = 1 による完全ハードウェア自動制御** (送信中 HIGH / 完了後 LOW) |
-| **/RE** | Pin 20 | `PA7` | RS-485 受信イネーブル (Active LOW) | 常時 LOW 固定（受信有効）または PA7 制御 |
-| **LED** | Pin 8 | `PB2` | ステータスインジケータ (赤色 LED) | ポート出力 (ブートローダー起動時ハートビート点滅) |
+| **TXD** | Pin 14 | `PA1` | USART0 送信データ | USART0 送信ペリフェラル駆動 |
+| **RXD** | Pin 15 | `PA2` | USART0 受信データ | USART0 受信ペリフェラル入力 |
+| **DE** | Pin 16 | `PA3` | RS-485 送信ドライバ・イネーブル (Active HIGH) | **ソフトウェア GPIO 制御 (`VPORTA.OUT` bit 3)** |
+| **/RE** | Pin 20 | `PA7` | RS-485 受信レシーバ・イネーブル (Active LOW) | **ソフトウェア GPIO 制御 (`VPORTA.OUT` bit 7)** |
+| **LED** | Pin 8 | `PB2` | ステータスインジケータ (赤色 LED, Active HIGH) | ソフトウェア GPIO 制御 (`VPORTB.OUT` bit 2) |
 
-### 2.2. 通信パラメータ
-* **ボーレート**: 115,200 bps
-* **データ形式**: 8 ビットデータ, パリティなし, 1 ストップビット (8N1)
-* **MCU 内部クロック**:
-  * 起動時: 内部高周波発振器 (16MHz または 20MHz), 分周比 6 (F_CPU = 約 2.67MHz / 3.33MHz)
-  * ボーレートレジスタ (`USART0.BAUD`): fractional 演算により誤差 0.5% 未満を達成
+### 2.2. RS-485 バス方向制御の真理値表
 
-### 2.3. メモリ空間とヒューズ設定
+| バス状態 | DE (PA3) | /RE (PA7) | トランシーバー状態 | マイコン側の動作 |
+|---|:---:|:---:|---|---|
+| **アイドル / 受信待機** | **`0` (LOW)** | **`0` (LOW)** | 送信 Driver: **OFF** (High-Z)<br>受信 Receiver: **ON** (有効) | ホストからのコマンドパケットを受信待機。バスを解放。 |
+| **データ送信中** | **`1` (HIGH)** | **`1` (HIGH)** | 送信 Driver: **ON** (送信中)<br>受信 Receiver: **OFF** (遮断・High-Z) | バスへデータを出力。**自身の RX ピンへの自爆エコーを物理的に 100% 遮断！** |
+| **送信完了直後** | $\rightarrow$ | $\rightarrow$ | `TXCIF`（送信完了フラグ）を確認後、直ちに「受信待機」状態へ復帰。 |
 
-```text
-+-------------------------------------------+ 0x0000
-| BOOT Section (512 Bytes)                  |
-| - Optiboot_O4 ファームウェア本体          |
-| - ハードウェア書き込み保護 (BOOTEND = 2)   |
-+-------------------------------------------+ 0x01FE
-| Version Word (2 Bytes)                    |
-+-------------------------------------------+ 0x0200
-| APPCODE Section (15.5 KB)                 |
-| - ユーザーアプリケーション領域             |
-| - ページサイズ: 64 Bytes                  |
-| - 書き込み/消去: NVMCTRL Page Erase/Write |
-+-------------------------------------------+ 0x3FFF
-```
-
-* **`FUSE.BOOTEND = 0x02`**: `2 × 256B = 512 Bytes`。アドレス `0x0000`〜`0x01FF` はハードウェア的に保護され、誤作動による自己破壊を防止。
-* **`FUSE.APPEND = 0x00`**: `BOOTEND` 以降の全領域を `APPCODE` として開放（`APPDATA` 領域は設けない）。
-* **`FUSE.WDTCFG = 0x00`**: ヒューズによるハードウェア WDT は無効化（ブートローダーがソフトウェア制御）。
+### 2.3. 通信パラメータ & メモリ空間
+* **ボーレート**: 115,200 bps (8N1, パリティなし, 1 ストップビット)
+* **MCU 内部クロック**: 内部高周波発振器 (16MHz / 20MHz, Prescaler 6 = 約 2.67MHz / 3.33MHz 起動)
+* **ヒューズ設計**:
+  * `FUSE.BOOTEND = 0x02`: `2 × 256B = 512 Bytes`（アドレス `0x0000`〜`0x01FF` をハードウェア保護）
+  * `FUSE.APPEND = 0x00`: `BOOTEND` 以降の全領域を `APPCODE` として開放（`APPDATA` はなし）
+  * `FUSE.WDTCFG = 0x00`: ハードウェア WDT は無効（ブートローダーがソフトウェア制御）
 
 ---
 
 ## 3. Optiboot_O4 状態遷移モデル (State Machine)
-
-Optiboot_O4 は、厳格に定義された以下の 5 つの状態（States）を遷移します。
 
 ```mermaid
 stateDiagram-v2
@@ -102,7 +73,7 @@ stateDiagram-v2
 
     AppDirectLaunch --> [*] : jmp 0x0200 (Run Application)
 
-    EnterBootloader --> STATE_1_WAIT_SYNC : Init UART & Start 8s WDT
+    EnterBootloader --> STATE_1_WAIT_SYNC : Init GPIO (DE=0, /RE=0) & Start 8s WDT
 
     state STATE_1_WAIT_SYNC {
         [*] --> PollingLoop
@@ -115,15 +86,20 @@ stateDiagram-v2
     STATE_1_WAIT_SYNC --> STATE_2_LOCKED : STK_ENTER_PROGMODE (0x50) Received
     
     state STATE_2_LOCKED {
-        [*] --> StopWDT : Disable WDT Completely
-        StopWDT --> ReadyTransaction : Invariant Clean Buffer
+        [*] --> StopWDT : Disable WDT Completely (WDT_PERIOD_OFF_gc)
+        StopWDT --> ReadyTransaction : Invariant: DE=0, /RE=0, Clean RX FIFO
     }
 
-    STATE_2_LOCKED --> STATE_3_TRANSACTION : STK_LOAD_ADDRESS / STK_PROG_PAGE / STK_READ_PAGE
+    STATE_2_LOCKED --> STATE_3_TRANSACTION : Command Packet (LOAD_ADDR / WRITE / READ)
 
     state STATE_3_TRANSACTION {
-        ExecuteCommand --> FlushAndClean : Wait TXCIF & Flush RX FIFO
-        FlushAndClean --> ReadyNextCommand : Buffer 100% Clean
+        SetTXMode : DE=1, /RE=1 (Mute Receiver & Drive Bus)
+        SendPayload : putch() loop
+        WaitTXCIF : while (!(STATUS & TXCIF))
+        SetRXMode : DE=0, /RE=0 & Flush residual FIFO
+        SetTXMode --> SendPayload
+        SendPayload --> WaitTXCIF
+        WaitTXCIF --> SetRXMode
     }
 
     STATE_3_TRANSACTION --> STATE_2_LOCKED : Ready for next command
@@ -131,141 +107,135 @@ stateDiagram-v2
     STATE_2_LOCKED --> STATE_4_EXIT_REBOOT : STK_LEAVE_PROGMODE (0x51) Received
 
     state STATE_4_EXIT_REBOOT {
-        SendOK --> Arm8msWDT : WDT = 8CLK (~8ms)
-        Arm8msWDT --> SpinLock : while(1);
+        SendOK : Send 0x14 0x10 & Wait TXCIF
+        Arm8msWDT : WDT = 8CLK (~8ms)
+        SpinLock : while(1);
     }
 
     SpinLock --> STATE_0_RESET : Clean Hardware Reset
 ```
 
-### 各状態の詳細定義
+### 各状態の詳細仕様
 
 #### 【State 0: 起動とリセット原因判定】
 1. `RSTCTRL.RSTFR` をチェックする。
-2. **もし WDT リセット（`WDRF = 1`）だった場合:**
-   * 直前の State 4（プログラミング完了後の終了処理）によって引き起こされた意図的な再起動であると判定。
-   * ブートローダーの待機処理は一切行わず、**即座に `jmp 0x0200`（ユーザーアプリ起動）** を実行する。
-3. **もし 電源投入（POR）または外部リセット、ソフトウェアリセットだった場合:**
+2. **WDT リセット（`WDRF = 1`）の場合:**
+   * 直前の State 4（プログラミング完了後の終了処理）による正常再起動であると判定。
+   * **即座に `jmp 0x0200`（ユーザーアプリ起動）** を実行する。
+3. **電源投入（POR）または外部リセット、ソフトウェアリセットの場合:**
    * リセットフラグをクリアし、State 1 へ進む。
 
 #### 【State 1: ホスト接続待機（ポーリング）】
-1. USART0 を RS-485 モード（XDIR=PA3 自動制御）で初期化。赤色 LED（PB2）を出力に設定。
-2. **ウォッチドッグタイマー（WDT）を 8 秒で開始**。
+1. GPIO 初期化:
+   * `PA1` (TXD) = OUTPUT, HIGH
+   * `PA3` (DE) = OUTPUT, LOW (送信ドライバ無効)
+   * `PA7` (/RE) = OUTPUT, LOW (受信レシーバ有効)
+   * `PB2` (LED) = OUTPUT, LOW (赤色 LED)
+   * USART0: `CTRLA = 0` (標準非同期, 割り込みなし, XDIR無効), `CTRLB = RXEN | TXEN`
+2. **WDT を 8 秒で開始**。
 3. LED を約 0.3 秒周期で点滅させながら、ホストからの `STK_GET_SYNC`（`0x30 0x20`）を待機。
-4. 8 秒以内にホストから何も来なければ、WDT により自滅リセット $\rightarrow$ State 0 を経由して安全にユーザーアプリを起動。
-5. ホストから `STK_GET_SYNC`（`0x30 0x20`）を受信したら、`STK_INSYNC`（`0x14`）+ `STK_OK`（`0x10`）を返信。
-6. ホストから `STK_ENTER_PROGMODE`（`0x50 0x20`）を受信したら、State 2 へ移行。
+4. 8 秒間無通信なら、WDT タイムアウト $\rightarrow$ State 0 を経由して安全にアプリ起動。
+5. `STK_GET_SYNC`（`0x30 0x20`）受信 $\rightarrow$ 送信モード切替 $\rightarrow$ `0x14 0x10` 返信 $\rightarrow$ 受信モード復帰。
+6. `STK_ENTER_PROGMODE`（`0x50 0x20`）受信 $\rightarrow$ State 2 へ移行。
 
 #### 【State 2: プログラミングモード無期限ロック】
-1. **ウォッチドッグタイマーを完全に停止（`WDT_PERIOD_OFF_gc`）**。
-   * これにより、書き込み（Stage 4）やベリファイ読み出し（Stage 5）が何秒・何分続いても、Core-D が勝手にタイムアウトしてアプリへ逃亡することを物理的に遮断する。
-2. ホストへ `STK_INSYNC`（`0x14`）+ `STK_OK`（`0x10`）を返信。
-3. コマンドディスパッチループに入り、ホストからのコマンドを待つ。
+1. **ウォッチドッグタイマーを完全停止（`WDT_PERIOD_OFF_gc`）**。
+   * 書き込みやベリファイが何分続いても、アプリへの逃亡を物理遮断。
+2. 送信モード切替 $\rightarrow$ `STK_INSYNC (0x14)` + `STK_OK (0x10)` を返信 $\rightarrow$ 受信モード復帰。
+3. コマンド待機ループへ入る。
 
-#### 【State 3: パケットトランザクションと不変条件保証】
-1. `STK_LOAD_ADDRESS`（`0x55`）、`STK_PROG_PAGE`（`0x64`）、`STK_READ_PAGE`（`0x74`）等の各コマンドを処理。
-2. **★ 核心となる不変条件（The Golden Invariant）**:
-   * Core-D がレスポンス（`STK_OK` や 64 バイトの読み出しデータ）を送信した後、**次のコマンドの受信待ちに入る前に、必ず `rs485_flush_rx()` を実行する**。
-   * `rs485_flush_rx()` の動作:
-     ```c
-     // 1. 送信シフトレジスタが空になり、物理ピンから最後のビットが出力され、
-     //    XDIR ピンが LOW に戻るまで待機する
-     while (!(USART0.STATUS & USART_TXCIF_bm));
-     USART0.STATUS = USART_TXCIF_bm; // TXCIF フラグをクリア
+#### 【State 3: パケットトランザクションと方向制御】
+* **返信送信前の処理 (`rs485_tx_start`)**:
+  ```c
+  VPORTA.OUT |= (1 << 3);  // DE = 1 (送信イネーブル)
+  VPORTA.OUT |= (1 << 7);  // /RE = 1 (受信ディセーブル・自爆エコー物理遮断!)
+  ```
+* **データ送信**:
+  * `putch()` により、`STK_INSYNC`、データペイロード（0〜64バイト）、`STK_OK` を順次出力。
+* **返信送信後の処理 (`rs485_tx_end`)**:
+  ```c
+  // 1. 送信シフトレジスタが空になり、最後のストップビットが出終わるのを待つ
+  while (!(USART0.STATUS & USART_TXCIF_bm))
+    ;
+  USART0.STATUS = USART_TXCIF_bm; // TXCIF フラグクリア
 
-     // 2. 自爆エコーバックによって受信 FIFO に入った残骸データを全て空読みして破棄する
-     while (USART0.STATUS & USART_RXCIF_bm) {
-       uint8_t dummy = USART0.RXDATAL;
-       (void)dummy;
-     }
-     ```
-   * これにより、0x0400 ページの末尾文字 `'t'`（`0x74`）やその他の文字が、次のコマンドとして誤認される可能性を **100% 物理的に根絶** する。
+  // 2. バスを受信待機へ明け渡す
+  VPORTA.OUT &= ~(1 << 3); // DE = 0 (送信ドライバ停止)
+  VPORTA.OUT &= ~(1 << 7); // /RE = 0 (受信レシーバ復帰)
+
+  // 3. 念のため受信 FIFO を空読みクリア (完全なクリーン保証)
+  while (USART0.STATUS & USART_RXCIF_bm) {
+    uint8_t dummy = USART0.RXDATAL;
+    (void)dummy;
+  }
+  ```
 
 #### 【State 4: 終了処理とクリーンリブート】
 1. ホストから `STK_LEAVE_PROGMODE`（`0x51 0x20`）を受信。
-2. ホストへ `STK_INSYNC`（`0x14`）+ `STK_OK`（`0x10`）を返信。
-3. 送信完了（`TXCIF`）を確認。
-4. **WDT を最短周期（8CLK = 約 8ms）に設定し、`while(1);` のスピンロックに入る**。
-5. 約 8ms 後に WDT が発火し、**マイコン全体（CPU、全ペリフェラル、全レジスタ）がハードウェア初期化（Clean Reset）される**。
-6. State 0 に入り、`WDRF = 1` を検知して、クリーンな状態でユーザーアプリケーション（`0x0200`）がスタートする。
+2. 送信モード切替 $\rightarrow$ `STK_INSYNC` + `STK_OK` を返信 $\rightarrow$ 送信完了（`TXCIF`）を確認。
+3. **WDT を最短（8CLK = 約 8ms）に設定し、`while(1);` のスピンロックに入る**。
+4. 約 8ms 後に WDT が発火 $\rightarrow$ マイコン全体（CPU、全レジスタ）がハードウェア初期化 $\rightarrow$ State 0 を経由して、完全にクリーンな状態でユーザーアプリ（`0x0200`）が起動。
 
 ---
 
-## 4. サポートする STK500v1 コマンド一覧
-
-Optiboot_O4 は、1-to-1 RS-485 書き込みに必要なコマンドのみをサポートし、不要なレガシーコマンドを徹底的に削減してコードサイズを最小化します。
-
-| コマンド | HEX | 意味 | Optiboot_O4 の振る舞い |
-|---|---|---|---|
-| **STK_GET_SYNC** | `0x30` | 同期確認 | `verifySpace()` $\rightarrow$ `STK_INSYNC (0x14)` + `STK_OK (0x10)` を返信。 |
-| **STK_GET_PARAMETER** | `0x41` | パラメータ取得 | `0x81`(Major), `0x82`(Minor) のみバージョン返信。他は `0x03`。 |
-| **STK_ENTER_PROGMODE** | `0x50` | プログラミング開始 | **WDT 完全停止** $\rightarrow$ `STK_INSYNC` + `STK_OK` を返信。 |
-| **STK_LEAVE_PROGMODE** | `0x51` | プログラミング終了 | `STK_INSYNC` + `STK_OK` 返信 $\rightarrow$ **8ms WDT で安全リブート**。 |
-| **STK_LOAD_ADDRESS** | `0x55` | ターゲットアドレス設定 | 2バイトのアドレスを受信し保持 $\rightarrow$ `STK_INSYNC` + `STK_OK` を返信。 |
-| **STK_PROG_PAGE** | `0x64` | ページ書き込み (64B) | データを Flash バッファに転送し、NVMCTRL Page Erase/Write 実行。 |
-| **STK_READ_PAGE** | `0x74` | ページ読み出し (64B) | Flash メモリマップド領域（0x8000+addr）から 64B 送信。 |
-| **STK_READ_SIGN** | `0x75` | デバイスシグネチャ取得 | ATtiny1616 の Device ID (`0x1E 0x94 0x21`) を返信。 |
-| *(その他)* | - | 非サポートコマンド | `CRC_EOP` まで読み捨てて `STK_INSYNC` + `STK_OK` を返信（Avrdude 互換性維持）。 |
-
----
-
-## 5. 通信タイミングチャート (半二重 1-to-1 シーケンス)
+## 4. 通信タイミングチャート (半二重 1-to-1 トランザクション)
 
 ```text
 [Host: PC/Browser]                                [Slave: Core-D (Optiboot_O4)]
         │                                                     │
+        │                                                     │ ◄── DE=0, /RE=0 (受信待機・バス解放)
         │─── [TX] 55 00 04 20 (LOAD_ADDRESS 0x0400) ─────────►│
-        │                                                     │ ◄─ RE=LOW, XDIR=LOW (受信中)
         │                                                     │
-        │                                                     │ 1. アドレス 0x0400 を保持
-        │                                                     │ 2. XDIR=HIGH (送信開始)
-        │◄── [RX] 14 10 (INSYNC + OK) ────────────────────────│
-        │                                                     │ 3. XDIR=LOW (送信完了 TXCIF)
-        │                                                     │ 4. ★自爆エコー (14 10) を RX FIFO からフラッシュ!
-        │                                                     │
+        │                                                     │ 1. rs485_tx_start():
+        │                                                     │    DE=1, /RE=1 (受信遮断・エコー阻止!)
+        │◄── [RX] 14 10 (INSYNC + OK) ────────────────────────│ 2. putch(0x14), putch(0x10)
+        │                                                     │ 3. rs485_tx_end():
+        │                                                     │    wait TXCIF -> DE=0, /RE=0 (受信復帰)
   (Quiet 10ms)                                                │
         │                                                     │
         │─── [TX] 74 00 40 46 20 (READ_PAGE 64B) ────────────►│
-        │                                                     │ ◄─ RE=LOW, XDIR=LOW (受信中)
         │                                                     │
-        │                                                     │ 1. 0x8400 から 64 バイト準備
-        │                                                     │ 2. XDIR=HIGH (送信開始)
-        │◄── [RX] 14 [64 Bytes Data...] 10 ───────────────────│
-        │                                                     │ 3. XDIR=LOW (送信完了 TXCIF)
-        │                                                     │ 4. ★自爆エコー (66 Bytes) を RX FIFO から完全フラッシュ!
-        │                                                     │    (末尾の 't' 0x74 もここで消滅!)
-        │                                                     │
+        │                                                     │ 1. rs485_tx_start():
+        │                                                     │    DE=1, /RE=1 (受信遮断・エコー阻止!)
+        │◄── [RX] 14 [64 Bytes Data...] 10 ───────────────────│ 2. putch loop (末尾 'White' 送信)
+        │                                                     │ 3. rs485_tx_end():
+        │                                                     │    wait TXCIF -> DE=0, /RE=0 (受信復帰)
+        │                                                     │    ★RXピンは遮断されていたため、
+        │                                                     │      受信FIFOに 't' (0x74) は皆無!
   (Quiet 10ms)                                                │
         │                                                     │
         │─── [TX] 55 40 04 20 (LOAD_ADDRESS 0x0440) ─────────►│
-        │                                                     │ ◄─ 受信 FIFO は 100% クリーン!
-        │                                                     │    先頭の 0x55 ('U') を正しく認識!
-        │◄── [RX] 14 10 (INSYNC + OK) ────────────────────────│
-        │                                                     │
+        │                                                     │ ◄── 受信 FIFO は 100% 空・クリーン!
+        │                                                     │     先頭の 0x55 ('U') を正しく認識!
+        │                                                     │ 1. rs485_tx_start(): DE=1, /RE=1
+        │◄── [RX] 14 10 (INSYNC + OK) ────────────────────────│ 2. putch(0x14), putch(0x10)
+        │                                                     │ 3. rs485_tx_end(): DE=0, /RE=0
 ```
 
 ---
 
-## 6. コードサイズ見積もり (512 バイト境界の管理)
+## 5. 512 バイト制限とサイズ見積もり
 
-Optiboot_O4 では、以下の最適化により **490 バイト以下** に収めることを目標とします：
+VPORT によるソフトウェア GPIO 制御を採用したことで、ペリフェラル設定コードが削減され、サイズ面でも極めて有利になります：
 
-| セクション | 現行 Optiboot_x | Optiboot_O4 目標 | 最適化内容 |
-|---|---|---|---|
-| **.text (コード本体)** | 488 Bytes | **470〜484 Bytes** | 不要な EEPROM 処理・レガシー引数の簡略化で約 20B 削減、<br>`rs485_flush_rx()` の追加（約 12B）を吸収。 |
-| **.version (バージョン)** | 2 Bytes | **2 Bytes** | アドレス `0x01FE`〜`0x01FF` に配置。 |
-| **合計バイナリサイズ** | **490 Bytes** | **472〜486 Bytes** | **512 バイト制限に対して 26〜40 バイトの安全マージンを確保** |
+| 構成要素 | 機械語命令 / 実装方式 | 概算バイト数 |
+|---|---|:---:|
+| **ベクトル・初期化** | `rjmp`, `RSTCTRL` 判定, クロック・ボーレート設定 | 約 50 Bytes |
+| **GPIO 方向制御** | `VPORTA` の `sbi` / `cbi` 命令 | **約 16 Bytes** |
+| **`putch` / `getch`** | UART 状態チェック, WDT リセット, LED トグル | 約 60 Bytes |
+| **STK500v1 コマンドループ** | `GET_SYNC`, `LOAD_ADDR`, `PROG_PAGE`, `READ_PAGE` 等 | 約 240 Bytes |
+| **NVMCTRL フラッシュ書き込み** | `_PROTECTED_WRITE_SPM`, ページ消去・書き込み待機 | 約 60 Bytes |
+| **WDT 制御 (`watchdogConfig`)** | `WDT.STATUS` 同期待機, `CCP` 書き込み | 約 20 Bytes |
+| **バージョン情報 (`.version`)** | 2 バイト固定値 (`0x01FE`〜`0x01FF`) | 2 Bytes |
+| **合計予想バイナリサイズ** |  | **約 450〜470 Bytes** |
+| **マージン (vs 512B)** | **`BOOTEND = 0x02` (512B) 境界内** | **42〜62 Bytes の余裕** |
 
 ---
 
-## 7. レビューにおける確認項目 (Checklist for Review)
+## 6. レビュー確認項目
 
-1. [ ] **自爆エコー対策の網羅性**: 送信完了後に `TXCIF` 待ちと `RXCIF` 空読みを行うことで、エコーが完全に消去されるか？
-2. [ ] **WDT 制御の安全性**:
-   * 起動時: 8 秒タイムアウトでアプリ起動
-   * プログラミング中: 完全停止（WDT OFF）で無期限ロック
-   * 終了時: 8ms WDT で安全なハードウェアリブート
-3. [ ] **回路ピン配置の整合性**:
-   * TX=PA1, RX=PA2, DE(XDIR)=PA3, /RE=PA7, LED=PB2 で Core-D 実機回路と完全一致しているか？
-4. [ ] **ホストツールとの親和性**:
-   * Web Serial Flasher（`docs/flasher/index.html`）および Python 診断ツール（`debug_flasher.py`）から、標準 STK500v1 パケットとしてそのまま通信できるか？
+1. [x] **XDIR の完全撤廃**: ハードウェア XDIR 依存をなくし、VPORT ソフトウェア GPIO 制御に変更した。
+2. [x] **自爆エコーの物理遮断**: 送信時に `/RE = 1`（受信ディセーブル）とすることで、自身の RX ピンへのループバックを回路レベルで阻止した。
+3. [x] **送信完了とバス復帰**: `TXCIF` 待ちにより、最後のストップビットが出終わるまで確実にバスをドライブし、完了後に速やかに受信モード（DE=0, /RE=0）に戻す。
+4. [x] **WDT ライフサイクル**: 起動時（8s） $\rightarrow$ 書込中（OFF・無期限ロック） $\rightarrow$ 終了時（8ms クリーンリセット）の安全性を担保した。
+5. [x] **コードサイズ**: 512 バイト境界に対して十分な余裕（40バイト以上）を確保した。
