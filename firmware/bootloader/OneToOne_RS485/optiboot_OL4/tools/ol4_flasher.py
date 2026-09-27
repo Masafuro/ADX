@@ -47,12 +47,11 @@ CHUNK_SIZE      = 8
 CHUNKS_PER_PAGE = 8
 
 # LN-485 Master Schedule Slot Durations (seconds)
-# 115200bps: 8 bytes + frame overhead takes ~1.5ms.
-# 20ms slot gives huge margin (>85% slack time) to guarantee deterministic stability.
-SLOT_CONTROL  = 0.020  # 20ms for PING, GET_INFO, SET_ADDR
-SLOT_CHUNK    = 0.020  # 20ms for WRITE_CHUNK, READ_CHUNK
-SLOT_COMMIT   = 0.060  # 60ms for COMMIT_PAGE (NVM erase/write: ~25ms + 35ms slack)
-PAGE_INTERVAL = 0.020  # 20ms quiet bus settlement interval between full page cycles
+# User Strategy: Expanding Master polling cycles guarantees deterministic stability.
+SLOT_CONTROL  = 0.040  # 40ms (25Hz) for PING, GET_INFO, SET_ADDR
+SLOT_CHUNK    = 0.035  # 35ms (~28Hz) for WRITE_CHUNK, READ_CHUNK (huge slack for 1.5ms transmission)
+SLOT_COMMIT   = 0.080  # 80ms (12.5Hz) for COMMIT_PAGE (NVM erase/write: ~25ms + 55ms slack)
+PAGE_INTERVAL = 0.030  # 30ms quiet bus settlement interval between full page cycles
 
 
 def status_str(status: int) -> str:
