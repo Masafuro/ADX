@@ -555,7 +555,12 @@ int main(void) {
       // Adaboot no-wait mod
       watchdogConfig(WDT_PERIOD_8CLK_gc);
       verifySpace();
-    } else if (ch == STK_GET_SYNC || ch == STK_ENTER_PROGMODE) {
+    } else if (ch == STK_ENTER_PROGMODE) {
+      // Enter programming mode: stop watchdog timer completely
+      // to lock into bootloader mode until STK_LEAVE_PROGMODE is explicitly received!
+      watchdogConfig(WDT_PERIOD_OFF_gc);
+      verifySpace();
+    } else if (ch == STK_GET_SYNC) {
       verifySpace();
     } else {
       continue;
