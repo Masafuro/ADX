@@ -112,13 +112,14 @@ class LN485MasterBroker:
             self.ser.close()
             print("[INFO] Serial port closed.")
 
-    def execute_slot(self, pid: int, payload: bytes = b"", slot_duration: float = SLOT_CONTROL, timeout: float = 0.25) -> Tuple[bool, int, bytes]:
+    def execute_slot(self, pid: int, payload: bytes = b"", slot_duration: float = SLOT_CONTROL, timeout: float = 0.25) -> Tuple[bool, int, bytes, float, int]:
         """
         Executes an atomic LN-485 transaction within a strict Master Schedule Slot:
           1. Sends Break (18 Tbit LOW via 57600bps 0x00).
           2. Sends [0x55, PID] + payload atomically in a single write/flush.
           3. Receives Slave response [Status, Len, Payload, CRC16].
           4. Strictly waits for the remainder of slot_duration (Slack Time conservation).
+        Returns: (ok, status, data, rtt_ms, raw_rx_len)
         """
         t_start = time.perf_counter()
         self.ser.reset_input_buffer()
@@ -134,16 +135,23 @@ class LN485MasterBroker:
         frame_bytes = bytes([0x55, pid]) + payload
         self.ser.write(frame_bytes)
         self.ser.flush()
+        t_tx_done = time.perf_counter()
 
         # 3. Receive Slave Response
         self.ser.timeout = timeout
+        raw_rx = bytearray()
         hdr = self.ser.read(2)
+        raw_rx.extend(hdr)
+        t_rx_hdr = time.perf_counter()
+        rtt_ms = (t_rx_hdr - t_tx_done) * 1000.0
+
         if len(hdr) < 2:
             ok, status, data = False, STATUS_ERR_UNKNOWN, b""
         else:
             status = hdr[0]
             length = hdr[1]
             rest = self.ser.read(length + 2)
+            raw_rx.extend(rest)
             if len(rest) < (length + 2):
                 ok, data = False, b""
             else:
@@ -163,13 +171,11 @@ class LN485MasterBroker:
         if t_elapsed < slot_duration:
             time.sleep(slot_duration - t_elapsed)
 
-        return ok, status, data
+        return ok, status, data, rtt_ms, len(raw_rx)
 
     def ping(self) -> bool:
         """Sends CMD_PING and expects STATUS_OK."""
-        t0 = time.time()
-        ok, status, _ = self.execute_slot(PID_PING, b"", slot_duration=SLOT_CONTROL)
-        rtt_ms = (time.time() - t0) * 1000.0
+        ok, status, _, rtt_ms, _ = self.execute_slot(PID_PING, b"", slot_duration=SLOT_CONTROL)
         if ok:
             print(f"  [PING PASS] Core-D responded with STATUS_OK (RTT={rtt_ms:.1f}ms)")
             return True
@@ -179,139 +185,152 @@ class LN485MasterBroker:
 
     def poll_power_on(self, max_wait_sec: float = 30.0) -> bool:
         """Waits for Core-D power on by sending periodic PING headers."""
-        print(f"\n[STAGE 1] Waiting for Core-D power on/reset (up to {max_wait_sec}s)...")
+        print(f"\n[Step 1-2] Waiting for Core-D power on/reset (up to {max_wait_sec}s)...")
         print(">>> POWER ON OR RESET CORE-D NOW <<<")
         start = time.time()
         probes = 0
         while time.time() - start < max_wait_sec:
             probes += 1
-            ok, status, _ = self.execute_slot(PID_PING, b"", slot_duration=SLOT_CONTROL, timeout=0.06)
+            ok, status, _, rtt_ms, _ = self.execute_slot(PID_PING, b"", slot_duration=SLOT_CONTROL, timeout=0.06)
             if ok:
                 elapsed = time.time() - start
-                print(f"[STAGE 1: PASS] Power-on detected in {elapsed:.2f}s (probe #{probes})!")
+                print(f"[Step 1-2: PASS] Power-on detected in {elapsed:.2f}s (probe #{probes}, RTT={rtt_ms:.1f}ms)!")
                 # Inter-stage settlement delay (ensure slave finishes TXCIF and WFB re-arm)
                 time.sleep(0.150)
                 return True
             time.sleep(0.02)
-        print("[STAGE 1: FAIL] Timeout waiting for Core-D.")
+        print("[Step 1-2: FAIL] Timeout waiting for Core-D.")
         return False
 
     def get_info(self, max_retries: int = 3) -> Optional[Tuple[str, str]]:
         """Queries Device Signature and Bootloader Version with visible retry telemetry."""
         status = STATUS_ERR_UNKNOWN
+        print("[Step 2-1] Querying device info (GET_INFO)...")
         for attempt in range(1, max_retries + 1):
-            ok, status, payload = self.execute_slot(PID_GET_INFO, b"", slot_duration=SLOT_CONTROL)
+            ok, status, payload, rtt_ms, rx_len = self.execute_slot(PID_GET_INFO, b"", slot_duration=SLOT_CONTROL)
             if ok and len(payload) >= 5:
                 sig = f"0x{payload[0]:02X} 0x{payload[1]:02X} 0x{payload[2]:02X}"
                 ver = f"{payload[3]}.{payload[4]}"
-                if attempt > 1:
-                    print(f"  [DEVICE INFO] Signature: {sig} | Optiboot_OL4 Version: {ver} (recovered on retry #{attempt})")
-                else:
-                    print(f"  [DEVICE INFO] Signature: {sig} | Optiboot_OL4 Version: {ver}")
+                retry_tag = f" (recovered on retry #{attempt})" if attempt > 1 else ""
+                print(f"  [Step 2-1: PASS] Signature: {sig} | Optiboot_OL4 Version: {ver} (RTT={rtt_ms:.1f}ms){retry_tag}")
                 return sig, ver
             else:
                 if attempt < max_retries:
-                    print(f"  [INFO RETRY #{attempt}/{max_retries}] get_info failed ({status_str(status)}), retrying slot...")
+                    print(f"  [Step 2-1: RETRY #{attempt}/{max_retries}] get_info failed ({status_str(status)}, rx={rx_len}B), retrying slot...")
                     time.sleep(0.03)
 
-        print(f"  [ERROR] Failed to read device info after {max_retries} attempts ({status_str(status)})")
+        print(f"  [Step 2-1: FAIL] Failed to read device info after {max_retries} attempts ({status_str(status)}, rx={rx_len}B)")
         return None
 
-    def set_address(self, addr: int, max_retries: int = 2) -> bool:
-        """Sets target Flash address with visible retry telemetry."""
+    def set_address(self, addr: int, step_id: str = "", max_retries: int = 2) -> bool:
+        """Sets target Flash address with numbered telemetry."""
         payload = bytes([2, addr & 0xFF, (addr >> 8) & 0xFF, 0x00, 0x00])
         status = STATUS_ERR_UNKNOWN
+        prefix = f"  [{step_id}] " if step_id else "  "
+        rx_len = 0
         for attempt in range(1, max_retries + 1):
-            ok, status, _ = self.execute_slot(PID_SET_ADDR, payload, slot_duration=SLOT_CONTROL)
+            ok, status, _, rtt_ms, rx_len = self.execute_slot(PID_SET_ADDR, payload, slot_duration=SLOT_CONTROL)
             if ok:
-                if attempt > 1:
-                    print(f"    [RETRY OK] set_address 0x{addr:04X} succeeded on attempt #{attempt}")
+                retry_tag = f" (recovered on retry #{attempt})" if attempt > 1 else ""
+                print(f"{prefix}set_address 0x{addr:04X}... PASS (RTT={rtt_ms:.1f}ms){retry_tag}")
                 return True
             else:
                 if attempt < max_retries:
-                    print(f"    [ADDR RETRY #{attempt}/{max_retries}] set_address 0x{addr:04X} failed ({status_str(status)}), retrying...")
+                    print(f"{prefix}set_address 0x{addr:04X}... RETRY #{attempt}/{max_retries} ({status_str(status)}, rx={rx_len}B), retrying...")
                     time.sleep(0.02)
 
-        print(f"  [ERROR] Failed to set address 0x{addr:04X} ({status_str(status)})")
+        print(f"{prefix}set_address 0x{addr:04X}... FAIL ({status_str(status)}, rx={rx_len}B)")
         return False
 
-    def write_chunk(self, offset: int, chunk: bytes, max_retries: int = 2) -> bool:
-        """Writes an 8-byte chunk directly to the Flash page buffer with CRC16 verification."""
+    def write_chunk(self, offset: int, chunk: bytes, step_id: str = "", max_retries: int = 2) -> bool:
+        """Writes an 8-byte chunk directly to the Flash page buffer with numbered telemetry."""
         assert len(chunk) == CHUNK_SIZE
         payload = bytes([offset]) + chunk
         crc = crc16_ccitt(payload)
         packet = payload + bytes([(crc >> 8) & 0xFF, crc & 0xFF])
+        prefix = f"  [{step_id}] " if step_id else "  "
+        rx_len = 0
 
         status = STATUS_ERR_UNKNOWN
         for attempt in range(1, max_retries + 1):
-            ok, status, _ = self.execute_slot(PID_WRITE_CHUNK, packet, slot_duration=SLOT_CHUNK, timeout=0.15)
+            ok, status, _, rtt_ms, rx_len = self.execute_slot(PID_WRITE_CHUNK, packet, slot_duration=SLOT_CHUNK, timeout=0.15)
             if ok:
+                retry_tag = f" (recovered on retry #{attempt})" if attempt > 1 else ""
+                print(f"{prefix}write_chunk @ offset={offset:02d} (8B)... PASS (RTT={rtt_ms:.1f}ms, ACK=OK){retry_tag}")
                 return True
             else:
                 if attempt < max_retries:
-                    print(f"    [CHUNK RETRY #{attempt}/{max_retries}] offset={offset} failed ({status_str(status)}), retrying...")
+                    print(f"{prefix}write_chunk @ offset={offset:02d} (8B)... RETRY #{attempt}/{max_retries} ({status_str(status)}, rx={rx_len}B), retrying...")
                     time.sleep(0.01)
 
-        print(f"  [ERROR] write_chunk failed at offset {offset} ({status_str(status)})")
+        print(f"{prefix}write_chunk @ offset={offset:02d} (8B)... FAIL ({status_str(status)}, rx={rx_len}B)")
         return False
 
-    def commit_page(self, max_retries: int = 2) -> bool:
-        """Executes Flash page erase and write (NVMCTRL) on Core-D."""
+    def commit_page(self, step_id: str = "", max_retries: int = 2) -> bool:
+        """Executes Flash page erase and write (NVMCTRL) with numbered telemetry."""
         status = STATUS_ERR_UNKNOWN
+        prefix = f"  [{step_id}] " if step_id else "  "
+        rx_len = 0
         for attempt in range(1, max_retries + 1):
-            ok, status, _ = self.execute_slot(PID_COMMIT_PAGE, b"", slot_duration=SLOT_COMMIT, timeout=0.25)
+            ok, status, _, rtt_ms, rx_len = self.execute_slot(PID_COMMIT_PAGE, b"", slot_duration=SLOT_COMMIT, timeout=0.25)
             if ok:
+                retry_tag = f" (recovered on retry #{attempt})" if attempt > 1 else ""
+                print(f"{prefix}commit_page (Flash Erase/Write)... PASS (RTT={rtt_ms:.1f}ms, ACK=OK){retry_tag}")
                 return True
             else:
                 if attempt < max_retries:
-                    print(f"    [COMMIT RETRY #{attempt}/{max_retries}] commit_page failed ({status_str(status)}), retrying...")
+                    print(f"{prefix}commit_page... RETRY #{attempt}/{max_retries} ({status_str(status)}, rx={rx_len}B), retrying...")
                     time.sleep(0.02)
 
-        print(f"  [ERROR] commit_page failed ({status_str(status)})")
+        print(f"{prefix}commit_page... FAIL ({status_str(status)}, rx={rx_len}B)")
         return False
 
-    def read_chunk(self, offset: int, max_retries: int = 2) -> Optional[bytes]:
-        """Reads an 8-byte chunk from Flash with CRC16 verification."""
+    def read_chunk(self, offset: int, step_id: str = "", max_retries: int = 2) -> Optional[bytes]:
+        """Reads an 8-byte chunk from Flash with numbered telemetry."""
         packet = bytes([offset, 0x00, 0x00])  # offset + dummy CRC
         status = STATUS_ERR_UNKNOWN
+        prefix = f"  [{step_id}] " if step_id else "  "
+        rx_len = 0
         for attempt in range(1, max_retries + 1):
-            ok, status, payload = self.execute_slot(PID_READ_CHUNK, packet, slot_duration=SLOT_CHUNK, timeout=0.15)
+            ok, status, payload, rtt_ms, rx_len = self.execute_slot(PID_READ_CHUNK, packet, slot_duration=SLOT_CHUNK, timeout=0.15)
             if ok and len(payload) == CHUNK_SIZE:
+                retry_tag = f" (recovered on retry #{attempt})" if attempt > 1 else ""
+                print(f"{prefix}read_chunk @ offset={offset:02d} (8B)... PASS (RTT={rtt_ms:.1f}ms, CRC=OK){retry_tag}")
                 return payload
             else:
                 if attempt < max_retries:
-                    print(f"    [READ RETRY #{attempt}/{max_retries}] offset={offset} failed ({status_str(status)}), retrying...")
+                    print(f"{prefix}read_chunk @ offset={offset:02d} (8B)... RETRY #{attempt}/{max_retries} ({status_str(status)}, rx={rx_len}B), retrying...")
                     time.sleep(0.01)
 
-        print(f"  [ERROR] read_chunk failed at offset {offset} ({status_str(status)})")
+        print(f"{prefix}read_chunk @ offset={offset:02d} (8B)... FAIL ({status_str(status)}, rx={rx_len}B)")
         return None
 
-    def write_page(self, addr: int, data: bytes) -> bool:
+    def write_page(self, page_num: int, total_pages: int, addr: int, data: bytes) -> bool:
         """Writes a 64-byte Flash page in 8x 8-byte chunks followed by a page commit."""
         assert len(data) == PAGE_SIZE
-        if not self.set_address(addr):
+        if not self.set_address(addr, step_id=f"Step 4-{page_num}-ADDR"):
             return False
 
         for chunk_idx in range(CHUNKS_PER_PAGE):
             offset = chunk_idx * CHUNK_SIZE
             chunk_data = data[offset:offset + CHUNK_SIZE]
-            if not self.write_chunk(offset, chunk_data):
+            if not self.write_chunk(offset, chunk_data, step_id=f"Step 4-{page_num}-W{chunk_idx}"):
                 return False
 
-        if not self.commit_page():
+        if not self.commit_page(step_id=f"Step 4-{page_num}-COMMIT"):
             return False
 
         return True
 
-    def read_page(self, addr: int) -> Optional[bytes]:
+    def read_page(self, page_num: int, total_pages: int, addr: int) -> Optional[bytes]:
         """Reads a 64-byte Flash page in 8x 8-byte chunks."""
-        if not self.set_address(addr):
+        if not self.set_address(addr, step_id=f"Step 4-{page_num}-VADDR"):
             return None
 
         result = bytearray()
         for chunk_idx in range(CHUNKS_PER_PAGE):
             offset = chunk_idx * CHUNK_SIZE
-            chunk = self.read_chunk(offset)
+            chunk = self.read_chunk(offset, step_id=f"Step 4-{page_num}-R{chunk_idx}")
             if chunk is None:
                 return None
             result.extend(chunk)
@@ -355,6 +374,7 @@ def main():
 
     broker = LN485MasterBroker(args.port, args.baud)
     try:
+        print(f"[Step 1-1] Opening serial port {args.port} at {args.baud} bps...")
         broker.connect()
 
         if not broker.poll_power_on():
@@ -372,13 +392,13 @@ def main():
         if args.read_page:
             target_addr = int(args.read_page, 16)
             print(f"\n[READ PAGE] Address 0x{target_addr:04X}...")
-            data = broker.read_page(target_addr)
+            data = broker.read_page(1, 1, target_addr)
             if data:
                 print(f"Read 64 bytes: {hex_dump(data[:16])} ...")
 
         if args.hex:
             hex_data = parse_intel_hex(args.hex)
-            print(f"[HEX] Loaded {len(hex_data)} bytes from {args.hex}")
+            print(f"\n[Step 3-1] Loading HEX file {args.hex}...")
 
             addrs = list(hex_data.keys())
             min_addr = min(addrs)
@@ -389,27 +409,28 @@ def main():
             end_p = ((max_addr + PAGE_SIZE) // PAGE_SIZE) * PAGE_SIZE
             total_pages = (end_p - start_p) // PAGE_SIZE
 
-            print(f"[PLAN] Flashing {total_pages} pages (0x{start_p:04X} ~ 0x{end_p:04X})...")
+            print(f"[Step 3-1: PASS] Loaded {len(hex_data)} bytes. Plan: Flashing {total_pages} pages (0x{start_p:04X} ~ 0x{end_p:04X})...")
+            print("\n[Step 4] Starting Flashing & Verification Sequence:")
             all_ok = True
             t_total_start = time.time()
             for p_idx in range(total_pages):
                 curr_addr = start_p + p_idx * PAGE_SIZE
                 page_bytes = bytes([hex_data.get(curr_addr + i, 0xFF) for i in range(PAGE_SIZE)])
 
-                print(f"  Flashing Page {p_idx+1}/{total_pages} @ 0x{curr_addr:04X}...", end="", flush=True)
+                print(f"\n--- Page {p_idx+1}/{total_pages} @ 0x{curr_addr:04X} ---")
                 t_w0 = time.time()
-                if not broker.write_page(curr_addr, page_bytes):
-                    print(" [WRITE FAIL]")
+                if not broker.write_page(p_idx + 1, total_pages, curr_addr, page_bytes):
+                    print(f"[PAGE {p_idx+1} WRITE FAIL] Failed to write page at 0x{curr_addr:04X}")
                     all_ok = False
                     break
 
                 time.sleep(0.020)  # Brief quiet bus settlement before verify read
-                readback = broker.read_page(curr_addr)
+                readback = broker.read_page(p_idx + 1, total_pages, curr_addr)
                 t_page = (time.time() - t_w0) * 1000.0
                 if readback == page_bytes:
-                    print(f" [VERIFY PASS] ({t_page:.1f}ms)")
+                    print(f"  [Step 4-{p_idx+1}: PASS] Page {p_idx+1}/{total_pages} @ 0x{curr_addr:04X} verified in {t_page:.1f}ms")
                 else:
-                    print(" [VERIFY MISMATCH]")
+                    print(f"  [Step 4-{p_idx+1}: FAIL] Verify mismatch at page {p_idx+1} (0x{curr_addr:04X})")
                     all_ok = False
                     break
 
