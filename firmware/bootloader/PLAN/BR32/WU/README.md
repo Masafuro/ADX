@@ -20,6 +20,7 @@ SPDX-License-Identifier: CC-BY-4.0
 | **WU-2** | **意地悪 SIGROW ゲート・チェッカー** | 不正 UID やゴミデータに対するスレーブの「鉄壁の沈黙」と自己治癒力の体感 | [`WU2_sigrow_fuzzing/`](./WU2_sigrow_fuzzing/) |
 | **WU-3** | **フレーム破壊 ＆ ノイズ耐性実験室** | 10B 欠損・50B 垂れ流し・CRC 破壊に対する時間枠自律脱出（非デッドロック）の実証 | [`WU3_fault_injection/`](./WU3_fault_injection/) |
 | **WU-4** | **仮想 SRAM ページペインタ** | Flash 書き込みゼロで、SRAM 上の 64B 配列に 4 チャンク分割蓄積・読出遊び | [`WU4_sram_painter/`](./WU4_sram_painter/) |
+| **WU-5-1** | **WebSerial BREAK 挙動検証プローブ** | Chrome/Edge の WebSerial API による RS-485 BREAK 生成・IDENTIFY 応答性レビュー | [`WU5_1_web_break_probe/`](./WU5_1_web_break_probe/) |
 
 ---
 
