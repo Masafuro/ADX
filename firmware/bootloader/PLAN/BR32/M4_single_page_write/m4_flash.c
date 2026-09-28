@@ -179,6 +179,20 @@ static bool is_target_accepted(const uint8_t *target_uid, const uint8_t *my_uid)
 }
 
 // =========================================================================
+// Hardwired Flash Commit Routine (Placed strictly inside BOOT Section < 0x0400)
+// =========================================================================
+__attribute__((noinline))
+void nvm_commit_page_hw(uint16_t page_addr, const uint8_t *data) {
+    uint8_t *dest = (uint8_t *)(MAPPED_PROGMEM_START + page_addr);
+    for (uint8_t i = 0; i < FLASH_PAGE_SIZE; i++) {
+        *(dest++) = data[i];
+    }
+    _PROTECTED_WRITE_SPM(NVMCTRL.CTRLA, NVMCTRL_CMD_PAGEERASEWRITE_gc);
+    while (NVMCTRL.STATUS & (NVMCTRL_FBUSY_bm | NVMCTRL_EEBUSY_bm))
+        ;
+}
+
+// =========================================================================
 // Main Program Loop
 // =========================================================================
 int main(void) {
@@ -434,16 +448,8 @@ int main(void) {
                 dbg_print_hex8((uint8_t)(p_addr & 0xFF));
                 dbg_print(") Erase & Write...\r\n");
 
-                // 1. ページバッファへのロード
-                uint8_t *dest_ptr = (uint8_t *)(MAPPED_PROGMEM_START + p_addr);
-                for (uint8_t i = 0; i < FLASH_PAGE_SIZE; i++) {
-                    *(dest_ptr++) = page_buffer[i];
-                }
-
-                // 2. 消去書き込み実行 (最大約 25ms マイコンがビジー状態)
-                _PROTECTED_WRITE_SPM(NVMCTRL.CTRLA, NVMCTRL_CMD_PAGEERASEWRITE_gc);
-                while (NVMCTRL.STATUS & (NVMCTRL_FBUSY_bm | NVMCTRL_EEBUSY_bm))
-                    ;
+                // ★ アプローチ 2: BOOT 領域（< 0x0400）に配置された専用ルーチンで物理書き込み！
+                nvm_commit_page_hw(p_addr, page_buffer);
 
                 dbg_print("  |-> [ASYNC NVM] Flash write complete! (Slack time ~158ms remaining)\r\n");
             }
