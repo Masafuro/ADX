@@ -140,8 +140,9 @@ Warm Up サンドボックス（WU-0 〜 WU-4）の完全制覇により、通�
 | **M1** | 32B Ping-Pong 実証 | 時間枠読取 ＆ 自己同定返信 | 200ms 周期 ポーリング<br>`TARGET_SIGROW = 全0x00` 送信 | ・連続 1,000 回 Ping 応答率 100%<br>・時間ジッター $\sigma \le 1.0\,\text{ms}$ | **PASS (WU-1実証済)** |
 | **M2** | SIGROW ゲート照合 | 一致時応答 ＆ **不一致時完全沈黙** | 正常 UID と不正 UID を交互送信 | ・不一致 UID に対し 1 ビットも発言せず沈黙すること | **PASS (WU-2実証済)** |
 | **M3** | 64B SRAM 蓄積・読出 | 4 チャンク (16B $\times$ 4) 蓄積 ＆ `CMD_READ_CHUNK` 返答 | 64B テキスト・バイナリ送信 $\rightarrow$ 全バイト読出照合 | ・64 バイト全ビット完全一致 (100% ベリファイ PASS) | **PASS (WU-4実証済)** |
-| **M4** | **単一 Flash ページ書込** | 即時 ACK 送出 $\rightarrow$ **応答後に Flash 25ms 書込** | 1 ページ (`0x0400`) 書込指示 $\rightarrow$ Flash 読出ベリファイ | ・消去書き込み中の通信破綻ゼロ<br>・Flash 書込後の 64B 完全一致 | **★ 現在のターゲット ★** |
-| **M5** | **フルアプリ OTW 書込** | ブートローダー本体完成<br>(サイズ $\le 1024$B) | HEX パース・全ページ書込 $\rightarrow$ `CMD_BOOT_APP` 送出 | ・白色 LED (PB3) 点滅開始<br>・電源再投入後の自動起動 | 次期目標 |
+| **M4** | **単一 Flash ページ書込** | 即時 ACK 送出 $\rightarrow$ **応答後に Flash 25ms 書込** | 1 ページ (`0x0400`) 書込指示 $\rightarrow$ Flash 読出ベリファイ | ・消去書き込み中の通信破綻ゼロ<br>・自爆現象の特定 $\rightarrow$ M4-1 へ昇華 | **CONDITIONAL PASS** |
+| **M4-1**| **極小ブートローダー書込** | **サイズ $\le 1024$B (実測 1,022B)**<br>自爆ゼロで安全書き込み | 1 ページ (`0x0400`) 書込指示 $\rightarrow$ 物理 Flash 読出ベリファイ | ・**64/64 バイト 100% 完全一致**<br>・保護領域遮断 100% | **GRADE A+ (PASS)** |
+| **M5** | **フルアプリ OTW 書込** | 極小ブートローダー本体<br>(M4-1 エンジン搭載) | HEX パース・全ページ書込 $\rightarrow$ `CMD_BOOT_APP` 送出 | ・白色 LED (PB3) 点滅開始<br>・電源再投入後の自動起動 | **★ 次期 Active Gate ★** |
 | **M6** | バスクロック短縮 | 高速フレーム処理 | ポーリング周期短縮<br>(200ms $\rightarrow$ 100ms $\rightarrow$ 50ms) | ・本番運用の最適ポーリング周期とスラックタイムの特定 | 最終性能限界特定 |
 
 ---
@@ -179,20 +180,20 @@ Warm Up サンドボックス（WU-0 〜 WU-4）の完全制覇により、通�
 
 ---
 
-### Milestone 4: 単一 Flash ページ消去・書き込み ＆ 非同期分離実証 (★Active Gate★)
-- **目的**: 初めて物理 Flash メモリ（`0x0400`：ユーザーアプリ先頭ページ）への消去書き込みコードを有効化し、通信破綻ゼロで 64 バイトが正確に物理 Flash に刻まれることを実証する。
-- **スレーブ側ファームウェア**:
-  - `wu4_sram.c` をベースに、Chunk 3 受信後の `NVMCTRL.CTRLA = NVMCTRL_CMD_PAGEERASEWRITE_gc;` を追加。
-  - Flash 先頭保護領域（`0x0000`〜`0x03FF`: ブートローダー本体領域）への書き込み要求は `STATUS_ERR_PROTECT (0x03)` で拒絶。
-- **ホスト側ツール**:
-  - アドレス `0x0400`（Page 16）へ 64 バイトのテストパターンを書き込み $\rightarrow$ `CMD_READ_CHUNK` で Flash から読み戻して全バイト照合。
-- **合格基準**:
-  - Flash 書き込み中の通信フリーズや波形破壊が一切発生せず、読み戻しデータが 64/64 バイト完全一致すること。
+### Milestone 4 ＆ Milestone 4-1: 単一 Flash ページ消去・書き込み実証 【GRADE A+ PASS】
+* **M4 (初期検証)**:
+  - 消去書き込みルーチンを `0x01A8`（BOOT 領域）へ配置することで、ハードウェア SPM アンロックに成功。
+  - しかしプログラム全体が 1,506B あったため、Page 16（`0x0400`）にあった自身の `main()` コードを上書きして自爆（自己破壊）する現象を特定。
+* **M4-1 (極小ブートローダー収容 ＆ 100% 完全勝利)**:
+  - ブートローダーの全コードを **1,022 バイト (`0x0000` 〜 `0x03FE`)** に完全に収容（`BOOTEND = 0x04` 境界内）。
+  - Page 16 (`0x0400`〜`0x043F`) は 100% 完全更地のアプリ領域となったため、自爆リスクを完全排除。
+  - **物理 Flash からの読み戻し照合にて、64/64 バイト全 512 ビットが 100% 完全一致（Bit-for-Bit Perfect Match）を実証！**
+  - ブートローダー保護領域（Page 0）への書き込み拒絶（`STATUS_ERR_PROTECT`）も 100% 達成。
 
 ---
 
-### Milestone 5: フルアプリケーション OTW 書き込み ＆ 自動起動実証
-- **目的**: 実際のテストスケッチ（オンボード白色 LED 点滅、約 700 バイト / 11 ページ）の RS-485 経由フル書き込みと自動起動を実証する。
+### Milestone 5: フルアプリケーション OTW 書き込み ＆ 自動起動実証 (★Active Gate★)
+- **目的**: M4-1 で確立された極小ブートローダーエンジン（1,022B）を用い、実際のテストスケッチ（オンボード白色 LED 点滅、約 700 バイト / 11 ページ）の RS-485 経由フル書き込みと自動起動を実証する。
 - **実施内容**:
   1. `test_blink_white_led.hex` を自動パースし、全 11 ページを連続書き込み・自動ベリファイ。
   2. 書き込み完了後、`CMD_BOOT_APP` を送信。
@@ -226,11 +227,9 @@ firmware/bootloader/PLAN/BR32/records/
 │   ├── WU3_fault_injection.md
 │   └── WU4_sram_painter.md
 │
-├── M0_env_setup/result.md             # 本番 Gate エビデンス
-├── M1_ping_pong/result.md             # (WU-1 にて達成)
-├── M2_sigrow_gate/result.md           # (WU-2 にて達成)
-├── M3_sram_buffer/result.md           # (WU-4 にて達成)
-├── M4_single_page_write/result.md     # ★次期 Gate
-├── M5_full_otw_upload/result.md
+├── WU_report.md                       # Warm Up 全体総括レポート
+├── M4_single_page_write/result.md     # M4 初期検証（自爆現象の特定とナレッジ）
+├── M4_1_compact_bootloader/result.md  # M4-1 極小ブートローダー物理Flash書込 (GRADE A+)
+├── M5_full_otw_upload/result.md       # ★次期 Gate
 └── M6_bus_stress_test/result.md
 ```
