@@ -502,6 +502,9 @@
         <button class="btn-halfbaud" id="btnProbeHalfBaud" disabled>
           🎯 Tuned Half-Baud Probe (P10)
         </button>
+        <button class="btn-emerald" id="btnHalfBaud20" disabled>
+          🏆 Half-Baud 20-Cycle Stress Test
+        </button>
         <button class="btn-amber" id="btnHalfBaudSweep" disabled>
           🔬 Half-Baud Timing Sweep (5~30ms)
         </button>
@@ -515,11 +518,8 @@
         <button class="btn-secondary" id="btnPulseSweep" disabled>
           📊 Pulse Width Sweep (0.7~5ms)
         </button>
-        <button class="btn-emerald" id="btnProbeSingle" disabled>
+        <button class="btn-secondary" id="btnProbeSingle" disabled>
           ⚡ Standard Probe
-        </button>
-        <button class="btn-secondary" id="btnBenchmark50" disabled>
-          🔄 50-Cycle Deep Profiler
         </button>
         <button class="btn-danger" id="btnStop" disabled>⏹ Stop</button>
       </div>
@@ -606,12 +606,12 @@
     const rngDelimMs = document.getElementById('rngDelimMs');
     const lblDelimMs = document.getElementById('lblDelimMs');
     const btnProbeHalfBaud = document.getElementById('btnProbeHalfBaud');
+    const btnHalfBaud20 = document.getElementById('btnHalfBaud20');
     const btnHalfBaudSweep = document.getElementById('btnHalfBaudSweep');
     const btnRunExplorer = document.getElementById('btnRunExplorer');
     const btnDelimSweep = document.getElementById('btnDelimSweep');
     const btnPulseSweep = document.getElementById('btnPulseSweep');
     const btnProbeSingle = document.getElementById('btnProbeSingle');
-    const btnBenchmark50 = document.getElementById('btnBenchmark50');
     const btnStop = document.getElementById('btnStop');
     const uidBadge = document.getElementById('uidBadge');
     const uidHex = document.getElementById('uidHex');
@@ -652,12 +652,12 @@
 
     function setButtonsState(busy) {
       btnProbeHalfBaud.disabled = busy;
+      btnHalfBaud20.disabled = busy;
       btnHalfBaudSweep.disabled = busy;
       btnRunExplorer.disabled = busy;
       btnDelimSweep.disabled = busy;
       btnPulseSweep.disabled = busy;
       btnProbeSingle.disabled = busy;
-      btnBenchmark50.disabled = busy;
       btnStop.disabled = !busy;
     }
 
@@ -927,6 +927,57 @@
     });
 
     // =========================================================================
+    // Action 1b: 🏆 Half-Baud 20-Cycle Continuous Stress Test
+    // =========================================================================
+    btnHalfBaud20.addEventListener('click', async () => {
+      isRunning = true;
+      stopRequested = false;
+      setButtonsState(true);
+
+      const count = 20;
+      log(`=== 🏆 Starting Half-Baud 20-Cycle Continuous Stress Test (Metronome: 250ms) ===`, 'info');
+
+      let passCount = 0;
+      for (let i = 1; i <= count; i++) {
+        if (stopRequested) {
+          log('Stress test stopped by user.', 'warn');
+          break;
+        }
+
+        const allZeros = new Uint8Array(10);
+        const frame = buildMasterFrame(0x01, i & 0xFF, allZeros, 0, 0, null);
+
+        try {
+          const resp = await executeBr32Transaction(frame, { 
+            useHalfBaudReopen: true, 
+            flushWaitMs: 15, 
+            closeRestMs: 12, 
+            openRestMs: 12 
+          });
+
+          const isWin = (resp.status === 0xAA && resp.rxCount === 32 && resp.b0 === 0x01 && resp.crcOk);
+          if (isWin || (resp.status === 0x00 && resp.crcOk)) {
+            passCount++;
+            log(`[#${i}/${count}] PERFECT (rx:32B, b0:0x01, b1:0x${resp.b1.toString(16).padStart(2,'0')}, RTT:${resp.rtt.toFixed(1)}ms)`, 'win');
+            updateStats(resp.rtt, true);
+          } else {
+            log(`[#${i}/${count}] WARN (rx:${resp.rxCount}B, b0:0x${resp.b0.toString(16).padStart(2,'0')})`, 'warn');
+            updateStats(resp.rtt, false);
+          }
+        } catch (err) {
+          log(`[#${i}/${count}] FAIL: ${err.message}`, 'err');
+          updateStats(0, false);
+        }
+
+        await sleep(250); // スレーブの Soft-UART (約200ms) 完了を確実に待つ
+      }
+
+      log(`=== 🏆 Half-Baud Stress Test Complete: ${passCount}/${count} Passed (${((passCount/count)*100).toFixed(1)}%) ===`, passCount === count ? 'win' : 'info');
+      isRunning = false;
+      setButtonsState(false);
+    });
+
+    // =========================================================================
     // Action 2: 🔬 Half-Baud Timing Sweep (5ms 〜 30ms 探索)
     // =========================================================================
     btnHalfBaudSweep.addEventListener('click', async () => {
@@ -976,7 +1027,7 @@
           } catch (err) {
             updateStats(0, false);
           }
-          await sleep(50);
+          await sleep(250); // マイコンの Soft-UART (約200ms) 出力完了待ち
         }
 
         const avgRx = (rxCountSum / repeats).toFixed(1);
@@ -1092,7 +1143,7 @@
           } catch (err) {
             updateStats(0, false);
           }
-          await sleep(50);
+          await sleep(250); // マイコンの Soft-UART (約200ms) 出力完了待ち
         }
 
         const avgRx = (rxCountSum / repeats).toFixed(1);
@@ -1207,7 +1258,7 @@
           } catch (err) {
             updateStats(0, false);
           }
-          await sleep(50);
+          await sleep(250); // マイコンの Soft-UART (約200ms) 出力完了待ち
         }
 
         const avgRx = (rxCountSum / repeats).toFixed(1);
@@ -1301,7 +1352,7 @@
           } catch (err) {
             updateStats(0, false);
           }
-          await sleep(50);
+          await sleep(250); // マイコンの Soft-UART (約200ms) 出力完了待ち
         }
 
         const avgRx = (rxCountSum / repeats).toFixed(1);
