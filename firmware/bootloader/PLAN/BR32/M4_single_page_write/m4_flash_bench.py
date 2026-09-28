@@ -48,6 +48,7 @@ STATUS_NAMES = {
 }
 
 # Target Flash Configuration
+APP_START_PAGE     = 16      # 0x0400 (First 1KB protected)
 TARGET_PAGE_IDX    = 16      # 0x0400
 PROTECTED_PAGE_IDX = 0       # 0x0000 (Bootloader area)
 FLASH_PAGE_SIZE    = 64
