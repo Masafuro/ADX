@@ -37,4 +37,4 @@ ADX のメイン MCU である Microchip **ATtiny1616-MNR** 向けに、SpenceKo
 
 詳細な開発計画およびマイルストーンについては、以下の開発計画書を参照してください：
 
-👉 **[ADX Core-D 用 1-to-1 RS-485 ブートローダー開発計画書](./OneToOne_RS485/development_plan.md)**
+👉 **[ADX Core-D 用 1-to-1 RS-485 ブートローダー開発計画書 (アーカイブ)](./archive/OneToOne_RS485/development_plan.md)**

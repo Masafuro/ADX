@@ -3,9 +3,12 @@ Copyright (c) 2026 ADX Project Contributors
 SPDX-License-Identifier: MIT
 -->
 
-# ADX Core-D 1-to-1 RS-485 ブートローダー プロジェクト
+# ADX Core-D 1-to-1 RS-485 ブートローダー プロジェクト（アーカイブ）
 
-ADX Core-D（Microchip **ATtiny1616-MNR** 搭載）向け、2線式差動 **RS-485 半二重通信（115,200 bps）経由でのファームウェア書き込み（Over-The-Wire: OTW）** を実現する堅牢なブートローダーおよびホストツールのリポジトリです。
+> [!WARNING]
+> **本ディレクトリは過去の試作バックナンバー（アーカイブ）です。**  
+> 2026年9月27日の試作検証（optiboot_x, optiboot_O4, optiboot_OL4）における実装・実験コード・検証ログを保管しています。  
+> 本プロジェクトで得られた確定ハードウェア設定値・ノウハウ・失敗要因分析は、親ディレクトリの **[ナレッジベース (`RS485_BOOTLOADER_KNOWLEDGE_BASE.md`)](../../RS485_BOOTLOADER_KNOWLEDGE_BASE.md)** を参照してください。
 
 ---
 
