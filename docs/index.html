@@ -820,7 +820,19 @@
 
       try {
         const resp = await executeBr32Transaction(frame, breakMs, delimMs);
-        if (resp.crcOk && resp.status === 0x00) {
+        if (resp.status === 0xAA && resp.crcOk) {
+          const rxCount = resp.rxBuffer[1];
+          const firstByte = '0x' + resp.rxBuffer[2].toString(16).padStart(2, '0').toUpperCase();
+          const secondByte = '0x' + resp.rxBuffer[3].toString(16).padStart(2, '0').toUpperCase();
+          const uidStr = hexDump(resp.uid);
+          const rawDump = hexDump(resp.rxBuffer.subarray(14, 30));
+          uidHex.textContent = '0x' + uidStr;
+          uidBadge.style.display = 'flex';
+          log(`[RX DIAG] Slave Captured: ${rxCount} Bytes (RTT: ${resp.rtt.toFixed(2)} ms, CRC OK)`, 'rx');
+          log(`  ↳ Byte[0]: ${firstByte} | Byte[1]: ${secondByte} | Slave UID: 0x${uidStr}`, 'info');
+          log(`  ↳ Slave Rx Buffer Dump [0..15]: ${rawDump}`, 'rx');
+          updateStats(resp.rtt, true);
+        } else if (resp.crcOk && resp.status === 0x00) {
           const uidStr = hexDump(resp.uid);
           uidHex.textContent = '0x' + uidStr;
           uidBadge.style.display = 'flex';
