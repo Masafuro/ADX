@@ -369,6 +369,49 @@
       color: #94a3b8;
     }
 
+        .log-pre {
+      font-family: 'JetBrains Mono', monospace;
+      white-space: pre;
+      line-height: 1.4;
+      color: #38bdf8;
+      background: rgba(3, 6, 12, 0.85);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin: 8px 0;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      overflow-x: auto;
+      font-size: 11px;
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #8b5cf6, #d946ef);
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-purple:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+    }
+
+    .btn-purple:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
     .log-entry {
       display: flex;
       gap: 10px;
@@ -447,14 +490,17 @@
       <div class="card-title">
         <span class="accent">●</span> Step 2: BREAK 信号送出 ＆ スレーブ応答プローブ
       </div>
-      <div class="btn-row">
+      <div class="btn-row" style="flex-wrap: wrap;">
         <button class="btn-emerald" id="btnProbeSingle" disabled>
-          ⚡ Probe Slave (Single Break + CMD_IDENTIFY)
+          ⚡ Single Probe
         </button>
         <button class="btn-secondary" id="btnBenchmark50" disabled>
-          🚀 Run 50-Cycle Benchmark (200ms Metronome)
+          📊 50-Cycle Deep Profiler
         </button>
-        <button class="btn-danger" id="btnStop" disabled>Stop</button>
+        <button class="btn-purple" id="btnMatrixSweep" disabled>
+          🔬 2D Matrix Sweep (Break × Delim)
+        </button>
+        <button class="btn-danger" id="btnStop" disabled>⏹ Stop</button>
       </div>
 
       <div class="uid-badge" id="uidBadge" style="display: none;">
@@ -540,6 +586,7 @@
     const lblDelimMs = document.getElementById('lblDelimMs');
     const btnProbeSingle = document.getElementById('btnProbeSingle');
     const btnBenchmark50 = document.getElementById('btnBenchmark50');
+    const btnMatrixSweep = document.getElementById('btnMatrixSweep');
     const btnStop = document.getElementById('btnStop');
     const uidBadge = document.getElementById('uidBadge');
     const uidHex = document.getElementById('uidHex');
@@ -592,6 +639,7 @@
         btnDisconnect.disabled = false;
         btnProbeSingle.disabled = false;
         btnBenchmark50.disabled = false;
+        btnMatrixSweep.disabled = false;
         log('Serial port opened successfully @ 19,200 bps.', 'info');
       } catch (err) {
         log(`Failed to open serial port: ${err.message}`, 'err');
@@ -620,6 +668,7 @@
         btnDisconnect.disabled = true;
         btnProbeSingle.disabled = true;
         btnBenchmark50.disabled = true;
+        btnMatrixSweep.disabled = true;
         log('Serial port closed.', 'info');
       } catch (err) {
         log(`Error closing port: ${err.message}`, 'err');
@@ -741,10 +790,27 @@
       }
     }
 
+    
+    function setButtonsState(busy) {
+      btnProbeSingle.disabled = busy;
+      btnBenchmark50.disabled = busy;
+      btnMatrixSweep.disabled = busy;
+      btnStop.disabled = !busy;
+    }
+
+    function logPre(text) {
+      const pre = document.createElement('pre');
+      pre.className = 'log-pre';
+      pre.textContent = text;
+      consoleBox.appendChild(pre);
+      consoleBox.scrollTop = consoleBox.scrollHeight;
+    }
+
     // Single Probe Handler
     btnProbeSingle.addEventListener('click', async () => {
       btnProbeSingle.disabled = true;
       btnBenchmark50.disabled = true;
+        btnMatrixSweep.disabled = true;
       const breakMs = parseFloat(rngBreakMs.value);
       const delimMs = parseFloat(rngDelimMs.value);
 
@@ -770,6 +836,7 @@
       } finally {
         btnProbeSingle.disabled = false;
         btnBenchmark50.disabled = false;
+        btnMatrixSweep.disabled = false;
       }
     });
 
@@ -779,6 +846,7 @@
       stopRequested = false;
       btnProbeSingle.disabled = true;
       btnBenchmark50.disabled = true;
+        btnMatrixSweep.disabled = true;
       btnStop.disabled = false;
 
       const breakMs = parseFloat(rngBreakMs.value);
@@ -818,6 +886,7 @@
       isRunning = false;
       btnProbeSingle.disabled = false;
       btnBenchmark50.disabled = false;
+        btnMatrixSweep.disabled = false;
       btnStop.disabled = true;
     });
 
