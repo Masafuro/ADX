@@ -261,15 +261,16 @@
       box-shadow: 0 6px 20px rgba(0, 240, 255, 0.5);
     }
 
-    .btn-emerald {
-      background: linear-gradient(135deg, var(--emerald), #059669);
-      color: #ffffff;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    .btn-halfbaud {
+      background: linear-gradient(135deg, #06b6d4, #10b981);
+      color: #03060c;
+      box-shadow: 0 4px 16px rgba(6, 182, 212, 0.4);
+      font-weight: 700;
     }
 
-    .btn-emerald:hover:not(:disabled) {
+    .btn-halfbaud:hover:not(:disabled) {
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 6px 24px rgba(6, 182, 212, 0.6);
     }
 
     .btn-explorer {
@@ -293,6 +294,17 @@
     .btn-amber:hover:not(:disabled) {
       transform: translateY(-1px);
       box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+    }
+
+    .btn-emerald {
+      background: linear-gradient(135deg, var(--emerald), #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-emerald:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
     }
 
     .btn-secondary {
@@ -383,7 +395,7 @@
       background: var(--console-bg);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 12px;
-      height: 320px;
+      height: 340px;
       overflow-y: auto;
       padding: 14px 16px;
       font-family: 'JetBrains Mono', monospace;
@@ -486,18 +498,25 @@
         <span class="accent">●</span> Step 2: 探索パターンの実行 ＆ 診断
       </div>
       <div class="btn-row">
-        <!-- 主役: 全自動 Break 探索エンジン -->
+        <!-- 勝ち筋本命: Half-Baud 安定化プローブ -->
+        <button class="btn-halfbaud" id="btnProbeHalfBaud" disabled>
+          🎯 Tuned Half-Baud Probe (P10)
+        </button>
+        <button class="btn-amber" id="btnHalfBaudSweep" disabled>
+          🔬 Half-Baud Timing Sweep (5~30ms)
+        </button>
+        <!-- 全自動 Break 探索エンジン -->
         <button class="btn-explorer" id="btnRunExplorer" disabled>
           🧪 Run Multi-Pattern Break Explorer
         </button>
-        <button class="btn-amber" id="btnDelimSweep" disabled>
+        <button class="btn-secondary" id="btnDelimSweep" disabled>
           📈 Delimiter Sweep (0.5~50ms)
         </button>
         <button class="btn-secondary" id="btnPulseSweep" disabled>
           📊 Pulse Width Sweep (0.7~5ms)
         </button>
         <button class="btn-emerald" id="btnProbeSingle" disabled>
-          ⚡ Single Probe
+          ⚡ Standard Probe
         </button>
         <button class="btn-secondary" id="btnBenchmark50" disabled>
           🔄 50-Cycle Deep Profiler
@@ -586,6 +605,8 @@
     const lblBreakMs = document.getElementById('lblBreakMs');
     const rngDelimMs = document.getElementById('rngDelimMs');
     const lblDelimMs = document.getElementById('lblDelimMs');
+    const btnProbeHalfBaud = document.getElementById('btnProbeHalfBaud');
+    const btnHalfBaudSweep = document.getElementById('btnHalfBaudSweep');
     const btnRunExplorer = document.getElementById('btnRunExplorer');
     const btnDelimSweep = document.getElementById('btnDelimSweep');
     const btnPulseSweep = document.getElementById('btnPulseSweep');
@@ -630,11 +651,13 @@
     }
 
     function setButtonsState(busy) {
-      btnProbeSingle.disabled = busy;
-      btnBenchmark50.disabled = busy;
+      btnProbeHalfBaud.disabled = busy;
+      btnHalfBaudSweep.disabled = busy;
       btnRunExplorer.disabled = busy;
       btnDelimSweep.disabled = busy;
       btnPulseSweep.disabled = busy;
+      btnProbeSingle.disabled = busy;
+      btnBenchmark50.disabled = busy;
       btnStop.disabled = !busy;
     }
 
@@ -717,7 +740,7 @@
      * - Standard Break (setSignals break true/false) with Delimiter
      * - Pre-locked Writer (eliminates getWriter latency after break release)
      * - Atomic Single-Packet Transmission (0x55 + 32B frame = 33 Bytes)
-     * - Dynamic Half-Baud Re-open Trick (open 9600 -> write 0x00 -> close -> open 19200)
+     * - Tuned Dynamic Half-Baud Re-open Trick (open 9600 -> write 0x00 -> close -> open 19200)
      */
     async function executeBr32Transaction(frame, opts = {}) {
       if (!port) throw new Error('Port not open');
@@ -726,7 +749,10 @@
         breakMs = 2.0,
         delimMs = 10.0,
         preLock = false,
-        useHalfBaudReopen = false
+        useHalfBaudReopen = false,
+        flushWaitMs = 15,
+        closeRestMs = 12,
+        openRestMs = 12
       } = opts;
 
       const tStart = performance.now();
@@ -739,13 +765,22 @@
       if (useHalfBaudReopen) {
         // Strategy: Dynamic Half-Baud Re-open (WU-0 / Python Gold Standard in WebSerial)
         await port.close();
+        if (closeRestMs > 0) await sleep(closeRestMs);
+
         await port.open({ baudRate: 9600, dataBits: 8, stopBits: 1, parity: 'none', bufferSize: 256 });
         let w = port.writable.getWriter();
         await w.write(new Uint8Array([0x00])); // 9600bps 0x00 = perfect LIN Break @ 19200
         w.releaseLock();
-        await sleep(2);
+        
+        // Wait for physical UART transmission to finish completely before closing
+        await sleep(flushWaitMs);
+
         await port.close();
+        if (closeRestMs > 0) await sleep(closeRestMs);
+
         await port.open({ baudRate: 19200, dataBits: 8, stopBits: 1, parity: 'none', bufferSize: 256 });
+        if (openRestMs > 0) await sleep(openRestMs);
+
         w = port.writable.getWriter();
         await w.write(packet);
         w.releaseLock();
@@ -775,7 +810,7 @@
       reader = port.readable.getReader();
       const rxBuffer = new Uint8Array(32);
       let bytesReceived = 0;
-      const timeoutMs = 250;
+      const timeoutMs = 350;
       const rxStartTime = performance.now();
 
       try {
@@ -843,19 +878,21 @@
     }
 
     // =========================================================================
-    // Action 1: Single Probe
+    // Action 1: 🎯 Tuned Half-Baud Single Probe (勝ち筋本命)
     // =========================================================================
-    btnProbeSingle.addEventListener('click', async () => {
+    btnProbeHalfBaud.addEventListener('click', async () => {
       setButtonsState(true);
-      const breakMs = parseFloat(rngBreakMs.value);
-      const delimMs = parseFloat(rngDelimMs.value);
-
       const allZeros = new Uint8Array(10);
       const frame = buildMasterFrame(0x01, (probeCount + 1) & 0xFF, allZeros, 0, 0, null);
-      log(`[TX] Break(${breakMs.toFixed(1)}ms) + Delim(${delimMs.toFixed(1)}ms) + Atomic Sync+Frame: ${hexDump(frame)}`, 'tx');
+      log(`[TX] 🎯 Sending Tuned Half-Baud Re-open Probe (Flush:15ms, Rest:12ms) + Atomic Sync+Frame`, 'tx');
 
       try {
-        const resp = await executeBr32Transaction(frame, { breakMs, delimMs });
+        const resp = await executeBr32Transaction(frame, { 
+          useHalfBaudReopen: true, 
+          flushWaitMs: 15, 
+          closeRestMs: 12, 
+          openRestMs: 12 
+        });
         if (resp.status === 0xAA && resp.crcOk) {
           const firstByte = '0x' + resp.b0.toString(16).padStart(2, '0').toUpperCase();
           const secondByte = '0x' + resp.b1.toString(16).padStart(2, '0').toUpperCase();
@@ -868,7 +905,7 @@
           log(`[RX DIAG] Captured: ${resp.rxCount}B | Byte[0]: ${firstByte} | Byte[1]: ${secondByte} (RTT: ${resp.rtt.toFixed(1)}ms, CRC OK)`, isWin ? 'win' : 'warn');
           log(`  ↳ Slave Rx Buffer Dump [0..15]: ${rawDump}`, 'rx');
           if (isWin) {
-            log(`  🎉 ★★★ PERFECT MATCH! 32B FULL CAPTURE & Byte[0]=0x01 ACHIEVED! ★★★`, 'win');
+            log(`  🎉 ★★★ 100% PERFECT MATCH! 32B FULL CAPTURE & Byte[0]=0x01 ACHIEVED! ★★★`, 'win');
           }
           updateStats(resp.rtt, isWin);
         } else if (resp.crcOk && resp.status === 0x00) {
@@ -890,7 +927,109 @@
     });
 
     // =========================================================================
-    // Action 2: 🧪 Multi-Pattern Break Explorer (自動リスト探索)
+    // Action 2: 🔬 Half-Baud Timing Sweep (5ms 〜 30ms 探索)
+    // =========================================================================
+    btnHalfBaudSweep.addEventListener('click', async () => {
+      isRunning = true;
+      stopRequested = false;
+      setButtonsState(true);
+
+      const waitList = [5, 8, 12, 15, 20, 25, 30];
+      const repeats = 3;
+
+      log(`=== 🔬 Half-Baud Timing Sweep 開始: ${waitList.length} 条件 x 各 ${repeats} 回 ===`, 'info');
+
+      const results = [];
+
+      for (let wi = 0; wi < waitList.length; wi++) {
+        if (stopRequested) break;
+        const wVal = waitList[wi];
+        let passCount = 0;
+        let rxCountSum = 0;
+        let lastB0 = '--';
+        let lastB1 = '--';
+        let lastRtt = 0;
+
+        for (let rep = 1; rep <= repeats; rep++) {
+          if (stopRequested) break;
+          const allZeros = new Uint8Array(10);
+          const frame = buildMasterFrame(0x01, (wi * repeats + rep) & 0xFF, allZeros, 0, 0, null);
+
+          try {
+            const resp = await executeBr32Transaction(frame, { 
+              useHalfBaudReopen: true, 
+              flushWaitMs: wVal, 
+              closeRestMs: Math.max(8, Math.round(wVal * 0.8)), 
+              openRestMs: Math.max(8, Math.round(wVal * 0.8)) 
+            });
+            lastRtt = resp.rtt;
+            rxCountSum += resp.rxCount;
+            lastB0 = '0x' + resp.b0.toString(16).padStart(2, '0').toUpperCase();
+            lastB1 = '0x' + resp.b1.toString(16).padStart(2, '0').toUpperCase();
+
+            if (resp.status === 0xAA && resp.rxCount === 32 && resp.b0 === 0x01 && resp.crcOk) {
+              passCount++;
+              updateStats(resp.rtt, true);
+            } else {
+              updateStats(resp.rtt, false);
+            }
+          } catch (err) {
+            updateStats(0, false);
+          }
+          await sleep(50);
+        }
+
+        const avgRx = (rxCountSum / repeats).toFixed(1);
+        results.push({ wait: wVal, passCount, avgRx, lastB0, lastB1, lastRtt });
+        log(`[Wait ${wVal}ms] -> ${passCount}/${repeats} PERFECT (rx: ${avgRx}B, Byte[0]: ${lastB0}, Byte[1]: ${lastB1}, RTT: ${lastRtt.toFixed(1)}ms)`, passCount === repeats ? 'win' : (passCount > 0 ? 'rx' : 'warn'));
+      }
+
+      let table = 
+`========================================================================================
+                   HALF-BAUD TIMING STABILIZATION REPORT
+========================================================================================
+ Target MCU     : ATtiny1616 (wu5_diag.hex) on ADX Core-D @ 19,200 bps
+ Repeats        : ${repeats} probes per timing level
+----------------------------------------------------------------------------------------
+ Timing (ms)    |  Result   | rx_count | Byte[0] | Byte[1] | State & Verdict
+----------------+-----------+----------+---------+---------+----------------------------
+`;
+      let optimalWait = -1;
+      for (const r of results) {
+        const wStr = (`Wait ${r.wait} ms`).padEnd(14);
+        const resStr = `${r.passCount}/${repeats}`.padEnd(9);
+        const rxStr = `${r.avgRx} B`.padEnd(8);
+        const b0Str = r.lastB0.padEnd(7);
+        const b1Str = r.lastB1.padEnd(7);
+
+        let diagStr = '';
+        if (r.passCount === repeats) {
+          diagStr = '🏆 100% PERFECT (32B満額 & 0x01)';
+          if (optimalWait < 0) optimalWait = r.wait;
+        } else if (r.passCount > 0) {
+          diagStr = '▲ 準良好 (一部同期成立)';
+        } else if (r.avgRx === '0.0') {
+          diagStr = '✕ TIMEOUT (待機不足)';
+        } else {
+          diagStr = `? 不完全 (${r.avgRx}B, ${r.lastB0})`;
+        }
+        table += ` ${wStr} | ${resStr} | ${rxStr} | ${b0Str} | ${b1Str} | ${diagStr}\n`;
+      }
+      table += `----------------+-----------+----------+---------+---------+----------------------------\n`;
+      if (optimalWait >= 0) {
+        table += ` >>> 🎯 OPTIMAL TIMING: 待機時間 ${optimalWait} ms で 100% 安定した完全同期を達成！ <<<\n`;
+      } else {
+        table += ` >>> 検証完了: 各タイミングレベルの結果を確認してください。 <<<\n`;
+      }
+      table += `========================================================================================`;
+      logPre(table);
+
+      isRunning = false;
+      setButtonsState(false);
+    });
+
+    // =========================================================================
+    // Action 3: 🧪 Multi-Pattern Break Explorer (自動リスト探索)
     // =========================================================================
     btnRunExplorer.addEventListener('click', async () => {
       isRunning = true;
@@ -907,7 +1046,7 @@
         { name: "P07: Short Break 1.0ms + 10ms Delim",opts: { breakMs: 1.0, delimMs: 10.0, preLock: false } },
         { name: "P08: Short Break 1.5ms + 5ms Delim", opts: { breakMs: 1.5, delimMs: 5.0,  preLock: false } },
         { name: "P09: Pre-Lock Writer (Zero Latency)",opts: { breakMs: 2.0, delimMs: 10.0, preLock: true } },
-        { name: "P10: WebSerial Half-Baud Re-open",   opts: { breakMs: 0.0, delimMs: 0.0,  preLock: false, useHalfBaudReopen: true } }
+        { name: "P10: WebSerial Half-Baud (Tuned 15ms)", opts: { useHalfBaudReopen: true, flushWaitMs: 15, closeRestMs: 12, openRestMs: 12 } }
       ];
 
       const repeats = 3;
@@ -941,7 +1080,6 @@
             lastB1 = '0x' + resp.b1.toString(16).padStart(2, '0').toUpperCase();
             lastDump = hexDump(resp.rawDump.subarray(0, 8));
 
-            // 完全成功条件: 32B 満額 ＆ Byte[0]=0x01 ＆ CRC OK
             if (resp.status === 0xAA && resp.rxCount === 32 && resp.b0 === 0x01 && resp.crcOk) {
               passCount++;
               updateStats(resp.rtt, true);
@@ -1023,7 +1161,7 @@
     });
 
     // =========================================================================
-    // Action 3: Delimiter Sweep (0.5ms 〜 50ms)
+    // Action 4: Delimiter Sweep (0.5ms 〜 50ms)
     // =========================================================================
     btnDelimSweep.addEventListener('click', async () => {
       isRunning = true;
@@ -1119,7 +1257,7 @@
     });
 
     // =========================================================================
-    // Action 4: Pulse Width Sweep (0.7ms 〜 5.0ms)
+    // Action 5: Pulse Width Sweep (0.7ms 〜 5.0ms)
     // =========================================================================
     btnPulseSweep.addEventListener('click', async () => {
       isRunning = true;
@@ -1197,7 +1335,54 @@
     });
 
     // =========================================================================
-    // Action 5: 50-Cycle Deep Profiler
+    // Action 6: Standard Single Probe (手動スライダー値)
+    // =========================================================================
+    btnProbeSingle.addEventListener('click', async () => {
+      setButtonsState(true);
+      const breakMs = parseFloat(rngBreakMs.value);
+      const delimMs = parseFloat(rngDelimMs.value);
+
+      const allZeros = new Uint8Array(10);
+      const frame = buildMasterFrame(0x01, (probeCount + 1) & 0xFF, allZeros, 0, 0, null);
+      log(`[TX] Break(${breakMs.toFixed(1)}ms) + Delim(${delimMs.toFixed(1)}ms) + Atomic Sync+Frame: ${hexDump(frame)}`, 'tx');
+
+      try {
+        const resp = await executeBr32Transaction(frame, { breakMs, delimMs });
+        if (resp.status === 0xAA && resp.crcOk) {
+          const firstByte = '0x' + resp.b0.toString(16).padStart(2, '0').toUpperCase();
+          const secondByte = '0x' + resp.b1.toString(16).padStart(2, '0').toUpperCase();
+          const uidStr = hexDump(resp.uid);
+          const rawDump = hexDump(resp.rawDump);
+          uidHex.textContent = '0x' + uidStr;
+          uidBadge.style.display = 'flex';
+
+          const isWin = (resp.rxCount === 32 && resp.b0 === 0x01);
+          log(`[RX DIAG] Captured: ${resp.rxCount}B | Byte[0]: ${firstByte} | Byte[1]: ${secondByte} (RTT: ${resp.rtt.toFixed(1)}ms, CRC OK)`, isWin ? 'win' : 'warn');
+          log(`  ↳ Slave Rx Buffer Dump [0..15]: ${rawDump}`, 'rx');
+          if (isWin) {
+            log(`  🎉 ★★★ PERFECT MATCH! 32B FULL CAPTURE & Byte[0]=0x01 ACHIEVED! ★★★`, 'win');
+          }
+          updateStats(resp.rtt, isWin);
+        } else if (resp.crcOk && resp.status === 0x00) {
+          const uidStr = hexDump(resp.uid);
+          uidHex.textContent = '0x' + uidStr;
+          uidBadge.style.display = 'flex';
+          log(`[RX PASS] Slave UID: 0x${uidStr} (RTT: ${resp.rtt.toFixed(2)} ms, CRC OK)`, 'win');
+          updateStats(resp.rtt, true);
+        } else {
+          log(`[RX ERR] Status: 0x${resp.status.toString(16).padStart(2, '0')} CRC: ${resp.crcOk ? 'OK' : 'MISMATCH'} Raw: ${hexDump(resp.rxBuffer)}`, 'warn');
+          updateStats(resp.rtt, false);
+        }
+      } catch (err) {
+        log(`[FAIL] ${err.message}`, 'err');
+        updateStats(0, false);
+      } finally {
+        setButtonsState(false);
+      }
+    });
+
+    // =========================================================================
+    // Action 7: 50-Cycle Deep Profiler
     // =========================================================================
     btnBenchmark50.addEventListener('click', async () => {
       isRunning = true;
