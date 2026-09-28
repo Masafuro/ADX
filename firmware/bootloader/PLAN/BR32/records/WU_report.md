@@ -8,7 +8,7 @@ SPDX-License-Identifier: CC-BY-4.0
 **最終更新日**: 2026-09-28  
 **対象ハードウェア**: ADX Core-D (Microchip ATtiny1616-MNR, SP485EEN)  
 **配線環境**: 50cm (25cm+25cm WAGO 差込形コネクタ中継・3線 A/B/GND・両端 120Ω 終端抵抗 ON)  
-**対象サンドボックス**: WU-0 〜 WU-4 (随時追記・更新)
+**対象サンドボックス**: WU-0 〜 WU-4 (全 5 段階完全制覇: GRADE A+)
 
 ---
 
@@ -16,7 +16,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 本レポートは、机上の理論や推測を一切排除し、**実際のハードウェア（ADX Core-D / ATtiny1616 / SP485EEN）、市販 USB-RS485 ドングル、および現場レベルの実配線（WAGO 差込形コネクタ中継・終端抵抗）において、数千回に及ぶ実測ベンチマークによって証明された「動かぬ真実（Proven Facts）」と「黄金の動作条件パターン」** を体系的にまとめた技術規範である。
 
-過去の OneToOne_RS485 開発で苦戦した「CRC エラー」「タイムアウト」「自爆エコーによるフリーズ」「ジッターの増大」といった問題は、本サンドボックス群の徹底的な実証により、その物理・数学・OS 的メカニズムが完全に解明され、再現性 100.00% の堅牢な動作パターンへと昇華された。
+過去の OneToOne_RS485 開発で苦戦した「CRC エラー」「タイムアウト」「自爆エコーによるフリーズ」「ジッターの増大」といった問題は、本サンドボックス群（WU-0 〜 WU-4）の徹底的な実証により、その物理・数学・OS 的メカニズムが完全に解明され、再現性 100.00% の堅牢な動作パターンへと昇華された。
 
 ---
 
@@ -36,6 +36,7 @@ SPDX-License-Identifier: CC-BY-4.0
 | **回線制御** | **自爆エコー完全遮断** | **送信時 `/RE=1` 物理切断** | 送信前: `DE=1`, `/RE=1` $\rightarrow$ 50µs ディレイ<br>送信後: `TXCIF` 待機 $\rightarrow$ `DE=0`, `/RE=0` 復帰 $\rightarrow$ 受信 FIFO 空読みフラッシュ。自爆エコーの混入によるフリーズ・誤判定を 100% 遮断。 |
 | **宛先照合** | **SIGROW ゲート照合** | **全0x00 または 自身UID のみ応答** | 宛先不一致（他人のUID、1bit反転、全0xFF、ランダムゴミ）時は **DE=0 のまま 1 ビットも喋らず 100% 完全沈黙（0 Bytes 送出）**。共有バスでのパケット衝突を物理的に根絶。 |
 | **耐ノイズ性** | **無状態自己治癒力** | **LIN Break による強制リセット** | 50〜100回の連続ゴミパケット攻撃後も、次フレームの LIN Break で受信ステートマシンが即座に自律復帰（デッドロック発生率 0.00%、復帰遅延 RTT 38.70ms）。 |
+| **境界防衛** | **原則 6 (超過沈黙)** | **32B 超過時は完全沈黙** | 32 バイト満了後にデータが継続流入している場合は原則 2 相当（BREAK なしゴミ）として即沈黙。連鎖的衝突事故（Cascading Collision）を物理的に防ぐ。 |
 | **応答設計** | **レスポンス優先度** | **RS-485 応答を最優先射出** | Soft-UART 等のデバッグ処理は返信完了後に回す。19,200 bps でのワイヤ伝送理論限界（約 34ms）に迫る **真の RTT: 38.60 ms** を達成。 |
 
 ---
@@ -52,7 +53,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ### 3.2 各言語・環境での実装コード
 
-#### Python 実装 (`wu1_echo_bench.py` / `wu2_fuzz_bench.py` / ホスト Flasher)
+#### Python 実装 (`wu1_echo_bench.py` 〜 `wu4_sram_bench.py` / ホスト Flasher)
 ```python
 def crc16_ccitt(data: bytes, init: int = 0xFFFF) -> int:
     """Calculate CRC-16-CCITT / XMODEM (Poly 0x1021, Init 0xFFFF, MSB-first)."""
@@ -67,7 +68,7 @@ def crc16_ccitt(data: bytes, init: int = 0xFFFF) -> int:
     return crc
 ```
 
-#### AVR C 実装 (`wu1_echo.c` / `wu2_fuzz.c` / ブートローダー本体)
+#### AVR C 実装 (`wu1_echo.c` 〜 `wu4_sram.c` / ブートローダー本体)
 ```c
 #include <util/crc16.h>
 
@@ -87,7 +88,7 @@ static uint16_t calc_crc16(const uint8_t *data, uint8_t len) {
 
 ---
 
-## 4. サンドボックス別 検証結果アーカイブ
+## 4. サンドボックス別 検証結果アーカイブ (全 5 段階完全制覇)
 
 ### 4.1 【WU-0】PC 側 RS-485 BREAK 生成実験ベンチ
 * **レポート詳細**: [`records/WU_sandboxes/WU0_break_generator.md`](./WU_sandboxes/WU0_break_generator.md)
@@ -126,6 +127,16 @@ static uint16_t calc_crc16(const uint8_t *data, uint8_t len) {
   4. **破壊攻撃直後の一撃即時自己治癒 (原則 5)**:
      途中切断・CRC毒入れ・過剰垂れ流しの 3 連撃直後、正規パケットに対し **一撃で RTT = 39.80 ms（STATUS_OK）** で復帰（GRADE A+ 獲得）。
 
+### 4.5 【WU-4】仮想 SRAM ページペインタ ＆ 4 チャンク分割転送実機実証
+* **レポート詳細**: [`records/WU_sandboxes/WU4_sram_painter.md`](./WU_sandboxes/WU4_sram_painter.md)
+* **主要成果**:
+  1. **64B ページバッファへの 4 チャンク分割転送の完全成立**:
+     `CMD_WRITE_CHUNK (0x10)` により、16 バイト $\times$ 4 回でスレーブの `virtual_sram[64]` に分割書き込みを行い、即時エコーバックによる受託確認を達成。
+  2. **4 チャンク分割読み出し ＆ 100% ビット・パーフェクト・ベリファイ**:
+     `CMD_READ_CHUNK (0x20)` により、スレーブ SRAM から 16 バイト $\times$ 4 回で全データを読み戻し、**64/64 バイト全ビット完全一致（100.0% Verify PASS）** を実証。
+  3. **Master / Slave フレームの完全対称性 (Symmetric 16B Payload)**:
+     Master 送信データ、Slave 返信データともにオフセット `[14..29]`（16 Bytes）に配置される対称構造を確立。パーサー・バッファ処理が最小限のフットプリントで完結。
+
 ---
 
 ## 5. BR32 黄金の 6 大原則 (The 6 Fundamental Axioms of BR32)
@@ -152,10 +163,16 @@ static uint16_t calc_crc16(const uint8_t *data, uint8_t len) {
 
 ---
 
-## 7. 今後追記予定の検証テーマ (Roadmap)
+## 7. 本番開発マイルストーン (Roadmap)
 
-1. **【WU-4】仮想 SRAM ページペインタ (Virtual Page Painter)**:
-   - Flash 書込なしで、SRAM 上の 64B 配列に 4 チャンク分割蓄積・読出遊び。
-2. **【M1〜M5】本番ブートローダー開発マイルストーン**:
-   - 1024 バイト以内への凝縮、単一 Flash ページ書き込み（M4）、フルアプリ OTW 書込（M5）。
+Warm Up（WU-0 〜 WU-4）の完全制覇により、以下の本番マイルストーンを不安なく Gate 通過できる強固な土台が完成した：
 
+| Milestone | テーマ | 内容 | 状況 |
+| :---: | :--- | :--- | :---: |
+| **M0** | 接続・環境準備 | ポート導通確認 (COM19/20/21) | **完了** |
+| **M1** | 32B Ping-Pong 実証 | 時間枠厳格読取 ＆ 自己同定（WU-1 で実証済） | **準備完了** |
+| **M2** | SIGROW ゲート照合 | 一致時応答 ＆ 不一致時完全沈黙（WU-2 で実証済） | **準備完了** |
+| **M3** | 64B SRAM 蓄積・読出 | 4 チャンク蓄積 ＆ ベリファイ（WU-4 で実証済） | **準備完了** |
+| **M4** | 単一 Flash ページ書込 | 即時 ACK 送出 $\rightarrow$ **応答後に Flash 25ms 書込** | 次期目標 |
+| **M5** | フルアプリ OTW 書込 | ブートローダー本体完成（サイズ $\le 1024$B） $\rightarrow$ アプリ自動起動 | 最終目標 |
+| **M6** | バスクロック短縮 | ポーリング周期短縮（200ms $\rightarrow$ 100ms $\rightarrow$ 50ms） | 性能限界特定 |

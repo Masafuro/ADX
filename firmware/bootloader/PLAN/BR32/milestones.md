@@ -118,7 +118,8 @@ Flash メモリへの書き込みは一切行わないため、何度動かし�
 
 ---
 
-### WU-4: 仮想 SRAM ページペインタ (Virtual Page Painter - No Flash Risk)
+### WU-4: 仮想 SRAM ページペインタ (Virtual Page Painter - No Flash Risk) 【実機実証済: GRADE A+ 合格】
+* **実証レポート**: [`records/WU_sandboxes/WU4_sram_painter.md`](./records/WU_sandboxes/WU4_sram_painter.md)
 * **マイコン側**:
   - SRAM 上に 64 バイトの配列バッファを確保。
   - Chunk 0〜3 で送られてきた 16B データをバッファに書き込み、`CMD_READ_CHUNK` で読み出せるだけの模型（**Flash 書き込みは一切しない**）。
