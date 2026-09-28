@@ -260,3 +260,25 @@ void br32_process_frame(const uint8_t *rx_buf, uint8_t rx_count) {
    スレーブが返信してきた `RX_COUNT` が **32** である確率（100% が合格基準）。
 4. **CRC 合格率**:
    `STATUS_OK` の比率（100% が合格基準）。
+
+---
+
+## 7. ホスト側（WebSerial / Python）実装標準規約
+
+WU-5-1 の詳細な物理層検証（[`WU/WU5_1_web_break_probe/WU5_1_REPORT.md`](./WU/WU5_1_web_break_probe/WU5_1_REPORT.md)）により、WebSerial API（ブラウザ）およびホスト OS のシリアルスタックにおける鉄則が確定しました。
+
+### 7.1 送信の完全一括化（Atomic Transmission）
+* **絶対原則**: `Sync (0x55)` と `32 バイトマスターフレーム` は、必ず **33 バイト（`Uint8Array(33)`）として 1 回の Write で一括送出** しなければならない。
+* **アンチパターン**: `write([0x55])` と `write(frame)` の間に `sleep()` を挟む分割送信は、スレーブの受信時間枠（$T_{\text{window}}$）が先行満了してスレーブ返信とマスター送信が正面衝突（RS-485 コリジョン）するため、**厳禁** とする。
+
+### 7.2 WebSerial における Break 生成（Half-Baud Re-open Trick）
+* **背景と課題**: Windows / WebSerial の `port.setSignals({ break: true/false })`（Win32 `SetCommBreak`）は、CH342K の内部 UART TX クロック位相を非同期に狂わせ、直後のパケットの先頭 2 バイトが `0x40 0x20`（ビット鏡像反転）を起こして 31 バイトに欠損する。
+* **標準採用仕様**:
+  ブラウザ（WebSerial）では、**Half-Baud Re-open トリック** を標準採用する：
+  1. 通常ポート（19,200 bps）を閉じる（`await port.close()`）。
+  2. 9,600 bps でポートを開き、`0x00` を 1 バイト送信する（物理 UART の正規 8N1 サイクルとして LOW 18 ビットの完全同期 LIN Break を生成）。
+  3. 送出完了待機（約 8ms〜15ms）後、ポートを閉じる。
+  4. 19,200 bps で再度開き、`0x55` + 32B フレームを一括送出する。
+* **実証性能**:
+  WU-5-1 において、20 サイクル連続ストレステストおよび全 7 条件タイミングスイープにて **全 41 トランザクション連続 100.0% PERFECT MATCH（エラー率 0.00%）** を実証済み。
+
