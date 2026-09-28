@@ -44,6 +44,16 @@ SPDX-License-Identifier: MIT
 
 ---
 
-## 3. 関連調査ドキュメント
+## 3. 次世代 BR32 プロトコル ＆ ブートローダー開発計画 (`PLAN/BR32/`)
+
+昨日の試作（`OneToOne_RS485`）の反省と知見を踏まえ、**「バスクロック思想」「時間枠厳格読取（待たない）」「応答最優先（即時ACK）」「2機能 SIGROW アーキテクチャ」** を統合した次世代プロトコル **BR32** の仕様策定を進めています。
+
+- 👉 **[BR32 プロトコル哲学・基本構想 (`PLAN/BR32/concept.md`)](./PLAN/BR32/concept.md)**
+- 👉 **[BR32 プロトコル開発仕様書 (`PLAN/BR32/specification.md`)](./PLAN/BR32/specification.md)**
+- 👉 **[BR32 段階的開発マイルストーン計画書 (`PLAN/BR32/milestones.md`)](./PLAN/BR32/milestones.md)**
+
+---
+
+## 4. 関連調査ドキュメント
 
 - [optiboot_x の研究と ADX への適用](./research_of_optiboot_x.md)
