@@ -482,6 +482,10 @@
           <label>Delimiter Gap: <span class="val" id="lblDelimMs">0.5 ms</span></label>
           <input type="range" id="rngDelimMs" min="0.1" max="5.0" step="0.1" value="0.5">
         </div>
+        <div class="control-item">
+          <label>Sync Gap (息継ぎ): <span class="val" id="lblSyncGapMs">1.0 ms</span></label>
+          <input type="range" id="rngSyncGapMs" min="0.0" max="10.0" step="0.5" value="1.0">
+        </div>
       </div>
     </div>
 
@@ -497,8 +501,11 @@
         <button class="btn-secondary" id="btnBenchmark50" disabled>
           📊 50-Cycle Deep Profiler
         </button>
+        <button class="btn-purple" id="btnSyncSweep" disabled style="background: linear-gradient(135deg, #f59e0b, #ef4444); box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);">
+          ⏱️ 息継ぎスイープ (Sync Gap Sweep)
+        </button>
         <button class="btn-purple" id="btnMatrixSweep" disabled>
-          🔬 2D Matrix Sweep (Break × Delim)
+          🔬 2D Matrix Sweep
         </button>
         <button class="btn-danger" id="btnStop" disabled>⏹ Stop</button>
       </div>
@@ -584,6 +591,9 @@
     const lblBreakMs = document.getElementById('lblBreakMs');
     const rngDelimMs = document.getElementById('rngDelimMs');
     const lblDelimMs = document.getElementById('lblDelimMs');
+    const rngSyncGapMs = document.getElementById('rngSyncGapMs');
+    const lblSyncGapMs = document.getElementById('lblSyncGapMs');
+    const btnSyncSweep = document.getElementById('btnSyncSweep');
     const btnProbeSingle = document.getElementById('btnProbeSingle');
     const btnBenchmark50 = document.getElementById('btnBenchmark50');
     const btnMatrixSweep = document.getElementById('btnMatrixSweep');
@@ -600,6 +610,7 @@
     // Update Slider Labels
     rngBreakMs.addEventListener('input', () => lblBreakMs.textContent = parseFloat(rngBreakMs.value).toFixed(1) + ' ms');
     rngDelimMs.addEventListener('input', () => lblDelimMs.textContent = parseFloat(rngDelimMs.value).toFixed(1) + ' ms');
+    rngSyncGapMs.addEventListener('input', () => lblSyncGapMs.textContent = parseFloat(rngSyncGapMs.value).toFixed(1) + ' ms');
 
     function log(msg, type = 'info') {
       const entry = document.createElement('div');
@@ -640,6 +651,7 @@
         btnProbeSingle.disabled = false;
         btnBenchmark50.disabled = false;
         btnMatrixSweep.disabled = false;
+        btnSyncSweep.disabled = false;
         log('Serial port opened successfully @ 19,200 bps.', 'info');
       } catch (err) {
         log(`Failed to open serial port: ${err.message}`, 'err');
@@ -669,6 +681,7 @@
         btnProbeSingle.disabled = true;
         btnBenchmark50.disabled = true;
         btnMatrixSweep.disabled = true;
+        btnSyncSweep.disabled = true;
         log('Serial port closed.', 'info');
       } catch (err) {
         log(`Error closing port: ${err.message}`, 'err');
@@ -692,8 +705,8 @@
       return frame;
     }
 
-    // Core BR32 Transaction: Break -> Sync(0x55) -> 32B Frame -> 32B Response
-    async function executeBr32Transaction(frame, breakMs, delimMs) {
+    // Core BR32 Transaction: Break -> Sync(0x55) -> (SyncGap 息継ぎ) -> 32B Frame -> 32B Response
+    async function executeBr32Transaction(frame, breakMs, delimMs, syncGapMs = 0) {
       if (!port) throw new Error('Port not open');
 
       const tStart = performance.now();
@@ -706,13 +719,18 @@
       await port.setSignals({ break: false });
       if (delimMs > 0) await sleep(delimMs);
 
-      // Step 3: Transmit Sync (0x55) + 32-Byte Master Frame
-      const packet = new Uint8Array(33);
-      packet[0] = 0x55;
-      packet.set(frame, 1);
-
       writer = port.writable.getWriter();
-      await writer.write(packet);
+
+      // Step 3: Transmit Sync (0x55)
+      await writer.write(new Uint8Array([0x55]));
+
+      // Step 4: 息継ぎ (Sync Delimiter Gap) - マイコンの LINAUTO -> 通常受信復帰待ち
+      if (syncGapMs > 0) {
+        await sleep(syncGapMs);
+      }
+
+      // Step 5: Transmit 32-Byte Master Frame
+      await writer.write(frame);
       writer.releaseLock();
       writer = null;
 
@@ -795,6 +813,7 @@
       btnProbeSingle.disabled = busy;
       btnBenchmark50.disabled = busy;
       btnMatrixSweep.disabled = busy;
+      btnSyncSweep.disabled = busy;
       btnStop.disabled = !busy;
     }
 
@@ -811,15 +830,17 @@
       btnProbeSingle.disabled = true;
       btnBenchmark50.disabled = true;
         btnMatrixSweep.disabled = true;
+        btnSyncSweep.disabled = true;
       const breakMs = parseFloat(rngBreakMs.value);
       const delimMs = parseFloat(rngDelimMs.value);
+      const syncGapMs = parseFloat(rngSyncGapMs.value);
 
       const allZeros = new Uint8Array(10);
       const frame = buildMasterFrame(0x01, (probeCount + 1) & 0xFF, allZeros, 0, 0, null);
-      log(`[TX] Break(${breakMs}ms) + Sync(0x55) + IDENTIFY Frame: ${hexDump(frame)}`, 'tx');
+      log(`[TX] Break(${breakMs.toFixed(1)}ms) + Sync(0x55) + Gap(${syncGapMs.toFixed(1)}ms) + IDENTIFY Frame: ${hexDump(frame)}`, 'tx');
 
       try {
-        const resp = await executeBr32Transaction(frame, breakMs, delimMs);
+        const resp = await executeBr32Transaction(frame, breakMs, delimMs, syncGapMs);
         if (resp.status === 0xAA && resp.crcOk) {
           const rxCount = resp.rxBuffer[1];
           const firstByte = '0x' + resp.rxBuffer[2].toString(16).padStart(2, '0').toUpperCase();
@@ -849,6 +870,7 @@
         btnProbeSingle.disabled = false;
         btnBenchmark50.disabled = false;
         btnMatrixSweep.disabled = false;
+        btnSyncSweep.disabled = false;
       }
     });
 
@@ -859,6 +881,7 @@
       btnProbeSingle.disabled = true;
       btnBenchmark50.disabled = true;
         btnMatrixSweep.disabled = true;
+        btnSyncSweep.disabled = true;
       btnStop.disabled = false;
 
       const breakMs = parseFloat(rngBreakMs.value);
@@ -876,7 +899,7 @@
         const frame = buildMasterFrame(0x01, i & 0xFF, allZeros, 0, 0, null);
 
         try {
-          const resp = await executeBr32Transaction(frame, breakMs, delimMs);
+          const resp = await executeBr32Transaction(frame, breakMs, delimMs, syncGapMs);
           if (resp.crcOk && resp.status === 0x00) {
             log(`[#${i}/50] ACK PASS (RTT: ${resp.rtt.toFixed(2)} ms)`, 'rx');
             updateStats(resp.rtt, true);
@@ -899,7 +922,127 @@
       btnProbeSingle.disabled = false;
       btnBenchmark50.disabled = false;
         btnMatrixSweep.disabled = false;
+        btnSyncSweep.disabled = false;
       btnStop.disabled = true;
+    });
+
+
+    // Mode C: Sync Gap Sweep Handler (息継ぎスキャン)
+    btnSyncSweep.addEventListener('click', async () => {
+      isRunning = true;
+      stopRequested = false;
+      setButtonsState(true);
+
+      const breakMs = parseFloat(rngBreakMs.value);
+      const delimMs = parseFloat(rngDelimMs.value);
+      const gapList = [0.0, 0.2, 0.5, 1.0, 1.5, 2.0, 3.0, 5.0, 10.0];
+      const repeats = 3;
+
+      log(`=== ⏱️ 息継ぎスイープ (Sync Gap Sweep) 開始: ${gapList.length} 条件 x 各 ${repeats} 回 ===`, 'info');
+      log(`固定条件: Break = ${breakMs.toFixed(1)}ms, BreakDelimiter = ${delimMs.toFixed(1)}ms`, 'info');
+
+      const results = [];
+
+      for (let gi = 0; gi < gapList.length; gi++) {
+        if (stopRequested) break;
+
+        const gVal = gapList[gi];
+        let rxCountSum = 0;
+        let passCount = 0;
+        let lastB0 = '--';
+        let lastB1 = '--';
+        let lastStatus = 0;
+        let lastRxCount = 0;
+        let lastRtt = 0;
+
+        for (let rep = 1; rep <= repeats; rep++) {
+          if (stopRequested) break;
+          const allZeros = new Uint8Array(10);
+          const frame = buildMasterFrame(0x01, (gi * repeats + rep) & 0xFF, allZeros, 0, 0, null);
+
+          try {
+            const resp = await executeBr32Transaction(frame, breakMs, delimMs, gVal);
+            lastStatus = resp.status;
+            lastRxCount = resp.rxCount;
+            lastRtt = resp.rtt;
+            rxCountSum += resp.rxCount;
+            if (resp.rxBuffer && resp.rxBuffer.length >= 4) {
+              lastB0 = '0x' + resp.rxBuffer[2].toString(16).padStart(2, '0').toUpperCase();
+              lastB1 = '0x' + resp.rxBuffer[3].toString(16).padStart(2, '0').toUpperCase();
+            }
+            // 診断フレーム(0xAA)で 32B 満額、または正規 OK(0x00) で PASS
+            if ((resp.status === 0x00 || resp.status === 0xAA) && resp.rxCount >= 32 && resp.crcOk) {
+              passCount++;
+            }
+          } catch (err) {
+            lastStatus = -1;
+          }
+          await sleep(60);
+        }
+
+        const avgRx = (rxCountSum / repeats).toFixed(1);
+        results.push({
+          gap: gVal,
+          passCount,
+          avgRx,
+          lastB0,
+          lastB1,
+          lastStatus,
+          lastRxCount,
+          lastRtt
+        });
+
+        const isGood = passCount > 0;
+        log(`[Gap ${gVal.toFixed(1)}ms] -> ${passCount}/${repeats} PASS (rx_cnt: ${lastRxCount}B, Byte[0]: ${lastB0}, Byte[1]: ${lastB1}, RTT: ${lastRtt.toFixed(1)}ms)`, isGood ? 'rx' : 'warn');
+      }
+
+      // Render ASCII Report
+      let table = 
+`========================================================================================
+                     SYNC GAP (息継ぎ) AUTOMATED SWEEP REPORT
+========================================================================================
+ Config         : Break = ${breakMs.toFixed(1)}ms, Delim = ${delimMs.toFixed(1)}ms | Repeats = ${repeats} probes/level
+ Target MCU     : ATtiny1616 LINAUTO Mode
+----------------------------------------------------------------------------------------
+ Sync Gap (ms)  |  Result   | rx_count | Byte[0] | Byte[1] | State & Diagnosis
+----------------+-----------+----------+---------+---------+----------------------------
+`;
+
+      let minGoodGap = -1;
+      for (const r of results) {
+        const gapStr = (r.gap.toFixed(1) + ' ms').padEnd(14);
+        const resStr = `${r.passCount}/${repeats}`.padEnd(9);
+        const rxStr = `${r.lastRxCount} B`.padEnd(8);
+        const b0Str = r.lastB0.padEnd(7);
+        const b1Str = r.lastB1.padEnd(7);
+
+        let diagStr = '';
+        if (r.passCount === repeats) {
+          diagStr = '★ PERFECT 32B (同期完全成立)';
+          if (minGoodGap < 0) minGoodGap = r.gap;
+        } else if (r.lastRxCount === 31 && r.lastB0 === '0x40') {
+          diagStr = '✕ 位相ズレ (2ビット取りこぼし)';
+        } else if (r.lastStatus === -1) {
+          diagStr = '✕ TIMEOUT (応答なし)';
+        } else {
+          diagStr = `? 不完全 (${r.lastRxCount}B, Stat:0x${r.lastStatus.toString(16)})`;
+        }
+
+        table += ` ${gapStr} | ${resStr} | ${rxStr} | ${b0Str} | ${b1Str} | ${diagStr}\n`;
+      }
+
+      table += `----------------+-----------+----------+---------+---------+----------------------------\n`;
+      if (minGoodGap >= 0) {
+        table += ` >>> VERDICT: 息継ぎ時間 ${minGoodGap.toFixed(1)} ms 以上で完全同期・32バイト満額受信を達成！ <<<\n`;
+      } else {
+        table += ` >>> VERDICT: 全領域で改善せず。他の要因を調査する必要があります。 <<<\n`;
+      }
+      table += `========================================================================================`;
+
+      logPre(table);
+
+      isRunning = false;
+      setButtonsState(false);
     });
 
     btnStop.addEventListener('click', () => {
