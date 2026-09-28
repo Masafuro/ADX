@@ -128,12 +128,18 @@ void br32_process_frame(const uint8_t *rx_buf, uint8_t rx_count) {
     slave_frame_t resp;
     memset(&resp, 0, sizeof(resp));
 
+    // ★ 原則 6: 32バイト超過検知 (連鎖衝突防止のための完全沈黙)
+    // 32バイト満了後、直後に後続データが流入している場合は原則 2 相当（BREAKなしゴミ）として即沈黙
+    if (rx_count == 32 && has_trailing_bytes()) {
+        return; // DE=0 維持で次の BREAK を待つ
+    }
+
     // 1. スレーブ自身の SIGROW (10B) を応答フレームにセット
     memcpy(resp.my_sigrow, (const void *)&SIGROW.SERNUM0, 10);
     resp.echo_seq = m->seq;
     resp.rx_count = rx_count;
 
-    // 2. 宛先照合 (Gate Check)
+    // 2. 宛先照合 (Gate Check: 原則 2)
     bool is_broadcast = is_all_zero(m->target_sigrow);
     bool is_for_me    = (memcmp(m->target_sigrow, resp.my_sigrow, 10) == 0);
 
@@ -142,15 +148,15 @@ void br32_process_frame(const uint8_t *rx_buf, uint8_t rx_count) {
         return; 
     }
 
-    // 3. 整合性チェック
+    // 3. 整合性チェック (原則 3 & 4)
     if (rx_count < 32) {
-        resp.status = STATUS_ERR_TIMEOUT;
-        rs485_send_32b(&resp); // 欠落をマスターへ通知
+        resp.status = STATUS_ERR_TIMEOUT; // 原則 3: 欠損通知
+        rs485_send_32b(&resp);
         return;
     }
     if (!check_crc16(rx_buf, 32)) {
-        resp.status = STATUS_ERR_CRC;
-        rs485_send_32b(&resp); // CRC異常を通知
+        resp.status = STATUS_ERR_CRC;     // 原則 4: CRC異常通知
+        rs485_send_32b(&resp);
         return;
     }
 
