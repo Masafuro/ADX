@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="dark_bg">#070A13</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">ADX Break Probe</string>
+    <style name="Theme.AdxBreakProbe" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/dark_bg</item>
+        <item name="android:windowBackground">@color/dark_bg</item>
+        <item name="android:navigationBarColor">@color/dark_bg</item>
+    </style>
+</resources>

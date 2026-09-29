@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- FTDI (FT232R, FT231X, FT2232, etc.) -->
+    <usb-device vendor-id="1027" /> <!-- 0x0403 -->
+
+    <!-- Silicon Labs CP210x (CP2102, CP2104, CP2105, etc.) -->
+    <usb-device vendor-id="4292" /> <!-- 0x10C4 -->
+
+    <!-- QinHeng CH340 / CH341 -->
+    <usb-device vendor-id="6790" /> <!-- 0x1A86 -->
+
+    <!-- Prolific PL2303 -->
+    <usb-device vendor-id="1659" /> <!-- 0x067B -->
+
+    <!-- Standard CDC-ACM Class (Arduino, Raspberry Pi Pico, ST-Link, etc.) -->
+    <usb-device class="2" />
+</resources>
