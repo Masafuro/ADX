@@ -1245,124 +1245,6 @@
                 }
             }
         },
-        "gge6": {
-            "props": {
-                "Add into BOM": "yes",
-                "Convert to PCB": "yes",
-                "Symbol": "6d5293867351354c",
-                "Designator": "CN1",
-                "Device": "7a8bc745ac5dc228",
-                "Footprint": "c94e591aacc78d14",
-                "Name": "={Manufacturer Part}",
-                "Unique ID": "gge6",
-                "Reuse Block": "",
-                "Group ID": "",
-                "Channel ID": "$2I3",
-                "LCSC Part Name": "1x2P 5.08mm 每排P数:2 排数:1",
-                "Supplier Part": "C2898709",
-                "Manufacturer": "DORABO(地博电气)",
-                "Manufacturer Part": "DB142R-5.08-2P-GN",
-                "Supplier Footprint": "弯插,P=5.08mm",
-                "JLCPCB Part Class": "Extended Part",
-                "Datasheet": "https://item.szlcsc.com/datasheet/DB142R-5.08-2P-GN/3146288.html",
-                "Supplier": "LCSC",
-                "3D Model": "143ad98e0f3143eeaf605b0ee4e757fc|0819f05c4eef4c71ace90d822a990e87",
-                "3D Model Title": "CONN-TH_2P-P5.08_DIBO_DB142R-5.08-2P",
-                "3D Model Transform": "499.999,555.117,0,0,0,0,50,-58.661,-133.858",
-                "Number of Positions or Pins": "1x2P",
-                "Pitch": "5.08mm",
-                "Color": "Green",
-                "Mounting Type": "-",
-                "Number of Pins": "2P",
-                "Number of PINs Per Row": "2",
-                "Number of Rows": "1",
-                "Current Rating": "10A",
-                "Voltage Rating (Max)": "300V",
-                "Wire Gauge - AWG": "14~24",
-                "Wire Gauge - mm2": "1.5",
-                "Operating Temperature": "-40℃~+105℃",
-                "Description": "Number of Positions or Pins:1x2P Pitch:5.08mm Color:Green Mounting Type:- Number of Pins:2P Number of PINs Per Row:2 Number of Rows:1 Current Rating:10A Voltage Rating (Max):300V Wire Gauge - AWG:14~24 Wire Gauge - mm2:1.5 Operating Temperature:-40℃~+105℃",
-                "DeviceName": "DB142R-5.08-2P-GN",
-                "FootprintName": "CONN-TH_2P-P5.08_DIBO_DB142R-5.08-2P"
-            },
-            "pinInfoMap": {
-                "1": {
-                    "name": "1",
-                    "number": "1",
-                    "net": "A",
-                    "props": {
-                        "Pin Number": "1"
-                    }
-                },
-                "2": {
-                    "name": "2",
-                    "number": "2",
-                    "net": "B",
-                    "props": {
-                        "Pin Number": "2"
-                    }
-                }
-            }
-        },
-        "gge7": {
-            "props": {
-                "Add into BOM": "yes",
-                "Convert to PCB": "yes",
-                "Symbol": "6d5293867351354c",
-                "Designator": "CN2",
-                "Device": "7a8bc745ac5dc228",
-                "Footprint": "c94e591aacc78d14",
-                "Name": "={Manufacturer Part}",
-                "Unique ID": "gge7",
-                "Reuse Block": "",
-                "Group ID": "",
-                "Channel ID": "$2I4",
-                "LCSC Part Name": "1x2P 5.08mm 每排P数:2 排数:1",
-                "Supplier Part": "C2898709",
-                "Manufacturer": "DORABO(地博电气)",
-                "Manufacturer Part": "DB142R-5.08-2P-GN",
-                "Supplier Footprint": "弯插,P=5.08mm",
-                "JLCPCB Part Class": "Extended Part",
-                "Datasheet": "https://item.szlcsc.com/datasheet/DB142R-5.08-2P-GN/3146288.html",
-                "Supplier": "LCSC",
-                "3D Model": "143ad98e0f3143eeaf605b0ee4e757fc|0819f05c4eef4c71ace90d822a990e87",
-                "3D Model Title": "CONN-TH_2P-P5.08_DIBO_DB142R-5.08-2P",
-                "3D Model Transform": "499.999,555.117,0,0,0,0,50,-58.661,-133.858",
-                "Number of Positions or Pins": "1x2P",
-                "Pitch": "5.08mm",
-                "Color": "Green",
-                "Mounting Type": "-",
-                "Number of Pins": "2P",
-                "Number of PINs Per Row": "2",
-                "Number of Rows": "1",
-                "Current Rating": "10A",
-                "Voltage Rating (Max)": "300V",
-                "Wire Gauge - AWG": "14~24",
-                "Wire Gauge - mm2": "1.5",
-                "Operating Temperature": "-40℃~+105℃",
-                "Description": "Number of Positions or Pins:1x2P Pitch:5.08mm Color:Green Mounting Type:- Number of Pins:2P Number of PINs Per Row:2 Number of Rows:1 Current Rating:10A Voltage Rating (Max):300V Wire Gauge - AWG:14~24 Wire Gauge - mm2:1.5 Operating Temperature:-40℃~+105℃",
-                "DeviceName": "DB142R-5.08-2P-GN",
-                "FootprintName": "CONN-TH_2P-P5.08_DIBO_DB142R-5.08-2P"
-            },
-            "pinInfoMap": {
-                "1": {
-                    "name": "1",
-                    "number": "1",
-                    "net": "ISO_GND",
-                    "props": {
-                        "Pin Number": "1"
-                    }
-                },
-                "2": {
-                    "name": "2",
-                    "number": "2",
-                    "net": "",
-                    "props": {
-                        "Pin Number": "2"
-                    }
-                }
-            }
-        },
         "gge12": {
             "props": {
                 "Add into BOM": "yes",
@@ -1774,6 +1656,122 @@
                     "net": "$2N27",
                     "props": {
                         "Pin Number": "6"
+                    }
+                }
+            }
+        },
+        "gge30": {
+            "props": {
+                "Unique ID": "gge30",
+                "Add into BOM": "yes",
+                "Convert to PCB": "yes",
+                "Symbol": "bb2a3fa979971a70",
+                "Designator": "CN3",
+                "Device": "c1d84c7d190e0264",
+                "LCSC Part Name": "1x2P 4mm 每排P数:2 排数:1",
+                "Supplier Part": "C5197184",
+                "Manufacturer": "HDGC(华德共创)",
+                "Manufacturer Part": "HDGC4001SMD-S-2P",
+                "Supplier Footprint": "SMD,P=4mm",
+                "JLCPCB Part Class": "Extended Part",
+                "Datasheet": "https://item.szlcsc.com/datasheet/HDGC4001SMD-S-2P/5878486.html",
+                "Supplier": "LCSC",
+                "Footprint": "3974ee076ffbdc56",
+                "3D Model": "6fb5ce16bbbf4759865281a4ac10c3be|0819f05c4eef4c71ace90d822a990e87",
+                "3D Model Title": "CONN-SMD_2P-P4.00_HDGC4001SMD-S-2P",
+                "3D Model Transform": "311.417,515.747,0,180,0,0,0,-24.606,0",
+                "Number of Positions or Pins": "1x2P",
+                "Pitch": "4mm",
+                "Color": "Gray",
+                "Mounting Type": "Surface Mount, Right Angle",
+                "Number of Pins": "2P",
+                "Number of PINs Per Row": "2",
+                "Number of Rows": "1",
+                "Current Rating": "9A",
+                "Voltage Rating (Max)": "320V",
+                "Wire Gauge - AWG": "18~24",
+                "Operating Temperature": "-25℃~+85℃",
+                "Name": "={Manufacturer Part}",
+                "Description": "Number of Positions or Pins:1x2P Pitch:4mm Color:Gray Mounting Type:Surface Mount, Right Angle Number of Pins:2P Number of PINs Per Row:2 Number of Rows:1 Current Rating:9A Voltage Rating (Max):320V Wire Gauge - AWG:18~24 Operating Temperature:-25℃~+85℃ O",
+                "Reuse Block": "",
+                "Group ID": "",
+                "Channel ID": "$2I40",
+                "DeviceName": "HDGC4001SMD-S-2P",
+                "FootprintName": "CONN-SMD_2P-P4.00_HDGC4001SMD-S-2P"
+            },
+            "pinInfoMap": {
+                "1": {
+                    "name": "1",
+                    "number": "1",
+                    "net": "A",
+                    "props": {
+                        "Pin Number": "1"
+                    }
+                },
+                "2": {
+                    "name": "2",
+                    "number": "2",
+                    "net": "B",
+                    "props": {
+                        "Pin Number": "2"
+                    }
+                }
+            }
+        },
+        "gge31": {
+            "props": {
+                "Add into BOM": "yes",
+                "Convert to PCB": "yes",
+                "Symbol": "bb2a3fa979971a70",
+                "Designator": "CN1",
+                "Device": "c1d84c7d190e0264",
+                "LCSC Part Name": "1x2P 4mm 每排P数:2 排数:1",
+                "Supplier Part": "C5197184",
+                "Manufacturer": "HDGC(华德共创)",
+                "Manufacturer Part": "HDGC4001SMD-S-2P",
+                "Supplier Footprint": "SMD,P=4mm",
+                "JLCPCB Part Class": "Extended Part",
+                "Datasheet": "https://item.szlcsc.com/datasheet/HDGC4001SMD-S-2P/5878486.html",
+                "Supplier": "LCSC",
+                "Footprint": "3974ee076ffbdc56",
+                "3D Model": "6fb5ce16bbbf4759865281a4ac10c3be|0819f05c4eef4c71ace90d822a990e87",
+                "3D Model Title": "CONN-SMD_2P-P4.00_HDGC4001SMD-S-2P",
+                "3D Model Transform": "311.417,515.747,0,180,0,0,0,-24.606,0",
+                "Number of Positions or Pins": "1x2P",
+                "Pitch": "4mm",
+                "Color": "Gray",
+                "Mounting Type": "Surface Mount, Right Angle",
+                "Number of Pins": "2P",
+                "Number of PINs Per Row": "2",
+                "Number of Rows": "1",
+                "Current Rating": "9A",
+                "Voltage Rating (Max)": "320V",
+                "Wire Gauge - AWG": "18~24",
+                "Operating Temperature": "-25℃~+85℃",
+                "Name": "={Manufacturer Part}",
+                "Description": "Number of Positions or Pins:1x2P Pitch:4mm Color:Gray Mounting Type:Surface Mount, Right Angle Number of Pins:2P Number of PINs Per Row:2 Number of Rows:1 Current Rating:9A Voltage Rating (Max):320V Wire Gauge - AWG:18~24 Operating Temperature:-25℃~+85℃ O",
+                "Unique ID": "gge31",
+                "Reuse Block": "",
+                "Group ID": "",
+                "Channel ID": "$2I41",
+                "DeviceName": "HDGC4001SMD-S-2P",
+                "FootprintName": "CONN-SMD_2P-P4.00_HDGC4001SMD-S-2P"
+            },
+            "pinInfoMap": {
+                "1": {
+                    "name": "1",
+                    "number": "1",
+                    "net": "ISO_GND",
+                    "props": {
+                        "Pin Number": "1"
+                    }
+                },
+                "2": {
+                    "name": "2",
+                    "number": "2",
+                    "net": "",
+                    "props": {
+                        "Pin Number": "2"
                     }
                 }
             }

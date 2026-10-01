@@ -17,7 +17,8 @@ ADXのハードウェアは、**8748 Form Factor**（`87.0 mm × 48.0 mm`）お�
 
 | ボード名 | グレード | 絶縁構造 | 状態・概要 | リンク |
 | :--- | :--- | :--- | :--- | :--- |
-| **ADX CORE-I** | **Production** | **両絶縁** (電源・通信) | ADXの本命標準機。外部機器（PLC・PC・異電源系）と安全に接続可能。 | [設計検討中](CORE-I/CORE-S_strategy_rethink.md) |
+| **ADX CORE-A** | **Production / Flagship** | **完全絶縁RS-485 / 5V特化** | **ADXの新たな絶対標準機。** -40℃〜+105℃耐熱、完全絶縁RS-485、BMC搭載、机上・電池・工場配電盤すべてに対応。 | [構想書](CORE-A/concept.md) / [仕様書](CORE-A/spec.md) |
+| **ADX CORE-I** | **Production** | **両絶縁** (電源・通信) | 旧構想機。高電圧一体型絶縁モデル。 | [設計検討中](CORE-I/CORE-S_strategy_rethink.md) |
 | **ADX CORE-S-P** | **Professional** | **非絶縁** (共通GND) | コスト極限・超低価格製造（$5〜7/台）を追求したプロ専用機。自己責任DIY製造前提。 | [詳細・レビュー](CORE-S-P/README.md) |
 | **ADX Core-D** | **Development** | **非絶縁** | LN-485（LIN-based RS-485）ブートローダおよびファームウェア開発専用ボード。 | [仕様書](Core-D/proposal.md) |
 
