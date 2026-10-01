@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ADX Core-D RS-485 Web Flasher & Serial Monitor</title>
+  <title>ADX RS-485 Web Flasher & Serial Monitor | CORE-A & RPR4 Ready</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -550,8 +550,8 @@
     <div class="brand">
       <div class="logo-badge">ADX</div>
       <div class="title-group">
-        <h1>Core-D RS-485 Tool <span class="version-tag">M5 Web</span></h1>
-        <p>1-to-1 RS-485 Web Flasher & Serial Monitor</p>
+        <h1>ADX RS-485 Tool <span class="version-tag">CORE-A & RPR4</span></h1>
+        <p>1-to-1 RS-485 Web Flasher & Serial Monitor for ADX CORE-A / Core-D</p>
       </div>
     </div>
     <div class="port-status-pill">
@@ -568,9 +568,9 @@
 
   <!-- Common Step 1: Serial Connection -->
   <div class="card">
-    <div class="card-title">1. シリアルポート接続 (USB-RS485)</div>
+    <div class="card-title">1. シリアルポート接続 (USB-RS485 / RPR4)</div>
     <p style="font-size: 13px; color: var(--text-muted);">
-      PC またはスマホ（USB-OTG）に接続された USB-RS485 ドングルを選択して接続します。
+      PC またはスマホ（USB-OTG / Chrome）に接続された USB-RS485 ドングル、または RPR4 Smart Probe を選択して接続します。
     </p>
     <div class="btn-row">
       <button class="btn-primary" id="btnConnect">
@@ -633,7 +633,7 @@
         <span>⚡</span>
         <div>
           <strong>書き込みのタイミングについて:</strong><br>
-          下記の「書き込み開始」をクリック後、画面が <code>[POLLING]</code> になったら、<strong>Core-D の電源を ON にしてください（またはリセット）</strong>。赤色 LED（PB2）の点滅を自動検知して書き込みを開始します。
+          下記の「書き込み開始」をクリック後、画面が <code>[POLLING]</code> になったら、<strong>CORE-A（または Core-D）の電源を ON にしてください（またはリセット）</strong>。車載赤色 LED（PB2）の点滅を自動検知して書き込みを開始します。
         </div>
       </div>
 
@@ -677,7 +677,7 @@
         </div>
       </div>
       <div class="console-body" id="consoleBody">
-        <div class="log-line log-info">[INFO] ADX Core-D Web Flasher loaded. Connect USB-RS485 adapter to start.</div>
+        <div class="log-line log-info">[INFO] ADX RS-485 Web Flasher (CORE-A / Core-D / RPR4 Ready) loaded. Connect USB-RS485 adapter or RPR4 Smart Probe to start.</div>
       </div>
     </div>
   </div>
@@ -745,8 +745,9 @@
   <div class="card" style="font-size: 13px; color: var(--text-muted);">
     <div class="card-title">💡 端子台配線 & 極性診断メモ</div>
     <ul style="margin-left: 20px; line-height: 1.8;">
-      <li><strong>基本配線:</strong> Core-D 端子台の <code>A</code>, <code>B</code>, <code>GND</code> を USB-RS485 アダプタに接続します。</li>
-      <li><strong>A/B 逆接時の診断シグネチャ:</strong> Core-D の電源を入れた瞬間に <strong>「赤 LED（PB2）がチカチカ点滅せず、即座に消灯する」</strong> 場合は、A と B が逆接されています。端子台で A と B の線を入れ替えてください。</li>
+      <li><strong>基本配線:</strong> ADX CORE-A（または Core-D）端子台の <code>A</code>, <code>B</code>, <code>GND</code> を USB-RS485 アダプタまたは RPR4 Smart Probe に接続します。</li>
+      <li><strong>電源供給:</strong> CORE-A は USB Type-C から単独受電、または Power CARD から IDC 20P 経由で 5V 受給電が可能です。</li>
+      <li><strong>A/B 逆接時の診断シグネチャ:</strong> 電源を入れた瞬間に <strong>「赤色 LED（PB2）がチカチカ点滅せず、即座に消灯する」</strong> 場合は、A と B が逆接されています。端子台で A と B の線を入れ替えてください。</li>
     </ul>
   </div>
 </div>
@@ -1366,9 +1367,9 @@ btnFlash.addEventListener('click', async () => {
     clearRxBuffer();
 
     // Stage 1: Polling & Power-on Detection
-    setProgress(5, "Stage 1: 電源投入待ち (Core-D を ON にしてください)...", 1);
-    log("[STAGE 1: POLLING] Waiting for Core-D to power on / reset...", 'warn');
-    log(">>> Power on or reset the Core-D NOW (Red LED PB2 will blink) <<<", 'warn');
+    setProgress(5, "Stage 1: 電源投入待ち (CORE-A / Core-D を ON にしてください)...", 1);
+    log("[STAGE 1: POLLING] Waiting for CORE-A / Core-D to power on / reset...", 'warn');
+    log(">>> Power on or reset CORE-A / Core-D NOW (Red LED PB2 will blink) <<<", 'warn');
 
     const pollStart = Date.now();
     let powerOnDetected = false;
@@ -1387,7 +1388,7 @@ btnFlash.addEventListener('click', async () => {
     }
 
     if (!powerOnDetected) {
-      throw new Error("Stage 1 タイムアウト: 30秒以内に Core-D からの応答がありませんでした。(A/B 極性や配線をご確認ください)");
+      throw new Error("Stage 1 タイムアウト: 30秒以内に CORE-A / Core-D からの応答がありませんでした。(A/B 極性や配線をご確認ください)");
     }
 
     const elapsedSec = ((Date.now() - pollStart) / 1000).toFixed(1);
@@ -1517,7 +1518,7 @@ btnFlash.addEventListener('click', async () => {
     log("=================================================================", 'pass');
     log("  🎉 [SUCCESS] Application successfully flashed over RS-485!", 'pass');
     log("=================================================================", 'pass');
-    log(">>> Core-D is now launching the application.", 'pass');
+    log(">>> CORE-A / Core-D is now launching the application.", 'pass');
 
     if (fileName.textContent.includes("alternate") || fileName.textContent.includes("赤白")) {
       log(">>> 🚨 Check the onboard LEDs — RED (PB2) and WHITE (PB3) are alternating (200ms cycle)!", 'pass');

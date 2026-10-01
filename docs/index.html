@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ADX Core-D | WU-5-1 WebSerial BREAK Explorer</title>
+  <title>ADX WU-5-1 WebSerial BREAK Explorer | CORE-A & RPR4 Ready</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -203,6 +203,7 @@
       background: rgba(255, 255, 255, 0.1);
       outline: none;
       -webkit-appearance: none;
+      appearance: none;
     }
 
     input[type="range"]::-webkit-slider-thumb {
@@ -460,7 +461,7 @@
         </div>
       </div>
       <div style="display: flex; align-items: center; gap: 12px;">
-        <a href="flasher/" style="color: var(--text-muted); font-size: 11px; font-family: 'JetBrains Mono', monospace; text-decoration: none; border: 1px solid var(--bg-card-border); padding: 6px 12px; border-radius: 8px; transition: all 0.2s;" onmouseover="this.style.color='#00f0ff'; this.style.borderColor='rgba(0, 240, 255, 0.4)'" onmouseout="this.style.color='var(--text-muted)'; this.style.borderColor='var(--bg-card-border)'">Legacy Flasher ↗</a>
+        <a href="flasher/" style="color: var(--text-muted); font-size: 11px; font-family: 'JetBrains Mono', monospace; text-decoration: none; border: 1px solid var(--bg-card-border); padding: 6px 12px; border-radius: 8px; transition: all 0.2s;" onmouseover="this.style.color='#00f0ff'; this.style.borderColor='rgba(0, 240, 255, 0.4)'" onmouseout="this.style.color='var(--text-muted)'; this.style.borderColor='var(--bg-card-border)'">⚡ RS-485 Web Flasher ↗</a>
         <div class="port-status-pill">
           <div class="status-dot" id="statusDot"></div>
           <span id="portStatusText">DISCONNECTED</span>
@@ -1039,7 +1040,7 @@
 `========================================================================================
                    HALF-BAUD TIMING STABILIZATION REPORT
 ========================================================================================
- Target MCU     : ATtiny1616 (wu5_diag.hex) on ADX Core-D @ 19,200 bps
+ Target MCU     : ATtiny1616 (wu5_diag.hex) on ADX CORE-A / Core-D @ 19,200 bps
  Repeats        : ${repeats} probes per timing level
 ----------------------------------------------------------------------------------------
  Timing (ms)    |  Result   | rx_count | Byte[0] | Byte[1] | State & Verdict
@@ -1168,7 +1169,7 @@
 `========================================================================================================
                       MULTI-PATTERN BREAK EXPLORER DIAGNOSIS REPORT
 ========================================================================================================
- Target MCU     : ATtiny1616 (wu5_diag.hex) on ADX Core-D @ 19,200 bps
+ Target MCU     : ATtiny1616 (wu5_diag.hex) on ADX CORE-A / Core-D @ 19,200 bps
  Repeats        : ${repeats} probes per pattern
 --------------------------------------------------------------------------------------------------------
  Pattern Name                         | Result | rx_count | Byte[0] | Byte[1] | State & Verdict

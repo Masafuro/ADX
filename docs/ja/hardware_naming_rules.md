@@ -5,6 +5,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # ADX ハードウェア命名規則・グレード分類基準 (Hardware Naming Conventions & Grade Classification)
 
+[ English (../en/hardware_naming_rules.md) | **日本語** ]
+
 本ドキュメントは、ADXエコシステムにおけるハードウェア製品（基板・モジュール等）の命名規則、および「一般・製品グレード」と「プロ専用・自己責任DIYグレード（`-P`）」の分類基準を定義する公式仕様書です。
 
 ---
@@ -85,7 +87,8 @@ graph TD
 
 | 型番 | グレード | 絶縁 | 主な用途・ターゲット |
 | :--- | :--- | :--- | :--- |
-| **`ADX CORE-I`** | Production | **両絶縁** | 一般開発、外部機器（PLC・PC・異電源システム）との自由接続。ADXの本命完成品。 |
+| **`ADX CORE-A`** | Production | **完全絶縁** | **ADXの絶対標準機（Absolute）**。完全絶縁RS-485（2500V耐圧）、クリーン5V専任、PC逆流阻止。机上開発から夏の車内・工場配電盤まで誰でも安全に運用可能。 |
+| **`ADX CORE-I`** | Production | **両絶縁** | 外部機器（PLC・PC・異電源システム）との自由接続。 |
 | **`ADX CORE-S-P`** | Professional | **非絶縁** | 同一電源内の機器組込、自社検査治具、ロボット内部配線、コスト最優先のプロトタイピング。自己責任DIY製造。 |
 | **`ADX Core-D`** | Development | 非絶縁 | LN-485ブートローダおよびファームウェア開発専用ボード（内部評価用）。 |
 | **`ADX CARD-RELAY`** | Production | **絶縁** | フォトカプラ等で完全分離された汎用リレー出力拡張カード。 |

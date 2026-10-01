@@ -9,7 +9,7 @@
 | 項目 | 定格 / 仕様 | 備考 |
 | :--- | :--- | :--- |
 | **主電源電圧 (VDD)** | **5.0V DC** (±10%) | Type-C または 20P拡張バス (Pins 1〜4) 受電時 |
-| **動作保証温度範囲** | **-40℃ 〜 +100℃ / +105℃** | **Industrial Grade 完全保証** |
+| **動作保証温度範囲** | **-40℃ 〜 +100℃ / +105℃** | **システム主要回路 Industrial Grade 完全保証**<br>*(※USB Type-Cポート単体: -40℃〜+85℃ / 3,000 cycles)* |
 | **保存温度範囲** | **-40℃ 〜 +125℃** | |
 | **外形寸法** | **87.0 mm × 48.0 mm** | 8748 フォームファクタ準拠 |
 | **基板仕様** | 2層 / 4層 FR-4, 厚み 1.6mm, 1oz銅箔, 耐熱Tg150以上推奨 | |
@@ -43,8 +43,9 @@
 
 ### 3.2 電源入力部 (USB Type-C 6P & 逆流阻止バルブ)
 
-1. **USB Type-C 6P (U4 / 6Pin SMD, 耐熱LCP樹脂仕様)**:
-   - 机上開発および室内給電用。VBUS, GND, CC1(A5), CC2(B5)。
+1. **USB Type-C 6P (U4 / 6Pin SMD, -40℃〜+85℃, 3,000 cycles)**:
+   - 机上開発・室内給電・車内通常給電用。VBUS, GND, CC1(A5), CC2(B5)。
+   - **寒冷地（-40℃）対応、3,000回挿抜耐久**。LCSC/JLCPCBで超潤沢に入手可能な高信頼・低コスト品。
    - CCピンには各5.1kΩ (±1%) をGNDへプルダウン。
 2. **USB 逆流阻止バルブ (D1 / LM66100 または 低Vfショットキー)**:
    - USB VBUSから基板共通VDDプレーンへは低損失で給電。
@@ -86,7 +87,7 @@
 | **U1** | メインMCU | **ATTINY1616-MNR** (VQFN-20) | Microchip | -40℃〜+105℃ | Basic / Ext |
 | **U2** | 絶縁RS-485 | **TDA51S485HC** (SOP-16) | Mornsun | -40℃〜+105℃ | Extended |
 | **U3** | スイッチ端子 | 2.54mm THT 1×2P スルーホール | - | - | BOM除外 |
-| **U4** | USB Type-C | 6Pin SMD ライトアングル (耐熱LCP) | DEALON / CXT等 | -40℃〜+105℃ | Extended |
+| **U4** | USB Type-C | **6Pin SMD ライトアングル (3,000 cycles)** | DEALON / KH等 | **-40℃〜+85℃** | Basic / Ext |
 | **D1** | 逆流阻止バルブ | **LM66100DCKR** (SC-70) / 低Vfショットキー | TI / SGMICRO | -40℃〜+125℃ | Extended / Basic |
 | **U6** | BMC サブMCU | **ATTINY412-SSNR** (SOIC-8) | Microchip | -40℃〜+105℃ | Extended |
 | **U7** | eFuse / スイッチ | 高耐熱 ハイサイドスイッチ / eFuse | 3PEAK / SGMICRO | -40℃〜+125℃ | Extended |

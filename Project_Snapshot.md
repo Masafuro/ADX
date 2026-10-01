@@ -9,75 +9,84 @@ SPDX-License-Identifier: CC-BY-4.0
 
 - **ADX**: Advanced Devices eXtended
 - **コア・アイデンティティ**: **"Enclosure-Friendly"（筐体適合性）** を軸とした次世代オープンソース・モジュラーハードウェア規格。
-- **現在の探求テーマと提供価値**:
-  - Arduino が切り拓いた「机の上のプロトタイピング」を、実際の筐体や過酷な現実空間（屋外、防水ケース、建築・舞台・設備現場）へスムーズに連れ出すための物理的・電気的アーキテクチャの確立。
-  - **「音響・PA機器のように現場で直感的に数珠つなぎ（デイジーチェーン）配線できるフィールドネットワーク（CORE-S）」** と、**「DCDCを捨ててeFuse/OVPに特化し、12V誤挿入にも耐える5V大電力・バッテリー一体型デバイス（CORE-U）」** の2大ラインナップを主軸に、Enclosure-Friendly な 8748 フォームファクタをベースにした具体的な製品価値を確立・実証中。
-- **直近のゴール**: Crowd Supply キャンペーンのローンチ
+- **現在の提供価値とパラダイムシフト**:
+  - Arduino が切り拓いた「机の上のプロトタイピング」を、実際の筐体や過酷な現実空間（屋外、防水ケース、車載、工場配電盤、冷凍設備、通信インフラ）へスムーズに連れ出すための物理的・電気的アーキテクチャの確立。
+  - **「最もシンプルで、最もタフで、安価な1枚のコア（ADX CORE-A: $28）」** と、**「現場のRS-485トラブルを一撃で解決するスマートツール（RPR4 Smart Probe: $25）」** の二頭立てを主軸に、モジュラー型 CARD システムと連携して普遍的なエッジコンピューティング環境を提供。
+- **直近のゴール**: Crowd Supply キャンペーンのローンチ（ADX Starter Kit: $49〜$55）
 - **ライセンス体系**: Tri-license モデル（Docs: CC BY 4.0, Hardware: CERN-OHL-P-v2, Firmware: MIT）
 
 ---
 
 ## 1. ハードウェア開発進捗 (Hardware Status)
 
-### 1.1 ADX CORE-S (`hardware/CORE-S`) 【現場・差動通信標準機】
-- **役割**: 12V/24V電源、長距離ノイズ環境、多点デイジーチェーン配線に対応するADXの現場標準コントローラー。
+### 1.1 ADX CORE-A (`hardware/CORE-A`) 【絶対標準機 / 旗艦コア】
+- **役割**: 机上開発から酷暑・極寒・工場配電盤まで、1枚ですべてを網羅するADXエコシステムの絶対標準コントローラー。
+- **主要機能 & アーキテクチャ**:
+  - **5V専任・自己発熱ゼロ**: 高電圧DCDCをコアボードから追放し、真夏の密閉ボックスでも動く -40℃〜+105℃ フルIndustrial耐熱を実現。
+  - **完全絶縁 RS-485**: Mornsun `TDA51S485HC`（2500V耐圧、絶縁電源内蔵）＋ 前面スクリューレス・スプリング端子台（DB142R-5.08）。
+  - **USB Type-C 6P ＋ 逆流阻止バルブ**: TI `LM66100`（理想ダイオード）により、現場通電中に作業用PCを挿してもPCを100%保護。
+  - **20P ラッチ付き Eject Header**: 車載・工場の振動脱落を完全防止、5V/2A双方向幹線プレーン。
+  - **超低消費電力 BMC**: ATtiny412 によるナノアンペアスリープ制御 ＆ スマホPWAからの完全自動OTW書き換え。
+  - **メインMCU**: Microchip ATtiny1616-MNR（工業用Nグレード: -40℃〜+105℃）。
+- **進捗実績・コスト**:
+  - 2026/10/01: CORE-A 基本構想書（`concept.md`）および技術仕様書（`spec.md`）策定完了。
+  - 2026/10/01: rev1 ネットリスト出力完了。車載グレードAEC-Q102 LED（-40℃〜+110℃）、TI LM66100、TDA51S485HC、牛角ヘッダ選定完了。
+  - **JLCPCB 100pcs PCBA見積もり確定**: **$626.27（送料込・1台あたり約 $6.26 / 想定販売価格 $28.00、粗利率 74.8%）**。
+
+### 1.2 RPR4 Smart Probe (`hardware/RPR4_Smart_Probe`) 【スマートアナライザ ＆ プログラマ】
+- **役割**: 保守員・組み込み開発者のための完全絶縁マルチツール。RS-485のブラックボックス問題を粉砕し、スマホOTWを実現するポケットデバイス。
 - **主要機能**:
-  - DC 12V/24V 広入力 DCDC（TI TPS5430）
-  - デイジーチェーン対応 LN-485（RS-485半二重 / MaxLinear SP485EEN）
-  - サブMCU（BMC: ATtiny412）による自律電源ゲーティング（`VDD_SW`）およびブート制御
-  - メインMCU: Microchip ATtiny1616-MNR
-- **進捗状況**:
-  - rev1 〜 rev3 の設計レビューおよびシャットダウン・パワーマネジメント改善完了。
-  - rev4 回路図・ネットリスト精査および試作発注準備進行中。
+  - **コントローラー**: Raspberry Pi RP2040（Dual Cortex-M0+ @ 133MHz）。
+  - **完全絶縁インターフェース**: Mornsun `TDA51S485HC` による 2500V ガルバニック絶縁。
+  - **RP2040 PIO（プログラマブルI/O）による超高速解析**:
+    - 通信ボーレート自動検出（Auto-Baud: 9600〜115200bps等）。
+    - プロトコル自動デコード（Modbus RTU、DMX512、LN-485）。
+  - **専用 Web PWA アプリ連携**: スマホのブラウザ上でRS-485波形・トラフィック・エラーをロジアナ表示。
+  - **完全自動 OTW 書き換え**: BREAK信号送出とOptibootプロトコルによる3秒ファームウェア更新。
+- **進捗実績・コスト**:
+  - 2026/10/01: rev1 ネットリスト確定。PCBA原価 約 $7.00、想定販売価格 $25.00。
 
-### 1.2 ADX CORE-U (`hardware/CORE-U`) 【汎用・5V大電力・バッテリー連携機】
-- **役割**: 5V/2A（10Wクラス）の大電力を安全に扱い、筐体内蔵バッテリーCARDとの連携に特化した普及・汎用コントローラー。
-- **主要機能**:
-  - DCDCをあえてオミットし、Raspberry Pi等の高品位5V ACアダプターを前提化
-  - 削ったコスト・面積を **大電流 eFuse ＋ 12V耐圧過電圧保護（OVP）** に再投資
-  - 単一DCジャックによる物理排他（バッテリーCARD接続時のACアダプター誤挿入・多重衝突を構造的にゼロ化）
-  - USB Type-C（WCH CH342K）による SerialUPDI 書込 ＆ デュアルUARTデバッグ
-  - 8748 Form Factor、メインMCU: ATtiny1616-MNR
-- **進捗状況**:
-  - 2026/09/24: rev0 構想策定（`concept.md`）およびネットリスト一次評価完了。
-  - 2026/09/24: 開発指針書（`review/rev0/development_guidelines.md`）策定完了。OVP回路選定と次期rev1ネットリスト作成へ移行。
+### 1.3 CARD シリーズ (`hardware/CARD/`) 【モジュラー拡張基板】
+「電源の保護・変換・昇圧・降圧は、電源を供給するCARD側が背負う」という単一責任の原則に基づき展開。
 
-### 1.3 ADX Core-D (`hardware/Core-D`) 【R&D 実証・実験専用ボード】
-- **役割**: LN-485（LIN-based RS-485）通信スタックおよびブートローダー先行開発のための実証ボード（※量産製品ラインナップ外）。
-- **進捗実績**:
-  - 2026/08/17 : 初版PCBA発注完了
-  - 2026/08/23 : 基板受領、基本動作検証完了（SerialUPDI、SoftwareSerial、LED、12MHz外部オシレーター動作確認 PASS）。
-  - 2026/08/24 : RS-485 半二重通信テスト完了（実機2台での双方向通信 PASS）。
-  - 2026/08/25 : LN-485 Phase 1 / Phase 2 検証完了（Break送出、LINAUTO自動ボーレート同期 PASS）。
-  - 2026/08/26 : LN-485 Phase 3 (Master-Pub → Slave-Sub) ＆ Phase 4 (Slave-Pub → Master-Sub、Double Buffer Mailbox、Master Broker MVP) 検証 PASS。
-  - 2026/08/27 : LN-485 Phase 5 (実機3台構成スレーブ間直接通信 ＆ Master傍受監視、LN-485 UP/CS 完成) 検証 PASS。
-  - 開発実験用としての役割を完了し、得られた知見を CORE-S / CORE-U の設計へ完全反映済み。
-
-### 1.4 CARD シリーズ (`hardware/CARD/`)
-- **ADX Prototyping CARD**:
-  - 8748フォームファクタ準拠の拡張ユニバーサル試作基板。基板受領済み。
-- **ADX Battery / Power CARD**:
-  - 乾電池やLiPoバッテリーから昇降圧してCORE-UのDCジャックへ5Vを供給するバッテリー拡張CARDの構想・設計検討中。
+- **AAA 2S Power CARD (乾電池自律運用)**:
+  - 単4電池×2本から低暗電流昇圧DCDCでクリーンな5Vを生成。BMC連動でDCDCを完全停止。
+- **DC 12V〜48V Power CARD (産業・インフラ電源)**:
+  - 工場配電盤（24V）、車載（12V/24V）、通信基地局（-48V）等の広入力をトランス絶縁5V変換。TVS/サージ保護集約。
+- **Prototyping CARD (ユニバーサル試作基板)**:
+  - 20P Eject Header 中継パススルー ＋ 2.54mmピッチ試作エリア。基板受領済み。
 
 ---
 
-## 2. ファームウェア & 通信スタック進捗 (Firmware & Software)
+## 2. ソフトウェア ＆ クラウド進捗 (Software Ecosystem)
 
+- **PWA ＋ クラウドAPI アーキテクチャ確立**:
+  - Androidネイティブアプリの保守地獄（16KBページ問題、OSセキュリティ制約）を完全回避。
+  - ブラウザ1本で iOS / Android / PC 全対応。
+  - 現場での定数調整: RS-485経由でATtiny1616のEEPROMパラメータを直接書き換え（所要時間0.1秒、オフライン対応）。
+  - クラウドコンパイルAPI: サーバー側 `arduino-cli` が1秒でビルドして `.hex` を返送。
 - **LN-485 通信スタック**:
   - Phase 1 〜 Phase 5 までの実機検証完了（実機3台によるマルチドロップ通信、Zero-Copy Mailbox、自動タイムアウト復帰）。
-- **開発ツール & ブートローダー**:
-  - WCH CH342K による SerialUPDI 高速書き込み検証完了。
-  - SoftwareSerial デバッグログ環境確立済み。
 
 ---
 
-## 3. 直近のマイルストーン & 今後の課題 (Next Milestones)
+## 3. ガイドライン ＆ 規格策定 (Standard & Guidelines)
 
-1. **CORE-U rev1 の回路確定**:
-   - 12V誤挿入対策（OVP）の回路方式確定（TMI6240 + ツェナーシャットダウン回路 vs 5V専用OVP統合IC）とネットリスト出力。
-2. **CORE-S rev4 の最終FIX ＆ 試作発注**:
-   - BMC・DCDC周りの定数・パターン最適化と試作検証。
-3. **8748 筐体適合性（Enclosure-Friendly）の実機検証**:
-   - 3Dプリントケース、タカチ防水ケースへのM3ネジ締結トルク試験、L型DCプラグ・IDCリボンケーブルの配線クリアランス検証。
-4. **Crowd Supply プロジェクト準備**:
-   - プロジェクト申請資料（`memo/merketing/crowd_supply_application.md`）のアップデート。
+- **ADX ハードウェア・フォームファクタ開発ガイドライン (`docs/ja/adx_formfactor_guidelines.md`)**:
+  - RFC 2119 準拠の3段階要件定義（MUST / SHOULD / MAY）を策定。
+  - 【MUST】Power CARDの逆流阻止義務（電池破裂防止）、Pin 5アイソレーション帯厳守。
+  - 【SHOULD】ラッチ付き Eject Header、産業用トランス絶縁DCDC、8748寸法、-40℃〜+105℃耐熱。
+  - 【MAY】非絶縁DCDC、ボックスヘッダ、自由な基板形状、独自センサー実装。
+
+---
+
+## 4. 直近のマイルストーン & 今後の課題 (Next Milestones)
+
+1. **CORE-A rev1 のアートワーク設計 ＆ 試作発注**:
+   - 8748サイズ内での前面端子台・Type-C・牛角Eject Headerの配置最適化。
+2. **RPR4 Smart Probe のファームウェア開発（PIOロジアナ ＆ OTWエンジン）**:
+   - RP2040 PIO による Auto-Baud 計測および Modbus/DMX パケット解析エンジンの実装。
+3. **PWA 開発環境のプロトタイピング**:
+   - WebSerial API を用いた RPR4 通信 ＆ クラウドコンパイルAPI連携の検証。
+4. **Crowd Supply キャンペーン準備**:
+   - **ADX Mobile Starter Kit**（CORE-A ＋ RPR4 ＋ Power CARD: $49〜$55）の企画資料・デモ動画の構成FIX。

@@ -23,29 +23,34 @@ ADX bridges the gap between desktop prototyping and physical deployment through 
   Terminal blocks, external ports, and connectors are aligned along designated board edges, making panel cutouts and environmental sealing clean and straightforward.
 * **Tolerance-Absorbing IDC Ribbon Coupling**:
   Expansion boards (CARDs) couple via a 20-pin IDC ribbon cable rather than rigid stacking pin headers. This absorbs enclosure manufacturing tolerances, allows flexible internal placement (stacked, coplanar, or folded), and eliminates pin-bending stress.
-* **Single-Directional Protected Power Flow**:
-  Strict architectural power routing: core power is fed through designated, protected input gateways, while the 20-pin IDC expansion bus serves strictly as an outbound power delivery bus (5V / 2A+), preventing hazardous cross-feed and back-power collisions.
+* **Safe Bidirectional 5V Power Trunk (Double Check-Valve Architecture)**:
+  The Core board can either receive power from Type-C (protected by an LM66100 ideal diode) to supply 5V / 2A+ to the IDC expansion bus, or accept 5V reverse power from a Power CARD via the IDC expansion bus. Bidirectional safety is guaranteed by "Double Check Valves"—the CORE-A PC back-feed prevention diode and the mandatory Power CARD reverse-current protection circuit (MUST requirement), physically eliminating cross-feed hazards and battery damage.
 
 ---
 
 ## 2. Hardware Lineup
+The ADX platform is anchored by the universal **ADX CORE-A** MCU board, the **RPR4 Smart Probe** diagnostics tool, and flexible modular **CARDs**:
 
-The ADX platform is anchored by two complementary Core MCU boards sharing the 8748 Form Factor, accompanied by flexible expansion CARDs:
-
-### 2.1 Core Boards (MCU)
+### 2.1 Core Board (MCU)
 
 | Board | Role & Power Architecture | Communication & Features | Target Applications & Status |
 | :--- | :--- | :--- | :--- |
-| **ADX CORE-S**<br>*(Standard / Field-Ready)* | **DC 12V / 24V Wide Input**<br>Onboard step-down DC-DC (TPS5430), switched 5V power gating via dedicated BMC supervisor (ATtiny412). | **Daisy-Chainable LN-485 (RS-485)**<br>Hardware LIN-assisted differential bus for multi-node networks, robust against field noise and long runs. | Architectural lighting, stage & interactive art installations, outdoor exhibits, multi-drop field sensing.<br>*(In Review / Pre-production)* |
-| **ADX CORE-U**<br>*(Universal / Utility)* | **DC 5V High-Power (2A+)**<br>DCDC omitted to reinvest in rock-solid protection: **eFuse + 12V Overvoltage Protection (OVP)**. Single DC jack with physical interlock. | **USB Type-C (UPDI / Dual UART)**<br>WCH CH342K for seamless flashing and debugging. Native 5V ATtiny1616 logic. | Enclosure-integrated standalone devices, robotics & servo control, battery-powered portable IoT via CARDs.<br>*(rev0 Conceptualized)* |
+| **ADX CORE-A**<br>*(Absolute / Universal)*<br>**Target Price: $28** | **5V-Dedicated / Zero Self-Heating**<br>USB Type-C 6P (Ideal Diode LM66100 PC back-feed protection). Bidirectional 5V delivery via 20P Eject Header. | **Fully Isolated RS-485 (2500VDC)**<br>Mornsun TDA51S485HC. Direct front spring clamp terminal. Automotive AEC-Q102 LEDs (-40°C~+110°C). Secondary BMC supervisor. | Desktop, high-temp vehicle cabins, sealed IP67 cases, industrial control panels, -48V telecom infrastructure.<br>*(rev1 Netlist & Cost Locked, Pre-production)* |
 | *ADX Core-D*<br>*(R&D Testbed)* | *DC 5V USB / Terminal* | *LN-485 protocol and bootloader verification board. Validated across Phases 1–5.* | *Internal R&D testbed (Not for production).* |
 
-### 2.2 CARDs (Expansion Modules)
+### 2.2 Smart Diagnostics & Programmer
+
+| Tool | Role & Architecture | Key Features | Target Price & Status |
+| :--- | :--- | :--- | :--- |
+| **RPR4 Smart Probe** | **Fully Isolated RS-485 Pocket Analyzer**<br>Raspberry Pi RP2040 + Isolated RS-485 (TDA51S485HC). | **RP2040 PIO Real-time Analysis**<br>Auto-Baud detection, Modbus RTU / DMX / LN-485 decoding, dedicated Web PWA sniffer, 3-sec wireless OTW flashing. | **$25.00**<br>*(rev1 Netlist Locked, In Development)* |
+
+### 2.3 CARDs (Modular Add-ons)
 
 | Board | Description | Status & Resources |
 | :--- | :--- | :--- |
-| **ADX Prototyping CARD** | 8748 Form Factor companion board with lower 20-pin ADX bus breakout and upper 20-pin prototyping grid. | [Proposal](../../hardware/CARD/Prototyping/proposal.md) / [Data](../../hardware/CARD/Prototyping/data/) |
-| **ADX Battery / Power CARD** | External battery regulation (LiPo / Dry Cell) feeding 5V into CORE-U for fully enclosed battery-powered systems. | Conceptual Planning |
+| **AAA 2S Power CARD** | 2× AAA battery boost converter feeding clean 5V, featuring BMC-gated nanoampere sleep shutdown. | Conceptual Planning |
+| **DC 12V–48V Power CARD** | Wide-input isolated DC-DC supporting factory 24V, automotive, and telecom -48V with centralized surge protection. | Conceptual Planning |
+| **ADX Prototyping CARD** | 8748 Form Factor companion board with 20P Eject Header pass-through and universal prototyping grid. | [Proposal](../../hardware/CARD/Prototyping/proposal.md) / [Data](../../hardware/CARD/Prototyping/data/) |
 
 ---
 
@@ -90,6 +95,18 @@ See [ADX_pinout.md](ADX_pinout.md) for full details.
 | **19** | PC0/SCK | PC0 | **SPI SCK** | #19 (SPI Group) |
 | **20** | GND_5V | - | **GND (Termination Shield)** | #20 |
 
+### 3.3 Hardware Naming Rules & Safety Classification
+Defines product part numbers and the strict boundary between "Standard / Commercial Grade" and "Professional / DIY Grade (`-P`)".
+See [hardware_naming_rules.md](hardware_naming_rules.md) for full details.
+
+### 3.4 ADX Form Factor Guidelines (MUST / SHOULD / MAY)
+Comprehensive design guidelines based on RFC 2119 for third parties and DIY developers designing compatible expansion cards.
+See [adx_formfactor_guidelines.md](adx_formfactor_guidelines.md) for full details.
+
+* **[MUST] Mandatory Requirements:** Reverse-current protection on Power CARDs, strict Pin 5 short-prevention isolation buffer.
+* **[SHOULD] Official Standards:** Latched Eject Headers, industrial isolated DC-DC converters, 8748 Form Factor dimensions, -40°C~+105°C temperature ratings.
+* **[MAY] Developer Freedom:** Non-isolated DC-DC converters, standard box headers, custom board shapes, application-specific sensors.
+
 > * Note: For full MCU peripheral multiplexing (PWM, ADC) and PORTMUX register specifications, refer to [adx_attiny1616_mcu_matrix.md](adx_attiny1616_mcu_matrix.md).
 
 ---
@@ -105,7 +122,8 @@ ADX/
 │   ├── en/                 # English documentation (this directory)
 │   └── ja/                 # Japanese documentation
 ├── hardware/               # Hardware design & manufacturing files (CERN-OHL-P-v2)
-│   ├── ADX_Core-D/         # LN-485 bootloader development board
+│   ├── CORE-A/             # ADX CORE-A (Absolute / Fully Isolated RS-485 / 5V Dedicated)
+│   ├── ADX_Core-D/         # LN-485 bootloader development board (R&D Testbed)
 │   └── CARD/Prototyping/   # Prototyping expansion card
 ├── firmware/               # Drivers, BSP, and sample sketches (MIT)
 ├── logo/                   # Brand assets & logos
