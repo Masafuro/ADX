@@ -11,7 +11,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 While conventional prototyping boards excel on the workbench, transitioning them into actual enclosures, installations, or field deployments often brings physical frustration—mounting screws colliding with traces, lack of washer clearance, multi-directional cable protrusions, and rigid shield stacking that cannot absorb real-world mechanical tolerances. 
 
-ADX bridges the gap between desktop prototyping and physical deployment through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a flexible 20-pin IDC ribbon bus. From robust, daisy-chainable field networking reminiscent of professional audio equipment to 5V high-power battery-integrated enclosed devices, ADX explores what is possible when hardware is built to fit cleanly inside 3D-printed enclosures, off-the-shelf waterproof cases, and electrical utility boxes.
+ADX bridges the gap between desktop prototyping and physical deployment through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a flexible 20-pin IDC ribbon bus. From fully isolated, daisy-chainable field networking (ADX CORE-A) with real-time packet inspection (RPR4 Smart Probe) to versatile power and sensor extensions (CARD Series), ADX explores what is possible when hardware is built to fit cleanly inside 3D-printed enclosures, off-the-shelf waterproof cases, and electrical utility boxes.
 
 ---
 

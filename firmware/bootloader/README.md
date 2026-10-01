@@ -5,7 +5,7 @@ SPDX-License-Identifier: MIT
 
 # ADX Bootloader & Over-The-Wire (OTW) Flashing
 
-本ディレクトリは、ADX 各モジュール（ADX Core-D / CORE-S 等、Microchip ATtiny1616-MNR 搭載）向けのブートローダーおよび RS-485 経由ファームウェア書き込み（OTW: Over-The-Wire）関連のリソースを管理します。
+本ディレクトリは、ADX 各モジュール（ADX CORE-A / Core-D 等、Microchip ATtiny1616-MNR 搭載）向けのブートローダーおよび RS-485 経由ファームウェア書き込み（OTW: Over-The-Wire）関連のリソースを管理します。
 
 ---
 
