@@ -112,6 +112,9 @@ class SerialManager {
     this.writer = null;
     this.isConnected = false;
     this.isTransferring = false;
+    this.rxBuffer = []; // FIFO buffer for incoming bytes
+    this.readingActive = false;
+    this.readLoopPromise = null;
   }
 
   async connect() {
@@ -125,75 +128,125 @@ class SerialManager {
       dataBits: 8,
       stopBits: 1,
       parity: 'none',
-      bufferSize: 1024
+      bufferSize: 4096
     });
 
     this.isConnected = true;
     this.writer = this.port.writable.getWriter();
-    this.reader = this.port.readable.getReader();
+    this.readingActive = true;
+    this.rxBuffer = [];
+
+    // Start background stream ingestion loop
+    this.readLoopPromise = this._startReadLoop();
     return true;
+  }
+
+  async _startReadLoop() {
+    while (this.port && this.readingActive) {
+      try {
+        this.reader = this.port.readable.getReader();
+        while (this.readingActive) {
+          const { value, done } = await this.reader.read();
+          if (done) break;
+          if (value && value.length > 0) {
+            for (let i = 0; i < value.length; i++) {
+              this.rxBuffer.push(value[i]);
+            }
+          }
+        }
+      } catch (err) {
+        if (this.readingActive) {
+          console.warn('WebSerial Read Loop Warning:', err);
+        }
+      } finally {
+        if (this.reader) {
+          try { this.reader.releaseLock(); } catch (e) {}
+          this.reader = null;
+        }
+      }
+    }
   }
 
   async disconnect() {
     this.isConnected = false;
+    this.readingActive = false;
+
     if (this.reader) {
       try { await this.reader.cancel(); } catch (e) {}
-      this.reader.releaseLock();
-      this.reader = null;
+    }
+    if (this.readLoopPromise) {
+      try { await this.readLoopPromise; } catch (e) {}
+      this.readLoopPromise = null;
     }
     if (this.writer) {
       try { await this.writer.close(); } catch (e) {}
-      this.writer.releaseLock();
+      try { this.writer.releaseLock(); } catch (e) {}
       this.writer = null;
     }
     if (this.port) {
       try { await this.port.close(); } catch (e) {}
       this.port = null;
     }
+    this.rxBuffer = [];
   }
 
-  // Send a 32-byte frame and wait for 32-byte response with timeout
-  async sendAndReceive(txFrame, timeoutMs = 120) {
-    if (!this.isConnected || !this.writer || !this.reader) {
+  clearRx() {
+    this.rxBuffer = [];
+  }
+
+  // Send a 32-byte frame and wait for 32-byte response with Header Hunting
+  async sendAndReceive(txFrame, timeoutMs = 200) {
+    if (!this.isConnected || !this.writer) {
       throw new Error('シリアルポートが接続されていません。');
     }
 
+    // 1. Flush any stale bytes before transmission (like pyserial reset_input_buffer)
+    this.clearRx();
+
     const tStart = performance.now();
 
-    // 1. Send frame
+    // 2. Transmit frame
     await this.writer.write(txFrame);
 
-    // 2. Read exact 32 bytes
-    const rxBuf = new Uint8Array(MR32_FRAME_LEN);
-    let bytesRead = 0;
+    // 3. Wait for 32-byte response frame with SYNC(0x55) and MAGIC(0xAD) header hunting
     const deadline = performance.now() + timeoutMs;
+    let foundFrame = null;
 
-    while (bytesRead < MR32_FRAME_LEN) {
-      const remainingTime = deadline - performance.now();
-      if (remainingTime <= 0) break;
+    while (performance.now() < deadline) {
+      if (this.rxBuffer.length >= 2) {
+        let syncIdx = -1;
+        for (let i = 0; i <= this.rxBuffer.length - 2; i++) {
+          if (this.rxBuffer[i] === MR32_SYNC_BYTE && this.rxBuffer[i + 1] === MR32_MAGIC_BYTE) {
+            syncIdx = i;
+            break;
+          }
+        }
 
-      // Promise with timeout
-      const readPromise = this.reader.read();
-      const timeoutPromise = new Promise(resolve => setTimeout(() => resolve({ value: null, done: false, timeout: true }), remainingTime));
-      
-      const result = await Promise.race([readPromise, timeoutPromise]);
-      if (result.timeout || result.done || !result.value) {
-        break;
+        if (syncIdx > 0) {
+          // Drop garbage noise bytes before SYNC
+          this.rxBuffer.splice(0, syncIdx);
+        }
+
+        if (syncIdx >= 0 && this.rxBuffer.length >= MR32_FRAME_LEN) {
+          // Complete 32-byte MR32 frame extracted!
+          foundFrame = new Uint8Array(this.rxBuffer.splice(0, MR32_FRAME_LEN));
+          break;
+        }
       }
 
-      const chunk = result.value;
-      const copyLen = Math.min(chunk.length, MR32_FRAME_LEN - bytesRead);
-      rxBuf.set(chunk.subarray(0, copyLen), bytesRead);
-      bytesRead += copyLen;
+      await new Promise(r => setTimeout(r, 2)); // 2ms polling sleep
     }
 
     const tEnd = performance.now();
     const rtt = tEnd - tStart;
 
-    if (bytesRead === MR32_FRAME_LEN) {
-      return { ok: true, data: rxBuf, rtt };
+    if (foundFrame) {
+      return { ok: true, data: foundFrame, rtt };
     }
-    return { ok: false, data: rxBuf.subarray(0, bytesRead), rtt, timeout: true };
+
+    // If timeout, return whatever raw bytes were captured
+    const partial = new Uint8Array(this.rxBuffer);
+    return { ok: false, data: partial, rtt, timeout: true };
   }
 }
 
@@ -480,9 +533,11 @@ btnPing.addEventListener('click', async () => {
   const frame = buildMr32Frame(nodeId, 0x00, CMD_BOOT_PING, 1);
   logPacket('TX', frame);
 
-  const res = await serialMgr.sendAndReceive(frame, 150);
+  const res = await serialMgr.sendAndReceive(frame, 250);
   if (!res.ok) {
-    log(`Ping タイムアウト: 応答がありません。`, 'warn');
+    const rxLen = res.data ? res.data.length : 0;
+    const rawHex = rxLen > 0 ? ` (受信バイト列: ${toHexStr(res.data)})` : ' (受信バイト数: 0)';
+    log(`Ping タイムアウト: 応答がありません${rawHex}`, 'warn');
     return;
   }
 
@@ -514,9 +569,11 @@ btnProtectTest.addEventListener('click', async () => {
   const frame = buildMr32Frame(nodeId, 0x00, CMD_BOOT_WRITE_CHUNK, 1, payload);
   logPacket('TX', frame);
 
-  const res = await serialMgr.sendAndReceive(frame, 150);
+  const res = await serialMgr.sendAndReceive(frame, 250);
   if (!res.ok) {
-    log(`保護テストタイムアウト`, 'warn');
+    const rxLen = res.data ? res.data.length : 0;
+    const rawHex = rxLen > 0 ? ` (受信: ${toHexStr(res.data)})` : ' (受信: 0B)';
+    log(`保護テストタイムアウト${rawHex}`, 'warn');
     return;
   }
 
@@ -543,9 +600,11 @@ btnLaunchApp.addEventListener('click', async () => {
   const frame = buildMr32Frame(nodeId, 0x00, CMD_BOOT_APP_EXEC, 1);
   logPacket('TX', frame);
 
-  const res = await serialMgr.sendAndReceive(frame, 150);
+  const res = await serialMgr.sendAndReceive(frame, 250);
   if (!res.ok) {
-    log(`起動指示タイムアウト`, 'warn');
+    const rxLen = res.data ? res.data.length : 0;
+    const rawHex = rxLen > 0 ? ` (受信: ${toHexStr(res.data)})` : ' (受信: 0B)';
+    log(`起動指示タイムアウト${rawHex}`, 'warn');
     return;
   }
 
@@ -589,10 +648,12 @@ btnFlashOTW.addEventListener('click', async () => {
         payload.set(cData, 3);
 
         const frame = buildMr32Frame(nodeId, 0x00, CMD_BOOT_WRITE_CHUNK, c, payload);
-        const res = await serialMgr.sendAndReceive(frame, 150);
+        const res = await serialMgr.sendAndReceive(frame, 200);
 
         if (!res.ok) {
-          throw new Error(`Page ${pageNo} Chunk ${c} 書込タイムアウト`);
+          const rxLen = res.data ? res.data.length : 0;
+          const rawHex = rxLen > 0 ? ` [生データ: ${toHexStr(res.data)}]` : ' [受信0バイト]';
+          throw new Error(`Page ${pageNo} Chunk ${c} 書込タイムアウト${rawHex}`);
         }
 
         if (c === 3) {

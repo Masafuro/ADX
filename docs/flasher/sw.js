@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-const CACHE_NAME = 'adx-mr32-flasher-v1';
+const CACHE_NAME = 'adx-mr32-flasher-v2';
 const ASSETS = [
   './',
   './index.html',
