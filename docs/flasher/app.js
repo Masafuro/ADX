@@ -320,19 +320,44 @@ function setFirmware(data, name) {
   log(`ファームウェアをロードしました: ${name} (${loadedFirmwareData.length} Bytes, CRC: 0x${totalCrc.toString(16).toUpperCase()})`, 'info');
 }
 
-// Load Built-in Preset
-btnPresetM4.addEventListener('click', () => {
-  if (typeof BUILTIN_M4_APP_BASE64 === 'undefined') {
-    log('プリセットデータが見つかりません。', 'error');
+function loadPreset(b64Str, name) {
+  if (!b64Str) {
+    log(`プリセットデータ [${name}] が見つかりません。`, 'error');
     return;
   }
-  const binaryStr = atob(BUILTIN_M4_APP_BASE64);
+  const binaryStr = atob(b64Str);
   const bytes = new Uint8Array(binaryStr.length);
   for (let i = 0; i < binaryStr.length; i++) {
     bytes[i] = binaryStr.charCodeAt(i);
   }
-  setFirmware(bytes, 'M4 Alternating LED Blink App (app_12k.bin)');
+  setFirmware(bytes, name);
+}
+
+// Preset Buttons
+btnPresetM4.addEventListener('click', () => {
+  loadPreset(window.BUILTIN_M4_APP_BASE64 || BUILTIN_M4_APP_BASE64, 'M4 Alternating LED Blink App (app_12k.bin)');
 });
+
+const btnSample1 = document.getElementById('btnSample1');
+if (btnSample1) {
+  btnSample1.addEventListener('click', () => {
+    loadPreset(window.SAMPLE1_RED_SOS_BASE64 || SAMPLE1_RED_SOS_BASE64, 'Sample 1: Red LED Morse SOS (sample1_red_sos.bin)');
+  });
+}
+
+const btnSample2 = document.getElementById('btnSample2');
+if (btnSample2) {
+  btnSample2.addEventListener('click', () => {
+    loadPreset(window.SAMPLE2_WHITE_STROBE_BASE64 || SAMPLE2_WHITE_STROBE_BASE64, 'Sample 2: White LED Strobe (sample2_white_strobe.bin)');
+  });
+}
+
+const btnSample3 = document.getElementById('btnSample3');
+if (btnSample3) {
+  btnSample3.addEventListener('click', () => {
+    loadPreset(window.SAMPLE3_SMART_ECHO_BASE64 || SAMPLE3_SMART_ECHO_BASE64, 'Sample 3: Smart Auto-Reboot (sample3_smart_echo.bin)');
+  });
+}
 
 // File Upload / Drop Handling
 fileInput.addEventListener('change', (e) => {
@@ -354,13 +379,77 @@ dropZone.addEventListener('drop', (e) => {
   }
 });
 
+// Intel HEX Format Parser (Auto-maps to 0x1000..0x3FFF)
+function parseIntelHex(hexText) {
+  const lines = hexText.split(/\r?\n/);
+  const targetLen = APP_TOTAL_PAGES * FLASH_PAGE_SIZE; // 12,288 Bytes
+  const appData = new Uint8Array(targetLen);
+  appData.fill(0xFF);
+
+  let upperAddr = 0;
+  let recordCount = 0;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed.startsWith(':')) continue;
+
+    const byteCount = parseInt(trimmed.substr(1, 2), 16);
+    const addr = parseInt(trimmed.substr(3, 4), 16);
+    const recordType = parseInt(trimmed.substr(7, 2), 16);
+    const dataStr = trimmed.substr(9, byteCount * 2);
+
+    if (recordType === 0x00) { // Data Record
+      const fullAddr = upperAddr + addr;
+      let offset = -1;
+      if (fullAddr >= 0x1000 && fullAddr < 0x4000) {
+        offset = fullAddr - 0x1000;
+      } else if (fullAddr < 0x3000) {
+        offset = fullAddr;
+      }
+
+      if (offset >= 0 && offset + byteCount <= appData.length) {
+        for (let i = 0; i < byteCount; i++) {
+          appData[offset + i] = parseInt(dataStr.substr(i * 2, 2), 16);
+        }
+        recordCount++;
+      }
+    } else if (recordType === 0x02) { // Extended Segment
+      upperAddr = parseInt(dataStr, 16) << 4;
+    } else if (recordType === 0x04) { // Extended Linear
+      upperAddr = parseInt(dataStr, 16) << 16;
+    } else if (recordType === 0x01) { // EOF
+      break;
+    }
+  }
+
+  if (recordCount === 0) {
+    throw new Error('有効な Intel HEX データレコードが見つかりませんでした。');
+  }
+  return appData;
+}
+
 function handleFile(file) {
+  const isHex = file.name.toLowerCase().endsWith('.hex');
   const reader = new FileReader();
-  reader.onload = (e) => {
-    const raw = new Uint8Array(e.target.result);
-    setFirmware(raw, file.name);
-  };
-  reader.readAsArrayBuffer(file);
+
+  if (isHex) {
+    reader.onload = (e) => {
+      try {
+        const text = e.target.result;
+        const parsed = parseIntelHex(text);
+        setFirmware(parsed, file.name);
+      } catch (err) {
+        log(`HEXパースエラー: ${err.message}`, 'error');
+      }
+    };
+    reader.readAsText(file);
+  } else {
+    reader.onload = (e) => {
+      const raw = new Uint8Array(e.target.result);
+      setFirmware(raw, file.name);
+    };
+    reader.readAsArrayBuffer(file);
+  }
 }
 
 // =========================================================================
