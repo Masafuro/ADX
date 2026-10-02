@@ -59,9 +59,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleUsbIntent(intent: Intent) {
         if (UsbManager.ACTION_USB_DEVICE_ATTACHED == intent.action) {
-            // Trigger auto connect attempt on device plug-in
+            // Trigger auto connect attempt on device plug-in @ 115200 bps
             webView.postDelayed({
-                usbBridge.connect(19200)
+                usbBridge.connect(115200)
             }, 500)
         }
     }

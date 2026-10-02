@@ -82,7 +82,7 @@
     }
 
     async open(options = {}) {
-      const baudRate = options.baudRate || 19200;
+      const baudRate = options.baudRate || 115200;
       const resJson = window.AndroidBridge.connect(baudRate);
       const res = JSON.parse(resJson);
       if (res.status === 'CONNECTED') {
