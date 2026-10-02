@@ -11,7 +11,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 While conventional prototyping boards excel on the workbench, transitioning them into actual enclosures, installations, or field deployments often brings physical frustration—mounting screws colliding with traces, lack of washer clearance, multi-directional cable protrusions, and rigid shield stacking that cannot absorb real-world mechanical tolerances. 
 
-ADX bridges the gap between desktop prototyping and physical deployment through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a flexible 20-pin IDC ribbon bus. From fully isolated, daisy-chainable field networking (ADX CORE-A) with real-time packet inspection (RPR4 Smart Probe) to versatile power and sensor extensions (CARD Series), ADX explores what is possible when hardware is built to fit cleanly inside 3D-printed enclosures, off-the-shelf waterproof cases, and electrical utility boxes.
+ADX bridges the gap between desktop prototyping and physical deployment through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a flexible 20-pin IDC ribbon bus. From fully isolated, daisy-chainable field networking (ADX CORE-A) with open MR32 protocol compatibility (usable with any generic USB-RS485 dongle) to versatile power and sensor extensions (CARD Series), ADX explores what is possible when hardware is built to fit cleanly inside 3D-printed enclosures, off-the-shelf waterproof cases, and electrical utility boxes.
 
 ---
 
@@ -25,31 +25,33 @@ ADX bridges the gap between desktop prototyping and physical deployment through 
   Expansion boards (CARDs) couple via a 20-pin IDC ribbon cable rather than rigid stacking pin headers. This absorbs enclosure manufacturing tolerances, allows flexible internal placement (stacked, coplanar, or folded), and eliminates pin-bending stress.
 * **Safe Bidirectional 5V Power Trunk (Double Check-Valve Architecture)**:
   The Core board can either receive power from Type-C (protected by an LM66100 ideal diode) to supply 5V / 2A+ to the IDC expansion bus, or accept 5V reverse power from a Power CARD via the IDC expansion bus. Bidirectional safety is guaranteed by "Double Check Valves"—the CORE-A PC back-feed prevention diode and the mandatory Power CARD reverse-current protection circuit (MUST requirement), physically eliminating cross-feed hazards and battery damage.
+* **MR32 Protocol (Dongle-Free Programming & Networking)**:
+  Deterministic 32-byte fixed-length protocol enabling instant, 3-second OTW firmware flashing and inter-node networking using **any generic $3–$5 USB-RS485 dongle** directly from smartphone browsers (Android PWA) and PCs without proprietary hardware lock-in.
 
 ---
 
 ## 2. Hardware Lineup
-The ADX platform is anchored by the universal **ADX CORE-A** MCU board, the **RPR4 Smart Probe** diagnostics tool, and flexible modular **CARDs**:
+The ADX platform is anchored by the universal **ADX CORE-A** MCU board, the open **MR32** field network architecture (enabling generic USB-RS485 dongle and smartphone PWA flashing), and flexible modular **CARDs**:
 
 ### 2.1 Core Board (MCU)
 
 | Board | Role & Power Architecture | Communication & Features | Target Applications & Status |
 | :--- | :--- | :--- | :--- |
-| **ADX CORE-A**<br>*(Absolute / Universal)*<br>**Target Price: $28** | **5V-Dedicated / Zero Self-Heating**<br>USB Type-C 6P (Ideal Diode LM66100 PC back-feed protection). Bidirectional 5V delivery via 20P Eject Header. | **Fully Isolated RS-485 (2500VDC)**<br>Mornsun TDA51S485HC. Direct front spring clamp terminal. Automotive AEC-Q102 LEDs (-40°C~+110°C). Secondary BMC supervisor. | Desktop, high-temp vehicle cabins, sealed IP67 cases, industrial control panels, -48V telecom infrastructure.<br>*(rev1 Netlist & Cost Locked, Pre-production)* |
-| *ADX Core-D*<br>*(R&D Testbed)* | *DC 5V USB / Terminal* | *LN-485 protocol and bootloader verification board. Validated across Phases 1–5.* | *Internal R&D testbed (Not for production).* |
+| **ADX CORE-A**<br>*(Absolute / Universal)*<br>**Target Price: $28** | **5V-Dedicated / Zero Self-Heating**<br>USB Type-C 6P (Ideal Diode LM66100 PC back-feed protection). Bidirectional 5V delivery via 20P Eject Header. | **Fully Isolated RS-485 (2500VDC)**<br>Mornsun TDA51S485HC. Direct front spring clamp terminal. Automotive AEC-Q102 LEDs (-40°C~+110°C). Secondary BMC supervisor. Native MR32 protocol stack. | Desktop, high-temp vehicle cabins, sealed IP67 cases, industrial control panels, -48V telecom infrastructure.<br>*(rev1 Netlist & Cost Locked, Pre-production)* |
+| *ADX Core-D*<br>*(R&D Testbed)* | *DC 5V USB / Terminal* | *LN-485 / MR32 protocol and bootloader verification board. Validated across Phases 1–5.* | *Internal R&D testbed (Not for production).* |
 
-### 2.2 Smart Diagnostics & Programmer
+### 2.2 Dongle-Free Communication & Programming (MR32 Architecture)
 
-| Tool | Role & Architecture | Key Features | Target Price & Status |
+| Component | Role & Interface | Key Features | Target Price & Status |
 | :--- | :--- | :--- | :--- |
-| **RPR4 Smart Probe** | **Fully Isolated RS-485 Pocket Analyzer**<br>Raspberry Pi RP2040 + Isolated RS-485 (TDA51S485HC). | **RP2040 PIO Real-time Analysis**<br>Auto-Baud detection, Modbus RTU / DMX / LN-485 decoding, dedicated Web PWA sniffer, 3-sec wireless OTW flashing. | **$25.00**<br>*(rev1 Netlist Locked, In Development)* |
+| **Generic USB-RS485 Converters** | **Off-the-shelf USB to RS-485 dongles**<br>CH340G, CP2102, FTDI, PL2303 chipsets. | **Standard UART 8N1 + WebSerial PWA**<br>Direct connection to Android smartphones (via Type-C OTG) and PCs. 100% electrically protected by CORE-A's 2,500V isolation. | **$3.00 〜 $10.00**<br>*(Standard commercial products, 100% verified)* |
 
 ### 2.3 CARDs (Modular Add-ons)
 
 | Board | Description | Status & Resources |
 | :--- | :--- | :--- |
 | **AAA 2S Power CARD** | 2× AAA battery boost converter feeding clean 5V, featuring BMC-gated nanoampere sleep shutdown. | Conceptual Planning |
-| **DC 12V–48V Power CARD** | Wide-input isolated DC-DC supporting factory 24V, automotive, and telecom -48V with centralized surge protection. | Conceptual Planning |
+| **DC 12V–48V (DC 24V) Power CARD** | Wide-input isolated DC-DC supporting factory 24V, automotive, and telecom -48V with centralized surge protection. | Conceptual Planning |
 | **ADX Prototyping CARD** | 8748 Form Factor companion board with 20P Eject Header pass-through and universal prototyping grid. | [Proposal](../../hardware/CARD/Prototyping/proposal.md) / [Data](../../hardware/CARD/Prototyping/data/) |
 
 ---

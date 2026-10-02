@@ -11,7 +11,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 While traditional prototyping boards excel on the workbench, deploying them into real-world enclosures, harsh industrial cabinets, or outdoor environments introduces friction—screw holes colliding with traces, multi-directional wiring protrusions, and rigid pin headers that cannot absorb mechanical tolerances.
 
-ADX solves this through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a flexible **20-pin IDC Eject Header bus**. Built upon a single, indestructible, industrial-grade core (**ADX CORE-A: $28**) and an isolated pocket analyzer (**RPR4 Smart Probe: $25**), ADX provides an uncompromised bridge from desktop prototyping to professional social infrastructure.
+ADX solves this through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a flexible **20-pin IDC Eject Header bus**. Built upon a single, indestructible, industrial-grade core (**ADX CORE-A: $28**) and an open, dongle-free field protocol (**MR32**), ADX provides an uncompromised bridge from desktop prototyping to professional social infrastructure.
 
 ---
 
@@ -29,6 +29,8 @@ ADX solves this through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a fl
   Heavy-duty MIL-DTL-83503 compliant ejector header ensuring zero vibration disconnects and 100% reverse/misalignment prevention, providing bidirectional 5V/2A power delivery.
 * **Ultra-Low Power BMC Supervisor**:
   Secondary MCU (ATtiny412) operating in the nanoampere sleep tier, enabling touchless remote Over-The-Wire (OTW) firmware flashing via mobile PWA.
+* **MR32 Protocol (Dongle-Free Architecture)**:
+  Deterministic 32-byte fixed-length packet protocol enabling instant, 3-second OTW firmware flashing and inter-node networking using **any generic $3–$5 USB-RS485 dongle** directly from smartphone browsers (Android PWA) and PCs without proprietary hardware lock-in.
 
 ---
 
@@ -42,20 +44,21 @@ ADX solves this through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a fl
 │  - USB Type-C 6P (Ideal Diode Reverse-Current Protection)              │
 │  - 20P Latch Eject Header (5V/2A Bidirectional Power Bus)              │
 │  - Board Management Controller (BMC) for <10µA Sleep & Remote Flashing │
+│  - Native MR32 Protocol Stack (Standard UART 8N1 + CRC-16)             │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
         ┌───────────────────────────┴───────────────────────────┐
         ▼ 20-Pin IDC Expansion Bus                              ▼ Front RS-485 Terminal
 ┌───────────────────────────────────┐               ┌───────────────────────────────────┐
-│     【 CARD Series (Modular) 】   │               │   【 RPR4 Smart Probe 】($25)     │
-│                                   │               │                                   │
-│ ① AAA 2S Power CARD (Battery)     │               │ - Raspberry Pi RP2040 Controller  │
-│    5V Boost / BMC-Gated Sleep     │               │ - Fully Isolated RS-485 (2500VDC) │
-│ ② DC 12V–48V Power CARD (Telecom) │               │                                   │
-│    Isolated DCDC / -48V & 24V IN  │               │ 【 RP2040 PIO + Web PWA Tool 】   │
-│ ③ Prototyping CARD                │               │ - RS-485 Logic Analyzer / Sniffer │
-│    20P Pass-Through + Breadboard  │               │ - Auto-Baud & Modbus/DMX Decoder  │
-│ (Future: 24V I/O, Relay CARDs)    │               │ - One-Tap Mobile OTW Programmer   │
+│     【 CARD Series (Modular) 】   │               │ 【 Generic USB-RS485 Dongles 】   │
+│                                   │               │ (Dongle-Free Architecture)        │
+│ ① AAA 2S Power CARD (Battery)     │               │ - Off-the-shelf $3–$10 converters │
+│    5V Boost / BMC-Gated Sleep     │               │   (CH340G, CP2102, FTDI, PL2303)  │
+│ ② DC 12V–48V Power CARD (Telecom) │               │ - Direct Phone (Android PWA) & PC │
+│    Isolated DCDC / -48V & 24V IN  │               │ - 100% Electrically Protected by  │
+│ ③ Prototyping CARD                │               │   CORE-A Onboard 2500V Isolation  │
+│    20P Pass-Through + Breadboard  │               │ - 3-second MR32 OTW Flashing      │
+│ (Future: 24V I/O, Relay CARDs)    │               │                                   │
 └───────────────────────────────────┘               └───────────────────────────────────┘
 ```
 
@@ -63,11 +66,7 @@ ADX solves this through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a fl
 * **ADX CORE-A ($28.00 USD)**:
   The absolute standard MCU board of the ADX ecosystem. Driven by a Microchip ATtiny1616-MNR and ATtiny412-SSNR, featuring fully isolated RS-485, AEC-Q102 automotive LEDs (-40°C to +110°C), and rugged front terminals.
 
-### 2.2 Smart Diagnostics & Programmer
-* **RPR4 Smart Probe ($25.00 USD)**:
-  Pocket-sized, fully isolated multi-tool powered by RP2040 PIO. Automatically detects RS-485 baud rates, decodes Modbus RTU / DMX512 / LN-485 protocols in real-time, and provides wireless 3-second OTW firmware uploads directly from a mobile smartphone browser.
-
-### 2.3 Modular Expansion CARDs
+### 2.2 Modular Expansion CARDs
 * **AAA 2S Battery CARD**: Ultra-low quiescent boost converter feeding 5V into the VDD bus, with BMC-linked complete shutdown.
 * **DC 12V–48V Industrial Power CARD**: Galvanically isolated wide-input DC-DC feeding clean 5V, supporting factory 24V and telecom -48V infrastructure.
 * **Prototyping CARD**: Universal breadboard area with 20-pin pass-through.
@@ -110,13 +109,14 @@ Eliminating the maintenance burden of native mobile apps (16KB page size crashes
 ┌────────────────────────────────────────────────────────┐
 │  ② Web PWA (Zero-Install, Runs in Any Browser)         │
 │     - Real-time parameter tuning via EEPROM (<0.1s)    │
-│     - WebSerial transfer to RPR4 Smart Probe           │
+│     - WebSerial / WebUSB transfer (MR32 Protocol)      │
 └───────────────────────────┬────────────────────────────┘
-                            │ USB (WebSerial)
+                            │ USB (Generic RS-485 Dongle)
                             ▼
 ┌────────────────────────────────────────────────────────┐
-│  ③ RPR4 Smart Probe ➔ ADX CORE-A                       │
-│     - Touchless, wireless Over-The-Wire (OTW) flashing │
+│  ③ Generic USB-RS485 Dongle ➔ ADX CORE-A               │
+│     - 3-second deterministic OTW flashing via MR32     │
+│     - 2,500V onboard galvanic isolation for safety     │
 └────────────────────────────────────────────────────────┘
 ```
 
@@ -149,9 +149,9 @@ ADX/
 │   └── ja/                 # Japanese documentation
 ├── hardware/               # Hardware design & production files (CERN-OHL-P-v2)
 │   ├── CORE-A/             # Flagship universal tough MCU board (-40°C~+105°C, isolated RS-485)
-│   ├── RPR4_Smart_Probe/   # Isolated pocket analyzer & OTW programmer (RP2040)
 │   ├── CARD/               # Modular add-on boards (Power, Prototyping)
-│   └── Formfactor/         # Mechanical 8748 templates and CAD models
+│   ├── Formfactor/         # Mechanical 8748 templates and CAD models
+│   └── archive/            # Retired / archived hardware designs (RPR4, Core-S, Core-D, Core-O)
 ├── firmware/               # Drivers, BSP, bootloaders, and samples (MIT)
 ├── logo/                   # Brand assets & logos
 └── memo/                   # Engineering notes & strategic concept reports
