@@ -1,0 +1,590 @@
+/*
+ * ADX MR32 WebSerial Flasher & Diagnostic Engine
+ * Copyright (c) 2026 ADX Project Contributors
+ * SPDX-License-Identifier: MIT
+ */
+
+// =========================================================================
+// MR32 Protocol Constants & Specifications
+// =========================================================================
+const MR32_SYNC_BYTE       = 0x55;
+const MR32_MAGIC_BYTE      = 0xAD;
+const MR32_FRAME_LEN       = 32;
+const MR32_PAYLOAD_LEN     = 24;
+
+const CMD_BOOT_PING        = 0x10;
+const CMD_BOOT_WRITE_CHUNK = 0x11;
+const CMD_BOOT_READ_CHUNK  = 0x12;
+const CMD_BOOT_CRC_CHECK   = 0x13;
+const CMD_BOOT_APP_EXEC    = 0x14;
+
+const STATUS_OK            = 0x00;
+const STATUS_ERR_PARAM     = 0x03;
+const STATUS_PAGE_DONE     = 0x10;
+
+const APP_START_PAGE       = 64;
+const APP_TOTAL_PAGES      = 192; // Pages 64..255 (12KB)
+const FLASH_PAGE_SIZE      = 64;
+const CHUNK_SIZE           = 16;
+const CHUNKS_PER_PAGE      = 4;
+
+// =========================================================================
+// CRC-16-CCITT Engine (Polynomial 0x1021, Initial 0xFFFF)
+// =========================================================================
+function calculateCRC16(data, initVal = 0xFFFF) {
+  let crc = initVal;
+  for (let i = 0; i < data.length; i++) {
+    crc ^= (data[i] << 8);
+    for (let j = 0; j < 8; j++) {
+      if (crc & 0x8000) {
+        crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+      } else {
+        crc = (crc << 1) & 0xFFFF;
+      }
+    }
+  }
+  return crc;
+}
+
+// Build 32-byte MR32 Fixed-length Frame
+function buildMr32Frame(dstId, srcId, cmd, seqNum, payload24 = null) {
+  const frame = new Uint8Array(MR32_FRAME_LEN);
+  frame[0] = MR32_SYNC_BYTE;
+  frame[1] = MR32_MAGIC_BYTE;
+  frame[2] = dstId & 0xFF;
+  frame[3] = srcId & 0xFF;
+  frame[4] = cmd & 0xFF;
+  frame[5] = seqNum & 0xFF;
+
+  if (payload24) {
+    const copyLen = Math.min(payload24.length, MR32_PAYLOAD_LEN);
+    frame.set(payload24.subarray(0, copyLen), 6);
+  }
+
+  // Calculate CRC over body (bytes 2..29, length 28)
+  const crc = calculateCRC16(frame.subarray(2, 30));
+  frame[30] = crc & 0xFF;
+  frame[31] = (crc >> 8) & 0xFF;
+
+  return frame;
+}
+
+// Parse and Validate 32-byte MR32 Frame
+function parseMr32Frame(frame) {
+  if (frame.length !== MR32_FRAME_LEN) {
+    return { valid: false, error: `Invalid length: ${frame.length} != 32` };
+  }
+  if (frame[0] !== MR32_SYNC_BYTE || frame[1] !== MR32_MAGIC_BYTE) {
+    return { valid: false, error: `Magic error: [0x${frame[0].toString(16)}, 0x${frame[1].toString(16)}]` };
+  }
+
+  const expectedCrc = calculateCRC16(frame.subarray(2, 30));
+  const receivedCrc = frame[30] | (frame[31] << 8);
+  if (expectedCrc !== receivedCrc) {
+    return { valid: false, error: `CRC mismatch: expected 0x${expectedCrc.toString(16)}, got 0x${receivedCrc.toString(16)}` };
+  }
+
+  return {
+    valid: true,
+    sync: frame[0],
+    magic: frame[1],
+    dstId: frame[2],
+    srcId: frame[3],
+    cmd: frame[4],
+    seqNum: frame[5],
+    payload: frame.subarray(6, 30),
+    crc16: receivedCrc
+  };
+}
+
+// Helper: Format bytes to HEX string
+function toHexStr(bytes) {
+  return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join(' ');
+}
+
+// =========================================================================
+// WebSerial Communication Controller
+// =========================================================================
+class SerialManager {
+  constructor() {
+    this.port = null;
+    this.reader = null;
+    this.writer = null;
+    this.isConnected = false;
+    this.isTransferring = false;
+  }
+
+  async connect() {
+    if (!('serial' in navigator)) {
+      throw new Error('お使いのブラウザは WebSerial API に対応していません。Chrome または Edge を使用してください。');
+    }
+
+    this.port = await navigator.serial.requestPort();
+    await this.port.open({
+      baudRate: 115200,
+      dataBits: 8,
+      stopBits: 1,
+      parity: 'none',
+      bufferSize: 1024
+    });
+
+    this.isConnected = true;
+    this.writer = this.port.writable.getWriter();
+    this.reader = this.port.readable.getReader();
+    return true;
+  }
+
+  async disconnect() {
+    this.isConnected = false;
+    if (this.reader) {
+      try { await this.reader.cancel(); } catch (e) {}
+      this.reader.releaseLock();
+      this.reader = null;
+    }
+    if (this.writer) {
+      try { await this.writer.close(); } catch (e) {}
+      this.writer.releaseLock();
+      this.writer = null;
+    }
+    if (this.port) {
+      try { await this.port.close(); } catch (e) {}
+      this.port = null;
+    }
+  }
+
+  // Send a 32-byte frame and wait for 32-byte response with timeout
+  async sendAndReceive(txFrame, timeoutMs = 120) {
+    if (!this.isConnected || !this.writer || !this.reader) {
+      throw new Error('シリアルポートが接続されていません。');
+    }
+
+    const tStart = performance.now();
+
+    // 1. Send frame
+    await this.writer.write(txFrame);
+
+    // 2. Read exact 32 bytes
+    const rxBuf = new Uint8Array(MR32_FRAME_LEN);
+    let bytesRead = 0;
+    const deadline = performance.now() + timeoutMs;
+
+    while (bytesRead < MR32_FRAME_LEN) {
+      const remainingTime = deadline - performance.now();
+      if (remainingTime <= 0) break;
+
+      // Promise with timeout
+      const readPromise = this.reader.read();
+      const timeoutPromise = new Promise(resolve => setTimeout(() => resolve({ value: null, done: false, timeout: true }), remainingTime));
+      
+      const result = await Promise.race([readPromise, timeoutPromise]);
+      if (result.timeout || result.done || !result.value) {
+        break;
+      }
+
+      const chunk = result.value;
+      const copyLen = Math.min(chunk.length, MR32_FRAME_LEN - bytesRead);
+      rxBuf.set(chunk.subarray(0, copyLen), bytesRead);
+      bytesRead += copyLen;
+    }
+
+    const tEnd = performance.now();
+    const rtt = tEnd - tStart;
+
+    if (bytesRead === MR32_FRAME_LEN) {
+      return { ok: true, data: rxBuf, rtt };
+    }
+    return { ok: false, data: rxBuf.subarray(0, bytesRead), rtt, timeout: true };
+  }
+}
+
+// Global Manager Instance
+const serialMgr = new SerialManager();
+
+// =========================================================================
+// UI Controller & State
+// =========================================================================
+let loadedFirmwareData = null; // 12,288 Bytes (192 pages)
+let loadedFirmwareName = "";
+
+// DOM Elements
+const statusDot = document.getElementById('statusDot');
+const statusText = document.getElementById('statusText');
+const btnConnect = document.getElementById('btnConnect');
+const btnDisconnect = document.getElementById('btnDisconnect');
+const targetNodeInput = document.getElementById('targetNodeId');
+
+const btnPing = document.getElementById('btnPing');
+const btnProtectTest = document.getElementById('btnProtectTest');
+const btnPresetM4 = document.getElementById('btnPresetM4');
+const btnFlashOTW = document.getElementById('btnFlashOTW');
+const btnLaunchApp = document.getElementById('btnLaunchApp');
+const fileInput = document.getElementById('fileInput');
+const dropZone = document.getElementById('dropZone');
+
+const fwInfoBox = document.getElementById('fwInfoBox');
+const fwFileName = document.getElementById('fwFileName');
+const fwFileSize = document.getElementById('fwFileSize');
+const fwCrcBadge = document.getElementById('fwCrcBadge');
+
+const progressBar = document.getElementById('progressBar');
+const progressPercent = document.getElementById('progressPercent');
+const progressSubText = document.getElementById('progressSubText');
+const metricSpeed = document.getElementById('metricSpeed');
+const metricElapsed = document.getElementById('metricElapsed');
+const metricAvgRtt = document.getElementById('metricAvgRtt');
+const metricCurrentPage = document.getElementById('metricCurrentPage');
+
+const consoleOutput = document.getElementById('consoleOutput');
+const btnClearLog = document.getElementById('btnClearLog');
+
+// Logging utility
+function log(msg, type = 'info') {
+  const now = new Date();
+  const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+  
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  entry.innerHTML = `<span class="log-time">[${timeStr}]</span> <span class="log-${type}">${msg}</span>`;
+  consoleOutput.appendChild(entry);
+  consoleOutput.scrollTop = consoleOutput.scrollHeight;
+}
+
+// Log MR32 Packets
+function logPacket(direction, frame, rtt = 0) {
+  const cmdNames = {
+    0x10: 'PING',
+    0x11: 'WRITE_CHUNK',
+    0x12: 'READ_CHUNK',
+    0x13: 'CRC_CHECK',
+    0x14: 'APP_EXEC'
+  };
+  const cmd = frame[4];
+  const cmdName = cmdNames[cmd] || `CMD:0x${cmd.toString(16)}`;
+  const hex = toHexStr(frame);
+  const rttStr = rtt > 0 ? ` (${rtt.toFixed(1)}ms)` : '';
+
+  if (direction === 'TX') {
+    log(`TX ▶ [${cmdName}] ${hex}`, 'tx');
+  } else {
+    log(`RX ◀ [${cmdName}] ${hex}${rttStr}`, 'rx');
+  }
+}
+
+// Update Connection UI
+function updateConnectionUI(connected, portInfo = '') {
+  if (connected) {
+    statusDot.className = 'status-dot connected';
+    statusText.textContent = `CONNECTED (115.2k 8N1)`;
+    btnConnect.disabled = true;
+    btnDisconnect.disabled = false;
+    btnPing.disabled = false;
+    btnProtectTest.disabled = false;
+    btnLaunchApp.disabled = false;
+    if (loadedFirmwareData) btnFlashOTW.disabled = false;
+    log(`RS-485 ポートに正常接続しました (@ 115,200 bps 8N1)`, 'success');
+  } else {
+    statusDot.className = 'status-dot';
+    statusText.textContent = 'DISCONNECTED';
+    btnConnect.disabled = false;
+    btnDisconnect.disabled = true;
+    btnPing.disabled = true;
+    btnProtectTest.disabled = true;
+    btnFlashOTW.disabled = true;
+    btnLaunchApp.disabled = true;
+    log(`シリアルポートを切断しました。`, 'info');
+  }
+}
+
+// =========================================================================
+// Firmware Loader (Preset & Custom File)
+// =========================================================================
+function setFirmware(data, name) {
+  // Pad or slice to exactly 12,288 Bytes (192 pages * 64B)
+  const targetLen = APP_TOTAL_PAGES * FLASH_PAGE_SIZE;
+  const padded = new Uint8Array(targetLen);
+  padded.fill(0xFF);
+  padded.set(data.subarray(0, Math.min(data.length, targetLen)));
+
+  loadedFirmwareData = padded;
+  loadedFirmwareName = name;
+
+  const totalCrc = calculateCRC16(loadedFirmwareData);
+  fwFileName.textContent = name;
+  fwFileSize.textContent = `${loadedFirmwareData.length} Bytes (192 Pages / 12KB)`;
+  fwCrcBadge.textContent = `CRC: 0x${totalCrc.toString(16).toUpperCase().padStart(4, '0')}`;
+  fwInfoBox.style.display = 'flex';
+
+  if (serialMgr.isConnected) {
+    btnFlashOTW.disabled = false;
+  }
+  log(`ファームウェアをロードしました: ${name} (${loadedFirmwareData.length} Bytes, CRC: 0x${totalCrc.toString(16).toUpperCase()})`, 'info');
+}
+
+// Load Built-in Preset
+btnPresetM4.addEventListener('click', () => {
+  if (typeof BUILTIN_M4_APP_BASE64 === 'undefined') {
+    log('プリセットデータが見つかりません。', 'error');
+    return;
+  }
+  const binaryStr = atob(BUILTIN_M4_APP_BASE64);
+  const bytes = new Uint8Array(binaryStr.length);
+  for (let i = 0; i < binaryStr.length; i++) {
+    bytes[i] = binaryStr.charCodeAt(i);
+  }
+  setFirmware(bytes, 'M4 Alternating LED Blink App (app_12k.bin)');
+});
+
+// File Upload / Drop Handling
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) handleFile(file);
+});
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.classList.add('dragover');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  if (e.dataTransfer.files.length > 0) {
+    handleFile(e.dataTransfer.files[0]);
+  }
+});
+
+function handleFile(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const raw = new Uint8Array(e.target.result);
+    setFirmware(raw, file.name);
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// =========================================================================
+// Actions (Connect, Ping, Protection, OTW Flash, Launch)
+// =========================================================================
+
+// Connect
+btnConnect.addEventListener('click', async () => {
+  try {
+    await serialMgr.connect();
+    updateConnectionUI(true);
+  } catch (err) {
+    log(`接続失敗: ${err.message}`, 'error');
+  }
+});
+
+// Disconnect
+btnDisconnect.addEventListener('click', async () => {
+  await serialMgr.disconnect();
+  updateConnectionUI(false);
+});
+
+// Ping
+btnPing.addEventListener('click', async () => {
+  const nodeId = parseInt(targetNodeInput.value, 16) || 0x01;
+  log(`Node 0x${nodeId.toString(16).padStart(2, '0')} へ Ping (0x10) を送信中...`, 'info');
+
+  const frame = buildMr32Frame(nodeId, 0x00, CMD_BOOT_PING, 1);
+  logPacket('TX', frame);
+
+  const res = await serialMgr.sendAndReceive(frame, 150);
+  if (!res.ok) {
+    log(`Ping タイムアウト: 応答がありません。`, 'warn');
+    return;
+  }
+
+  logPacket('RX', res.data, res.rtt);
+  const parsed = parseMr32Frame(res.data);
+  if (!parsed.valid) {
+    log(`パケット検証エラー: ${parsed.error}`, 'error');
+    return;
+  }
+
+  const p = parsed.payload;
+  const mcuId = (p[1] << 8) | p[2];
+  const flashKb = p[3];
+  const pageB = p[4];
+  log(`★ Ping 成功! RTT=${res.rtt.toFixed(1)}ms | MCU: 0x${mcuId.toString(16).toUpperCase()} (ATtiny1616), Flash: ${flashKb}KB, Page: ${pageB}B`, 'success');
+});
+
+// Protection Test
+btnProtectTest.addEventListener('click', async () => {
+  const nodeId = parseInt(targetNodeInput.value, 16) || 0x01;
+  log(`自爆防止ガード検証: 保護領域 Page 0 への書込を試行中...`, 'info');
+
+  const payload = new Uint8Array(24);
+  // req_page = 0, chunk = 0
+  payload[0] = 0x00;
+  payload[1] = 0x00;
+  payload[2] = 0x00;
+
+  const frame = buildMr32Frame(nodeId, 0x00, CMD_BOOT_WRITE_CHUNK, 1, payload);
+  logPacket('TX', frame);
+
+  const res = await serialMgr.sendAndReceive(frame, 150);
+  if (!res.ok) {
+    log(`保護テストタイムアウト`, 'warn');
+    return;
+  }
+
+  logPacket('RX', res.data, res.rtt);
+  const parsed = parseMr32Frame(res.data);
+  if (!parsed.valid) {
+    log(`パケット検証エラー: ${parsed.error}`, 'error');
+    return;
+  }
+
+  const status = parsed.payload[0];
+  if (status === STATUS_ERR_PARAM) {
+    log(`★ 自爆防止ガード発動確認! Page 0 書込は STATUS_ERR_PARAM (0x03) で安全に拒絶されました (RTT=${res.rtt.toFixed(1)}ms)`, 'success');
+  } else {
+    log(`[WARN] 予期しないステータス: 0x${status.toString(16)}`, 'warn');
+  }
+});
+
+// Launch User Application
+btnLaunchApp.addEventListener('click', async () => {
+  const nodeId = parseInt(targetNodeInput.value, 16) || 0x01;
+  log(`ユーザーアプリ起動指示 (0x14) を送信中...`, 'info');
+
+  const frame = buildMr32Frame(nodeId, 0x00, CMD_BOOT_APP_EXEC, 1);
+  logPacket('TX', frame);
+
+  const res = await serialMgr.sendAndReceive(frame, 150);
+  if (!res.ok) {
+    log(`起動指示タイムアウト`, 'warn');
+    return;
+  }
+
+  logPacket('RX', res.data, res.rtt);
+  log(`★ ブートローダーが起動コマンドを受理しました! 0x1000 へジャンプします。`, 'success');
+  log(`>>> 基板の赤LED(PB2)と白LED(PB3)の高速交互点滅を確認してください! <<<`, 'success');
+});
+
+// 12KB High-Speed Full OTW Flasher
+btnFlashOTW.addEventListener('click', async () => {
+  if (!loadedFirmwareData || serialMgr.isTransferring) return;
+
+  const nodeId = parseInt(targetNodeInput.value, 16) || 0x01;
+  serialMgr.isTransferring = true;
+  statusDot.className = 'status-dot flashing';
+  statusText.textContent = 'FLASHING 12KB OTW...';
+  btnFlashOTW.disabled = true;
+  btnPing.disabled = true;
+  btnProtectTest.disabled = true;
+
+  log(`=== 12KB フル OTW ファームウェア更新を開始 (Pages 64..255) ===`, 'info');
+
+  const tStart = performance.now();
+  const pageRtts = [];
+
+  try {
+    for (let pIdx = 0; pIdx < APP_TOTAL_PAGES; pIdx++) {
+      const pageNo = APP_START_PAGE + pIdx;
+      const pageData = loadedFirmwareData.subarray(pIdx * FLASH_PAGE_SIZE, (pIdx + 1) * FLASH_PAGE_SIZE);
+      const expectedPageCrc = calculateCRC16(pageData);
+
+      const tPageStart = performance.now();
+
+      // Send 4 chunks
+      for (let c = 0; c < CHUNKS_PER_PAGE; c++) {
+        const cData = pageData.subarray(c * CHUNK_SIZE, (c + 1) * CHUNK_SIZE);
+        const payload = new Uint8Array(24);
+        payload[0] = pageNo & 0xFF;
+        payload[1] = (pageNo >> 8) & 0xFF;
+        payload[2] = c;
+        payload.set(cData, 3);
+
+        const frame = buildMr32Frame(nodeId, 0x00, CMD_BOOT_WRITE_CHUNK, c, payload);
+        const res = await serialMgr.sendAndReceive(frame, 150);
+
+        if (!res.ok) {
+          throw new Error(`Page ${pageNo} Chunk ${c} 書込タイムアウト`);
+        }
+
+        if (c === 3) {
+          const parsed = parseMr32Frame(res.data);
+          if (!parsed.valid) throw new Error(`Page ${pageNo} 応答破損: ${parsed.error}`);
+
+          const status = parsed.payload[0];
+          const flashCrc = parsed.payload[5] | (parsed.payload[6] << 8);
+
+          if (status !== STATUS_PAGE_DONE) {
+            throw new Error(`Page ${pageNo} コミット失敗: status 0x${status.toString(16)}`);
+          }
+          if (flashCrc !== expectedPageCrc) {
+            throw new Error(`Page ${pageNo} CRC不一致: Flash 0x${flashCrc.toString(16)} != 期待値 0x${expectedPageCrc.toString(16)}`);
+          }
+        }
+      }
+
+      const tPageEnd = performance.now();
+      const pageRtt = tPageEnd - tPageStart;
+      pageRtts.push(pageRtt);
+
+      // UI Update
+      const progress = (pIdx + 1) / APP_TOTAL_PAGES;
+      progressBar.style.width = `${(progress * 100).toFixed(1)}%`;
+      progressPercent.textContent = `${(progress * 100).toFixed(1)}%`;
+      progressSubText.textContent = `Page ${pageNo} / 255 (RTT: ${pageRtt.toFixed(1)}ms)`;
+
+      const elapsedSec = (performance.now() - tStart) / 1000.0;
+      const kbSec = ((pIdx + 1) * 64 / 1024.0) / elapsedSec;
+      metricSpeed.textContent = `${kbSec.toFixed(2)} KB/s`;
+      metricElapsed.textContent = `${elapsedSec.toFixed(2)}s`;
+      metricAvgRtt.textContent = `${(pageRtts.reduce((a, b) => a + b, 0) / pageRtts.length).toFixed(1)}ms`;
+      metricCurrentPage.textContent = `${pageNo}`;
+    }
+
+    const tTotalSec = (performance.now() - tStart) / 1000.0;
+    log(`★ 12KB フル OTW 書き換え完了! 所要時間: ${tTotalSec.toFixed(2)} 秒 (実効速度: ${(12.0 / tTotalSec).toFixed(2)} KB/s)`, 'success');
+
+    // Auto Launch
+    log(`新ファームウェア自動起動コマンド (0x14) を発行中...`, 'info');
+    const execFrame = buildMr32Frame(nodeId, 0x00, CMD_BOOT_APP_EXEC, 1);
+    const execRes = await serialMgr.sendAndReceive(execFrame, 150);
+    if (execRes.ok) {
+      log(`★ アプリケーション自動起動成功! 基板の赤・白LED交互点滅を確認してください!`, 'success');
+    }
+
+  } catch (err) {
+    log(`OTW書込中断: ${err.message}`, 'error');
+  } finally {
+    serialMgr.isTransferring = false;
+    statusDot.className = 'status-dot connected';
+    statusText.textContent = 'CONNECTED';
+    btnFlashOTW.disabled = false;
+    btnPing.disabled = false;
+    btnProtectTest.disabled = false;
+  }
+});
+
+// Clear log
+btnClearLog.addEventListener('click', () => {
+  consoleOutput.innerHTML = '';
+});
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.pane).classList.add('active');
+  });
+});
+
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      console.log('PWA Service Worker registered:', reg.scope);
+    }).catch(err => {
+      console.warn('PWA SW registration failed:', err);
+    });
+  });
+}
