@@ -77,14 +77,26 @@ int main(void) {
     USART0.CTRLA = 0;
     USART0.CTRLB = USART_RXMODE_NORMAL_gc | USART_RXEN_bm | USART_TXEN_bm;
 
-    _delay_ms(50);
+    // 起動直後の残余バッファを完全にフラッシュ
+    while (USART0.STATUS & USART_RXCIF_bm) {
+        (void)USART0.RXDATAL;
+    }
+
+    _delay_ms(100);
     dbg_print("\r\n=======================================================\r\n");
     dbg_print("   🌟 ADX SAMPLE 3: SMART AUTO-REBOOT ACTIVE! 🌟\r\n");
     dbg_print("   Both LEDs Breathe (500ms) | Listening on RS-485\r\n");
     dbg_print("   [MAGIC] Send Ping/Connect from PWA to Reboot!\r\n");
     dbg_print("=======================================================\r\n");
 
-    uint8_t rx_state = 0;
+    // 起動後 1 秒間はジャンプ直後の余韻パケットによる誤リブートを防止するガード時間
+    _delay_ms(500);
+    while (USART0.STATUS & USART_RXCIF_bm) {
+        (void)USART0.RXDATAL;
+    }
+
+    uint8_t rx_buf[6];
+    uint8_t rx_idx = 0;
     uint32_t loop_count = 0;
     bool led_state = false;
 
@@ -93,20 +105,32 @@ int main(void) {
         if (USART0.STATUS & USART_RXCIF_bm) {
             uint8_t b = USART0.RXDATAL;
 
-            if (rx_state == 0 && b == MR32_SYNC_BYTE) {
-                rx_state = 1;
-            } else if (rx_state == 1 && b == MR32_MAGIC_BYTE) {
-                rx_state = 2;
-            } else if (rx_state == 2) {
-                // Byte 2 is DST, Byte 3 is SRC, Byte 4 is CMD
-                // For simplicity, if we get SYNC + MAGIC and packet is arriving,
-                // trigger Software Reset to return to Bootloader!
-                dbg_print("\r\n[SMART-APP] MR32 Packet Detected! Software Resetting to Bootloader...\r\n");
-                _delay_ms(20);
-                _PROTECTED_WRITE(RSTCTRL.SWRR, 1); // Software Reset!
-                while (1) ;
+            if (rx_idx == 0) {
+                if (b == MR32_SYNC_BYTE) {
+                    rx_buf[0] = b;
+                    rx_idx = 1;
+                }
+            } else if (rx_idx == 1) {
+                if (b == MR32_MAGIC_BYTE) {
+                    rx_buf[1] = b;
+                    rx_idx = 2;
+                } else {
+                    rx_idx = 0;
+                }
             } else {
-                rx_state = 0;
+                rx_buf[rx_idx++] = b;
+                // Byte 2: DST, Byte 3: SRC, Byte 4: CMD
+                if (rx_idx >= 5) {
+                    uint8_t cmd = rx_buf[4];
+                    // 明示的に Ping (0x10) または BMC Boot (0x01) を受領した時だけリブート！
+                    if (cmd == CMD_PING || cmd == CMD_BOOT) {
+                        dbg_print("\r\n[SMART-APP] Valid MR32 Ping/Boot Received! Resetting to Bootloader...\r\n");
+                        _delay_ms(20);
+                        _PROTECTED_WRITE(RSTCTRL.SWRR, 1); // Software Reset!
+                        while (1) ;
+                    }
+                    rx_idx = 0;
+                }
             }
         }
 
