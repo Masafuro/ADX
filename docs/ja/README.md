@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 [ English (../en/README.md) | **日本語** ]
 
-**ADX（Advanced Devices eXtended）**は、**「Enclosure-Friendly（筐体適合性）」** をコアフィロソフィーとして掲げる、オープンソースのハードウェア規格およびモジュラー制御プラッ�ADXは、**8748 Form Factor**（`87.0 mm × 48.0 mm`）と **IDCリボンケーブルによるフレキシブルな拡張バス**を通じてこれらの課題を解消します。音響・PA機器のように確実かつ直感的に配線できる完全絶縁フィールドネットワーク（ADX CORE-A）と市販ドングル直結のMR32プロトコル、そして多彩な電源・センサー拡張（CARDシリーズ）が、3Dプリントケースや市販防水ボックスに美しく収まるハードウェアエコシステムの新しい可能性を切り拓きます。
+**ADX（Advanced Devices eXtended）**は、**「Enclosure-Friendly（筐体適合性）」** をコアフィロソフィーとして掲げる、オープンソースのハードウェア規格およびモジュラー制御プラットフォームであるADXは、**8748 Form Factor**（`87.0 mm × 48.0 mm`）と **IDCリボンケーブルによるフレキシブルな拡張バス**を通じてこれらの課題を解消します。音響・PA機器のように確実かつ直感的に配線できる完全絶縁フィールドネットワーク（ADX CORE-A）と市販ドングル直結のMR32プロトコル、そして多彩な電源・センサー拡張（CARDシリーズ）が、3Dプリントケースや市販防水ボックスに美しく収まるハードウェアエコシステムの新しい可能性を切り拓きます。
 
 ---
 
@@ -49,7 +49,7 @@ ADXエコシステムは、同一の8748フォームファクタと20ピン拡�
 | :--- | :--- | :--- |
 | **AAA 2S Power CARD** | 単4アルカリ電池×2本から低暗電流昇圧DCDCでクリーンな5Vを生成。BMC連動スリープで待機電流ナノアンペア化。 | 設計検討中 |
 | **DC 12V〜48V (DC 24V) Power CARD** | 工場配電盤（24V）、車載（12V/24V）、通信基地局（-48V）等の広入力をトランス絶縁5V変換。サージ保護集約。 | 設計検討中 |
-| **ADX Prototyping CARD** | 8748フォームファクタ準拠、20P Eject Header引き出しおよびユニバーサル試作エリアを備えた拡張基板。 | [仕様書](../../hardware/CARD/Prototyping/proposal.md) / [設計データ](../../hardware/CARD/Prototyping/data/) |�電源衝突や逆流事故を防止。
+| **ADX Prototyping CARD** | 8748フォームファクタ準拠、20P Eject Header引き出しおよびユニバーサル試作エリアを備えた拡張基板。 | [仕様書](../../hardware/CARD/Prototyping/proposal.md) / [設計データ](../../hardware/CARD/Prototyping/data/) |�電源衝突や逆流事故を防止。
 
 ---
 
