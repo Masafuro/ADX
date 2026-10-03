@@ -6,6 +6,10 @@ SPDX-License-Identifier: CC-BY-4.0
 # ADX 基幹フィールドネットワーク「LM-32」仕様書 (LM-32 Specification)
 〜 LIN-inspired Master-scheduled, 32-byte Fixed-Length Deterministic Protocol 〜
 
+> [!WARNING]
+> **規格移行・改訂のお知らせ (2026-10-03)**:
+> 本仕様（標準 UART In-band マジックパケット同期）は、実機検証の結果「Out-of-baud な BREAK 信号による絶対同期が不可欠」と判断されたため、LIN BREAK ＋ RS-485 差動伝送 ＋ 32B 固定長を統合した **[LD-32 仕様書 (memo/LD32_PROTOCOL_SPECIFICATION.md)](file:///home/ubuntu/AgentWorkspace/ADX/github/ADX/memo/LD32_PROTOCOL_SPECIFICATION.md)** へと再検討・正式移行されました。
+
 ---
 
 ## 1. エグゼクティブ・サマリー（LM-32 策定の意義と背景）
