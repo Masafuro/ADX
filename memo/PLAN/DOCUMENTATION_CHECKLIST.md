@@ -69,7 +69,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 各ファイルを編集・作成した際、上記チェックリストをパスしたことを記録します：
 
-- [ ] **`hardware/CORE-U/concept.md`**（ハードウェア仕様更新）: ______年____月____日 確認済
-- [ ] **`README.md`**（ルート英語全面刷新）: ______年____月____日 確認済
-- [ ] **`docs/ja/README.md`**（日本語全面刷新）: ______年____月____日 確認済
-- [ ] **`docs/ja/adx_formfactor_guidelines.md`**（ガイドライン整合性）: ______年____月____日 確認済
+- [x] **`hardware/CORE-U/concept.md`**（ハードウェア仕様更新）: 2026年10月12日 確認済
+- [x] **`README.md`**（ルート英語全面刷新）: 2026年10月12日 確認済
+- [x] **`docs/ja/README.md`**（日本語全面刷新）: 2026年10月12日 確認済
+- [x] **`docs/ja/adx_formfactor_guidelines.md`**（ガイドライン整合性）: 2026年10月12日 確認済
