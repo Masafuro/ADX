@@ -13,16 +13,16 @@ This document defines the official product naming syntax and safety classificati
 
 ## 1. Background & Philosophy
 
-ADX aims to bridge the gap between "the accessible UX of Arduino" and "the rugged reliability required for industrial field environments."
+ADX aims to bridge the gap between "the accessible UX of Arduino" and "reliable physical deployment in real-world enclosures."
 
-When dealing with fieldbuses (RS-485) and diverse power domains, there is a fundamental physical tradeoff between **"extreme miniaturization/cost reduction"** and **"absolute safety against all forms of wiring errors"**:
+When dealing with fieldbuses (RS-485) and diverse power domains, there is a fundamental physical tradeoff between **"miniaturization/cost reduction"** and **"broad resilience against common wiring errors"**:
 
 - **Non-isolated / Common GND:**
-  Allows reducing component count and producing ultra-low-cost, compact boards. However, during power reverse-polarity or ground-loop voltage differentials, the ground plane can float, risking **cascading destruction** back into connected upstream equipment (laptops, PLCs, precision test instruments) through communication lines.
+  Allows reducing component count and producing compact boards. However, during power reverse-polarity or ground-loop voltage differentials, the ground plane can float, risking **cascading destruction** back into connected upstream equipment (laptops, PLCs, precision test instruments) through communication lines.
 - **Fully Isolated:**
-  Electrical domains are strictly separated, completely preventing cascading destruction even under severe wiring mistakes or ground faults. However, digital isolators and isolated DC-DC converters add BOM cost and board surface area.
+  Electrical domains are strictly separated, preventing cascading destruction even under severe wiring mistakes or ground faults. However, digital isolators and isolated DC-DC converters add BOM cost and board surface area.
 
-Rather than locking away low-cost, non-isolated designs as "too dangerous," ADX adopts a dual-tier portfolio: providing open design files as **"Professional / DIY Grade (`-P`)"** for experienced engineers who manage risks, while providing foolproof **"Production Grade"** hardware for general users.
+Rather than locking away low-cost, non-isolated designs as "too dangerous," ADX adopts a dual-tier portfolio: providing open design files as **"Professional / DIY Grade (`-P`)"** for experienced engineers who manage risks, while providing reliable **"Production Grade"** hardware for general users.
 
 This clear naming convention conveys this distinction immediately.
 
@@ -75,10 +75,10 @@ graph TD
 - **Definition:** High-density, cost-optimized designs intended exclusively for experienced engineers with circuit comprehension and wiring control.
 - **Tradeoffs:**
   1. **Common Ground / Non-isolated:** Due to cost or board area constraints, wiring mistakes may cause dangerous loop currents or back-feed.
-  2. **Extreme Cost Efficiency:** Omitting isolators allows high-volume production for a fraction of the cost via JLCPCB PCBA.
+  2. **High Cost Efficiency:** Omitting isolators allows affordable production via JLCPCB PCBA.
 - **Distribution & Policy:**
   - **Not commercially sold as pre-assembled finished goods.**
-  - 100% open design files (Gerber, BOM, CPL, EasyEDA/KiCad projects) released for users to order and fabricate at their own responsibility.
+  - Open design files (Gerber, BOM, CPL, EasyEDA/KiCad projects) released for users to order and fabricate at their own responsibility.
   - Must include explicit cascading destruction warnings and liability disclaimers.
 
 ---
@@ -87,7 +87,7 @@ graph TD
 
 | Part Number | Grade | Isolation | Primary Applications & Target Audience |
 | :--- | :--- | :--- | :--- |
-| **`ADX CORE-A`** | Production | **Fully Isolated** | **ADX Absolute Standard.** 2500V isolated RS-485, dedicated clean 5V, PC back-feed protection. Safe for anyone from desktop development to summer vehicle cabins and factory control panels. |
+| **`ADX CORE-A`** | Production | **Fully Isolated** | **High-Durability Field Model.** 2500V isolated RS-485, 5V power, PC back-feed protection. Built for harsh environments such as industrial control panels and vehicle cabins. |
 | **`ADX CORE-I`** | Production | **Dual Isolated** | General deployment with external PLCs, PCs, and different power domains. |
 | **`ADX CORE-S-P`** | Professional | **Non-isolated** | Enclosed equipment, internal test fixtures, robot wiring, cost-critical prototypes. DIY fabrication at own risk. |
 | **`ADX Core-D`** | Development | Non-isolated | Internal verification testbed for LN-485 bootloader and firmware. |

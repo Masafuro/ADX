@@ -11,13 +11,13 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## 1. Overview & Philosophy
 
-This guideline defines the standard design rules for engineers developing Core boards (e.g., **ADX CORE-A**) and expansion cards (**CARD Series**) in the ADX ecosystem.
+This guideline defines the standard design rules for engineers developing Core boards (e.g., **ADX CORE-U**) and expansion cards (**CARD Series**) in the ADX ecosystem.
 
 This specification balances two essential principles:
 1. **Open-Source Freedom & Low Barrier to Entry:**
    - Enabling hobbyists, researchers, and DIY developers to easily create custom add-on cards at low cost with creative freedom.
-2. **Absolute Industrial Safety & Robustness:**
-   - Guaranteeing that no matter what expansion card is plugged in, catastrophic accidents (fire, battery rupture, PC port burnout, high-voltage shorts) are physically and electrically prevented.
+2. **Equipment Safety & Robustness:**
+   - Designing interfaces to actively prevent catastrophic accidents (fire, battery rupture, host PC burnout, power shorts) regardless of which expansion cards are attached.
 
 To achieve this balance, this guideline defines three requirement tiers based on **RFC 2119**.
 
@@ -27,7 +27,7 @@ To achieve this balance, this guideline defines three requirement tiers based on
 
 | Level | Keyword | Definition & Scope |
 | :---: | :---: | :--- |
-| **Level 1** | **[MUST] Mandatory**<br>*(Shall / Required)* | **Absolute constraints required to prevent electrical fires, physical destruction, or danger to human life.**<br>Must be strictly obeyed by all ADX hardware without exception (Official, third-party, and DIY). |
+| **Level 1** | **[MUST] Mandatory**<br>*(Shall / Required)* | **Mandatory constraints required to prevent electrical fires, physical destruction, or danger to human life.**<br>Must be strictly obeyed by all ADX hardware without exception (Official, third-party, and DIY). |
 | **Level 2** | **[SHOULD] Official Standard**<br>*(Recommended)* | **Industrial-grade quality and reliability standards met by official ADX products.**<br>Designed for automotive, extreme temperatures, and critical infrastructure. DIY and specialized cards may deviate. |
 | **Level 3** | **[MAY] Developer Freedom**<br>*(Optional)* | **Areas left entirely to the developer's creativity, cost targets, and design requirements.** |
 
@@ -64,7 +64,7 @@ To achieve this balance, this guideline defines three requirement tiers based on
 
 1. **[MUST] Reverse-Current Blocking for Power CARDs (Mandatory):**
    - Any CARD injecting power into the 20-pin bus (Pins 1–4: VDD) **MUST provide a reverse-current blocking mechanism at its output** (Schottky diode, ideal diode, or synchronous DCDC with reverse-blocking capability).
-   - *(Reason: When CORE-A is plugged into a PC via USB Type-C on the workbench, the 5.0V USB rail must be 100% prevented from back-feeding into external alkaline batteries, eliminating **battery rupture and electrolyte leakage fires**).*
+   - *(Reason: When a core board (such as CORE-U) is plugged into a PC via USB Type-C on the workbench, the 5.0V USB rail must be prevented from back-feeding into external alkaline batteries, mitigating **battery rupture and electrolyte leakage risks**).*
 2. **[MUST] Strict Isolation of Pin 5 (N.C.):**
    - Pin 5 acts as a short-circuit prevention isolation buffer between the high-current VDD zone (Pins 1–4) and sensitive signals (Pin 6 onwards). **No traces, copper pours, or vias may connect to Pin 5**.
    - Prevents fatal short-circuits during ribbon cable crimping misalignment or manufacturing tolerances.
@@ -82,7 +82,7 @@ To achieve this balance, this guideline defines three requirement tiers based on
 - **[MUST] Electrical Pinout Adherence:**
   - All boards must strictly adhere to the [ADX Pinout Specification (v2)](ADX_pinout.md).
 - **Connector Type Selection:**
-  - **Official Standard [SHOULD]:** To prevent dislodging under heavy automotive/industrial vibration and eliminate misaligned blind insertion in the field, use **MIL-DTL-83503 compliant Latched Eject Headers (牛角 / Ejector)**.
+  - **Official Standard [SHOULD]:** To prevent dislodging under heavy vibration and avoid misaligned blind insertion in tight spaces, use **MIL-DTL-83503 compliant Latched Eject Headers (牛角 / Ejector)**.
   - **DIY / General Add-ons [MAY]:** Standard boxed shrouded headers or simple pin headers may be used where low profile or minimal cost is prioritized.
 
 ### 4.2 Board Dimensions & Stacking
@@ -100,10 +100,10 @@ To achieve this balance, this guideline defines three requirement tiers based on
 ## 5. Thermal & Environmental Rules
 
 1. **[MUST] Heat Source Separation (Core Board Protection):**
-   - Major thermal generators (high-voltage step-down regulators, relay coils, high-power switches) must reside on the CARD, isolated from CORE-A via PCB thermal relief slots and ground-plane partitioning.
+   - Major thermal generators (high-voltage step-down regulators, relay coils, high-power switches) must reside on the CARD, isolated from the core board via PCB thermal relief slots and ground-plane partitioning.
 2. **Temperature Rating Selection:**
-   - **Official Standard [SHOULD]: Industrial Grade (-40°C to +105°C):**
-     - Official industrial CARDs should use X7R capacitors, thick-film resistors, and industrial-rated ICs rated for -40°C to +105°C.
+   - **High-Reliability Standard [SHOULD]: Industrial Grade (-40°C to +105°C):**
+     - Official high-reliability CARDs should use X7R capacitors, thick-film resistors, and industrial-rated ICs rated for -40°C to +105°C.
    - **DIY / General Add-ons [MAY]: Commercial Grade (0°C to 70°C / -20°C to 85°C):**
      - Common consumer components are fully acceptable for indoor experiments, hobby prototypes, and education.
 

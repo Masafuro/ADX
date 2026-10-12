@@ -3,156 +3,136 @@ Copyright (c) 2026 ADX Project Contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADX (Advanced Devices eXtended) - English Documentation
+# ADX (Advanced Devices eXtended)
 
 [ **English** | [日本語 (../ja/README.md)](../ja/README.md) ]
 
-**ADX (Advanced Devices eXtended)** is an open-source hardware standard and modular control ecosystem designed around the principle of **"Enclosure-Friendly"** engineering.
+<p align="center">
+  <img src="../images/hero_no_photo.svg" alt="ADX CORE-A: The Working Arduino" width="100%">
+</p>
 
-While conventional prototyping boards excel on the workbench, transitioning them into actual enclosures, installations, or field deployments often brings physical frustration—mounting screws colliding with traces, lack of washer clearance, multi-directional cable protrusions, and rigid shield stacking that cannot absorb real-world mechanical tolerances. 
+### *The Working Arduino*
+> **A tougher, enclosure-friendly board for running your Arduino sketches in the real world.**
 
-ADX bridges the gap between desktop prototyping and physical deployment through the **8748 Form Factor** (`87.0 mm × 48.0 mm`) and a flexible 20-pin IDC ribbon bus. From fully isolated, daisy-chainable field networking (ADX CORE-A) with open MR32 protocol compatibility (usable with any generic USB-RS485 dongle) to versatile power and sensor extensions (CARD Series), ADX explores what is possible when hardware is built to fit cleanly inside 3D-printed enclosures, off-the-shelf waterproof cases, and electrical utility boxes.
-
----
-
-## 1. Key Design Features
-
-* **Enclosure-Friendly Mechanical Alignment (8748 Form Factor)**:
-  `87.0 mm × 48.0 mm` outline with standardized M3 mounting holes (`77.0 mm × 38.0 mm` pitch) featuring generous $5.0\text{ mm}$ edge margins to accommodate standard screw washers without biting into PCB traces.
-* **Unified Interface Edge**:
-  Terminal blocks, external ports, and connectors are aligned along designated board edges, making panel cutouts and environmental sealing clean and straightforward.
-* **Tolerance-Absorbing IDC Ribbon Coupling**:
-  Expansion boards (CARDs) couple via a 20-pin IDC ribbon cable rather than rigid stacking pin headers. This absorbs enclosure manufacturing tolerances, allows flexible internal placement (stacked, coplanar, or folded), and eliminates pin-bending stress.
-* **Safe Bidirectional 5V Power Trunk (Double Check-Valve Architecture)**:
-  The Core board can either receive power from Type-C (protected by an LM66100 ideal diode) to supply 5V / 2A+ to the IDC expansion bus, or accept 5V reverse power from a Power CARD via the IDC expansion bus. Bidirectional safety is guaranteed by "Double Check Valves"—the CORE-A PC back-feed prevention diode and the mandatory Power CARD reverse-current protection circuit (MUST requirement), physically eliminating cross-feed hazards and battery damage.
-* **MR32 Protocol (Dongle-Free Programming & Networking)**:
-  Deterministic 32-byte fixed-length protocol enabling instant, 3-second OTW firmware flashing and inter-node networking using **any generic $3–$5 USB-RS485 dongle** directly from smartphone browsers (Android PWA) and PCs without proprietary hardware lock-in.
+**ADX CORE-A** is an open-hardware microcontroller board designed for projects that need to step off the workbench and run reliably inside real-world spaces—neatly mounted, cleanly wired, and built with practical protections.
 
 ---
 
-## 2. Hardware Lineup
-The ADX platform is anchored by the universal **ADX CORE-A** MCU board, the open **MR32** field network architecture (enabling generic USB-RS485 dongle and smartphone PWA flashing), and flexible modular **CARDs**:
+## 1. Overview: From Workbench to Workplace
 
-### 2.1 Core Board (MCU)
+Prototyping on a workbench with a breadboard is an incredible, creative way to bring ideas to life.
 
-| Board | Role & Power Architecture | Communication & Features | Target Applications & Status |
-| :--- | :--- | :--- | :--- |
-| **ADX CORE-A**<br>*(Absolute / Universal)*<br>**Target Price: $28** | **5V-Dedicated / Zero Self-Heating**<br>USB Type-C 6P (Ideal Diode LM66100 PC back-feed protection). Bidirectional 5V delivery via 20P Eject Header. | **Fully Isolated RS-485 (2500VDC)**<br>Mornsun TDA51S485HC. Direct front spring clamp terminal. Automotive AEC-Q102 LEDs (-40°C~+110°C). Secondary BMC supervisor. Native MR32 protocol stack. | Desktop, high-temp vehicle cabins, sealed IP67 cases, industrial control panels, -48V telecom infrastructure.<br>*(rev1 Netlist & Cost Locked, Pre-production)* |
-| *ADX Core-D*<br>*(R&D Testbed)* | *DC 5V USB / Terminal* | *LN-485 / MR32 protocol and bootloader verification board. Validated across Phases 1–5.* | *Internal R&D testbed (Not for production).* |
+However, when it is time to move those sketches into a permanent spot—a workshop dust collector, a greenhouse watering rig, a storefront display, or a custom wall-mounted clock—makers often run into common physical challenges:
 
-### 2.2 Dongle-Free Communication & Programming (MR32 Architecture)
+1. **Awkward Mounting**: Mounting holes are often too close to delicate traces, making tightening M3 screws feel risky.
+2. **Hard to Enclose**: Wires and connectors stick out in multiple directions, requiring complicated multi-sided cutouts in enclosures.
+3. **Loose Wiring**: Standard jumper wires can loosen under minor vibration or accidental tugs.
+4. **Maintenance Friction**: Taking a heavy laptop to a crawl space or ladder just to change a few lines of code is inconvenient.
 
-| Component | Role & Interface | Key Features | Target Price & Status |
-| :--- | :--- | :--- | :--- |
-| **Generic USB-RS485 Converters** | **Off-the-shelf USB to RS-485 dongles**<br>CH340G, CP2102, FTDI, PL2303 chipsets. | **Standard UART 8N1 + WebSerial PWA**<br>Direct connection to Android smartphones (via Type-C OTG) and PCs. 100% electrically protected by CORE-A's 2,500V isolation. | **$3.00 〜 $10.00**<br>*(Standard commercial products, 100% verified)* |
-
-### 2.3 CARDs (Modular Add-ons)
-
-| Board | Description | Status & Resources |
-| :--- | :--- | :--- |
-| **AAA 2S Power CARD** | 2× AAA battery boost converter feeding clean 5V, featuring BMC-gated nanoampere sleep shutdown. | Conceptual Planning |
-| **DC 12V–48V (DC 24V) Power CARD** | Wide-input isolated DC-DC supporting factory 24V, automotive, and telecom -48V with centralized surge protection. | Conceptual Planning |
-| **ADX Prototyping CARD** | 8748 Form Factor companion board with 20P Eject Header pass-through and universal prototyping grid. | [Proposal](../../hardware/CARD/Prototyping/proposal.md) / [Data](../../hardware/CARD/Prototyping/data/) |
+**ADX addresses these hurdles through a grounded philosophy: "The Working Arduino."**  
+Not a complicated, high-cost industrial PLC, but an accessible, slightly tougher companion that makes putting your projects into real enclosures natural and trouble-free.
 
 ---
 
-## 3. Specifications
+## 2. The Foundation: ADX Hardware Standard
 
-### 3.1 8748 Form Factor (Board Dimensions)
-An electromechanical co-design standard optimizing dimensional alignment between mil-based PCB layout and metric enclosure fabrication, minimizing rounding errors (<15 µm).
-See [8748_formfactor.md](8748_formfactor.md) for full details.
+The foundation of ADX is an open physical specification designed to ensure boards and modules mount cleanly and wire tidily.
 
-* **Board Dimensions:** `87.0 mm × 48.0 mm` (`3425 mil × 1890 mil`)
-* **Mounting Hole Pitch:** `77.0 mm × 38.0 mm` (`3031 mil × 1496 mil`)
-* **Hole Margin / Diameter:** `5.0 mm` (`197 mil`) from edges / `Φ3.3 mm` (M3 screw / `130 mil`)
-* **Corner Treatment:** C3 Chamfer (`120 mil`)
-
-### 3.2 ADX Pinout (Unified 20-Pin Interface / v2)
-A unified 20-pin IDC expansion interface (IDC Pins 1–20) standard across master, slave, and daughterboard modules.
-Key enhancements in v2 include 5V/2A power delivery, short-prevention isolation, co-planar GND shielding for EXTCLK, and full GND isolation for analog domains.
-See [ADX_pinout.md](ADX_pinout.md) for full details.
-
-**Connector Specification:** 2×10-pin, 2.54 mm pitch IDC ribbon connector (IDC Pins 1–20)
-
-| IDC Pin | Net Name | MCU Pin | Primary Function / Role | Ribbon Cable Structure & Shielding |
-| :--- | :--- | :--- | :--- | :--- |
-| **1** | **VDD** | - | **Power Supply (5V/2A Delivery)** | #1 (Power Zone: 2×2 Block) |
-| **2** | **VDD** | - | **Power Supply (5V/2A Delivery)** | #2 (Power Zone: 2×2 Block) |
-| **3** | **VDD** | - | **Power Supply (5V/2A Delivery)** | #3 (Power Zone: 2×2 Block) |
-| **4** | **VDD** | - | **Enhanced Power (5V/2A Delivery)** | #4 (Power Zone: 2×2 Block) |
-| **5** | *N.C.* | - | **Isolation (Power/Signal Short-Prevention Buffer)** | #5 (Buffer Zone) |
-| **6** | PA6/DAC0 | PA6 | **DAC0** Output / AIN6 | #6 (Analog Zone) |
-| **7** | PA5/AIN5 | PA5 | **VREFA** / AIN5 | #7 (Analog Zone) |
-| **8** | **GND_5V** | - | **GND (EXTCLK Guard ①)** | #8 (GND Shield) |
-| **9** | **PA3/EXTCLK** | PA3 | **EXTCLK** / AIN3 | #9 (EXTCLK Signal Line) |
-| **10** | **GND_5V** | - | **GND (EXTCLK Guard ② / Digital Bus Isolation)** | #10 (GND Shield) |
-| **11** | **PB2/TXD_EXT** | PB2 | **UART TxD (Alternate)** | #11 (UART Pair) |
-| **12** | **PB3/RXD_EXT** | PB3 | **UART RxD (Alternate)** | #12 (UART Pair) |
-| **13** | PB0/SCL | PB0 | **I2C SCL** | #13 (I2C Pair) |
-| **14** | PB1/SDA | PB1 | **I2C SDA** | #14 (I2C Pair) |
-| **15** | GND_5V | - | **GND (Inter-bus Shield)** | #15 |
-| **16** | PC3/SS | PC3 | **SPI SS** | #16 (SPI Group) |
-| **17** | PC2/MOSI | PC2 | **SPI MOSI** | #17 (SPI Group) |
-| **18** | PC1/MISO | PC1 | **SPI MISO** | #18 (SPI Group) |
-| **19** | PC0/SCK | PC0 | **SPI SCK** | #19 (SPI Group) |
-| **20** | GND_5V | - | **GND (Termination Shield)** | #20 |
-
-### 3.3 Hardware Naming Rules & Safety Classification
-Defines product part numbers and the strict boundary between "Standard / Commercial Grade" and "Professional / DIY Grade (`-P`)".
-See [hardware_naming_rules.md](hardware_naming_rules.md) for full details.
-
-### 3.4 ADX Form Factor Guidelines (MUST / SHOULD / MAY)
-Comprehensive design guidelines based on RFC 2119 for third parties and DIY developers designing compatible expansion cards.
-See [adx_formfactor_guidelines.md](adx_formfactor_guidelines.md) for full details.
-
-* **[MUST] Mandatory Requirements:** Reverse-current protection on Power CARDs, strict Pin 5 short-prevention isolation buffer.
-* **[SHOULD] Official Standards:** Latched Eject Headers, industrial isolated DC-DC converters, 8748 Form Factor dimensions, -40°C~+105°C temperature ratings.
-* **[MAY] Developer Freedom:** Non-isolated DC-DC converters, standard box headers, custom board shapes, application-specific sensors.
-
-> * Note: For full MCU peripheral multiplexing (PWM, ADC) and PORTMUX register specifications, refer to [adx_attiny1616_mcu_matrix.md](adx_attiny1616_mcu_matrix.md).
-
----
-
-## 4. Repository Structure
-
-```text
-ADX/
-├── README.md               # Global portal & overview (Root)
-├── LICENSE.md              # Multi-licensing policy & trademark notices
-├── LICENSES/               # REUSE-compliant license texts (CC-BY-4.0, CERN-OHL-P-2.0, MIT)
-├── docs/                   # Multilingual documentation (CC BY 4.0)
-│   ├── en/                 # English documentation (this directory)
-│   └── ja/                 # Japanese documentation
-├── hardware/               # Hardware design & manufacturing files (CERN-OHL-P-v2)
-│   ├── CORE-A/             # ADX CORE-A (Absolute / Fully Isolated RS-485 / 5V Dedicated)
-│   ├── ADX_Core-D/         # LN-485 bootloader development board (R&D Testbed)
-│   └── CARD/Prototyping/   # Prototyping expansion card
-├── firmware/               # Drivers, BSP, and sample sketches (MIT)
-├── logo/                   # Brand assets & logos
-├── memo/                   # Development notes & planning
-│   ├── what_is_adx.md      # Core vision & motivation
-│   ├── PLAN/               # Roadmap & revision plans
-│   └── REPORT/             # Technical proposals & evaluation reports
-└── Project_Snapshot.md     # Project roadmap & progress tracker
+```
+       ════════════════════════════════════════════════════════════════════
+                         【 ADX HARDWARE STANDARD 】
+         ・8748 Form Factor (87.0 mm × 48.0 mm outline)
+         ・Corner M3 Mounting Holes with Φ5.0 mm Washer Clearances
+         ・Rail-Grab Margins for Slot-In & Snap-Fit Enclosures
+         ・Unidirectional I/F Edge (All external wiring on one face)
+         ・20-Pin Robust Bus (Direct stack & flat IDC ribbon cable)
+       ════════════════════════════════════════════════════════════════════
+                                       │
+            ┌──────────────────────────┴──────────────────────────┐
+            ▼                                                     ▼
+   【 Main Core Board 】                                 【 Modular CARDs 】
+     ADX CORE-A (Active R&D)                               ADX CARD Ecosystem
+     ・Tougher, Enclosure-Native Core                      ・Prototyping CARD
+     ・Spring Terminals & Protection                       ・AAA Battery CARD
+     ・(See hardware/CORE-A/ for notes)                    ・3D-Print Mount STLs
 ```
 
+### 2.1 8748 Form Factor & Mechanical Mounting
+- **Dimensions**: `87.0 mm × 48.0 mm` (`3425 mil × 1890 mil`).
+- **Clearance for Real Screws**: Standardized 4-corner M3 mounting holes (`77.0 mm × 38.0 mm` pitch) with generous **Φ5.0 mm washer clearances**, ensuring screw heads and washers never crush PCB traces.
+- **Enclosure Grab Margins**: Dedicated keep-out zones along the board edges support **slot-in rail mounting** and **3D-printed snap-fit tabs**.
+
+### 2.2 Unidirectional Interface Edge
+External field connections are strictly aligned along a **single edge of the PCB**.  
+By eliminating multi-directional wire protrusions, enclosure design is simplified—you only need to plan cutouts and openings on one face of your project box.
+
+### 2.3 20-Pin Robust Bus & Flexible Placement
+Expansion modules (CARDs) connect through a unified 20-pin expansion bus (VDD, GND, GPIO, ADC, DAC, I2C, SPI, UART).
+- **Direct Stack**: CARDs can stack directly on top of or beneath the core board.
+- **Flexible IDC Ribbon Cable**: The bus is standardized for off-the-shelf **flat IDC ribbon cables**. In shallow boxes, modules can sit side-by-side; in deep boxes, they can stack vertically—adapting to your enclosure shape rather than dictating it.
+
 ---
 
-## 5. Links & Resources
+## 3. Flagship Hardware (In Active R&D)
 
-* **Project Snapshot:** [../../Project_Snapshot.md](../../Project_Snapshot.md)
-* **ADX Platform Official:** [https://adxplatform.com/](https://adxplatform.com/)
-* **Developer Blog:** [https://dev-blog.adxplatform.com/](https://dev-blog.adxplatform.com/)
+ADX is actively developing dedicated hardware solutions to bring "The Working Arduino" to life.
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│             【 ADX CORE-A 】(Main Board — In Active R&D)                │
+│  - Microchip ATtiny1616-MNR MCU (16KB Flash / 2KB SRAM)                │
+│  - Push-in spring terminal blocks for vibration-resistant wiring        │
+│  - Protective circuitry designed to cushion external electrical noise   │
+│  - Native 8748 Form Factor with standardized corner M3 mounts          │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Field connection
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│          【 RPR4 Smart Probe 】(Adapter Probe — In Active R&D)         │
+│  - Experimental tool exploring browser WebSerial connectivity          │
+│  - Researched to enable quick sketch updates directly in the field     │
+│  - Compact form factor to avoid carrying heavy laptops to deployed rigs│
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+### 3.1 ADX CORE-A (Main Board)
+CORE-A is the primary core board engineered for long-term installation.
+- **Push-in Spring Terminals**: Screwless terminal blocks allow solid or ferruled wires to be inserted securely without loosening over time.
+- **Protection by Design**: Circuitry designed to reduce the risk of accidental wiring damage, keeping the board steady when operating near switching devices or longer cable runs.
+- *For detailed circuit schematics, protection topology, and current revision notes, please refer to [hardware/CORE-A/concept.md](../../hardware/CORE-A/concept.md).*
+
+### 3.2 RPR4 Smart Probe (Adapter Probe)
+RPR4 is an experimental adapter currently under research and prototyping.
+- Built to explore convenient field servicing—such as quick parameter tweaks and sketch updates over browser-based WebSerial—aiming to free makers from balancing a laptop in awkward installation spaces.
+- *For prototype development progress, please refer to [hardware/RPR4/](../../hardware/RPR4/).*
 
 ---
 
-## 6. License
+## 4. Arduino IDE Compatibility
 
-ADX Project is released under a tri-license model:
+You do not need to learn a new programming language or switch to unfamiliar development tools.
 
-* **Documentation & Specifications** (`docs/`, `memo/`): [CC BY 4.0](../../LICENSES/CC-BY-4.0.txt) (`CC-BY-4.0`)
-* **Hardware Design & Production Files** (`hardware/`): [CERN-OHL-P-v2](../../LICENSES/CERN-OHL-P-2.0.txt) (`CERN-OHL-P-v2`)
-* **Firmware, Drivers & Software** (`firmware/`): [MIT License](../../LICENSES/MIT.txt) (`MIT`)
+- **Familiar Code**: Programs can be written with the standard Arduino language and libraries using `megaTinyCore`.
+- **Lightweight & Efficient**: Driven by an ATtiny1616, CORE-A keeps power consumption modest and startup instantaneous, making it well-suited for everyday sensing, timing, and device control tasks.
 
-See [../../LICENSE.md](../../LICENSE.md) for full licensing policy and trademark terms.
+---
 
+## 5. The Modular CARD Ecosystem
+
+ADX boards expand seamlessly through modular CARDs sharing the same 8748 physical profile:
+
+- **Prototyping CARD**: A universal 2.54 mm pitch breadboard area with pass-through 20-pin bus access, keeping custom circuits tidy and securely mountable.
+- **AAA 2S Battery CARD**: Onboard boost circuitry providing 5V to the bus from two standard AAA batteries for standalone and portable projects.
+- **Open 3D-Print STLs**: Downloadable STL/STEP files for customizable brackets, rail guides, and snap-fit project boxes.
+
+---
+
+## 6. Getting Started & Open Hardware Resources
+
+All hardware designs, dimensions, and specifications are open source:
+
+- **8748 Form Factor Specification**: [8748_formfactor.md](8748_formfactor.md) | [日本語 (../ja/8748_formfactor.md)](../ja/8748_formfactor.md)
+- **ADX 20-Pin Bus Pinout**: [docs/memo/adx_pinout_v2.md](../memo/adx_pinout_v2.md) | [日本語 (../ja/adx_pinout_v2.md)](../ja/adx_pinout_v2.md)
+- **CORE-A Hardware Notes**: [hardware/CORE-A/concept.md](../../hardware/CORE-A/concept.md)
+- **RPR4 Development Notes**: [hardware/RPR4/](../../hardware/RPR4/)
+- **Documentation Reorganization Plan**: [memo/PLAN/WORKING_ARDUINO_CORE-A_DOCUMENTATION_PLAN.md](../../memo/PLAN/WORKING_ARDUINO_CORE-A_DOCUMENTATION_PLAN.md)
