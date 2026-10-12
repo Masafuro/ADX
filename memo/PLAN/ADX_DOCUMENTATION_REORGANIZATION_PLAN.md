@@ -26,7 +26,7 @@ Crowd Supplyの事例研究およびReddit（特に r/Arduino）コミュニテ�
 という結論に至った。
 
 ### 1.2 目的
-ADXの看板を「難解な産業用」から**「ケースに美しく収まる、Arduino派生開発ボードのエコシステム（An Enclosure-Friendly Arduino-Compatible Board）」**へと刷新し、r/Arduinoコミュニティおよび来春の Crowd Supply に向けて、ドキュメント群を根本から再編成する。
+ADXの看板を「難解な産業用」から**「ケースに美しく収まる、Arduino IDE対応開発ボードのエコシステム（An Enclosure-Friendly Arduino-Programmable Board）」**へと刷新し、r/Arduinoコミュニティおよび来春の Crowd Supply に向けて、ドキュメント群を根本から再編成する。
 
 ---
 
@@ -98,6 +98,7 @@ ADXの看板を「難解な産業用」から**「ケースに美しく収まる
 | 避けるべき表現（DON'T） | 推奨する表現（DO） | 理由・トーンの意図 |
 | :--- | :--- | :--- |
 | **"The Ultimate Industrial Standard"**<br>（究極の産業用標準規格） | **"An Enclosure-Friendly Arduino Board"**<br>（ケースに優しいArduino派生ボード） | 威圧感を排し、親しみやすい入り口にする。 |
+| **"Arduino-compatible board"**<br>（Arduino互換ボード） | **"Arduino-programmable board"**<br>（Arduino IDEで開発できるボード） | UNOシールド等の物理互換であると誤認させないため。 |
 | **"Completely replaces Arduino UNO"**<br>（Arduino UNOを完全代替） | **"Great for small-to-medium control tasks"**<br>（小〜中規模の制御に最適） | MCUスペックの差やライブラリ互換性に誠実であるため。 |
 | **"Galvanically isolated dual-feed architecture"**<br>（ガルバニック絶縁デュアル給電アーキテクチャ） | **"Dual USB: Safe debugging while powering big servos"**<br>（大電流サーボを動かしながら安全にデバッグできる2つのUSB） | 初学者でも「何が嬉しいのか」が1秒で理解できる。 |
 | **"Perfect fit for Takachi cases"**<br>（タカチケースに完璧にフィット） | **"Designed for easy mounting in 3D prints and boxes"**<br>（自作3Dプリントや既製ボックスに組み込みやすい設計） | 既製品にポン付けできるという誤解を防ぐ。 |
@@ -138,7 +139,7 @@ ADXの看板を「難解な産業用」から**「ケースに美しく収まる
 
 | 対象ドキュメント | 改訂の方向性・重点項目 | 優先度 |
 | :--- | :--- | :---: |
-| **`README.md`**<br>(ルート英語) | ・「Industrial standard」の看板を完全撤去し、**「An Enclosure-Friendly Arduino-Compatible Board」**として全面刷新。<br>・Dual Type-C（Debug + 3A Power）と理想ダイオード電源の賢さを図解で解説。<br>・3Dプリントによるエンクロージャ親和性を強調。<br>・CORE-Aは最下部の「Future Ideas」として1段落でこっそり言及。 | **最優先 (P0)** |
+| **`README.md`**<br>(ルート英語) | ・「Industrial standard」の看板を完全撤去し、**「An Enclosure-Friendly Arduino-Programmable Board」**として全面刷新。<br>・Dual Type-C（Debug + 3A Power）と理想ダイオード電源の賢さを図解で解説。<br>・3Dプリントによるエンクロージャ親和性を強調。<br>・CORE-Aは最下部の「Future Ideas」として1段落でこっそり言及。 | **最優先 (P0)** |
 | **`docs/ja/README.md`**<br>(日本語) | ・ルート `README.md` の改訂内容を忠実に日本語化。<br>・過度な専門用語を排し、日本の個人メイカーにも親しみやすい言葉遣いで表現。 | **最優先 (P0)** |
 | **`hardware/CORE-U/concept.md`** | ・Dual Type-C（16P Debug + 6P Power）のハードウェア仕様を明文化。<br>・LM66100 × 3個（Power側2並列 + Debug側1個、Priority連動）の電源ブロック図と設計根拠を追記。 | **高 (P1)** |
 | **`docs/ja/adx_formfactor_guidelines.md`** | ・RFC 2119 ガイドラインにおける「MUST / SHOULD / MAY」の定義を再整理。<br>・産業用要件の押し付けを排除し、筐体設計におけるクリアランスや電源保護ルールに焦点を当てる。 | **高 (P1)** |
@@ -155,8 +156,8 @@ r/Arduinoの住人が読んだ瞬間に「これ欲しい！」「面白い！�
   `![ADX CORE-U Board & Enclosure](docs/images/hero_no_photo.png)` *(※現在は「No Photo / 写真準備中」のプレースホルダーを設置)*
   - 読者が一目で「欲しい！」と感じる、ケースやマウントに美しく収まったCORE-Uの実物写真・3Dレンダリングを表示する領域。
 - **Catchphrase**:
-  - *“ADX CORE-U: An enclosure-friendly, dual-USB Arduino-compatible board designed for tidy wiring and hassle-free power delivery.”*
-  - （すっきりとした配線とスマートな給電を実現する、筐体に優しいDual USB搭載のArduino派生ボード）
+  - *“ADX CORE-U: An enclosure-friendly, dual-USB Arduino-programmable board designed for tidy wiring and hassle-free power delivery.”*
+  - （すっきりとした配線とスマートな給電を実現する、筐体に優しいDual USB搭載のArduino IDE対応ボード）
 
 ### 2. Overview: From Workbench to Enclosure (ポジティブな設計思想)
 - ペイン煽りを排し、プロダクトの設計意図をポジティブかつ明快に記述：

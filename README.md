@@ -8,10 +8,10 @@ SPDX-License-Identifier: CC-BY-4.0
 [ **English** | [日本語 (docs/ja/README.md)](docs/ja/README.md) ]
 
 <p align="center">
-  <img src="docs/images/hero_no_photo.svg" alt="ADX CORE-U Enclosure-Friendly Arduino Board" width="100%">
+  <img src="docs/images/hero_no_photo.svg" alt="ADX CORE-U Enclosure-Friendly Arduino-Programmable Board" width="100%">
 </p>
 
-**ADX CORE-U** is an enclosure-friendly, Arduino-compatible board designed from the ground up to make putting your custom electronics projects into real boxes effortless, neat, and reliable.
+**ADX CORE-U** is an enclosure-friendly, Arduino-programmable board designed from the ground up to make putting your custom electronics projects into real boxes effortless, neat, and reliable.
 
 ---
 

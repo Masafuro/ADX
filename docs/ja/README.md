@@ -8,10 +8,10 @@ SPDX-License-Identifier: CC-BY-4.0
 [ English (../../README.md) | **日本語** ]
 
 <p align="center">
-  <img src="../images/hero_no_photo.svg" alt="ADX CORE-U 筐体フレンドリーなArduino開発ボード" width="100%">
+  <img src="../images/hero_no_photo.svg" alt="ADX CORE-U Arduino IDE対応の筐体親和型ボード" width="100%">
 </p>
 
-**ADX CORE-U** は、自作の電子工作プロジェクトを「本物の箱（エンクロージャ）」へ美しく、手軽に、確実に収めるためにゼロから設計された、Arduino互換の筐体親和型ボードです。
+**ADX CORE-U** は、自作の電子工作プロジェクトを「本物の箱（エンクロージャ）」へ美しく、手軽に、確実に収めるためにゼロから設計された、Arduino IDEで開発できる筐体親和型ボードです。
 
 ---
 
