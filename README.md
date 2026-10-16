@@ -96,8 +96,8 @@ All Core boards and Card modules interconnect via a standardized 2×10-pin shrou
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
 │             【 ADX CORE-A5 】(High-Reliability Edge Slave)              │
-│  - MCU: Microchip ATtiny1616-MNR (3.3V @ 10MHz / Zero Self-Heating)    │
-│  - Temperature: -40℃ to +105℃ (Full Industrial / Automotive Grade)     │
+│  - MCU: Microchip ATtiny1616-MNR (3.3V @ 10MHz / Negligible Heating)   │
+│  - Temperature: -40℃ to +105℃ rated components (Industrial Grade)      │
 │  - Field Power: Front 5VIN Spring Terminal Block (SY6280 Protection)   │
 │  - Isolated Comm: 2500V Galvanic Isolated RS-485 (TDA51S485HC, 500kbps)│
 │  - OTW Bootloader: Hardware CCL Break auto-detection & reboot          │
@@ -117,7 +117,7 @@ All Core boards and Card modules interconnect via a standardized 2×10-pin shrou
 You do not need to learn a proprietary PLC language or install heavy toolchains.
 
 - **Familiar Code**: Develop sketches using standard Arduino C/C++ syntax and common libraries via **`megaTinyCore`**.
-- **Instant Boot & Zero Delay**: Boots user sketches in **0 ms** on power-on (no artificial bootloader delay).
+- **Instant Boot**: Boots user sketches immediately upon power-on without typical 1–2 second bootloader delays.
 - **MCU Hardware Mapping**: See [ATtiny1616 Hardware Mapping](docs/spec/mcu_mapping/attiny1616.md) for timer allocations, PWM channels, and PORTMUX details.
 
 ---

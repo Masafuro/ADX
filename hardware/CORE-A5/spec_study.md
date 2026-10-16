@@ -21,7 +21,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ### 1.2 ADX コア製品ポートフォリオにおける棲み分け
 
-| 項目 | **ADX CORE-A5** (現場の重装甲スレーブ) | **ADX CORE-R** (現場の頭脳・マスター) |
+| 項目 | **ADX CORE-A5** (高耐環境・高信頼エッジスレーブ) | **ADX CORE-R** (現場の頭脳・マスター) |
 | :--- | :--- | :--- |
 | **主 MCU** | **Microchip ATtiny1616-MNR** (8-bit / 3.3V / 10MHz) | **Raspberry Pi RP2040** (32-bit Dual / 3.3V / 133MHz) |
 | **動作温度範囲** | **-40℃ 〜 +105℃** (Industrial / Automotive Grade) | **-20℃ 〜 +85℃** (通常産業・プロユース) |
@@ -31,7 +31,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 > [!NOTE]
 > **処理能力と耐熱性のトレードオフの割り切り:**  
-> 高度な浮動小数点演算やPC連携・USB通信が必要な場合は CORE-R / ESP32 が担当し、CORE-A5 は -40℃〜+105℃ の耐環境性と低消費電力・低発熱（自己発熱ゼロ）に特化します。
+> 高度な浮動小数点演算やPC連携・USB通信が必要な場合は CORE-R / ESP32 が担当し、CORE-A5 は -40℃〜+105℃ の耐環境性と低消費電力・極小発熱（密閉筐体でも温度上昇が極小）に特化します。
 
 ---
 
@@ -46,7 +46,7 @@ SPDX-License-Identifier: CC-BY-4.0
 | **拡張バス論理電圧** | **3.3V LVCMOS 準拠** | レベルシフタ不要、MCU ネイティブ直結 |
 | **MCU 動作周波数** | **10 MHz** (内部高精度オシレータ) | 3.3V 駆動時 Safe Operating Area 保証、自己発熱極小 |
 | **RS-485 絶縁耐圧** | **2500 VDC** ガルバニック絶縁 | Mornsun TDA51S485HC (絶縁電源内蔵、最大 500kbps) |
-| **動作保証温度範囲** | **-40℃ 〜 +105℃** | 全搭載部品（半導体・受動素子・端子台）規格完全準拠 |
+| **動作環境温度** | **-40℃ 〜 +105℃** | 全主要搭載部品に産業・車載グレード品（-40℃〜+105℃以上）を採用 |
 | **消費電流 (通常動作)** | 約 15mA 〜 25mA @ 5.0V | 絶縁トランシーバー消費電力を含む |
 | **外形寸法** | **87.0 mm × 48.0 mm** | ADX 8748 フォームファクタ準拠 |
 
@@ -95,7 +95,7 @@ SPDX-License-Identifier: CC-BY-4.0
 ### 3.1 電源保護 ＆ バスマネジメント (Power Architecture)
 1. **前面 5VIN 給電時の保護:**
    - 高機能ハイサイドスイッチ **SY6280AAC**（SOT-23-5, $R_{DS(on)} = 80\,\text{m}\Omega$）を搭載。
-   - 万一の配線ミスや短絡事故が発生しても、内部および拡張CARDを瞬時に保護。
+   - 万一の配線ミスや短絡事故が発生しても、内部および拡張CARDを高速遮断（マイクロ秒オーダーの電流制限）で保護。
    - 逆流防止回路（Reverse Current Blocking）により、拡張バス（Pins 1〜4）から別の電源が印加されても端子台側へ逆流しません。
 2. **POWER CARD スタック時の受電:**
    - 現場で POWER CARD（DC 12V/24V 絶縁受電）をスタックした場合は、拡張バス（Pins 1〜4）の VBUS を経由して CORE-A5 内部の LDO およびトランシーバーへ電力を供給可能です。
@@ -146,10 +146,10 @@ sequenceDiagram
     Note over CCL: CCL ハードウェア層がパルス幅を自律検出<br/>(スケッチのフリーズ・ハングアップを無視)
     CCL->>CPU: Event System 経由で高優先度割り込み (LVL1) 発火
     Note over CPU: 割り込みハンドラ内で即座に SWRST 発行<br/>_PROTECTED_WRITE(RSTCTRL.SWRR, 1)
-    CPU->>CPU: 【ハードウェア完全リセット発動】
+    CPU->>CPU: 【ハードウェアリセット（SWRST）発動】
     CPU->>Boot: リセット解除 ➜ ブートローダー起動
     Note over Boot: RSTCTRL.RSTFR を確認<br/>(SWRF == 1 のためブート待機モードへ突入)
-    Boot-->>Bus: (完全無言でコマンド待機 / 衝突防止)
+    Boot-->>Bus: (無応答でコマンド待機 / 衝突防止)
     Host->>Boot: SIGROW(UID) 指定による書き込みパケット転送
     Boot->>Boot: Flash 書き込み実行
     Boot->>CPU: 書き込み完了後、通常スケッチへジャンプ
@@ -164,7 +164,7 @@ void init_boot_check(void) {
     RSTCTRL.RSTFR = 0xFF; // フラグクリア
 
     if (reset_cause & RSTCTRL_PORF_bm) {
-        // 通常の現場電源投入時: 遅延なしで即座にスケッチへジャンプ (起動時間 0ms)
+        // 通常の現場電源投入時: ブート待機遅延なしで直ちにスケッチへジャンプ
         start_user_application();
     } else if (reset_cause & RSTCTRL_SWRF_bm) {
         // RS-485 CCL Break による再起動時: ブートローダーモード待機

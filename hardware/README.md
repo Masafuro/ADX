@@ -17,7 +17,7 @@ ADXのハードウェアは、**8748 Form Factor**（`87.0 mm × 48.0 mm`）お�
 
 | ボード名 | グレード | 絶縁構造 | 状態・概要 | リンク |
 | :--- | :--- | :--- | :--- | :--- |
-| **ADX CORE-A5** | **Production / Active** | **完全絶縁RS-485 / VBUS幹線受電** | **高耐環境・現場スレーブ決定版。** -40℃〜+105℃耐熱、3.3VネイティブGPIO、前面5VIN端子台、CCL自律リセット。 | [構想書](CORE-A5/concept.md) / [仕様検討書](CORE-A5/spec_study.md) |
+| **ADX CORE-A5** | **Production / Active** | **2500V 絶縁RS-485 / VBUS幹線受電** | **高耐環境・高信頼エッジ端末。** -40℃〜+105℃耐熱、3.3VネイティブGPIO、前面5VIN端子台、CCL自律リセット。 | [構想書](CORE-A5/concept.md) / [仕様検討書](CORE-A5/spec_study.md) |
 | **ADX CORE-U** | **Production / Flagship** | **PC保護回路** | **ADXの旗艦ボード。** ATtiny1616、Arduino IDE対応、USB Type-C、筐体親和型。 | [検討ノート](archive/CORE-U/review/rev0/concept.md) |
 | **ADX CORE-A** | **Archive** | **完全絶縁RS-485 / 5V給電** | 旧現場向けモデル。-40℃〜+105℃耐熱（CORE-A5へ発展継承）。 | [旧構想書](archive/CORE-A/rev1/concept.md) |
 | **ADX CORE-S-P** | **Professional** | **非絶縁** (共通GND) | 低価格製造を追求したプロ専用機。自己責任DIY製造前提。 | [詳細・レビュー](archive/CORE-S/README.md) |
@@ -47,7 +47,7 @@ ADX [FAMILY]-[TYPE][-SUFFIX]
 
 1. **Production Grade（通常版・サフィックスなし）**:
    - 例: `ADX CORE-I`, `ADX CARD-RELAY`
-   - **要件**: 電源・通信の完全絶縁またはフェイルセーフ保護を備え、誤配線時にも接続先の外部機器（PC、PLC等）を連鎖破壊しない安全設計。
+   - **要件**: 電源・通信のガルバニック絶縁またはフェイルセーフ保護を備え、誤配線時にも接続先の外部機器（PC、PLC等）を連鎖破壊しない安全設計。
    - **提供形態**: 完成品販売および公式サポート対象。
 2. **Professional / DIY Grade（`-P` 版）**:
    - 例: `ADX CORE-S-P`, `ADX CARD-RELAY-P`
