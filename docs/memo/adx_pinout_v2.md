@@ -1,4 +1,8 @@
-# ADX マイコンボード ピンアウト仕様書 (v2)
+# ADX マイコンボード ピンアウト仕様書 (v2 / 旧ドラフトメモ)
+
+> [!NOTE]
+> **本ドキュメントは策定時の検討メモ（過去ログ）です:**  
+> 正式な最新共通規格仕様は **[`docs/spec/ADX_PINOUT.md`](../spec/ADX_PINOUT.md)** を、日本語設計解説ガイドは **[`docs/ja/ADX_pinout.md`](../ja/ADX_pinout.md)** を、ATtiny1616 のハードウェアマッピング詳細は **[`docs/spec/mcu_mapping/attiny1616.md`](../spec/mcu_mapping/attiny1616.md)** を参照してください。
 
 ## 1. 概要
 本ドキュメントは、Microchip社製 ATtiny1616-MNR を搭載したマイコンボード「ADX」のIDC 2x10 コネクタ（回路図上のリファレンス例: CN2）のピンアウト、およびオンボードペリフェラル（RS-485、BMCブート制御、オンボードLED、UPDI）と PORTMUX 機能の接続関係を定義する仕様書（v2）です。本規格では、コネクタ端子番号を **「IDC Pin 1〜20」** と表記します。

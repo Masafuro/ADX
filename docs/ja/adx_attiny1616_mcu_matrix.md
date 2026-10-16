@@ -10,13 +10,13 @@ SPDX-License-Identifier: CC-BY-4.0
 ## 1. 概要 (Overview)
 本ドキュメントは、Microchip社製 **ATtiny1616-MNR (QFN-20)** を搭載したマイコンボード「ADX」における、MCU全ピンのペリフェラル多重化機能（Multiplexing）および **PORTMUX（ポートマルチプレクサ）レジスタ** の設定仕様・デザインルールを定義する統合リファレンスです。
 
-物理ピン配置やリボンケーブルのシールド構造については、[ADX Pinout 仕様書 (v2)](ADX_pinout.md) を参照してください。本ドキュメントでは、外部拡張用の 2×10ピン IDCコネクタ（基板回路図上のリファレンス例: CN2）の各端子番号を **「IDC Pin 1〜20」** と表記します。
+物理ピン配置やリボンケーブルのシールド構造については、[ADX 20ピンバス仕様書 (SSOT)](../spec/ADX_PINOUT.md) および [設計・解説ガイド](ADX_pinout.md) を参照してください。本マッピングの最新英文リファレンスは [docs/spec/mcu_mapping/attiny1616.md](../spec/mcu_mapping/attiny1616.md) にも配備されています。
 
 ---
 
 ## 2. ADX ボードにおける PORTMUX デザインルール (Design Rules)
 
-ATtiny1616 は柔軟なピン再配置機能（PORTMUX）を備えていますが、ADX ボードではオンボード回路（RS-485 トランシーバー、BMCブート制御 / インジケータLED、UPDI）に計7ピンが専用接続されています。
+ATtiny1616 は柔軟なピン再配置機能（PORTMUX）を備えていますが、ADX ボードではオンボード回路（RS-485 トランシーバー、インジケータLED、UPDI）に計7ピンが専用接続されています。
 そのため、ファームウェア開発時は以下の **必須設定・禁止設定** を遵守する必要があります。
 
 ### ① PORTMUX 設定ガイドライン一覧
@@ -53,7 +53,7 @@ ATtiny1616 は柔軟なピン再配置機能（PORTMUX）を備えています�
 | **PB2** | 12 | 9 | **IDC Pin 11** | - | - | **TCA0 WO2(Def)** | **USART0 TxD (Alt)** | AC1 OUT / TOSC2 | EVOUT1 |
 | **PB3** | 11 | 8 | **IDC Pin 12** | - | - | **TCA0 WO0(Alt)** | **USART0 RxD (Alt)** | AC0 OUT / TOSC1 | - |
 | **PB4** | 10 | 7 | **オンボード (赤色LED)** | AIN9 | - | TCA0 WO1(Alt) | - | AC1/2 AIN | X13/Y13 / LUT0-OUT(Alt) |
-| **PB5** | 9 | 6 | **オンボード (BOOT_REQ)** | AIN8 | - | TCA0 WO2(Alt) | - | CLKOUT / AC1/2 AIN | X12/Y12 |
+| **PB5** | 9 | 6 | **オンボード (青色LED)** | AIN8 | - | TCA0 WO2(Alt) | - | CLKOUT / AC1/2 AIN | X12/Y12 |
 | **PC0** | 15 | 12 | **IDC Pin 19** | - | AIN6 | **TCB0 WO(Alt)** / **TCD0 WOC** | **SPI0 SCK (Alt)** | - | X6/Y6 |
 | **PC1** | 16 | 13 | **IDC Pin 18** | - | AIN7 | **TCD0 WOD** | **SPI0 MISO (Alt)** | - | X7/Y7 / LUT1-OUT(Alt) |
 | **PC2** | 17 | 14 | **IDC Pin 17** | - | AIN8 | - | **SPI0 MOSI (Alt)** | - | EVOUT2 / X8/Y8 |

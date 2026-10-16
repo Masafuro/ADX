@@ -10,7 +10,7 @@ CORE-AからCORE-Rを経て、なんやかんやあってCORE-Aに戻りつつ�
 - 耐熱選定: Indsutrial -40℃~105℃以上
 - RS-485: 絶縁500kbps, Spring Clamp Terminal 2P*2
 - 5VIN: Spring Clamp Terminal 2P, 短絡保護, 過電流保護, 逆流防止
-- 拡張端子: ADX IDC 2*10P ( 5VSYS(4), GPIO 3V3トレラント )
+- 拡張端子: ADX IDC 2*10P ( VBUS(4), ネイティブ 3.3V GPIO )
 - MCU: ATtiny1616-MNR
 
 ## スケッチ書き込み

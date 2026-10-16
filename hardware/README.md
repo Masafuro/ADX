@@ -17,11 +17,11 @@ ADXのハードウェアは、**8748 Form Factor**（`87.0 mm × 48.0 mm`）お�
 
 | ボード名 | グレード | 絶縁構造 | 状態・概要 | リンク |
 | :--- | :--- | :--- | :--- | :--- |
-| **ADX CORE-U** | **Production / Flagship** | **PC保護回路** | **ADXの旗艦ボード。** ATtiny1616、Arduino IDE対応、USB Type-C、筐体親和型。 | [検討ノート](CORE-U/concept.md) |
-| **ADX CORE-A** | **Production** | **完全絶縁RS-485 / 5V給電** | **高耐環境・現場向けモデル。** -40℃〜+105℃耐熱、完全絶縁RS-485、BMC搭載。 | [構想書](CORE-A/concept.md) / [仕様書](CORE-A/spec.md) |
-| **ADX CORE-I** | **Production** | **両絶縁** (電源・通信) | 旧構想機。高電圧一体型絶縁モデル。 | [設計検討中](CORE-I/CORE-S_strategy_rethink.md) |
-| **ADX CORE-S-P** | **Professional** | **非絶縁** (共通GND) | 低価格製造を追求したプロ専用機。自己責任DIY製造前提。 | [詳細・レビュー](CORE-S-P/README.md) |
-| **ADX Core-D** | **Development** | **非絶縁** | LN-485（LIN-based RS-485）ブートローダおよびファームウェア開発専用ボード。 | [仕様書](Core-D/proposal.md) |
+| **ADX CORE-A5** | **Production / Active** | **完全絶縁RS-485 / VBUS幹線受電** | **高耐環境・現場スレーブ決定版。** -40℃〜+105℃耐熱、3.3VネイティブGPIO、前面5VIN端子台、CCL自律リセット。 | [構想書](CORE-A5/concept.md) / [仕様検討書](CORE-A5/spec_study.md) |
+| **ADX CORE-U** | **Production / Flagship** | **PC保護回路** | **ADXの旗艦ボード。** ATtiny1616、Arduino IDE対応、USB Type-C、筐体親和型。 | [検討ノート](archive/CORE-U/review/rev0/concept.md) |
+| **ADX CORE-A** | **Archive** | **完全絶縁RS-485 / 5V給電** | 旧現場向けモデル。-40℃〜+105℃耐熱（CORE-A5へ発展継承）。 | [旧構想書](archive/CORE-A/rev1/concept.md) |
+| **ADX CORE-S-P** | **Professional** | **非絶縁** (共通GND) | 低価格製造を追求したプロ専用機。自己責任DIY製造前提。 | [詳細・レビュー](archive/CORE-S/README.md) |
+| **ADX Core-D** | **Development** | **非絶縁** | LN-485（LIN-based RS-485）ブートローダおよびファームウェア開発専用ボード。 | [仕様書](archive/CORE-D/proposal.md) |
 
 ### 1.2 CARD シリーズ (拡張アドオン基板)
 
@@ -32,7 +32,8 @@ ADXのハードウェアは、**8748 Form Factor**（`87.0 mm × 48.0 mm`）お�
 ### 1.3 フォームファクタ & 規格仕様
 
 - **8748 フォームファクタ定義**: [`Formfactor/`](Formfactor/) / [仕様書](../docs/ja/8748_formfactor.md)
-- **ADX ピンアサイン (v2)**: [仕様書](../docs/ja/ADX_pinout.md)
+- **ADX 20ピンバス規格 (SSOT)**: [普遍的バス規格書 (英語・アルファベット)](../docs/spec/ADX_PINOUT.md)
+- **ADX ピン配置 設計ガイド**: [日本語仕様解説](../docs/ja/ADX_pinout.md) / [English Architecture Guide](../docs/en/ADX_pinout.md)
 
 ---
 

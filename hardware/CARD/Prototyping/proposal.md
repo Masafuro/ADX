@@ -8,4 +8,5 @@ SPDX-License-Identifier: CERN-OHL-P-2.0
 ## 概要
 ADXのプロトタイピング用の拡張カード
 ピンヘッダーはADX規格のGPIOをそのまま引き出す下列20ピン、ユニバーサルエリアから配線できるカスタム用上列20ピン。
+バス仕様の詳細は [ADX 20ピンバス仕様書 (SSOT)](../../../docs/spec/ADX_PINOUT.md) を参照。
 

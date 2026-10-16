@@ -67,7 +67,7 @@ External field connections are strictly aligned along a **single edge of the PCB
 By eliminating multi-directional wire protrusions, enclosure design is simplified—you only need to plan cutouts and openings on one face of your project box.
 
 ### 2.3 20-Pin Robust Bus & Flexible Placement
-Expansion modules (CARDs) connect through a unified 20-pin expansion bus (VDD, GND, GPIO, ADC, DAC, I2C, SPI, UART).
+Expansion modules (CARDs) connect through a unified 20-pin expansion bus (VBUS, GND, 3.3V GPIO, ADC, DAC, I2C, SPI, UART).
 - **Direct Stack**: CARDs can stack directly on top of or beneath the core board.
 - **Flexible IDC Ribbon Cable**: The bus is standardized for off-the-shelf **flat IDC ribbon cables**. In shallow boxes, modules can sit side-by-side; in deep boxes, they can stack vertically—adapting to your enclosure shape rather than dictating it.
 
@@ -132,7 +132,7 @@ ADX boards expand seamlessly through modular CARDs sharing the same 8748 physica
 All hardware designs, dimensions, and specifications are open source:
 
 - **8748 Form Factor Specification**: [docs/en/8748_formfactor.md](docs/en/8748_formfactor.md) | [docs/ja/8748_formfactor.md](docs/ja/8748_formfactor.md)
-- **ADX 20-Pin Bus Pinout**: [docs/memo/adx_pinout_v2.md](docs/memo/adx_pinout_v2.md) | [docs/ja/adx_pinout_v2.md](docs/ja/adx_pinout_v2.md)
-- **CORE-A Hardware Notes**: [hardware/CORE-A/concept.md](hardware/CORE-A/concept.md)
+- **ADX 20-Pin Bus Specification (SSOT)**: [docs/spec/ADX_PINOUT.md](docs/spec/ADX_PINOUT.md) | [Architecture Guide](docs/en/ADX_pinout.md)
+- **CORE-A5 Hardware Notes**: [hardware/CORE-A5/concept.md](hardware/CORE-A5/concept.md)
 - **RPR4 Development Notes**: [hardware/RPR4/](hardware/RPR4/)
 - **Documentation Reorganization Plan**: [memo/PLAN/WORKING_ARDUINO_CORE-A_DOCUMENTATION_PLAN.md](memo/PLAN/WORKING_ARDUINO_CORE-A_DOCUMENTATION_PLAN.md)

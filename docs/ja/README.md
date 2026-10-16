@@ -67,7 +67,7 @@ ADXの土台となるのは、マイコンやモジュールが様々なケー�
 コネクタが四方八方に飛び出さないため、ケースの開口加工や3Dプリントケースのフタ設計が「1面だけ」で完結します。
 
 ### 2.3 20ピンバスと柔軟な配置（IDCリボンケーブル対応）
-拡張モジュール（CARD）とは、共通の20ピン拡張バス（VDD, GND, GPIO, ADC, DAC, I2C, SPI, UART）で接続します。
+拡張モジュール（CARD）とは、共通の20ピン拡張バス（VBUS, GND, 3.3V GPIO, ADC, DAC, I2C, SPI, UART）で接続します。
 - **直スタック**: 基板同士を上下に重ねて省スペースに固定可能。
 - **フラットIDCケーブル対応**: 市販の**フラットIDCリボンケーブル**による接続を標準サポート。薄型ケースなら「横並び」、深型ボックスなら「上下配置」など、ケースの形状に合わせた柔軟なレイアウトが可能です。
 
@@ -132,7 +132,7 @@ ADXでは、「はたらくArduino」を形にするためのハードウェア�
 すべての回路設計、寸法、仕様はオープンソースとして公開・更新しています：
 
 - **8748 フォームファクタ仕様書**: [docs/ja/8748_formfactor.md](8748_formfactor.md) | [English (docs/en/8748_formfactor.md)](../en/8748_formfactor.md)
-- **ADX 20ピンバス ピン配置 (v2)**: [docs/memo/adx_pinout_v2.md](../memo/adx_pinout_v2.md) | [日本語 (docs/ja/adx_pinout_v2.md)](adx_pinout_v2.md)
-- **CORE-A ハードウェア検討ノート**: [hardware/CORE-A/concept.md](../../hardware/CORE-A/concept.md)
+- **ADX 20ピンバス仕様書 (SSOT)**: [docs/spec/ADX_PINOUT.md](../spec/ADX_PINOUT.md) | [設計解説ガイド (日本語)](ADX_pinout.md)
+- **CORE-A5 ハードウェア検討ノート**: [hardware/CORE-A5/concept.md](../../hardware/CORE-A5/concept.md)
 - **RPR4 開発ノート**: [hardware/RPR4/](../../hardware/RPR4/)
 - **ドキュメント再編計画書**: [memo/PLAN/WORKING_ARDUINO_CORE-A_DOCUMENTATION_PLAN.md](../../memo/PLAN/WORKING_ARDUINO_CORE-A_DOCUMENTATION_PLAN.md)

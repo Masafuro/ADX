@@ -10,13 +10,13 @@ SPDX-License-Identifier: CC-BY-4.0
 ## 1. Overview
 This document serves as an integrated technical reference defining the full MCU pin multiplexing and **PORTMUX (Port Multiplexer) register configuration rules** for the ADX microcomputer board based on the Microchip **ATtiny1616-MNR (QFN-20)**.
 
-For physical pinout definitions and ribbon cable shielding structure, refer to the [ADX Pinout Specification (v2)](ADX_pinout.md). Connector pin assignments are referenced as **"IDC Pin 1–20"** (schematic reference designator: `CN2`).
+For physical pinout definitions and ribbon cable shielding structure, refer to the master [ADX 20-Pin Bus Specification (SSOT)](../spec/ADX_PINOUT.md) and [Architecture Guide](ADX_pinout.md). Connector pin assignments are referenced as **"IDC Pin 1–20"**.
 
 ---
 
 ## 2. PORTMUX Design Rules on ADX Board
 
-The ATtiny1616 provides highly flexible I/O multiplexing via PORTMUX. However, on the ADX board, 7 MCU pins are hard-wired to dedicated onboard circuits (RS-485 transceiver, BMC boot control / indicator LED, and UPDI).
+The ATtiny1616 provides highly flexible I/O multiplexing via PORTMUX. However, on the ADX board, 7 MCU pins are hard-wired to dedicated onboard circuits (RS-485 transceiver, status LEDs, and UPDI).
 Firmware developers must adhere to the following **mandatory and restricted configuration rules**:
 
 ### ① PORTMUX Configuration Guidelines
@@ -53,7 +53,7 @@ Complete multiplexed pin capability matrix based on Microchip Datasheet Table 5-
 | **PB2** | 12 | 9 | **IDC Pin 11** | - | - | **TCA0 WO2(Def)** | **USART0 TxD (Alt)** | AC1 OUT / TOSC2 | EVOUT1 |
 | **PB3** | 11 | 8 | **IDC Pin 12** | - | - | **TCA0 WO0(Alt)** | **USART0 RxD (Alt)** | AC0 OUT / TOSC1 | - |
 | **PB4** | 10 | 7 | **Onboard (Red LED)** | AIN9 | - | TCA0 WO1(Alt) | - | AC1/2 AIN | X13/Y13 / LUT0-OUT(Alt) |
-| **PB5** | 9 | 6 | **Onboard (BOOT_REQ)** | AIN8 | - | TCA0 WO2(Alt) | - | CLKOUT / AC1/2 AIN | X12/Y12 |
+| **PB5** | 9 | 6 | **Onboard (Blue LED)** | AIN8 | - | TCA0 WO2(Alt) | - | CLKOUT / AC1/2 AIN | X12/Y12 |
 | **PC0** | 15 | 12 | **IDC Pin 19** | - | AIN6 | **TCB0 WO(Alt)** / **TCD0 WOC** | **SPI0 SCK (Alt)** | - | X6/Y6 |
 | **PC1** | 16 | 13 | **IDC Pin 18** | - | AIN7 | **TCD0 WOD** | **SPI0 MISO (Alt)** | - | X7/Y7 / LUT1-OUT(Alt) |
 | **PC2** | 17 | 14 | **IDC Pin 17** | - | AIN8 | - | **SPI0 MOSI (Alt)** | - | EVOUT2 / X8/Y8 |
