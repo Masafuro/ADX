@@ -26,7 +26,7 @@ This document serves as the **Single Source of Truth (SSOT)** for the physical p
 - **Mating Cable**: Standard 20-conductor flat ribbon cable (AWG 28 stranded).
 - **Pin Numbering Convention**: Standard zigzag (interleaved) ribbon cable numbering:
   - Row 1 (Odd pins): 1, 3, 5, 7, 9, 11, 13, 15, 17, 19
-  - Row 2 (Even pins): 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
+  - Row 2: (Even pins): 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
 
 ```text
                   【 20-Pin Shrouded Header (Top View) 】
@@ -57,7 +57,7 @@ This document serves as the **Single Source of Truth (SSOT)** for the physical p
 | **4** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A max) | Main Power Bus (Bidirectional) | Power Zone (Pins 1–4) |
 | **5** | **GND** | Power / Shield | 0V Return | VBUS Return & Zone Shield Wall | Primary Power Return |
 | **6** | **SYS_RST** | Digital I/O | 3.3V LVCMOS (Active LOW) | System Reset / MCU Programming | Quiet Zone (between Pin 5 & Pin 7) |
-| **7** | **AIN** | Analog In | 3.3V Analog / LVCMOS | Analog Input (ADC) / Voltage Reference | Analog Zone |
+| **7** | **AIN** | Analog I/O | 3.3V Analog / LVCMOS | Analog Input (ADC) / Optional DAC Output | Analog Zone |
 | **8** | **GND** | Power / Shield | 0V Return | Coplanar Shield (Clock guard ①) | GND Shield |
 | **9** | **EXTCLK** | Digital / GPIO | 3.3V LVCMOS | External Clock Input / PWM / GPIO | High-Speed Clock Line |
 | **10** | **GND** | Power / Shield | 0V Return | Isolation Shield (Clock guard ②) | GND Shield |
@@ -96,7 +96,11 @@ This document serves as the **Single Source of Truth (SSOT)** for the physical p
   - **RP2040 (CORE-R)**: Mapped to `RUN` (Hardware Reset).
   - **Other MCUs**: Mapped to native active-LOW reset line (`NRST` / `RESET#`).
 
-### 4.3 Logic Levels & Point of Load Regulation
+### 4.3 Analog Channel (`Pin 7: AIN`)
+- **Primary Function**: 3.3V single-ended analog input ($0\,\text{V} \sim 3.3\,\text{V}$) for ADC sensing.
+- **Multiplexed Capability**: Depending on the host Core MCU architecture, Pin 7 may optionally be multiplexed as an analog output (DAC). On CORE-A5 (ATtiny1616), Pin 7 maps to `PA6`, providing both 10-bit ADC input (`ADC0 AIN6`) and 8-bit true analog voltage output (`DAC0 OUT`).
+
+### 4.4 Logic Levels & Point of Load Regulation
 - **Standard**: All digital I/O pins (Pins 6, 7, 9, 11–14, 16–19) operate strictly at **3.3V LVCMOS native levels**:
   - $V_{IL} \le 0.8\,\text{V}$
   - $V_{IH} \ge 2.0\,\text{V}$
@@ -104,7 +108,7 @@ This document serves as the **Single Source of Truth (SSOT)** for the physical p
   - $V_{OH} \ge 2.4\,\text{V}$
 - **Point of Load (PoL) Rule**: 3.3V logic power is NOT distributed over the 20-pin bus. Addon Cards requiring 3.3V power MUST receive `VBUS` (Pins 1–4) and regulate it locally using an onboard LDO or DC-DC converter. This prevents ground loops, line drops, and ensures that Card-side power faults do not brown out the Core MCU.
 
-### 4.4 Shielding & Signal Integrity Topology
+### 4.5 Shielding & Signal Integrity Topology
 - **Pin 5 Power/Logic Barrier**: Isolates the high-current `VBUS` cluster (wires 1–4) from `SYS_RST` (wire 6) and analog inputs (wire 7). If an IDC crimping short occurs at the power boundary, VBUS shorts directly to GND (Pin 5), safely triggering sourcing over-current protection without exposing MCU logic to 5V.
 - **Pin 6 Quiet Placement**: Located between Pin 5 (GND) and Pin 7 (AIN: static analog input), isolating the sensitive reset/UPDI line from high-speed digital switching.
 - **EXTCLK Ground Sandwich**: Pin 9 (`EXTCLK`) is flanked by Pin 8 (`GND`) and Pin 10 (`GND`), forming a coplanar waveguide structure to suppress clock EMI.
@@ -117,8 +121,5 @@ This document serves as the **Single Source of Truth (SSOT)** for the physical p
 - **Implementation Mapping per Controller**:
   - [ATtiny1616 Hardware Mapping & PORTMUX Reference](mcu_mapping/attiny1616.md) (used by CORE-A5)
   - [RP2040 Hardware Mapping Reference](mcu_mapping/rp2040.md) (used by CORE-R)
-- **Design Guides & Rationale**:
-  - [ADX Pinout 設計・解説ガイド (日本語)](../ja/ADX_pinout.md)
-  - [ADX Pinout Architecture Guide (English)](../en/ADX_pinout.md)
 - **Form Factor Standards**:
   - [ADX 8748 Form Factor Specification](../ja/8748_formfactor.md)

@@ -28,7 +28,7 @@ This document specifies how the universal signals of the **ADX 20-Pin Bus (v3.0)
 | **4** | **VBUS** | - | - | System Power Bus (4.5V–5.0V Input/Output) | |
 | **5** | **GND** | - | - | VBUS Primary Ground Return & Zone Barrier | Directly adjacent to VBUS cluster |
 | **6** | **SYS_RST** | **PA0** | 19 | **UPDI / RESET** | 1-wire programming & hardware reset |
-| **7** | **AIN** | **PA5** | 6 | **VREFA** / ADC0 AIN5 / **TCD0 WOB** / TCB0 WO | Analog input channel |
+| **7** | **AIN** | **PA6** | 7 | **ADC0 AIN6** / ADC1 AIN2 / **DAC0 OUT** | 10-bit ADC Input / 8-bit DAC Output |
 | **8** | **GND** | - | - | Ground Return / Coplanar Shield | Analog/Clock shield |
 | **9** | **EXTCLK** | **PA3** | 2 | **EXTCLK** / ADC0 AIN3 / TCB1 WO | External clock / PWM output |
 | **10**| **GND** | - | - | Ground Return / Inter-bus Isolation | Clock/Communication isolation |
@@ -47,21 +47,28 @@ This document specifies how the universal signals of the **ADX 20-Pin Bus (v3.0)
 
 ## 3. Dedicated Onboard Pins (Non-Exposed to IDC Bus)
 
-The following 7 GPIO pins are reserved for dedicated onboard circuitry:
+The following 7 GPIO pins are reserved for dedicated onboard circuitry or internal reserves:
 
 | MCU Pin | QFN Pin | Dedicated Board Function | Electrical Connection & Notes |
 | :--- | :---: | :--- | :--- |
 | **PA1** | 20 | **RS-485 TxD** | USART0 Default TxD (DI pin of isolated transceiver). |
 | **PA2** | 1 | **RS-485 RxD** | USART0 Default RxD (RO pin) ➜ Hardwired to **CCL LUT0-IN2**. |
-| **PA4** | 5 | **RS-485 DE** | Hardware Auto-direction (`XDIR`) / Driver Enable. |
-| **PA7** | 8 | **RS-485 RE_** | Receiver Enable (Active Low, GPIO control). |
+| **PA4** | 5 | **RS-485 DE & /RE** | **USART0 XDIR** hardware auto-direction tied directly to both DE and /RE pins. |
 | **PB4** | 10 | **Red LED** | Active HIGH onboard status indicator. |
 | **PB5** | 9 | **Blue LED** | Active HIGH onboard status/comm indicator. |
-| **PA6** | 7 | **Reserved / Internal** | DAC0 OUT / ADC0 AIN6 (Unconnected / internal reserve). |
+| **PA5** | 6 | **Reserved / Internal** | ADC0 AIN5 / VREFA / TCB0 WO / TCD0 WOB (Unconnected / internal reserve). |
+| **PA7** | 8 | **Reserved / Internal** | ADC0 AIN7 / CCL LUT1-OUT (Unconnected / internal reserve). |
+
+> **Unconnected Pin (N.C.) Treatment Rule (PA5 / PA7):**  
+> To eliminate parasitic shoot-through current and noise vulnerability without adding external components, firmware MUST disable the input buffers or enable internal pull-ups on startup:  
+> `PORTA.PIN5CTRL = PORT_ISC_INPUT_DISABLE_gc;`  
+> `PORTA.PIN7CTRL = PORT_ISC_INPUT_DISABLE_gc;`  
+> In PCB layout, leave the pads completely isolated or route to small internal test lands with no external stubs.
+
 
 ---
 
-## 4. PORTMUX Hardware Configuration Rules
+## 4. PORTMUX & Direction Control Configuration Rules
 
 To route serial and timer peripherals to the universal 20-pin IDC bus without conflicting with the dedicated onboard RS-485 transceiver, firmware MUST apply the following register settings:
 
@@ -70,10 +77,15 @@ To route serial and timer peripherals to the universal 20-pin IDC bus without co
 | **`PORTMUX.CTRLB`** | **`SPI0`** (bit 2) | **Alternate** | `1` | Default (PA1–PA4) conflicts with RS-485. Routes SPI to **PC0–PC3 (Pins 16–19)**. |
 | **`PORTMUX.CTRLB`** | **`TWI0`** (bit 4) | **Default** | `0` | Default routes I2C to **PB0/PB1 (Pins 13, 14)**. Alternate conflicts with RS-485. |
 | **`PORTMUX.CTRLB`** | **`USART0`** (bit 0) | **Dynamic** | `0` or `1` | `0`: Onboard RS-485 (`PA1/PA2`)<br>`1`: External IDC Bus (`PB2/PB3`, Pins 11, 12) |
-| **`PORTMUX.CTRLD`** | **`TCB0`** (bit 0) | **User Select** | `0` or `1` | `0`: Route to Pin 7 (`PA5`)<br>`1`: Route to Pin 19 (`PC0`) |
 | **`PORTMUX.CTRLD`** | **`TCB1`** (bit 1) | **Default** | `0` | Default routes TCB1 PWM output to Pin 9 (`PA3`). |
 
-### 4.1 USART0 Dynamic Switching Operation
+### 4.1 RS-485 Hardware Auto-Direction Control (`XDIR`)
+- By hardwiring `DE` (Active HIGH) and `/RE` (Active LOW) together on the PCB and driving them from `PA4 (XDIR)`, the transceiver hardware automatically:
+  - Asserts `DE=1` and `/RE=1` one baud period prior to data transmission (Driver ON, Receiver OFF), preventing self-reception echo.
+  - De-asserts `DE=0` and `/RE=0` immediately upon stop bit completion (Driver OFF, Receiver ON).
+- Firmware transmits data via standard serial write without manual GPIO direction switching overhead.
+
+### 4.2 USART0 Dynamic Switching Operation
 - **Factory Test & Programming**: Set `PORTMUX.CTRLB |= PORTMUX_USART0_bm` (value `1`) to route serial debug output to IDC Pins 11 and 12 for automated PC test fixtures.
 - **Field Operation**: Set `PORTMUX.CTRLB &= ~PORTMUX_USART0_bm` (value `0`) to engage the isolated RS-485 transceiver on PA1/PA2.
 - **OTW Break Reset Autonomy**: Because `PA2` (RS-485 RX) is hardwired directly to CCL LUT0 input, incoming break pulses trigger software reset regardless of the current `PORTMUX.CTRLB` state.

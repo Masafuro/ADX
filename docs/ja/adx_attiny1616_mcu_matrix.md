@@ -27,7 +27,7 @@ ATtiny1616 は柔軟なピン再配置機能（PORTMUX）を備えています�
 | **PORTMUX.CTRLB** | **TWI0** (bit 4) | I2C (TWI0) 通信ピン | **Default 必須** | `0` | Default で IDC コネクタの **PB0/PB1 (IDC Pin 13, 14)** に接続。Alternate（PA1/PA2）は RS-485 と衝突するため使用禁止。 |
 | **PORTMUX.CTRLB** | **USART0** (bit 0) | USART0 通信ピン | **用途切替** | `0` / `1` | `0`: オンボード **RS-485 (PA1/PA2)** に接続<br>`1`: IDC 外部 **UART (PB2/PB3: IDC Pin 11, 12)** に接続 |
 | **PORTMUX.CTRLC** | **TCA00〜05** | TCA0 PWM 出力 | **任意** | 表参照 | モード（Normal / Split）および使用ピンに応じて動的設定可能。 |
-| **PORTMUX.CTRLD** | **TCB0** (bit 0) | TCB0 PWM 出力 | **任意** | `0` / `1` | `0`: **IDC Pin 7 (PA5)**<br>`1`: **IDC Pin 19 (PC0)** |
+| **PORTMUX.CTRLD** | **TCB0** (bit 0) | TCB0 PWM 出力 | **任意** | `0` / `1` | `0`: PA5（オンボード内部予約）<br>`1`: **IDC Pin 19 (PC0)** |
 | **PORTMUX.CTRLD** | **TCB1** (bit 1) | TCB1 PWM 出力 | **Default** | `0` | Default で **IDC Pin 9 (PA3)** に接続。 |
 | **PORTMUX.CTRLA** | **LUT0/1** (bit 4,5) | CCL 出力ピン | **用途に応じる** | `0` / `1` | オンボード回路との競合を避けて選択。 |
 | **PORTMUX.CTRLA** | **EVOUT0〜2** | イベント出力 | **任意** | `0` / `1` | IDC 外部へ内部イベントクロック等を出力可能（EVOUT1: PB2 / Pin 11, EVOUT2: PC2 / Pin 17）。 |
@@ -40,24 +40,24 @@ ATtiny1616 は柔軟なピン再配置機能（PORTMUX）を備えています�
 
 | ピン名 | QFN | SOIC | ADX接続先 | ADC0 | ADC1 | PWM / タイマー | 通信 (USART/SPI/I2C) | アナログ / 特殊 | その他 (CCL/PTC/EV) |
 | :--- | :---: | :---: | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **PA0** | 19 | 16 | **オンボード (UPDI/RESET)** | AIN0 | - | - | - | RESET / UPDI | LUT0-IN0 |
+| **PA0** | 19 | 16 | **IDC Pin 6 (SYS_RST / UPDI)** | AIN0 | - | - | - | RESET / UPDI | LUT0-IN0 |
 | **PA1** | 20 | 17 | **オンボード (RS-485 TxD)** | AIN1 | - | - | USART0 TxD (Def) / SPI MOSI(Def) / *TWI SDA(Alt)* | - | LUT0-IN1 |
 | **PA2** | 1 | 18 | **オンボード (RS-485 RxD)** | AIN2 | - | - | USART0 RxD (Def) / SPI MISO(Def) / *TWI SCL(Alt)* | - | EVOUT0 / LUT0-IN2 |
-| **PA3** | 2 | 19 | **IDC Pin 9** | AIN3 | - | TCA0 WO3(Def) / **TCB1 WO** | USART0 XCK (Def) / SPI SCK (Def) | **EXTCLK** | - |
-| **PA4** | 5 | 2 | **オンボード (RS-485 DE)** | AIN4 | AIN0 | TCA0 WO4(Def) / **TCD0 WOA** | USART0 XDIR (Def) / SPI SS (Def) | - | X0/Y0 / LUT0-OUT(Def) |
-| **PA5** | 6 | 3 | **IDC Pin 7** | AIN5 | AIN1 | TCA0 WO5(Def) / **TCB0 WO(Def)** / **TCD0 WOB** | - | **VREFA** / AC0 OUT / AC2 AINN0 | X1/Y1 |
-| **PA6** | 7 | 4 | **IDC Pin 6** | AIN6 | AIN2 | - | - | **DAC0 OUT** / AC0-2 AIN | X2/Y2 |
-| **PA7** | 8 | 5 | **オンボード (RS-485 RE)** | AIN7 | AIN3 | - | - | AC0-2 AIN | X3/Y3 / LUT1-OUT(Def) |
-| **PB0** | 14 | 11 | **IDC Pin 13** | AIN11 | - | **TCA0 WO0(Def)** | **TWI0 SCL (Def)** / USART0 XDIR(Alt) | AC0/1 AIN | X5/Y5 |
-| **PB1** | 13 | 10 | **IDC Pin 14** | AIN10 | - | **TCA0 WO1(Def)** | **TWI0 SDA (Def)** / USART0 XCK(Alt) | AC0 AIN | X4/Y4 |
-| **PB2** | 12 | 9 | **IDC Pin 11** | - | - | **TCA0 WO2(Def)** | **USART0 TxD (Alt)** | AC1 OUT / TOSC2 | EVOUT1 |
-| **PB3** | 11 | 8 | **IDC Pin 12** | - | - | **TCA0 WO0(Alt)** | **USART0 RxD (Alt)** | AC0 OUT / TOSC1 | - |
+| **PA3** | 2 | 19 | **IDC Pin 9 (EXTCLK)** | AIN3 | - | TCA0 WO3(Def) / **TCB1 WO** | USART0 XCK (Def) / SPI SCK (Def) | **EXTCLK** | - |
+| **PA4** | 5 | 2 | **オンボード (RS-485 DE & /RE)** | AIN4 | AIN0 | TCA0 WO4(Def) / **TCD0 WOA** | **USART0 XDIR (Def)** / SPI SS (Def) | - | X0/Y0 / LUT0-OUT(Def) |
+| **PA5** | 6 | 3 | **内部予約 (N.C.)** | AIN5 | AIN1 | TCA0 WO5(Def) / **TCB0 WO(Def)** / **TCD0 WOB** | - | **VREFA** / AC0 OUT / AC2 AINN0 | X1/Y1 |
+| **PA6** | 7 | 4 | **IDC Pin 7 (AIN / DAC)** | AIN6 | AIN2 | - | - | **DAC0 OUT** / AC0-2 AIN | X2/Y2 |
+| **PA7** | 8 | 5 | **内部予約 (N.C.)** | AIN7 | AIN3 | - | - | AC0-2 AIN | X3/Y3 / LUT1-OUT(Def) |
+| **PB0** | 14 | 11 | **IDC Pin 13 (I2C_SCL)** | AIN11 | - | **TCA0 WO0(Def)** | **TWI0 SCL (Def)** / USART0 XDIR(Alt) | AC0/1 AIN | X5/Y5 |
+| **PB1** | 13 | 10 | **IDC Pin 14 (I2C_SDA)** | AIN10 | - | **TCA0 WO1(Def)** | **TWI0 SDA (Def)** / USART0 XCK(Alt) | AC0 AIN | X4/Y4 |
+| **PB2** | 12 | 9 | **IDC Pin 11 (UART_TX)** | - | - | **TCA0 WO2(Def)** | **USART0 TxD (Alt)** | AC1 OUT / TOSC2 | EVOUT1 |
+| **PB3** | 11 | 8 | **IDC Pin 12 (UART_RX)** | - | - | **TCA0 WO0(Alt)** | **USART0 RxD (Alt)** | AC0 OUT / TOSC1 | - |
 | **PB4** | 10 | 7 | **オンボード (赤色LED)** | AIN9 | - | TCA0 WO1(Alt) | - | AC1/2 AIN | X13/Y13 / LUT0-OUT(Alt) |
 | **PB5** | 9 | 6 | **オンボード (青色LED)** | AIN8 | - | TCA0 WO2(Alt) | - | CLKOUT / AC1/2 AIN | X12/Y12 |
-| **PC0** | 15 | 12 | **IDC Pin 19** | - | AIN6 | **TCB0 WO(Alt)** / **TCD0 WOC** | **SPI0 SCK (Alt)** | - | X6/Y6 |
-| **PC1** | 16 | 13 | **IDC Pin 18** | - | AIN7 | **TCD0 WOD** | **SPI0 MISO (Alt)** | - | X7/Y7 / LUT1-OUT(Alt) |
-| **PC2** | 17 | 14 | **IDC Pin 17** | - | AIN8 | - | **SPI0 MOSI (Alt)** | - | EVOUT2 / X8/Y8 |
-| **PC3** | 18 | 15 | **IDC Pin 16** | - | AIN9 | **TCA0 WO3(Alt)** | **SPI0 SS (Alt)** | - | X9/Y9 / LUT1-IN0 |
+| **PC0** | 15 | 12 | **IDC Pin 19 (SPI_SCK)** | - | AIN6 | **TCB0 WO(Alt)** / **TCD0 WOC** | **SPI0 SCK (Alt)** | - | X6/Y6 |
+| **PC1** | 16 | 13 | **IDC Pin 18 (SPI_MISO)** | - | AIN7 | **TCD0 WOD** | **SPI0 MISO (Alt)** | - | X7/Y7 / LUT1-OUT(Alt) |
+| **PC2** | 17 | 14 | **IDC Pin 17 (SPI_MOSI)** | - | AIN8 | - | **SPI0 MOSI (Alt)** | - | EVOUT2 / X8/Y8 |
+| **PC3** | 18 | 15 | **IDC Pin 16 (SPI_CS)** | - | AIN9 | **TCA0 WO3(Alt)** | **SPI0 SS (Alt)** | - | X9/Y9 / LUT1-IN0 |
 
 ※ピン機能表記の `(Def)` は Default 位置、`(Alt)` は Alternate（PORTMUX切替後）を示します。
 
@@ -73,7 +73,6 @@ ATtiny1616 には 3 種類の独立したタイマー（TCA0, TCBn, TCD0）が�
 
 | IDC ピン | マイコンピン | 対応タイマー・PWMチャネル | PORTMUX 設定条件 | 備考・特徴 |
 | :---: | :---: | :--- | :--- | :--- |
-| **Pin 7** | PA5 | **TCB0 WO (Def)**<br>**TCD0 WOB**<br>TCA0 WO5 (Def) | `PORTMUX.CTRLD.TCB0 = 0`<br>TCD0 制御レジスタ有効化<br>`PORTMUX.CTRLC.TCA05 = 0` | 16-bit PWM (TCB0) / **高周波 12-bit PWM (TCD0)** / 16-bit PWM (TCA0) |
 | **Pin 9** | PA3 | **TCB1 WO**<br>TCA0 WO3 (Def) | `PORTMUX.CTRLD.TCB1 = 0`<br>`PORTMUX.CTRLC.TCA03 = 0` | 16-bit PWM (TCB1) / EXTCLK兼用 |
 | **Pin 11** | PB2 | **TCA0 WO2 (Def)** | `PORTMUX.CTRLC.TCA02 = 0` | 16-bit PWM (TCA0 Normal) / 8-bit PWM (Split) / UART TxD兼用 |
 | **Pin 12** | PB3 | **TCA0 WO0 (Alt)** | `PORTMUX.CTRLC.TCA00 = 1` | 8-bit PWM (TCA0 Split mode) / UART RxD兼用 |
@@ -83,8 +82,8 @@ ATtiny1616 には 3 種類の独立したタイマー（TCA0, TCBn, TCD0）が�
 | **Pin 18** | PC1 | **TCD0 WOD** | TCD0 制御レジスタ有効化 | **高周波 12-bit PWM (TCD0)** / SPI MISO兼用 |
 | **Pin 19** | PC0 | **TCD0 WOC**<br>**TCB0 WO (Alt)** | TCD0 制御レジスタ有効化<br>`PORTMUX.CTRLD.TCB0 = 1` | **高周波 12-bit PWM (TCD0)** / 16-bit PWM (TCB0) / SPI SCK兼用 |
 
-> **TCD0 (Timer Type D) について:**
-> 最大48MHz（PLLまたは非同期クロック）で駆動可能な高周波タイマーです。IDC コネクタからは **IDC Pin 7 (WOB)**、**IDC Pin 18 (WOD)**、**IDC Pin 19 (WOC)** の計3チャンネルを取り出すことができ、高分解能PWMや電源制御・ハーフブリッジ駆動等に適しています。
+> **TCD0 (Timer Type D) について:**  
+> 最大48MHz（PLLまたは非同期クロック）で駆動可能な高周波タイマーです。IDC コネクタからは **IDC Pin 18 (WOD)**、**IDC Pin 19 (WOC)** の2チャンネルを取り出すことができ、高分解能PWMや電源制御・ハーフブリッジ駆動等に適しています。
 
 ---
 
@@ -94,8 +93,7 @@ IDC コネクタには、高精度なアナログ入出力機能が集約され�
 
 | IDC ピン | マイコンピン | アナログ機能 | 説明 |
 | :---: | :---: | :--- | :--- |
-| **Pin 6** | PA6 | **DAC0 OUT**<br>ADC0 AIN6 / ADC1 AIN2<br>AC0/1/2 AIN | **8-bit DAC 出力**（内蔵DACのアナログ電圧出力ピン）<br>アナログコンパレータ入力 |
-| **Pin 7** | PA5 | **VREFA** (外部参照電圧)<br>ADC0 AIN5 / ADC1 AIN1<br>AC0 OUT | **外部基準電圧入力 (VREFA)**<br>アナログコンパレータ AC0 出力 |
+| **Pin 7** | PA6 | **DAC0 OUT**<br>ADC0 AIN6 / ADC1 AIN2<br>AC0/1/2 AIN | **8-bit DAC 出力**（内蔵DACのアナログ電圧出力ピン）<br>10-bit ADC 入力 / アナログコンパレータ入力 |
 | **Pin 9** | PA3 | **ADC0 AIN3** | 汎用 10-bit ADC 入力（外部クロック未使用時） |
 | **Pin 13** | PB0 | ADC0 AIN11 / AC0,1 AIN | 10-bit ADC 入力 / コンパレータ入力（I2C SCL兼用） |
 | **Pin 14** | PB1 | ADC0 AIN10 / AC0 AIN | 10-bit ADC 入力 / コンパレータ入力（I2C SDA兼用） |
@@ -117,16 +115,16 @@ IDC コネクタには、高精度なアナログ入出力機能が集約され�
 
 ---
 
-## 5. オンボード専用ピン (7ピン) の設計意図と保護
+## 5. オンボード専用・内部予約ピンの設計意図と保護
 
-IDC に引き出されていない 7 ピン（オンボード専用回路）の機能と、ボード上で固定されている役割です。
+IDC に引き出されていない 6 ピン（オンボード専用回路および内部予約）の機能と役割です。
 
 | ピン名 | 接続先・用途 | 状態・制約 | ファームウェア上の注意点 |
 | :--- | :--- | :--- | :--- |
-| **PA0** | UPDI プログラミング / RESET | デバッグ専用（オンボードTHT引き出し） | ヒューズ設定で GPIO 化しないこと（書き込み不可リスク防止）。 |
-| **PA1** | SP485EEN DI (TxD) | オンボード RS-485 送信 | `PORTMUX.CTRLB.USART0 = 0` 時に USART0 送信ピンとして機能。 |
-| **PA2** | SP485EEN RO (RxD) | オンボード RS-485 受信 | `PORTMUX.CTRLB.USART0 = 0` 時に USART0 受信ピンとして機能。 |
-| **PA4** | SP485EEN DE (Driver Enable) | 送信イネーブル | USART0 の `XDIR` 自動方向制御ピンとして機能。 |
-| **PA7** | SP485EEN /RE (Receiver Enable) | 受信イネーブル | GPIO 出力として制御（Lowで受信有効、Highで受信停止）。 |
-| **PB4** | オンボード赤色LED | Active HIGH (Highで点灯) | GPIO 出力。用途はオープン（ブートローダー待機中のインジケータ等に推奨）。 |
-| **PB5** | オンボードBMC BOOT_REQ | ブートリクエスト入力（プルダウン＋直列抵抗実装） | 起動時にサンプリング。HIGH ならタイムアウトなしでブートローダー突入、LOW なら即座に通常スケッチ実行。 |
+| **PA1** | TDA51S485HC DI (TxD) | オンボード RS-485 送信 | `PORTMUX.CTRLB.USART0 = 0` 時に USART0 送信ピンとして機能。 |
+| **PA2** | TDA51S485HC RO (RxD) | オンボード RS-485 受信 | CCL LUT0-IN2 にハードウェア直結（OTW Break リセット対応）。 |
+| **PA4** | TDA51S485HC DE & /RE | 送受信自動方向切替 | USART0 の `XDIR` 出力ピン。DE と /RE を基板上で直結。 |
+| **PA5** | 内部予約 (N.C.) | 未接続 / 内部予約 | 起動時に `PORTA.PIN5CTRL = PORT_ISC_INPUT_DISABLE_gc` で入力バッファ遮断。 |
+| **PA7** | 内部予約 (N.C.) | 未接続 / 内部予約 | 起動時に `PORTA.PIN7CTRL = PORT_ISC_INPUT_DISABLE_gc` で入力バッファ遮断。 |
+| **PB4** | オンボード赤色LED | Active HIGH (Highで点灯) | GPIO 出力（ステータス表示）。 |
+| **PB5** | オンボード青色LED | Active HIGH (Highで点灯) | GPIO 出力（通信・動作表示）。 |

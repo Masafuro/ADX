@@ -114,7 +114,7 @@ To achieve this balance, this guideline defines three requirement tiers based on
 The following signals may be utilized flexibly depending on application requirements:
 
 1. **Battery Level / Bus Voltage Telemetry:**
-   - External raw battery voltage can be divided down and routed to Pin 7 (`PA5/AIN5`) for analog voltage monitoring by the MCU.
+   - External raw battery voltage can be divided down and routed to Pin 7 (`PA6/AIN (DAC)`) for analog voltage monitoring or waveform generation by the MCU.
 2. **BMC-Coupled Sleep Shutdown:**
    - For ultra-low-power standby, connect Pin 18 (`PC3`) to the Enable (EN) pin of the CARD's DC-DC converter to completely shut down peripheral power rails during MCU sleep. (May be tied high if unused).
 
@@ -124,9 +124,9 @@ The following signals may be utilized flexibly depending on application requirem
 
 Before releasing or sending a PCB for fabrication (JLCPCB PCBA):
 
-- [ ] **[MUST]** Did you place a reverse-blocking diode or FET at the output of the Power CARD?
-- [ ] **[MUST]** Is Pin 5 (N.C.) completely isolated with no copper pours or traces touching it?
-- [ ] **[MUST]** Does the 20-pin IDC connector pin assignment strictly match ADX Pinout v2?
+- [ ] **[MUST]** Did you place reverse-current blocking and autonomous short-circuit/over-current protection on any Power CARD injecting into VBUS?
+- [ ] **[MUST]** Is Pin 5 properly tied to the primary ground return and zone barrier plane?
+- [ ] **[MUST]** Does the 20-pin IDC connector pin assignment strictly match ADX Bus Spec v3.0 (`ADX_PINOUT.md`)?
 - [ ] **[SHOULD]** Did you use a transformer-isolated DC-DC converter for industrial 24V/48V inputs?
 - [ ] **[SHOULD]** Did you select a latched Eject Header if intended for high-vibration applications?
 - [ ] **[SHOULD]** Does the board outline match the 8748 pitch (`77.0 mm × 38.0 mm`) for enclosure compatibility?
