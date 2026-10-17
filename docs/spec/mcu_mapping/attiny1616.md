@@ -14,34 +14,34 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## 1. Overview
 
-This document specifies how the universal signals of the **ADX 20-Pin Bus** are mapped to the physical pins, peripherals, and PORTMUX channels of the **Microchip ATtiny1616** microcontroller.
+This document specifies how the universal signals of the **ADX 20-Pin Bus (v3.0)** are mapped to the physical pins, peripherals, and PORTMUX channels of the **Microchip ATtiny1616** microcontroller.
 
 ---
 
 ## 2. Bus to MCU Physical Interconnect Table
 
-| IDC Pin | Bus Net Name | ATtiny1616 Pin | QFN Pin | Primary MCU Peripheral & Alternate Functions |
-| :---: | :--- | :--- | :---: | :--- |
-| **1** | **VBUS** | - | - | System Power Bus (4.5V–5.0V Input/Output) |
-| **2** | **VBUS** | - | - | System Power Bus (4.5V–5.0V Input/Output) |
-| **3** | **VBUS** | - | - | System Power Bus (4.5V–5.0V Input/Output) |
-| **4** | **VBUS** | - | - | System Power Bus (4.5V–5.0V Input/Output) |
-| **5** | **N.C.** | - | - | Isolation Barrier (No Connection) |
-| **6** | **AOUT** | **PA6** | 7 | **DAC0 OUT** / ADC0 AIN6 / ADC1 AIN2 |
-| **7** | **AIN** | **PA5** | 6 | **VREFA** / ADC0 AIN5 / **TCD0 WOB** / TCB0 WO |
-| **8** | **GND** | - | - | Ground Return / Coplanar Shield |
-| **9** | **EXTCLK** | **PA3** | 2 | **EXTCLK** / ADC0 AIN3 / TCB1 WO |
-| **10**| **GND** | - | - | Ground Return / Inter-bus Isolation |
-| **11**| **UART_TX** | **PB2** | 12 | **USART0 TxD (Alternate)** / TCA0 WO2 |
-| **12**| **UART_RX** | **PB3** | 11 | **USART0 RxD (Alternate)** / TCA0 WO0 |
-| **13**| **I2C_SCL** | **PB0** | 14 | **TWI0 SCL (Default)** / TCA0 WO0 |
-| **14**| **I2C_SDA** | **PB1** | 13 | **TWI0 SDA (Default)** / TCA0 WO1 |
-| **15**| **GND** | - | - | Ground Return / Mid-bus Shield |
-| **16**| **SPI_CS** | **PC3** | 18 | **SPI0 SS (Alternate)** / TCA0 WO3 |
-| **17**| **SPI_MOSI**| **PC2** | 17 | **SPI0 MOSI (Alternate)** / EVOUT2 |
-| **18**| **SPI_MISO**| **PC1** | 16 | **SPI0 MISO (Alternate)** / TCD0 WOD |
-| **19**| **SPI_SCK** | **PC0** | 15 | **SPI0 SCK (Alternate)** / TCD0 WOC / TCB0 WO |
-| **20**| **GND** | - | - | Ground Return / Bus Termination Shield |
+| IDC Pin | Bus Net Name | ATtiny1616 Pin | QFN Pin | Primary MCU Peripheral & Alternate Functions | Notes |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **1** | **VBUS** | - | - | System Power Bus (4.5V–5.0V Input/Output) | Pins 1–4 tied to VBUS plane |
+| **2** | **VBUS** | - | - | System Power Bus (4.5V–5.0V Input/Output) | |
+| **3** | **VBUS** | - | - | System Power Bus (4.5V–5.0V Input/Output) | |
+| **4** | **VBUS** | - | - | System Power Bus (4.5V–5.0V Input/Output) | |
+| **5** | **GND** | - | - | VBUS Primary Ground Return & Zone Barrier | Directly adjacent to VBUS cluster |
+| **6** | **SYS_RST** | **PA0** | 19 | **UPDI / RESET** | 1-wire programming & hardware reset |
+| **7** | **AIN** | **PA5** | 6 | **VREFA** / ADC0 AIN5 / **TCD0 WOB** / TCB0 WO | Analog input channel |
+| **8** | **GND** | - | - | Ground Return / Coplanar Shield | Analog/Clock shield |
+| **9** | **EXTCLK** | **PA3** | 2 | **EXTCLK** / ADC0 AIN3 / TCB1 WO | External clock / PWM output |
+| **10**| **GND** | - | - | Ground Return / Inter-bus Isolation | Clock/Communication isolation |
+| **11**| **UART_TX** | **PB2** | 12 | **USART0 TxD (Alternate)** / TCA0 WO2 | PORTMUX Alternate USART0 |
+| **12**| **UART_RX** | **PB3** | 11 | **USART0 RxD (Alternate)** / TCA0 WO0 | PORTMUX Alternate USART0 |
+| **13**| **I2C_SCL** | **PB0** | 14 | **TWI0 SCL (Default)** / TCA0 WO0 | Hardware I2C Clock |
+| **14**| **I2C_SDA** | **PB1** | 13 | **TWI0 SDA (Default)** / TCA0 WO1 | Hardware I2C Data |
+| **15**| **GND** | - | - | Ground Return / Mid-bus Shield | Flanking I2C and SPI buses |
+| **16**| **SPI_CS** | **PC3** | 18 | **SPI0 SS (Alternate)** / TCA0 WO3 | Active-LOW Chip Select |
+| **17**| **SPI_MOSI**| **PC2** | 17 | **SPI0 MOSI (Alternate)** / EVOUT2 | SPI Controller Out / Peripheral In |
+| **18**| **SPI_MISO**| **PC1** | 16 | **SPI0 MISO (Alternate)** / TCD0 WOD | SPI Controller In / Peripheral Out |
+| **19**| **SPI_SCK** | **PC0** | 15 | **SPI0 SCK (Alternate)** / TCD0 WOC / TCB0 WO | SPI Serial Clock |
+| **20**| **GND** | - | - | Ground Return / Bus Termination Shield | Outer bus termination |
 
 ---
 
@@ -51,13 +51,13 @@ The following 7 GPIO pins are reserved for dedicated onboard circuitry:
 
 | MCU Pin | QFN Pin | Dedicated Board Function | Electrical Connection & Notes |
 | :--- | :---: | :--- | :--- |
-| **PA0** | 19 | **UPDI / RESET** | Dedicated through-hole programming pad. |
-| **PA1** | 20 | **RS-485 TxD** | USART0 Default TxD (DI pin of RS-485 transceiver). |
+| **PA1** | 20 | **RS-485 TxD** | USART0 Default TxD (DI pin of isolated transceiver). |
 | **PA2** | 1 | **RS-485 RxD** | USART0 Default RxD (RO pin) ➜ Hardwired to **CCL LUT0-IN2**. |
 | **PA4** | 5 | **RS-485 DE** | Hardware Auto-direction (`XDIR`) / Driver Enable. |
 | **PA7** | 8 | **RS-485 RE_** | Receiver Enable (Active Low, GPIO control). |
 | **PB4** | 10 | **Red LED** | Active HIGH onboard status indicator. |
-| **PB5** | 9 | **Blue LED** | Active HIGH onboard status/comm indicator. *(Formerly BOOT_REQ in rev1)* |
+| **PB5** | 9 | **Blue LED** | Active HIGH onboard status/comm indicator. |
+| **PA6** | 7 | **Reserved / Internal** | DAC0 OUT / ADC0 AIN6 (Unconnected / internal reserve). |
 
 ---
 
@@ -73,11 +73,16 @@ To route serial and timer peripherals to the universal 20-pin IDC bus without co
 | **`PORTMUX.CTRLD`** | **`TCB0`** (bit 0) | **User Select** | `0` or `1` | `0`: Route to Pin 7 (`PA5`)<br>`1`: Route to Pin 19 (`PC0`) |
 | **`PORTMUX.CTRLD`** | **`TCB1`** (bit 1) | **Default** | `0` | Default routes TCB1 PWM output to Pin 9 (`PA3`). |
 
+### 4.1 USART0 Dynamic Switching Operation
+- **Factory Test & Programming**: Set `PORTMUX.CTRLB |= PORTMUX_USART0_bm` (value `1`) to route serial debug output to IDC Pins 11 and 12 for automated PC test fixtures.
+- **Field Operation**: Set `PORTMUX.CTRLB &= ~PORTMUX_USART0_bm` (value `0`) to engage the isolated RS-485 transceiver on PA1/PA2.
+- **OTW Break Reset Autonomy**: Because `PA2` (RS-485 RX) is hardwired directly to CCL LUT0 input, incoming break pulses trigger software reset regardless of the current `PORTMUX.CTRLB` state.
+
 ---
 
-## 5. Clocking & Thermal Considerations
+## 5. Factory Calibration & VDD Self-Testing
 
-- **Supply Voltage**: Powered at **3.3V DC** via onboard LDO.
-- **Operating Frequency**: Standard rated at **10 MHz** (OSC20M divided by 2).
-  - Maintains strict compliance with Microchip Safe Operating Area down to -40°C and up to +105°C.
-  - Keeps MCU self-heating virtually zero ($< 1\,\text{mW}$), maximizing thermal headroom in sealed enclosures.
+The CORE-A5 board does not route internal 3.3V power to external pins. Factory automated inspection verifies the onboard 3.3V LDO output voltage via the ATtiny1616 internal ADC:
+1. Initialize ADC0 with `ADC_REFSEL_INTREF_gc` (1.1V internal bandgap).
+2. Sample the internal VDD channel (`ADC_MUXPOS_INTREF_gc` with VDD reference or scaled VDD).
+3. Transmit the calculated VDD value via USART0 Alternate (IDC Pin 11) to the test fixture. Valid acceptance window: $3.20\,\text{V} \le V_{DD} \le 3.40\,\text{V}$.

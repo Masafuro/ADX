@@ -453,60 +453,6 @@
         }
       }
     },
-    "gge114_1": {
-      "props": {
-        "Footprint": "89d68ce6d6ed7359",
-        "Designator": "H3",
-        "LCSC Part Name": "1x1P 间距:2.54mm 方针 直插",
-        "Supplier Part": "C25503131",
-        "Manufacturer": "HanElectricity(瀚源)",
-        "Manufacturer Part": "2541WV-01P",
-        "Supplier Footprint": "插件,P=2.54mm",
-        "JLCPCB Part Class": "Extended Part",
-        "Datasheet": "https://item.szlcsc.com/datasheet/2541WV-01P/27233674.html",
-        "Supplier": "LCSC",
-        "Add into BOM": "no",
-        "3D Model": "",
-        "3D Model Transform": "",
-        "Pin Structure": "1x1P",
-        "Pitch": "2.54mm",
-        "Row Spacing": "-",
-        "Circluar Pins/Square Pins": "Pin Header",
-        "Mounting Type": "Through Hole",
-        "Number of Rows": "1",
-        "Number of Pins": "1P",
-        "Current Rating": "3A",
-        "Length of Mating Pin": "6mm",
-        "Insulation Height": "2.54mm",
-        "Length of End Connection Pin": "3mm",
-        "Contact Material": "Brass",
-        "Contact Plating": "Gold",
-        "Operating Temperature": "-55℃~+105℃",
-        "Name": "2541WV-01P",
-        "Description": "Pin Structure:1x1P Pitch:2.54mm Row Spacing:- Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:1 Number of Pins:1P Current Rating:3A Length of Mating Pin:6mm Insulation Height:2.54mm Length of End Connection Pin:3mm Contact M",
-        "Device": "1ef0cd115580d84e",
-        "Unique ID": "gge114_1",
-        "3D Model Title": "",
-        "Reuse Block": "",
-        "Group ID": "",
-        "Channel ID": "$1I3748",
-        "DeviceName": "2541WV-01P",
-        "FootprintName": "HDR-TH_1P-P2.54-V-F",
-        "PCB Layer": "TopLayer",
-        "Convert to PCB": "yes"
-      },
-      "footprintAttrKeys": [
-        "Footprint",
-        "Designator"
-      ],
-      "pinInfoMap": {
-        "1": {
-          "name": "",
-          "number": "1",
-          "net": "PA0/UPDI"
-        }
-      }
-    },
     "gge183": {
       "props": {
         "Footprint": "bc8e7b5bfd8acf78",
@@ -617,69 +563,7 @@
         "2": {
           "name": "",
           "number": "2",
-          "net": ""
-        }
-      }
-    },
-    "gge185": {
-      "props": {
-        "Footprint": "88091fa9a30b9da5",
-        "Designator": "U3",
-        "LCSC Part Name": "1x2P 间距:2.54mm 方针 直插",
-        "Supplier Part": "C32713268",
-        "Manufacturer": "hanxia(韩下)",
-        "Manufacturer Part": "HX PZ2.54-1x2P ZZ",
-        "Supplier Footprint": "插件,P=2.54mm",
-        "JLCPCB Part Class": "Extended Part",
-        "Datasheet": "https://item.szlcsc.com/datasheet/HX%2520PZ2.54-1x2P%2520ZZ/34444548.html",
-        "Supplier": "LCSC",
-        "Add into BOM": "no",
-        "3D Model": "",
-        "3D Model Transform": "",
-        "Pin Structure": "1x2P",
-        "Pitch": "2.54mm",
-        "Row Spacing": "-",
-        "Circluar Pins/Square Pins": "Pin Header",
-        "Mounting Type": "Through Hole",
-        "Number of Rows": "1",
-        "Number of Pins": "2P",
-        "Current Rating": "3A",
-        "Voltage Rating (Max)": "1kV",
-        "Length of Mating Pin": "6mm",
-        "Insulation Height": "2.5mm",
-        "Length of End Connection Pin": "3mm",
-        "Contact Material": "Brass",
-        "Contact Plating": "Gold",
-        "Operating Temperature": "-40℃~+105℃",
-        "Color": "Black",
-        "Supplementary Features": "-",
-        "Name": "HX PZ2.54-1x2P ZZ",
-        "Description": "Pin Structure:1x2P Pitch:2.54mm Row Spacing:- Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:1 Number of Pins:2P Current Rating:3A Voltage Rating (Max):1kV Length of Mating Pin:6mm Insulation Height:2.5mm Length of End Conn",
-        "Device": "b9a5670d5479f212",
-        "Unique ID": "gge185",
-        "3D Model Title": "",
-        "Reuse Block": "",
-        "Group ID": "",
-        "Channel ID": "$6I231",
-        "DeviceName": "HX PZ2.54-1x2P ZZ",
-        "FootprintName": "HDR-TH_2P-P2.54-V-M-3",
-        "PCB Layer": "TopLayer",
-        "Convert to PCB": "yes"
-      },
-      "footprintAttrKeys": [
-        "Footprint",
-        "Designator"
-      ],
-      "pinInfoMap": {
-        "1": {
-          "name": "",
-          "number": "1",
-          "net": ""
-        },
-        "2": {
-          "name": "",
-          "number": "2",
-          "net": ""
+          "net": "TERM"
         }
       }
     },
@@ -799,152 +683,6 @@
         }
       }
     },
-    "gge192": {
-      "props": {
-        "Footprint": "56e48732fc6f840b",
-        "Designator": "P1",
-        "LCSC Part Name": "2.54mm 2x10P 排数:2 每排P数:10",
-        "Supplier Part": "C9144",
-        "Manufacturer": "BOOMELE(博穆精密)",
-        "Manufacturer Part": "2.54-2*10P弯简牛",
-        "Supplier Footprint": "弯插,P=2.54mm",
-        "JLCPCB Part Class": "Extended Part",
-        "Datasheet": "https://item.szlcsc.com/datasheet/2.54-2*10P%25E5%25BC%25AF%25E7%25AE%2580%25E7%2589%259B/9667.html",
-        "Supplier": "LCSC",
-        "Add into BOM": "yes",
-        "3D Model": "fd35664fe4484f3b8755f78e2baa2a84|0819f05c4eef4c71ace90d822a990e87",
-        "3D Model Title": "IDC-TH_20P-L33.0-W13.8-H-M-R2-C10-P2.54-S2.54-TR",
-        "3D Model Transform": "1300.001,539.76266,0,0,0,0,0,-206.693,-120.079",
-        "Connector Type": "IDC Header",
-        "Pitch": "2.54mm",
-        "Number of Positions or Pins": "2x10P",
-        "Current Rating": "3A",
-        "Holder Type": "Right Angle",
-        "Row Spacing": "2.54mm",
-        "Number of Rows": "2",
-        "Number of PINs Per Row": "10",
-        "Contact Material": "Brass",
-        "Contact Plating": "-",
-        "Operating Temperature": "-40℃~+105℃",
-        "Name": "2.54-2*10P弯简牛",
-        "Description": "Connector Type:IDC Header Pitch:2.54mm Number of Positions or Pins:2x10P Current Rating:3A Holder Type:Right Angle Row Spacing:2.54mm Number of Rows:2 Number of PINs Per Row:10 Contact Material:Brass Contact Plating:- Operating Temperature:-40℃~+105℃ Oper",
-        "Device": "5a0925aed2f467b7",
-        "Unique ID": "gge192",
-        "Reuse Block": "",
-        "Group ID": "",
-        "Channel ID": "$1I3761",
-        "DeviceName": "2.54-2*10P弯简牛",
-        "FootprintName": "IDC-TH_20P-L33.0-W13.8-H-M-R2-C10-P2.54-S2.54-TR",
-        "PCB Layer": "TopLayer",
-        "Convert to PCB": "yes"
-      },
-      "footprintAttrKeys": [
-        "Footprint",
-        "Designator"
-      ],
-      "pinInfoMap": {
-        "1": {
-          "name": "",
-          "number": "1",
-          "net": ""
-        },
-        "2": {
-          "name": "",
-          "number": "2",
-          "net": ""
-        },
-        "3": {
-          "name": "",
-          "number": "3",
-          "net": ""
-        },
-        "4": {
-          "name": "",
-          "number": "4",
-          "net": ""
-        },
-        "5": {
-          "name": "",
-          "number": "5",
-          "net": ""
-        },
-        "6": {
-          "name": "",
-          "number": "6",
-          "net": ""
-        },
-        "7": {
-          "name": "",
-          "number": "7",
-          "net": ""
-        },
-        "8": {
-          "name": "",
-          "number": "8",
-          "net": ""
-        },
-        "9": {
-          "name": "",
-          "number": "9",
-          "net": ""
-        },
-        "10": {
-          "name": "",
-          "number": "10",
-          "net": ""
-        },
-        "11": {
-          "name": "",
-          "number": "11",
-          "net": ""
-        },
-        "12": {
-          "name": "",
-          "number": "12",
-          "net": ""
-        },
-        "13": {
-          "name": "",
-          "number": "13",
-          "net": ""
-        },
-        "14": {
-          "name": "",
-          "number": "14",
-          "net": ""
-        },
-        "15": {
-          "name": "",
-          "number": "15",
-          "net": ""
-        },
-        "16": {
-          "name": "",
-          "number": "16",
-          "net": ""
-        },
-        "17": {
-          "name": "",
-          "number": "17",
-          "net": ""
-        },
-        "18": {
-          "name": "",
-          "number": "18",
-          "net": ""
-        },
-        "19": {
-          "name": "",
-          "number": "19",
-          "net": ""
-        },
-        "20": {
-          "name": "",
-          "number": "20",
-          "net": ""
-        }
-      }
-    },
     "gge34": {
       "props": {
         "Footprint": "5204324dc48f74ca",
@@ -1013,63 +751,6 @@
         "5": {
           "name": "",
           "number": "5",
-          "net": ""
-        }
-      }
-    },
-    "gge184_0": {
-      "props": {
-        "Footprint": "bc8e7b5bfd8acf78",
-        "Designator": "CN1",
-        "LCSC Part Name": "1x2P 5.08mm 每排P数:2 排数:1",
-        "Supplier Part": "C2898709",
-        "Manufacturer": "DORABO(地博电气)",
-        "Manufacturer Part": "DB142R-5.08-2P-GN",
-        "Supplier Footprint": "弯插,P=5.08mm",
-        "JLCPCB Part Class": "Extended Part",
-        "Datasheet": "https://item.szlcsc.com/datasheet/DB142R-5.08-2P-GN/3146288.html",
-        "Supplier": "LCSC",
-        "Add into BOM": "yes",
-        "3D Model": "143ad98e0f3143eeaf605b0ee4e757fc|0819f05c4eef4c71ace90d822a990e87",
-        "3D Model Title": "CONN-TH_2P-P5.08_DIBO_DB142R-5.08-2P",
-        "3D Model Transform": "499.999,555.117,0,0,0,0,50,-58.661,-133.858",
-        "Number of Positions or Pins": "1x2P",
-        "Pitch": "5.08mm",
-        "Color": "Green",
-        "Mounting Type": "-",
-        "Number of Pins": "2P",
-        "Number of PINs Per Row": "2",
-        "Number of Rows": "1",
-        "Current Rating": "10A",
-        "Voltage Rating (Max)": "300V",
-        "Wire Gauge - AWG": "14~24",
-        "Wire Gauge - mm2": "1.5",
-        "Operating Temperature": "-40℃~+105℃",
-        "Name": "DB142R-5.08-2P-GN",
-        "Description": "Number of Positions or Pins:1x2P Pitch:5.08mm Color:Green Mounting Type:- Number of Pins:2P Number of PINs Per Row:2 Number of Rows:1 Current Rating:10A Voltage Rating (Max):300V Wire Gauge - AWG:14~24 Wire Gauge - mm2:1.5 Operating Temperature:-40℃~+105℃",
-        "Device": "c13caa14fa135a4a",
-        "Unique ID": "gge184_0",
-        "Reuse Block": "",
-        "Group ID": "",
-        "Channel ID": "$1I3763",
-        "DeviceName": "DB142R-5.08-2P-GN",
-        "FootprintName": "CONN-TH_2P-P5.08_DIBO_DB142R-5.08-2P",
-        "PCB Layer": "TopLayer",
-        "Convert to PCB": "yes"
-      },
-      "footprintAttrKeys": [
-        "Footprint",
-        "Designator"
-      ],
-      "pinInfoMap": {
-        "1": {
-          "name": "",
-          "number": "1",
-          "net": ""
-        },
-        "2": {
-          "name": "",
-          "number": "2",
           "net": ""
         }
       }
@@ -1235,6 +916,374 @@
           "net": ""
         }
       }
+    },
+    "gge200": {
+      "props": {
+        "Footprint": "a68839734e75d79a",
+        "Designator": "P2",
+        "LCSC Part Name": "2.54mm 2x10P 排数:2 每排P数:10",
+        "Supplier Part": "C9039",
+        "Manufacturer": "BOOMELE(博穆精密)",
+        "Manufacturer Part": "2.54-2*10P直牛角",
+        "Supplier Footprint": "插件,P=2.54mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/2.54-2*10P%25E7%259B%25B4%25E7%2589%259B%25E8%25A7%2592/9559.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "a7a49939f4c04825861a93c156cce86e|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "IDC-TH_HORNBUCKLE-2.54MM-20",
+        "3D Model Transform": "1755.902,322.834,0,0,0,0,0,0,-137.795",
+        "Connector Type": "IDC Header",
+        "Pitch": "2.54mm",
+        "Number of Positions or Pins": "2x10P",
+        "Current Rating": "3A",
+        "Holder Type": "Through Hole",
+        "Row Spacing": "2.54mm",
+        "Number of Rows": "2",
+        "Number of PINs Per Row": "10",
+        "Contact Material": "Brass",
+        "Contact Plating": "Gold",
+        "Operating Temperature": "-55℃~+105℃",
+        "Color": "Black",
+        "Name": "2.54-2*10P直牛角",
+        "Description": "Connector Type:IDC Header Pitch:2.54mm Number of Positions or Pins:2x10P Current Rating:3A Holder Type:Through Hole Row Spacing:2.54mm Number of Rows:2 Number of PINs Per Row:10 Contact Material:Brass Contact Plating:Gold Operating Temperature:-55℃~+105℃ ",
+        "Device": "434f393df87011db",
+        "Unique ID": "gge200",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I3764",
+        "DeviceName": "2.54-2*10P直牛角",
+        "FootprintName": "IDC-TH_HORNBUCKLE-2.54MM-20",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        },
+        "3": {
+          "name": "",
+          "number": "3",
+          "net": ""
+        },
+        "4": {
+          "name": "",
+          "number": "4",
+          "net": ""
+        },
+        "5": {
+          "name": "",
+          "number": "5",
+          "net": ""
+        },
+        "6": {
+          "name": "",
+          "number": "6",
+          "net": ""
+        },
+        "7": {
+          "name": "",
+          "number": "7",
+          "net": ""
+        },
+        "8": {
+          "name": "",
+          "number": "8",
+          "net": ""
+        },
+        "9": {
+          "name": "",
+          "number": "9",
+          "net": ""
+        },
+        "10": {
+          "name": "",
+          "number": "10",
+          "net": ""
+        },
+        "11": {
+          "name": "",
+          "number": "11",
+          "net": ""
+        },
+        "12": {
+          "name": "",
+          "number": "12",
+          "net": ""
+        },
+        "13": {
+          "name": "",
+          "number": "13",
+          "net": ""
+        },
+        "14": {
+          "name": "",
+          "number": "14",
+          "net": ""
+        },
+        "15": {
+          "name": "",
+          "number": "15",
+          "net": ""
+        },
+        "16": {
+          "name": "",
+          "number": "16",
+          "net": ""
+        },
+        "17": {
+          "name": "",
+          "number": "17",
+          "net": ""
+        },
+        "18": {
+          "name": "",
+          "number": "18",
+          "net": ""
+        },
+        "19": {
+          "name": "",
+          "number": "19",
+          "net": ""
+        },
+        "20": {
+          "name": "",
+          "number": "20",
+          "net": ""
+        }
+      }
+    },
+    "gge204": {
+      "props": {
+        "Name": "HH 6P TYPE-C (Y026X)",
+        "Designator": "USB1",
+        "Footprint": "7fb82ad78b8191be",
+        "LCSC Part Name": "Type-C 母 卧贴",
+        "Supplier Part": "C52711237",
+        "Manufacturer": "HH(辉焕)",
+        "Manufacturer Part": "HH 6P TYPE-C (Y026X)",
+        "Supplier Footprint": "SMD",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/HH%25206P%2520TYPE-C%2520(Y026X)/55588019.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "ab6076bf4dcb42b58b12fcacb7ccdaa0|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "TYPE-C-SMD_6P-L8.9-W6.8-H3.2-P1.00",
+        "3D Model Transform": "351.9678,267.716,0,180,0,0,0,-48.226,-39.37",
+        "Connector Type": "Type-C",
+        "Gender": "Female",
+        "Mounting Type": "Surface Mount, Right Angle",
+        "Number of Contacts": "6P",
+        "Number of Ports": "1",
+        "Current Rating-Power": "3A",
+        "Voltage Rating": "20V",
+        "Connect-Disconnect Life": "3,000 Cycles",
+        "Length": "6.8mm",
+        "Detection color": "Black",
+        "Operating Temperature": "-40℃~+85℃",
+        "Description": "Connector Type:Type-C Gender:Female Mounting Type:Surface Mount, Right Angle Number of Contacts:6P Number of Ports:1 Current Rating-Power:3A Voltage Rating:20V Connect-Disconnect Life:3,000 Cycles Length:6.8mm Detection color:Black Operating Temperature:-",
+        "Device": "f62a506450b285c1",
+        "Unique ID": "gge204",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I3770",
+        "DeviceName": "HH 6P TYPE-C (Y026X)",
+        "FootprintName": "TYPE-C-SMD_TYPE-C-6P",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Name",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "7": {
+          "name": "",
+          "number": "7",
+          "net": ""
+        },
+        "B12": {
+          "name": "",
+          "number": "B12",
+          "net": ""
+        },
+        "B9": {
+          "name": "",
+          "number": "B9",
+          "net": ""
+        },
+        "A5": {
+          "name": "",
+          "number": "A5",
+          "net": ""
+        },
+        "B5": {
+          "name": "",
+          "number": "B5",
+          "net": ""
+        },
+        "A9": {
+          "name": "",
+          "number": "A9",
+          "net": ""
+        },
+        "A12": {
+          "name": "",
+          "number": "A12",
+          "net": ""
+        }
+      }
+    },
+    "gge205": {
+      "props": {
+        "Footprint": "640b4446b692e6f5",
+        "Designator": "CN1",
+        "LCSC Part Name": "2.54mm 2x3P 排数:2 每排P数:3",
+        "Supplier Part": "C492441",
+        "Manufacturer": "XFCN(兴飞)",
+        "Manufacturer Part": "BH254V-6P",
+        "Supplier Footprint": "插件,P=2.54mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/BH254V-6P/502997.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "6037618f85e94803a348d5bca7bb476b|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "IDC-TH_6P-P2.54-V-R2-C3-S2.54",
+        "3D Model Transform": "599.2114,350.7867,0,0,0,0,0,3.937,-125.984",
+        "Connector Type": "IDC Header",
+        "Pitch": "2.54mm",
+        "Number of Positions or Pins": "2x3P",
+        "Current Rating": "3A",
+        "Voltage Rating (Max)": "250V",
+        "Holder Type": "Through Hole",
+        "Row Spacing": "2.54mm",
+        "Number of Rows": "2",
+        "Number of PINs Per Row": "3",
+        "Contact Material": "Brass",
+        "Contact Plating": "Gold",
+        "Color": "Black",
+        "Height Above Board": "9.05mm",
+        "Operating Temperature": "-40℃~+105℃",
+        "Name": "BH254V-6P",
+        "Description": "Connector Type:IDC Header Pitch:2.54mm Number of Positions or Pins:2x3P Current Rating:3A Voltage Rating (Max):250V Holder Type:Through Hole Row Spacing:2.54mm Number of Rows:2 Number of PINs Per Row:3 Contact Material:Brass Contact Plating:Gold Color:Bla",
+        "Device": "b7d7bc3768e21a5d",
+        "Unique ID": "gge205",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I3773",
+        "DeviceName": "BH254V-6P",
+        "FootprintName": "IDC-TH_6P-P2.54-V-R2-C3-S2.54",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        },
+        "3": {
+          "name": "",
+          "number": "3",
+          "net": ""
+        },
+        "4": {
+          "name": "",
+          "number": "4",
+          "net": ""
+        },
+        "5": {
+          "name": "",
+          "number": "5",
+          "net": ""
+        },
+        "6": {
+          "name": "",
+          "number": "6",
+          "net": ""
+        }
+      }
+    },
+    "gge206": {
+      "props": {
+        "Footprint": "47fbec41f05581fc",
+        "Designator": "D1",
+        "LCSC Part Name": "单向TVS 12V截止 峰值浪涌电流：34A@8/20us 30A@8/20us",
+        "Supplier Part": "C32677",
+        "Manufacturer": "PROTEK",
+        "Manufacturer Part": "PSM712-LF-T7",
+        "Supplier Footprint": "SOT-23",
+        "JLCPCB Part Class": "Basic Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/PSM712-LF-T7/33642.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "4eed685bb9f4439b846746bc2193f3c0|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "SOT-23-3L_L2.9-W1.6-H1.1-LS2.8-P0.95",
+        "3D Model Transform": "114.173,110.236,0,90,0,0,0,0,0",
+        "Polarity": "Unidirectional",
+        "Reverse Stand-Off Voltage (Vrwm)": "12V",
+        "Clamping Voltage": "19V",
+        "Peak Pulse Current (Ipp)": "34A@8/20us；30A@8/20us",
+        "Peak Pulse Power Dissipation (Ppp)": "600W@8/20us",
+        "Voltage - Breakdown": "13.3V",
+        "Reverse Leakage Current (Ir)": "1uA；20uA",
+        "Operating Temperature": "-55℃~+150℃",
+        "level of protection": "IEC 61000-4-4；IEC 61000-4-5；IEC 61000-4-2",
+        "Type": "TVS",
+        "Junction Capacitance": "75pF",
+        "Name": "PSM712-LF-T7",
+        "Description": "Polarity:Unidirectional Reverse Stand-Off Voltage (Vrwm):12V Clamping Voltage:19V Peak Pulse Current (Ipp):34A@8/20us；30A@8/20us Peak Pulse Power Dissipation (Ppp):600W@8/20us Voltage - Breakdown:13.3V Reverse Leakage Current (Ir):1uA；20uA Operating Tempe",
+        "Device": "e665d4bfea89bfce",
+        "Unique ID": "gge206",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$6I245",
+        "DeviceName": "PSM712-LF-T7_C32677",
+        "FootprintName": "SOT-23-3_L3.0-W1.7-P0.95-LS2.9-BR",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        },
+        "3": {
+          "name": "",
+          "number": "3",
+          "net": ""
+        }
+      }
     }
   },
   "designRule": {
@@ -1387,6 +1436,12 @@
       },
       "BOOT_REQ": {
         "net": "BOOT_REQ",
+        "ruleMap": {
+          "TrackPhysics": ""
+        }
+      },
+      "TERM": {
+        "net": "TERM",
         "ruleMap": {
           "TrackPhysics": ""
         }
