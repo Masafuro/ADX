@@ -1,0 +1,4 @@
+# Ignore raw large media in raw_assets except .gitkeep
+*
+!.gitkeep
+!.gitignore
