@@ -36,8 +36,8 @@ ADX/ (リポジトリルートは一切汚さない)
 ### 区画化による3大メリット
 1. **リポジトリルートの汚染ゼロ**:
    - ルートに `scripts/` や `raw_assets/`、`dist/` などのフォルダを散らかさず、本筋の開発作業に一切影響を与えない。
-2. **画像の公開パスが極めて美しく整理される**:
-   - GitHub Pages経由の画像URLが `https://masafuro.github.io/ADX/blog/images/YYYY-MM-DD-filename.jpg` となり、直感的で管理しやすい。
+2. **画像の公開パスが極めて高速・安全に配信される**:
+   - jsDelivr CDN 経由の画像URL（`https://cdn.jsdelivr.net/gh/Masafuro/ADX@main/docs/blog/images/YYYY-MM-DD-filename.jpg`）となり、Cloudflare エッジから爆速配信され、アクセス集中にも耐える設計。
 3. **自己完結型モジュール**:
    - `docs/blog/` ごと移動・バックアップ・切り離しが可能。
 
@@ -55,7 +55,7 @@ ADX/
         │   └── 2026-10-22-hero.jpg
         │
         ├── images/                     # [公開用] スクリプトで自動最適化・圧縮された画像
-        │   ├── 2026-10-22-hero.jpg     # (Pages URL: https://masafuro.github.io/ADX/blog/images/...)
+        │   ├── 2026-10-22-hero.jpg     # (CDN URL: https://cdn.jsdelivr.net/gh/Masafuro/ADX@main/docs/blog/images/...)
         │   └── 2026-10-22-scope.png
         │
         ├── posts/                      # [原稿] 週報Markdownファイル (Git履歴管理)
@@ -139,7 +139,7 @@ Hackaday.ioのUIの癖（改行の自動挿入、狭いコード枠、画像の�
    - 最適化画像を `docs/blog/images/` に配置。
 2. **Markdownパース ＆ HTML生成**:
    - `docs/blog/posts/YYYY-MM-DD.md` を読み込み。
-   - 画像パスを `https://masafuro.github.io/ADX/blog/images/YYYY-MM-DD-xxx.jpg` に置換。
+   - 画像パスを `https://cdn.jsdelivr.net/gh/Masafuro/ADX@main/docs/blog/images/YYYY-MM-DD-xxx.jpg` に置換（オプションで raw / pages にも切替可能）。
    - Hackaday用スタイル付きHTML断片を生成し、`docs/blog/dist/YYYY-MM-DD.html` に出力。
 
 ---
