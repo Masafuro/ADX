@@ -3,7 +3,11 @@ Copyright (c) 2026 ADX Project Contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADX Pinout Specification (v3)
+# ADX Pinout Specification (v3 / Archive Note)
+
+> [!NOTE]
+> **本ドキュメントは過去の検討ノート（v3 時代）です:**  
+> 最新の公式規格仕様は **[`docs/spec/ADX_PINOUT.md`](../../docs/spec/ADX_PINOUT.md)** (Standard: `ADX-BUS-SPEC-v4.0`) を、日本語設計解説ガイドは **[`docs/ja/ADX_pinout.md`](../../docs/ja/ADX_pinout.md)** を参照してください。
 
 ## 1. 概要 (Overview)
 ADX Pinout は、ADX エコシステムのコアボード（CORE-A、CORE-R 等）および拡張カード（CARD シリーズ）共通で利用可能な **20ピン（2×10ピン 2.54mmピッチ）拡張コネクタ規格** である。

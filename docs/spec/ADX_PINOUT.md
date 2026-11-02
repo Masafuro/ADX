@@ -5,8 +5,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # ADX 20-Pin Bus Specification
 
-**Standard Identifier**: ADX-BUS-SPEC-v3.0  
-**Category**: Core Electrical & Interconnect Specification  
+**Standard Identifier**: ADX-BUS-SPEC-v4.0  
+**Category**: Core Electrical & Interconnect Specification (Single Source of Truth)  
 **Status**: Standard (Release)  
 **Maintained by**: ADX Hardware Standards Committee  
 
@@ -14,34 +14,34 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## 1. Overview & Scope
 
-The **ADX 20-Pin Bus** is the standard electrical and physical interconnect for the ADX modular ecosystem. It establishes a unified backplane interface between **Core Boards** (main MCUs/controllers) and **Card Modules** (expansion addons, sensors, actuators, and communication cards).
+The **ADX 20-Pin Bus** is the universal physical and electrical interconnect standard for the ADX modular hardware ecosystem. It establishes a unified, vibration-resistant backplane interface connecting **Core Boards** (main MCUs and host controllers) and **Card Modules** (expansion addons, sensors, actuators, and communication cards).
 
-This document serves as the **Single Source of Truth (SSOT)** for the physical pinout, logical signal definitions, and electrical limits of the 20-pin IDC interface.
+This document serves as the authoritative **Single Source of Truth (SSOT)** for physical pin assignments, electrical limits, signal definitions, and mandatory design rules for the 20-pin IDC interface.
 
 ---
 
 ## 2. Physical & Mechanical Interface
 
-- **Connector Family**: 2×10-pin (20-pin), 2.54 mm (0.100") pitch shrouded box header or ejector/latch header (MIL-DTL-83503 compliant).
+- **Connector Family**: $2 \times 10$-pin (20-pin), 2.54 mm (0.100") pitch shrouded box header or ejector/latch header (MIL-DTL-83503 compliant).
 - **Mating Cable**: Standard 20-conductor flat ribbon cable (AWG 28 stranded).
 - **Pin Numbering Convention**: Standard zigzag (interleaved) ribbon cable numbering:
   - Row 1 (Odd pins): 1, 3, 5, 7, 9, 11, 13, 15, 17, 19
-  - Row 2: (Even pins): 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
+  - Row 2 (Even pins): 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
 
 ```text
-                  【 20-Pin Shrouded Header (Top View) 】
+                  【 20-Pin Shrouded Box Header (Top View) 】
 
                          ┌───────[ Center Key ]───────┐
-            VBUS   [ 1]  │  ●   ●  │  [ 2]  VBUS
-            VBUS   [ 3]  │  ●   ●  │  [ 4]  VBUS
-             GND   [ 5]  │  ●   ●  │  [ 6]  SYS_RST / PROG
-             AIN   [ 7]  │  ●   ●  │  [ 8]  GND
-          EXTCLK   [ 9]  │  ●   ●  │  [10]  GND
-         UART_TX   [11]  │  ●   ●  │  [12]  UART_RX
-         I2C_SCL   [13]  │  ●   ●  │  [14]  I2C_SDA
-             GND   [15]  │  ●   ●  │  [16]  SPI_CS
-        SPI_MOSI   [17]  │  ●   ●  │  [18]  SPI_MISO
-         SPI_SCK   [19]  │  ●   ●  │  [20]  GND
+              GND   [ 1]  │  ●   ●  │  [ 2]  OWD / PROG
+              AIN   [ 3]  │  ●   ●  │  [ 4]  GND
+           EXTCLK   [ 5]  │  ●   ●  │  [ 6]  GND
+          UART_TX   [ 7]  │  ●   ●  │  [ 8]  UART_RX
+          I2C_SCL   [ 9]  │  ●   ●  │  [10]  I2C_SDA
+              GND   [11]  │  ●   ●  │  [12]  SPI_CS
+         SPI_MOSI   [13]  │  ●   ●  │  [14]  SPI_MISO
+          SPI_SCK   [15]  │  ●   ●  │  [16]  GND
+             VBUS   [17]  │  ●   ●  │  [18]  VBUS
+             VBUS   [19]  │  ●   ●  │  [20]  VBUS
                          └────────────────────────────┘
 ```
 
@@ -49,77 +49,89 @@ This document serves as the **Single Source of Truth (SSOT)** for the physical p
 
 ## 3. Universal Pin Assignment Table
 
-| Pin | Net Name | Signal Type | Electrical Standard | Primary Function / Role | Shield & Structure |
+| Pin | Net Name | Signal Type | Electrical Standard | Primary Function / Role | Shield & Topology Role |
 | :---: | :--- | :--- | :--- | :--- | :--- |
-| **1** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A max) | Main Power Bus (Bidirectional) | Power Zone (Pins 1–4) |
-| **2** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A max) | Main Power Bus (Bidirectional) | Power Zone (Pins 1–4) |
-| **3** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A max) | Main Power Bus (Bidirectional) | Power Zone (Pins 1–4) |
-| **4** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A max) | Main Power Bus (Bidirectional) | Power Zone (Pins 1–4) |
-| **5** | **GND** | Power / Shield | 0V Return | VBUS Return & Zone Shield Wall | Primary Power Return |
-| **6** | **SYS_RST** | Digital I/O | 3.3V LVCMOS (Active LOW) | System Reset / MCU Programming | Quiet Zone (between Pin 5 & Pin 7) |
-| **7** | **AIN** | Analog I/O | 3.3V Analog / LVCMOS | Analog Input (ADC) / Optional DAC Output | Analog Zone |
-| **8** | **GND** | Power / Shield | 0V Return | Coplanar Shield (Clock guard ①) | GND Shield |
-| **9** | **EXTCLK** | Digital / GPIO | 3.3V LVCMOS | External Clock Input / PWM / GPIO | High-Speed Clock Line |
-| **10** | **GND** | Power / Shield | 0V Return | Isolation Shield (Clock guard ②) | GND Shield |
-| **11** | **UART_TX**| Digital Out | 3.3V LVCMOS | Serial Transmit (TXD) | UART Signal Pair |
-| **12** | **UART_RX**| Digital In | 3.3V LVCMOS | Serial Receive (RXD) | UART Signal Pair |
-| **13** | **I2C_SCL**| Open-Drain | 3.3V LVCMOS (Pull-up req.)| I2C Bus Clock | I2C Signal Pair |
-| **14** | **I2C_SDA**| Open-Drain | 3.3V LVCMOS (Pull-up req.)| I2C Bus Data | I2C Signal Pair |
-| **15** | **GND** | Power / Shield | 0V Return | Mid-bus Shield (I2C/SPI Boundary) | GND Shield |
-| **16** | **SPI_CS** | Digital Out | 3.3V LVCMOS | SPI Chip Select (Active Low) | SPI Bus Group |
-| **17** | **SPI_MOSI**| Digital Out | 3.3V LVCMOS | SPI Controller Out / Peripheral In | SPI Bus Group |
-| **18** | **SPI_MISO**| Digital In | 3.3V LVCMOS | SPI Controller In / Peripheral Out | SPI Bus Group |
-| **19** | **SPI_SCK** | Digital Out | 3.3V LVCMOS | SPI Serial Clock | SPI Bus Group |
-| **20** | **GND** | Power / Shield | 0V Return | Bus Termination Shield | GND Shield |
+| **1** | **GND** | Power / Shield | 0V Return | Cable Outer Edge Shield & Signal Return | Wire #1 (Edge ESD / Mechanical Guard) |
+| **2** | **OWD** | Bi-dir (1-Wire)| 3.3V LVCMOS (Weak PU) | One-Wire Debug & Production Flash (UPDI / SDI) | Wire #2 (Quasi-static Test Line) |
+| **3** | **AIN** | Analog In | 0V – 3.3V Analog | High-Precision Analog Input (ADC) / Opt. DAC | Wire #3 (Coplanar Shielded by Pins 1 & 4) |
+| **4** | **GND** | Power / Shield | 0V Return | Analog / Clock Isolation Shield | Wire #4 (EXTCLK Coplanar Guard ①) |
+| **5** | **EXTCLK** | Digital / GPIO | 3.3V LVCMOS | External Clock Input / High-Speed Timer / PWM | Wire #5 (Clock Waveguide Trace) |
+| **6** | **GND** | Power / Shield | 0V Return | Clock / Communications Isolation Shield | Wire #6 (EXTCLK Coplanar Guard ②) |
+| **7** | **UART_TX** | Digital Out | 3.3V LVCMOS | Asynchronous Serial Transmit (TXD) | Wire #7 (UART Balanced Pair) |
+| **8** | **UART_RX** | Digital In | 3.3V LVCMOS | Asynchronous Serial Receive (RXD) | Wire #8 (UART Balanced Pair) |
+| **9** | **I2C_SCL** | Open-Drain | 3.3V LVCMOS (Pull-up req.)| I2C Bus Serial Clock | Wire #9 (I2C Bus Pair) |
+| **10** | **I2C_SDA** | Open-Drain | 3.3V LVCMOS (Pull-up req.)| I2C Bus Serial Data | Wire #10 (I2C Bus Pair) |
+| **11** | **GND** | Power / Shield | 0V Return | Mid-bus Shield (I2C / SPI Group Boundary) | Wire #11 (Open-Drain to Push-Pull Barrier) |
+| **12** | **SPI_CS** | Digital Out | 3.3V LVCMOS | SPI Chip Select (Active LOW) | Wire #12 (SPI Bus Group) |
+| **13** | **SPI_MOSI**| Digital Out | 3.3V LVCMOS | SPI Controller Out / Peripheral In | Wire #13 (SPI Bus Group) |
+| **14** | **SPI_MISO**| Digital In | 3.3V LVCMOS | SPI Controller In / Peripheral Out | Wire #14 (SPI Bus Group) |
+| **15** | **SPI_SCK** | Digital Out | 3.3V LVCMOS | SPI Serial Clock | Wire #15 (SPI Bus Group) |
+| **16** | **GND** | Power / Shield | 0V Return | VBUS Short-Circuit Barrier Wall & SPI Return | Wire #16 (Protective Boundary Wall) |
+| **17** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Gravity Fail-Safe Cluster) | Wire #17 ($2 \times 2$ Solid Power Plane) |
+| **18** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Gravity Fail-Safe Cluster) | Wire #18 ($2 \times 2$ Solid Power Plane) |
+| **19** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Gravity Fail-Safe Cluster) | Wire #19 ($2 \times 2$ Solid Power Plane) |
+| **20** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Gravity Fail-Safe Cluster) | Wire #20 ($2 \times 2$ Solid Power Plane) |
 
 ---
 
 ## 4. Electrical Requirements & Design Rules
 
-### 4.1 Power Architecture (`VBUS` & `GND`)
-- **Voltage Range**: Nominal $5.0\,\text{V} \pm 10\%$ ($4.5\,\text{V} \sim 5.0\,\text{V}$ operating window).
-- **Current Capacity**: Rated up to **$2.0\,\text{A}$ continuous** across Pins 1–4 combined.
+### 4.1 Gravity Fail-Safe Power Architecture (`VBUS`: Pins 17–20)
+- **Bottom-Heavy Physical Placement**:  
+  Pins 17, 18, 19, and 20 are positioned at the lowest physical row of the connector. When modules are slotted vertically (e.g., in DIN-rail enclosures or vertical chassis), high-current and external power wiring remains at the bottom of the assembly. If an external supply wire disconnects due to mechanical vibration or screw-terminal loosening, gravity pulls the conductor downward toward the chassis floor or wiring duct, physically preventing unintended contact with delicate communication lines (RS-485, I2C, SPI) or analog inputs located higher on the assembly.
+- **Operating Voltage Window**: Nominal $5.0\,\text{V} \pm 10\%$ ($4.5\,\text{V} \sim 5.0\,\text{V}$ operating range).
+- **Current Carrying Capacity**: Rated for **$2.0\,\text{A} \sim 3.0\,\text{A}$ continuous** across Pins 17–20 combined.
+- **$2 \times 2$ Grid Copper Plane**: Pins 17, 18, 19, and 20 form a symmetrical $2 \times 2$ square grid. PCB layouts MUST bond all four pins together into a continuous solid copper pour on outer and inner layers to minimize IR drop and parasitic inductance.
 - **Mandatory Sourcing Protection (MUST)**:
-  - Any module that injects power into `VBUS` (Power CARDs, Core board external supplies, USB inputs) **MUST** implement:
-    1. **Reverse-Current Blocking**: Prevents back-feeding power into sources or unpowered circuits.
-    2. **Short-Circuit / Over-Current Protection**: Must autonomously limit or cut off output current upon a short-circuit condition (e.g., via high-side load switch, eFuse, or DC-DC hiccup mode).
-- **Primary Ground Return (Pin 5)**:
-  - Pin 5 serves as the primary ground return for the VBUS power cluster. Placing Pin 5 adjacent to Pin 4 minimizes high-current loop area and parasitic inductance, suppressing EMI.
-  - In flat ribbon cabling, wire 5 (GND) acts as an electrostatic and short-circuit barrier between the VBUS cluster (wires 1–4) and the logic/signal zone (wires 6–20).
-- **Physical Layout Rule**: Pins 1 to 4 form a $2 \times 2$ grid. PCB artwork MUST join these four pins into a continuous solid copper plane.
+  Any module injecting power into `VBUS` (Power Cards, Core Board external supplies, USB inputs) MUST incorporate:
+  1. **Reverse-Current Blocking**: Schottky barrier diodes, ideal diode controllers, or P-channel MOSFET switches to prevent reverse back-feeding into external sources.
+  2. **Short-Circuit / Over-Current Limitation**: Self-recovering PTC devices, eFuses, or current-limited load switches capable of isolating faults within microsecond thresholds.
 
-### 4.2 System Reset & Programming Pin (`Pin 6: SYS_RST / PROG`)
-- **Signal Definition**: Active-LOW open-drain / bidirectional line with an onboard pull-up resistor on the Core board ($10\,\text{k}\Omega \sim 47\,\text{k}\Omega$ to 3.3V).
-- **Card-Side Rule**: Expansion Cards MUST leave Pin 6 disconnected (N.C.) unless specifically implementing an open-drain hardware reset trigger (e.g., watchdog supervisor). Cards MUST NOT drive Pin 6 HIGH with a push-pull driver.
-- **Controller-Specific Mapping**:
-  - **ATtiny1616 (CORE-A5)**: Mapped to `PA0` (UPDI / RESET). Enables 1-wire programming, debugging, and factory flash programming through Pin 6 without requiring auxiliary connectors or test pads.
-  - **RP2040 (CORE-R)**: Mapped to `RUN` (Hardware Reset).
-  - **Other MCUs**: Mapped to native active-LOW reset line (`NRST` / `RESET#`).
+### 4.2 Protective Boundary Wall (`Pin 16: GND`)
+- **Fault Isolation Barrier**: Pin 16 is dedicated as a solid `GND` return directly flanking the high-power `VBUS` cluster (Pins 17–20).
+- **Crimp Misalignment Protection**: In flat ribbon cabling, should a manufacturing crimp misalignment or conductor fray occur along the power boundary, `VBUS` shorts directly to `GND` (Pin 16). This safely triggers upstream over-current protection rather than exposing low-voltage logic lines (Pins 1–15) to $5\,\text{V}$ bus power.
 
-### 4.3 Analog Channel (`Pin 7: AIN`)
-- **Primary Function**: 3.3V single-ended analog input ($0\,\text{V} \sim 3.3\,\text{V}$) for ADC sensing.
-- **Multiplexed Capability**: Depending on the host Core MCU architecture, Pin 7 may optionally be multiplexed as an analog output (DAC). On CORE-A5 (ATtiny1616), Pin 7 maps to `PA6`, providing both 10-bit ADC input (`ADC0 AIN6`) and 8-bit true analog voltage output (`DAC0 OUT`).
+### 4.3 One-Wire Debug & Production Flash Interface (`Pin 2: OWD`)
+- **Signal Definition**: 3.3V LVCMOS bidirectional 1-wire serial debug and programming interface with an onboard weak pull-up ($10\,\text{k}\Omega \sim 47\,\text{k}\Omega$ to 3.3V) on the Core board.
+- **Primary Function**:
+  1. Automated functional testing, unique ID (UID) readout, and factory firmware / bootloader flashing via the 20-pin IDC Eject Header test bench fixture during manufacturing.
+  2. Direct hardware debugger connection (WCH-LinkE, SerialUPDI, or 1-Wire SWD probe).
+- **Card-Side Mandatory Rules (MUST)**:
+  - Addon expansion Cards **MUST leave Pin 2 unconnected (N.C.)** under normal operation.
+  - Dedicated factory test fixtures or debugging adapters are the sole modules permitted to drive Pin 2.
+  - **Direct Grounding Prohibited**: Cards MUST NOT connect push-buttons or hardware pull-down switches directly between Pin 2 and GND.
+- **System Reset Architecture**:
+  System-level resets are governed via primary `VBUS` power cycling, internal watchdog timers (WDT), or verified protocol commands over communication buses (USB / RS-485).
 
-### 4.4 Logic Levels & Point of Load Regulation
-- **Standard**: All digital I/O pins (Pins 6, 7, 9, 11–14, 16–19) operate strictly at **3.3V LVCMOS native levels**:
+### 4.4 Coplanar Shielded Analog Channel (`Pin 3: AIN`)
+- **Coplanar Ground Guard**: Pin 3 (`AIN`) is flanked by Pin 1 (`GND`) on the outer cable perimeter and Pin 4 (`GND`) on the inner boundary.
+- **Noise Immunity**: This topology forms a coplanar waveguide shield that isolates high-impedance, delicate analog measurements from adjacent high-speed switching noise (such as `EXTCLK` on Pin 5) and external electrostatic interference.
+- **Signal Range**: $0\,\text{V} \sim 3.3\,\text{V}$ single-ended analog input for ADC acquisition. Where host MCUs support pin multiplexing (e.g., ATtiny1616), Pin 3 may optionally function as a true analog DAC output.
+
+### 4.5 Digital Signal Integrity & Logic Levels
+- **Clock Isolation Sandwich**: Pin 5 (`EXTCLK`) is guarded by Pin 4 (`GND`) and Pin 6 (`GND`), suppressing clock harmonic radiation (EMI).
+- **Bus Group Segregation**: Pin 11 (`GND`) separates open-drain, pull-up dependent lines (I2C) from high-speed push-pull lines (SPI).
+- **Native 3.3V LVCMOS Levels**: All digital I/O lines (Pins 2, 5, 7–10, 12–15) operate strictly at **3.3V LVCMOS**:
   - $V_{IL} \le 0.8\,\text{V}$
   - $V_{IH} \ge 2.0\,\text{V}$
   - $V_{OL} \le 0.4\,\text{V}$
   - $V_{OH} \ge 2.4\,\text{V}$
-- **Point of Load (PoL) Rule**: 3.3V logic power is NOT distributed over the 20-pin bus. Addon Cards requiring 3.3V power MUST receive `VBUS` (Pins 1–4) and regulate it locally using an onboard LDO or DC-DC converter. This prevents ground loops, line drops, and ensures that Card-side power faults do not brown out the Core MCU.
-
-### 4.5 Shielding & Signal Integrity Topology
-- **Pin 5 Power/Logic Barrier**: Isolates the high-current `VBUS` cluster (wires 1–4) from `SYS_RST` (wire 6) and analog inputs (wire 7). If an IDC crimping short occurs at the power boundary, VBUS shorts directly to GND (Pin 5), safely triggering sourcing over-current protection without exposing MCU logic to 5V.
-- **Pin 6 Quiet Placement**: Located between Pin 5 (GND) and Pin 7 (AIN: static analog input), isolating the sensitive reset/UPDI line from high-speed digital switching.
-- **EXTCLK Ground Sandwich**: Pin 9 (`EXTCLK`) is flanked by Pin 8 (`GND`) and Pin 10 (`GND`), forming a coplanar waveguide structure to suppress clock EMI.
-- **Digital Bus Segregation & SPI Shielding**: Pin 10 (`GND`) isolates clock lines from the digital communications cluster (UART/I2C/SPI). Pin 15 (`GND`) isolates the I2C open-drain bus from the SPI push-pull bus. Pin 15 and Pin 20 provide coplanar returns flanking the SPI bus group.
+- **Point of Load (PoL) Regulation Rule**: 3.3V power is NOT distributed across the 20-pin bus. Addon Cards requiring 3.3V logic supply MUST receive `VBUS` (Pins 17–20) and regulate down locally using dedicated on-card LDO or DC-DC stages.
 
 ---
 
-## 5. Cross-References & Related Documents
+## 5. Implementation Mapping per Controller Architecture
 
-- **Implementation Mapping per Controller**:
-  - [ATtiny1616 Hardware Mapping & PORTMUX Reference](mcu_mapping/attiny1616.md) (used by CORE-A5)
-  - [RP2040 Hardware Mapping Reference](mcu_mapping/rp2040.md) (used by CORE-R)
-- **Form Factor Standards**:
-  - [ADX 8748 Form Factor Specification](../ja/8748_formfactor.md)
+For detailed pin multiplexing (PORTMUX), timer mapping, and register-level configurations for each supported controller, refer to the dedicated specification references:
+
+- **Microchip ATtiny1616 (CORE-A5)**: [`mcu_mapping/attiny1616.md`](mcu_mapping/attiny1616.md)
+- **WCH CH32X035 (CORE-CX3)**: [`mcu_mapping/ch32x035.md`](mcu_mapping/ch32x035.md)
+- **Raspberry Pi RP2040 (CORE-R)**: [`mcu_mapping/rp2040.md`](mcu_mapping/rp2040.md)
+
+---
+
+## 6. Document Architecture & Loose Coupling Note
+
+To maintain absolute specification integrity, this document (`docs/spec/ADX_PINOUT.md`) is maintained strictly in **English as the Single Source of Truth (SSOT)**.
+
+Explanatory architecture guides in Japanese ([`docs/ja/ADX_pinout.md`](../ja/ADX_pinout.md)) and English ([`docs/en/ADX_pinout.md`](../en/ADX_pinout.md)) provide background design rationale, historical context, and application guidelines without duplicating authoritative tables, ensuring all future specification revisions are maintained in exactly one place.

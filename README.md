@@ -8,7 +8,7 @@ SPDX-License-Identifier: CC-BY-4.0
 [ **English** | [日本語 (docs/ja/README.md)](docs/ja/README.md) ]
 
 <p align="center">
-  <img src="docs/images/hero_no_photo.svg" alt="ADX CORE-A5: The Working Arduino" width="100%">
+  <img src="docs/images/hero_no_photo.svg" alt="ADX: The Working Arduino" width="100%">
 </p>
 
 ### *The Working Arduino*
@@ -24,9 +24,10 @@ Find what you need based on what you want to achieve:
 
 | What do you want to do? | Key Documentation | Primary Links |
 | :--- | :--- | :--- |
-| 🚀 **Run sketches on ADX** | Arduino IDE & megaTinyCore setup guide | [Arduino Setup Guide](#4-arduino-ide-compatibility) |
-| 🛠 **Inspect hardware & schematics** | Complete schematics, netlist & BOM for CORE-A5 | [CORE-A5 Specification](hardware/CORE-A5/spec_study.md) |
-| 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](docs/spec/ADX_PINOUT.md) |
+| 🚀 **Build with USB & UF2** | Next-generation USB Core board with CH32X035 | [CORE-CX3 Concept](hardware/CORE-CX3/concept.md) |
+| 🛡 **Deploy tough RS-485 nodes** | High-temp (-40℃ ~ +105℃) isolated Core board | [CORE-A5 Specification](hardware/CORE-A5/spec_study.md) |
+| 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](docs/spec/ADX_PINOUT.md) (v4.0) |
+| 📖 **Learn pinout engineering rationale**| Gravity fail-safe & coplanar shielding details | [ADX Pinout Architecture Guide](docs/en/ADX_pinout.md) |
 | 📦 **Design or 3D-print cases** | Dimensions, M3 hole spacing & rail margins | [8748 Form Factor Specification](docs/en/8748_formfactor.md) |
 
 ---
@@ -57,16 +58,16 @@ The ADX ecosystem is built upon two open, modular physical standards:
          ・8748 Form Factor (87.0 mm × 48.0 mm standardized profile)
          ・Corner M3 Mounting Holes with Φ5.0 mm Washer Clearances
          ・Unidirectional I/F Edge (All field wiring on a single face)
-         ・20-Pin Universal Bus (VBUS, GND, Native 3.3V LVCMOS Signals)
+         ・ADX Pinout v4.0 (Gravity-Safe Power, Edge Guard, Native 3.3V)
        ════════════════════════════════════════════════════════════════════
                                        │
             ┌──────────────────────────┴──────────────────────────┐
             ▼                                                     ▼
-   【 Main Core Board 】                                 【 Modular CARDs 】
-     ADX CORE-A5                                           ADX CARD Ecosystem
-     ・Field-Tough Edge Slave (-40℃ ~ +105℃)               ・Prototyping CARD
-     ・Push-in Spring Terminals (5VIN & RS-485)            ・Power Supply CARDs
-     ・2500V Galvanic Isolation & CCL OTW                  ・3D-Printable Enclosures
+   【 Main Core Boards 】                                【 Modular CARDs 】
+     ・ADX CORE-CX3 (USB Flagship / CH32X035 / UF2)        ADX CARD Ecosystem
+     ・ADX CORE-A5  (Tough Isolated RS-485 / -40℃~+105℃)   ・Prototyping CARD
+     ・Dual Type-C or Isolated Push-in Terminals           ・Power Supply CARDs
+     ・Automated 20P IDC Fixture Inspection & Flashing     ・3D-Printable Enclosures
 ```
 
 ### 2.1 8748 Form Factor & Mechanical Mounting
@@ -79,70 +80,28 @@ The ADX ecosystem is built upon two open, modular physical standards:
 External field connections (power and communications) are strictly aligned along **one single edge of the PCB**.  
 By eliminating multi-directional wire routing, enclosure cutouts and front-panel machining are simplified to a single opening.
 
-### 2.3 Universal 20-Pin Bus (VBUS & Native 3.3V GPIO)
+### 2.3 Universal 20-Pin Bus (ADX-BUS-SPEC-v4.0)
 All Core boards and Card modules interconnect via a standardized 2×10-pin shrouded IDC connector:
-- **`VBUS` Power Highway**: 4 dedicated pins (Pins 1–4) delivering up to **2.0A continuous** bidirectional power ($4.5\text{V} \sim 5.0\text{V}$).
-- **Short-Circuit Barrier**: Pin 5 is intentionally `N.C.` (No Connect) to physically prevent power-to-signal shorts during cable crimping.
-- **Native 3.3V Logic**: All digital pins (UART, I2C, SPI, GPIO) operate at **3.3V LVCMOS**, eliminating level-shifter clutter on addon cards.
-- **Flexible Stacking**: Supports direct board-to-board mezzanine stacking as well as off-the-shelf **flat IDC ribbon cables** for side-by-side placement.
+- **Gravity Fail-Safe Power (`VBUS`: Pins 17–20)**:  
+  High-current power bus ($4.5\text{V} \sim 5.0\text{V}$ / up to **2.0A–3.0A continuous**) is positioned at the bottom of the connector. In vertical slot-in mounts, disconnected power wires drop downward under gravity, physically preventing shorts against communication lines.
+- **Protective Boundary Wall (`Pin 16: GND`)**:  
+  Direct short barrier directly above VBUS, safely grounding crimp misalignments.
+- **Outer Edge Guard & Coplanar Analog (`Pins 1–4`)**:  
+  Pin 1 (GND) protects cable perimeter; Pin 3 (AIN) is shielded between Pins 1 and 4 from high-speed digital switching.
+- **One-Wire Maintenance (`Pin 2: OWD`)**:  
+  Unified 1-wire test and UF2 bootloader flashing interface via IDC test fixture.
+- **Native 3.3V Logic**: All digital pins (UART, I2C, SPI) operate at **3.3V LVCMOS**.
 - *Reference (SSOT)*: [ADX 20-Pin Bus Specification](docs/spec/ADX_PINOUT.md) | [Architecture Guide](docs/en/ADX_pinout.md)
 
 ---
 
-## 3. Flagship Core Board: ADX CORE-A5
+## 3. Core Board Portfolio
 
-**ADX CORE-A5** is the production-grade edge slave controller designed for long-term continuous operation in extreme environments.
+Choose the right Core board based on your operating environment and connectivity needs:
 
-```text
-┌────────────────────────────────────────────────────────────────────────┐
-│             【 ADX CORE-A5 】(High-Reliability Edge Slave)              │
-│  - MCU: Microchip ATtiny1616-MNR (3.3V @ 10MHz / Negligible Heating)   │
-│  - Temperature: -40℃ to +105℃ rated components (Industrial Grade)      │
-│  - Field Power: Front 5VIN Spring Terminal Block (SY6280 Protection)   │
-│  - Isolated Comm: 2500V Galvanic Isolated RS-485 (TDA51S485HC, 500kbps)│
-│  - OTW Bootloader: Hardware CCL Break auto-detection & reboot          │
-│  - Form Factor: Native 8748 profile with 20-pin bus header             │
-└────────────────────────────────────────────────────────────────────────┘
-```
-
-- **Screwless Push-in Terminals**: Front-facing 5.08mm spring clamp terminal blocks (DORABO DB142R) resist severe industrial vibration without loosening.
-- **Standalone 5VIN Power**: Operates standalone with local 5V field power (with reverse-current blocking, short-circuit, and overcurrent protection), or draws power from a stacked Power Card via `VBUS`.
-- **CCL-Driven Over-The-Wire (OTW) Updates**: Eliminates physical buttons and secondary management chips. An internal Configurable Custom Logic (CCL) block monitors the RS-485 line for a standard Break signal from off-the-shelf USB-RS485 dongles to trigger bootloader reboot safely.
-- *Specifications*: [CORE-A5 Specification Study](hardware/CORE-A5/spec_study.md) | [Hardware Concept](hardware/CORE-A5/concept.md)
-
----
-
-## 4. Arduino IDE Compatibility
-
-You do not need to learn a proprietary PLC language or install heavy toolchains.
-
-- **Familiar Code**: Develop sketches using standard Arduino C/C++ syntax and common libraries via **`megaTinyCore`**.
-- **Instant Boot**: Boots user sketches immediately upon power-on without typical 1–2 second bootloader delays.
-- **MCU Hardware Mapping**: See [ATtiny1616 Hardware Mapping](docs/spec/mcu_mapping/attiny1616.md) for timer allocations, PWM channels, and PORTMUX details.
-
----
-
-## 5. The Modular CARD Ecosystem
-
-ADX boards expand seamlessly through stackable, modular CARDs sharing the identical 8748 footprint:
-
-- **Prototyping CARD**: A universal 2.54mm breadboard prototyping area with breakout access to the 20-pin bus. ([Details](hardware/CARD/Prototyping/proposal.md))
-- **Power CARDs**: Isolated DC 12V/24V step-down cards and battery pack cards for off-grid operations.
-- **3D-Printable Enclosures**: Downloadable STL/STEP CAD models for DIN-rail mounts, desktop enclosures, and snap-fit cases.
-
----
-
-## 6. Open Hardware Standards & Repository Sitemap
-
-All designs, dimensions, firmware, and documentation are openly published:
-
-- **Core Standards (SSOT)**:
-  - **ADX 20-Pin Bus Specification**: [docs/spec/ADX_PINOUT.md](docs/spec/ADX_PINOUT.md)
-  - **8748 Form Factor Specification**: [docs/en/8748_formfactor.md](docs/en/8748_formfactor.md) | [日本語 (docs/ja/8748_formfactor.md)](docs/ja/8748_formfactor.md)
-- **Design & Architecture Guides**:
-  - **Bus Architecture & Shielding Guide**: [docs/en/ADX_pinout.md](docs/en/ADX_pinout.md) | [日本語 (docs/ja/ADX_pinout.md)](docs/ja/ADX_pinout.md)
-  - **ATtiny1616 Hardware Mapping**: [docs/spec/mcu_mapping/attiny1616.md](docs/spec/mcu_mapping/attiny1616.md)
-- **Active Hardware Projects**:
-  - **CORE-A5 Controller**: [hardware/CORE-A5/spec_study.md](hardware/CORE-A5/spec_study.md) | [concept.md](hardware/CORE-A5/concept.md)
-  - **CARD Modules**: [hardware/CARD/Prototyping/proposal.md](hardware/CARD/Prototyping/proposal.md)
-- **Hardware Portfolio Overview**: [hardware/README.md](hardware/README.md)
+1. **[ADX CORE-CX3](hardware/CORE-CX3/concept.md) (Standard USB Core)**:
+   - **MCU**: WCH CH32X035 (32-bit RISC-V 48MHz, Flash 62KB, SRAM 20KB)
+   - **Highlights**: Internal USB PHY, Dual Type-C ports (Communication 16P + Power 6P), PC reverse protection, cross-platform UF2 drag-and-drop sketch updating.
+2. **[ADX CORE-A5](hardware/CORE-A5/spec_study.md) (High-Reliability Edge Slave)**:
+   - **MCU**: Microchip ATtiny1616-MNR (8-bit 10MHz, negligible self-heating)
+   - **Highlights**: Industrial -40℃ to +105℃ rated components, 2500V galvanic isolated RS-485, push-in spring clamp terminals, CCL autonomous break-reset.

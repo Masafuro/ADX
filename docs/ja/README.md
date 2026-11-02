@@ -8,7 +8,7 @@ SPDX-License-Identifier: CC-BY-4.0
 [ English (../../README.md) | **日本語** ]
 
 <p align="center">
-  <img src="../images/hero_no_photo.svg" alt="ADX CORE-A5: はたらくArduino" width="100%">
+  <img src="../images/hero_no_photo.svg" alt="ADX: はたらくArduino" width="100%">
 </p>
 
 ### *はたらくArduino (The Working Arduino)*
@@ -24,9 +24,10 @@ SPDX-License-Identifier: CC-BY-4.0
 
 | やりたいこと | 主なドキュメント | リンク |
 | :--- | :--- | :--- |
-| 🚀 **まずスケッチを動かしたい** | Arduino IDE ＆ megaTinyCore の環境構築ガイド | [Arduino 開発ガイド](#4-arduino-ide-での親しみやすさ) |
-| 🛠 **ハードウェア回路・仕様を見たい** | 最新 CORE-A5 の詳細回路、BOM、見積もり | [CORE-A5 仕様検討書](../../hardware/CORE-A5/spec_study.md) |
-| 🔌 **オリジナルの拡張基板 (CARD) を作りたい** | 共通 20ピンバスの厳密なピン定義と設計ルール | [ADX 20ピンバス仕様書 (SSOT)](../spec/ADX_PINOUT.md) |
+| 🚀 **USB でサクッと動かしたい** | 次世代 USB Core ボード CORE-CX3 の構想と仕様 | [CORE-CX3 構想書](../../hardware/CORE-CX3/concept.md) |
+| 🛡 **現場用・高耐熱端末を作りたい** | 絶縁 RS-485 搭載 CORE-A5 の詳細回路と BOM | [CORE-A5 仕様検討書](../../hardware/CORE-A5/spec_study.md) |
+| 🔌 **拡張基板 (CARD) を作りたい** | 共通 20ピンバスの厳密なピン定義と設計ルール | [ADX 20ピンバス仕様書 (SSOT)](../spec/ADX_PINOUT.md) (v4.0) |
+| 📖 **ピン配置の設計思想を知りたい** | 重力フェイルセーフやシールド構造の解説 | [ADX Pinout 設計・解説ガイド](ADX_pinout.md) |
 | 📦 **ケースを設計・3Dプリントしたい** | 8748 外形寸法、ネジ穴位置、レールマージン | [8748 フォームファクタ仕様書](8748_formfactor.md) |
 
 ---
@@ -58,16 +59,16 @@ ADXの土台となるのは、マイコンやモジュールが様々なケー�
          ・四隅の M3 取付穴 ＆ Φ5.0 mm ワッシャークリアランス
          ・レール滑り込み（スロットイン）や爪留め（スナップフィット）用の掴み幅
          ・単一の「I/F辺」に外部配線を集約（加工面が1面で完結）
-         ・20ピン共通バス (VBUS, GND, 3.3V ネイティブ GPIO)
+         ・ADX Pinout v4.0 (重力安全電源、最外端GND、3.3V ネイティブ GPIO)
        ════════════════════════════════════════════════════════════════════
                                        │
             ┌──────────────────────────┴──────────────────────────┐
             ▼                                                     ▼
-   【 現場で動かすメイン基板 】                          【 モジュール式 CARD群 】
-     ADX CORE-A5                                           ADX CARD エコシステム
-     ・高耐環境エッジスレーブ (-40℃〜+105℃ 部品選定)       ・Prototyping CARD (試作基板)
-     ・スプリング端子台 (5VIN & RS-485)                    ・Power CARD (電源受電)
-     ・2500V ガルバニック絶縁 ＆ CCL 自律 OTW リセット     ・3Dプリント用ケース / マウントSTL
+   【 メイン Core シリーズ 】                            【 モジュール式 CARD群 】
+     ・ADX CORE-CX3 (USB Flagship / CH32X035 / UF2)        ADX CARD エコシステム
+     ・ADX CORE-A5  (高耐環境 RS-485 / -40℃〜+105℃)       ・Prototyping CARD (試作基板)
+     ・デュアル Type-C または 絶縁スプリング端子台         ・Power CARD (電源受電)
+     ・20P IDC 治具による出荷時自動検査・書込              ・3Dプリント用ケース / マウントSTL
 ```
 
 ### 2.1 8748 フォームファクタと確実なネジ固定
@@ -80,70 +81,29 @@ ADXの土台となるのは、マイコンやモジュールが様々なケー�
 外部配線と接続する端子部は、**基板の単一の一辺（I/F辺）に集約**されています。  
 コネクタが四方八方に飛び出さないため、ケースの開口加工や3Dプリントケースのフタ設計が「1面だけ」で完結します。
 
-### 2.3 共通 20ピンバス (VBUS 幹線 ＆ 3.3V ネイティブ GPIO)
+### 2.3 共通 20ピンバス (ADX-BUS-SPEC-v4.0)
 Core ボードと拡張 CARD は、標準の 2×10ピン IDC コネクタでシームレスに結合します：
-- **`VBUS` 電源幹線**: 4ピン（Pins 1〜4）で最大 **2.0A 連続** の双方向給受電（$4.5\text{V} \sim 5.0\text{V}$）をサポート。
-- **短絡防止アイソレーション**: Pin 5 を `N.C.`（未接続）とし、リボンケーブル圧接不良による電源-信号間ショート事故を物理的に遮断。
-- **3.3V ネイティブ統一**: 全デジタル信号（UART, I2C, SPI, GPIO）を **3.3V LVCMOS** に統一。拡張基板側にレベルシフタを積む必要がありません。
-- **柔軟な配置**: 基板同士の上下スタックだけでなく、市販の**フラットIDCリボンケーブル**による横並び配置など、ケース形状に合わせた自由なレイアウトが可能です。
-- *詳細仕様*: [ADX 20ピンバス仕様書 (SSOT)](../spec/ADX_PINOUT.md) | [設計解説ガイド](ADX_pinout.md)
+- **重力フェイルセーフ電源 (`VBUS`: Pins 17〜20)**:  
+  大動脈幹線を最下部に配置。縦型ユニット設置時、万一強電線が外れても重力で下へ落ちるだけで、通信線への接触短絡を防ぎます。$2 \times 2$ ベタパターンで最大 **2A〜3A 連続** を供給。
+- **保護境界壁 (`Pin 16: GND`)**:  
+  VBUS の直上に GND を配置し、フラットケーブル圧接ズレ時の信号線破損を防止。
+- **最外端ガード ＆ AIN コプレーナ保護 (`Pins 1〜4`)**:  
+  外周の Pin 1 (GND) と Pin 4 (GND) で微弱な Pin 3 (AIN) を挟み込み、高周波ノイズを遮断。
+- **One-Wire 保守 (`Pin 2: OWD`)**:  
+  製造治具による自動検査と初期ブートローダー書き込みを一括実行。
+- **3.3V ネイティブ統一**:  
+  全デジタル信号（UART, I2C, SPI）を **3.3V LVCMOS** に統一。
+- *詳細仕様 (SSOT)*: [ADX 20ピンバス仕様書 (英語)](../spec/ADX_PINOUT.md) | [設計解説ガイド (日本語)](ADX_pinout.md)
 
 ---
 
-## 3. 現行主力コアボード：ADX CORE-A5
+## 3. Core ボードラインナップ
 
-**ADX CORE-A5** は、過酷な現場で長期メンテナンスフリーで稼働し続けるために生まれた、量産プロダクション対応のエッジスレーブ端末です。
+用途と環境に応じて、最適な Core ボードを選択できます：
 
-```text
-┌────────────────────────────────────────────────────────────────────────┐
-│             【 ADX CORE-A5 】(高耐環境・高信頼性エッジスレーブ)         │
-│  - 主MCU: Microchip ATtiny1616-MNR (3.3V @ 10MHz / 極小の自己発熱)     │
-│  - 動作温度: -40℃ 〜 +105℃ 産業・車載グレード部品選定                   │
-│  - 電源受電: 前面 5VIN スプリング端子台 (SY6280 短絡・過電流・逆流保護)│
-│  - 通信部: 2500V ガルバニック絶縁 RS-485 (TDA51S485HC, 最大 500kbps)    │
-│  - OTW 書込: CCL (内蔵ロジック) Break 自律検知による遠隔ブートローダー │
-│  - 外形規格: 8748 フォームファクタ ＋ 20ピン IDC 拡張バス              │
-└────────────────────────────────────────────────────────────────────────┘
-```
-
-- **プッシュイン式スプリング端子台**: 前面に 5.08mm ピッチ端子台（DORABO DB142R）を採用。電線を差し込むだけで確実に留まり、長期間の激しい振動環境でも緩みにくく、定期的な増し締めメンテナンスが不要です。
-- **単体 5VIN 現場受電**: 前面端子台から 5V を直接受電して単体動作可能。さらにスタックされた Power CARD からの `VBUS` 受電にも自動対応します。
-- **CCL 自律監視による電線経由書き換え (OTW)**: 市販の安価な USB-RS485 ドングルから送出される Break 信号を MCU の内蔵ロジック（CCL）が自律検知し、安全にブートローダーへリブート。盤の蓋を開けずにファームウェアを更新できます。
-- *仕様詳細*: [CORE-A5 仕様検討書](../../hardware/CORE-A5/spec_study.md) | [基本構想書](../../hardware/CORE-A5/concept.md)
-
----
-
-## 4. Arduino IDE での親しみやすさ
-
-特別な専用ツールや難解な PLC 言語を新しく覚える必要はありません。
-
-- **慣れ親しんだスケッチ**: 普段使いの Arduino 言語やライブラリ（**`megaTinyCore`**）を使って直感的に開発できます。
-- **ブート待機遅延なし (Instant Boot)**: 従来の Arduino にあった電源投入時の 1〜2 秒のブート待機時間を排除し、**通電後直ちにスケッチが起動** します。
-- **ピンマッピング詳細**: タイマー出力、PWM チャンネル、PORTMUX 設定の詳細は [ATtiny1616 ハードウェアマッピング](../spec/mcu_mapping/attiny1616.md) を参照してください。
-
----
-
-## 5. モジュール式 CARD エコシステム
-
-同じ 8748 外形を持つ拡張 CARD を繋ぐことで、目的に応じて機能を拡張できます：
-
-- **Prototyping CARD**: 20ピンバスの信号を引き出したユニバーサル試作基板。自作回路をきれいに固定できます。([仕様書](../../hardware/CARD/Prototyping/proposal.md))
-- **Power CARD 群**: 現場の DC 12V/24V 電源をトランス絶縁降圧するカードや、乾電池バッテリーカード。
-- **オープン 3D プリント STL**: DINレールマウント、卓上ケース、スナップフィット筐体の 3D データを順次公開。
-
----
-
-## 6. オープンハードウェア規格 ＆ サイトマップ (Sitemap)
-
-すべての回路設計、寸法、仕様はオープンソースとして公開・更新しています：
-
-- **基本規格 (SSOT)**:
-  - **ADX 20ピンバス仕様書**: [docs/spec/ADX_PINOUT.md](../spec/ADX_PINOUT.md)
-  - **8748 フォームファクタ仕様書**: [docs/ja/8748_formfactor.md](8748_formfactor.md) | [English (docs/en/8748_formfactor.md)](../en/8748_formfactor.md)
-- **設計・解説ガイド**:
-  - **ADX Pinout 設計・解説ガイド**: [docs/ja/ADX_pinout.md](ADX_pinout.md) | [English (docs/en/ADX_pinout.md)](../en/ADX_pinout.md)
-  - **ATtiny1616 ハードウェアマッピング**: [docs/spec/mcu_mapping/attiny1616.md](../spec/mcu_mapping/attiny1616.md)
-- **アクティブハードウェア**:
-  - **ADX CORE-A5 コントローラー**: [hardware/CORE-A5/spec_study.md](../../hardware/CORE-A5/spec_study.md) | [concept.md](../../hardware/CORE-A5/concept.md)
-  - **CARD モジュール**: [hardware/CARD/Prototyping/proposal.md](../../hardware/CARD/Prototyping/proposal.md)
-- **ハードウェアラインナップ一覧**: [hardware/README.md](../../hardware/README.md)
+1. **[ADX CORE-CX3](../../hardware/CORE-CX3/concept.md) (次世代標準 USB Core)**:
+   - **MCU**: WCH CH32X035 (32-bit RISC-V 48MHz, Flash 62KB, SRAM 20KB)
+   - **特徴**: 内蔵 USB PHY、デュアル Type-C（通信専用 16P ＋ 電源専用 6P）、PC 逆流保護、UF2 ドラッグ＆ドロップ書き換え対応。手軽でパワフルな標準機。
+2. **[ADX CORE-A5](../../hardware/CORE-A5/spec_study.md) (高耐環境・高信頼エッジ端末)**:
+   - **MCU**: Microchip ATtiny1616-MNR (8-bit 10MHz, 極小自己発熱)
+   - **特徴**: -40℃〜+105℃ 耐熱部品、2500V 絶縁 RS-485、スプリング端子台、CCL 自律 OTW リセット。配電盤や屋外過酷環境の守護神。
