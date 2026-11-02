@@ -6,7 +6,7 @@
 <p style="font-size: 1.1em; line-height: 1.6; color: #222;"><strong>When Android's locked-down WebSerial threatened field diagnostics, we turned to a 1983 synthesizer standard. Combining Web MIDI SysEx with RP2040 PIO and solving a 32-byte UART FIFO overflow gave ADX bulletproof Over-The-Wire bootloading.</strong></p>
 
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">The Field Reality: The Death of WebSerial on Mobile</h2>
-<p>In our <a href="https://hackaday.io/project/205547-adx-enclosure-native-modular-hardware-standard/log/247524-adx-core-v0-design-freeze-and-pcba-order-placed">last project log</a>, we celebrated our "Half-Baud Pulse Trick." It was a neat firmware hack that allowed a standard desktop browser tab, talking through a generic USB-RS485 dongle via the WebSerial API, to reliably trigger bootloader entries without proprietary UPDI debuggers.</p>
+<p>In our <a href="https://hackaday.io/project/205547-adx-enclosure-native-modular-hardware-standard/log/252238-the-6-month-silence-what-actually-happened">last project log</a>, we celebrated our "Half-Baud Pulse Trick." It was a neat firmware hack that allowed a standard desktop browser tab, talking through a generic USB-RS485 dongle via the WebSerial API, to reliably trigger bootloader entries without proprietary UPDI debuggers.</p>
 <p>On a developer workstation running Chrome on Linux or macOS, it worked like a charm.</p>
 <p>Then we took the setup into the field.</p>
 <p>Picture the actual use case for ADX: you are standing on a stepladder in front of a dust-covered control cabinet on a factory floor. You don't want to balance an open, \$2,000 laptop on one knee while fiddling with cables. You pull out an Android smartphone, plug in a short USB-C OTG cable, open a Web PWA, and hit "Update Firmware."</p>
@@ -64,21 +64,8 @@ void sysex_pack_7to8(const uint8_t *src, size_t src_len, uint8_t *dst, size_t *d
 <!-- Image: ADX RPR4 Pre-development Bench -->
 <div style="text-align: center; margin: 22px 0;"><img src="https://cdn.jsdelivr.net/gh/Masafuro/ADX@main/docs/blog/images/2026-11-02-pico-rs485-bench.jpg" alt="ADX RPR4 Pre-development Bench" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.12);"><p style="font-size: 0.85em; color: #666; margin-top: 6px; margin-bottom: 0;"><em>Fig 1: Benchtop bring-up of the RPR4 Smart Probe pre-development rig: Raspberry Pi Pico H paired with a Waveshare 2CH RS-485 shield running hardware-level loopback tests.</em></p></div>
 <p>Before flashing any code, we tore down the Waveshare schematic to inspect its "automatic direction control" circuit.</p>
-<pre style="background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; font-family: Consolas, monospace; font-size: 0.9em; margin: 18px 0; line-height: 1.5;"><code class="language-mermaid">flowchart LR
-    subgraph RP2040
-        TX[&quot;TX Pin (GP0)&quot;]
-    end
-    subgraph AutoDirectionCircuit [&quot;Auto-Direction Circuit&quot;]
-        S1[&quot;Inverter Transistor (S1)&quot;]
-        PullUp[&quot;4.7kΩ Pull-up (3.3V)&quot;]
-    end
-    subgraph SP3485 [&quot;RS-485 Transceiver&quot;]
-        DI[&quot;DI Pin -&gt; Tied to GND&quot;]
-        DE_RE[&quot;DE / ~RE Combined&quot;]
-    end
-    TX --&gt; S1 --&gt; DE_RE
-    PullUp --&gt; DE_RE
-</code></pre>
+<!-- Image: Waveshare Pico-2CH-RS485 Auto-Direction Circuit -->
+<div style="text-align: center; margin: 22px 0;"><img src="https://cdn.jsdelivr.net/gh/Masafuro/ADX@main/docs/blog/images/2026-11-02-autodir-schematic.jpg" alt="Waveshare Pico-2CH-RS485 Auto-Direction Circuit" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.12);"><p style="font-size: 0.85em; color: #666; margin-top: 6px; margin-bottom: 0;"><em>Fig 2: Waveshare 2CH RS-485 auto-direction circuit teardown showing the inverter transistor driving DE/~RE with DI tied to ground.</em></p></div>
 <p>Many cheap RS-485 converters use an RC one-shot timer circuit that automatically flips back to receive mode after a few microseconds, making sustained low pulses impossible.</p>
 <p>Here, the schematic showed something brilliant: the transceiver's <code>DI</code> pin is permanently tied to <strong>GND</strong>, and the RP2040's <code>TX</code> pin directly drives <code>DE/~RE</code> through an inverting transistor.<br />
 - When <code>TX</code> is <strong>High (Idle)</strong>, the driver is disabled, and pull-up/pull-down bias resistors hold the bus in <strong>Recessive High</strong>.<br />
@@ -249,12 +236,7 @@ Result: ALL PASS
 </ul>
 <p>Drop your thoughts, war stories, and critique in the comments below!</p>
 
-<hr style="margin: 36px 0 24px; border: 0; border-top: 1px solid #e2e8f0;">
-<div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px 20px; margin-top: 24px;">
-  <h3 style="margin-top: 0; margin-bottom: 8px; font-size: 1.1em; color: #0f172a; font-weight: 600;">⚡ Project Links & Interactive Tools</h3>
-  <p style="margin: 6px 0; font-size: 0.95em; line-height: 1.7; color: #334155;">
-    • <strong>Try WebSerial Explorer Online:</strong> <a href="https://masafuro.github.io/ADX/" target="_blank" style="color: #0284c7; text-decoration: underline;">ADX Web Tools (Chrome/Edge)</a><br>
-    • <strong>Open Source Hardware & Code:</strong> <a href="https://github.com/Masafuro/ADX" target="_blank" style="color: #0284c7; text-decoration: underline;">GitHub Repository (Masafuro/ADX)</a><br>
-    • <strong>Technical Documentation:</strong> <a href="https://github.com/Masafuro/ADX/tree/main/docs" target="_blank" style="color: #0284c7; text-decoration: underline;">ADX Specs & MCU Matrix</a>
-  </p>
-</div>
+<hr style="margin: 36px 0 20px; border: 0; border-top: 1px solid #e2e8f0;">
+<p style="text-align: center; font-size: 0.95em; color: #475569; margin: 24px 0 12px;">
+  📂 <strong>Open Source Hardware &amp; Code:</strong> <a href="https://github.com/Masafuro/ADX" target="_blank" style="color: #0284c7; text-decoration: underline;">GitHub Repository (Masafuro/ADX)</a>
+</p>
