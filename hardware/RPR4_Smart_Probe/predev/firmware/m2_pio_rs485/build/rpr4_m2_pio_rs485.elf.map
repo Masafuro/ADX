@@ -63,21 +63,17 @@ Discarded input sections
  .text          0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
  .data          0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
  .bss           0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
- .text.init_pulse_measure
-                0x0000000000000000       0xd8 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+ .text.flush_pulse_measure
+                0x0000000000000000       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
  .text.flush_uart1
                 0x0000000000000000       0x24 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
- .rodata.ln485_pulse_measure_program
-                0x0000000000000000        0x6 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
- .rodata.ln485_pulse_measure_program_instructions
-                0x0000000000000000        0xe CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
  .text          0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
  .data          0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
  .bss           0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
- .text.ln485_tx_send_break
-                0x0000000000000000       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
  .text.ln485_tx_send_byte
                 0x0000000000000000       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
+ .text.ln485_tx_send_frame
+                0x0000000000000000       0x58 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
  .text          0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj
  .data          0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj
  .bss           0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.obj
@@ -687,16 +683,10 @@ Discarded input sections
  .text          0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
  .data          0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
  .bss           0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
- .text.__wrap___aeabi_cfcmple
-                0x0000000000000000       0x50 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
  .text.__wrap___aeabi_fcmpeq
                 0x0000000000000000       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
  .text.__wrap___aeabi_fcmplt
                 0x0000000000000000        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
- .text.__wrap___aeabi_fcmple
-                0x0000000000000000       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
- .text.__wrap___aeabi_fcmpge
-                0x0000000000000000       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
  .text.__wrap___aeabi_fcmpgt
                 0x0000000000000000        0xa CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
  .text.__wrap___aeabi_fcmpun
@@ -730,8 +720,6 @@ Discarded input sections
  .text.__wrap___aeabi_f2ulz
                 0x0000000000000000       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
  .text.float2ufix64
-                0x0000000000000000       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
- .text.__wrap___aeabi_f2d
                 0x0000000000000000       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
  .text.__wrap_sqrtf
                 0x0000000000000000       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
@@ -838,8 +826,6 @@ Discarded input sections
                 0x0000000000000000       0x4c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj
  .text.d2fix_a_float
                 0x0000000000000000       0x5c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj
- .text.float2double_shim
-                0x0000000000000000       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj
  .text          0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
  .data          0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
  .bss           0x0000000000000000        0x0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
@@ -1161,14 +1147,12 @@ Discarded input sections
                 0x0000000000000000       0x38 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
  .text.pio_sm_set_pins
                 0x0000000000000000       0x90 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
- .text.pio_sm_set_consecutive_pindirs
-                0x0000000000000000       0xb0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
  .text.pio_sm_drain_tx_fifo
                 0x0000000000000000       0x40 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
  .bss.claimed   0x0000000000000000        0x1 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
- .text          0x0000000000000000        0x0 /tmp/ccr5tvw6.o
- .data          0x0000000000000000        0x0 /tmp/ccr5tvw6.o
- .bss           0x0000000000000000        0x0 /tmp/ccr5tvw6.o
+ .text          0x0000000000000000        0x0 /tmp/cczpIdDG.o
+ .data          0x0000000000000000        0x0 /tmp/cczpIdDG.o
+ .bss           0x0000000000000000        0x0 /tmp/cczpIdDG.o
  .data          0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .bss           0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .text          0x0000000000000000       0x10 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-atexit.o)
@@ -1434,11 +1418,11 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
 .boot2          0x0000000010000000      0x100
                 0x0000000010000000                __boot2_start__ = .
  *(.boot2)
- .boot2         0x0000000010000000      0x100 /tmp/ccr5tvw6.o
+ .boot2         0x0000000010000000      0x100 /tmp/cczpIdDG.o
                 0x0000000010000100                __boot2_end__ = .
                 0x0000000000000001                ASSERT (((__boot2_end__ - __boot2_start__) == 0x100), ERROR: Pico second stage bootloader must be 256 bytes in size)
 
-.text           0x0000000010000100     0x7698
+.text           0x0000000010000100     0x7d80
                 0x0000000010000100                __logical_binary_start = .
  *(.vectors)
  .vectors       0x0000000010000100       0xd4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj
@@ -1499,654 +1483,689 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
                 0x00000000100002b8                _init
  *(EXCLUDE_FILE(*libm.a: *libc.a:*lib_a-mem*.o *libgcc.a:) .text*)
  .text          0x00000000100002bc       0x98 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+ .text.init_pulse_measure
+                0x0000000010000354       0xd8 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+                0x0000000010000354                init_pulse_measure
+ .text.get_pulse_width_us
+                0x000000001000042c       0x90 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+                0x000000001000042c                get_pulse_width_us
  .text.init_uart1_rx
-                0x0000000010000354       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
-                0x0000000010000354                init_uart1_rx
+                0x00000000100004bc       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+                0x00000000100004bc                init_uart1_rx
  .text.uart1_drain_all
-                0x000000001000039c       0xa4 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
-                0x000000001000039c                uart1_drain_all
- .text.run_investigation_1_and_2
-                0x0000000010000440      0x260 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
-                0x0000000010000440                run_investigation_1_and_2
- .text.run_investigation_3_sweep
-                0x00000000100006a0      0x1a0 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
-                0x00000000100006a0                run_investigation_3_sweep
+                0x0000000010000504       0xa4 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+                0x0000000010000504                uart1_drain_all
+ .text.run_test_1
+                0x00000000100005a8      0x158 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+                0x00000000100005a8                run_test_1
+ .text.run_test_2
+                0x0000000010000700      0x2d4 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+                0x0000000010000700                run_test_2
+ .text.run_test_3
+                0x00000000100009d4      0x2ac CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+                0x00000000100009d4                run_test_3
  .text.startup.main
-                0x0000000010000840       0xac CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
-                0x0000000010000840                main
+                0x0000000010000c80      0x12c CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+                0x0000000010000c80                main
  .text.ln485_tx_init
-                0x00000000100008ec      0x130 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
-                0x00000000100008ec                ln485_tx_init
- .text.ln485_tx_send_frame
-                0x0000000010000a1c       0x58 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
-                0x0000000010000a1c                ln485_tx_send_frame
+                0x0000000010000dac      0x130 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
+                0x0000000010000dac                ln485_tx_init
+ .text.ln485_tx_send_break
+                0x0000000010000edc       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
+                0x0000000010000edc                ln485_tx_send_break
+ .text.ln485_calc_checksum
+                0x0000000010000ef8       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
+                0x0000000010000ef8                ln485_calc_checksum
+ .text.ln485_tx_send_standard_frame
+                0x0000000010000f2c       0xcc CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
+                0x0000000010000f2c                ln485_tx_send_standard_frame
  .text.ln485_tx_wait_idle
-                0x0000000010000a74       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
-                0x0000000010000a74                ln485_tx_wait_idle
+                0x0000000010000ff8       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
+                0x0000000010000ff8                ln485_tx_wait_idle
  .text.gpio_set_function
-                0x0000000010000a90       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
-                0x0000000010000a90                gpio_set_function
+                0x0000000010001014       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
+                0x0000000010001014                gpio_set_function
  .text.gpio_set_input_enabled
-                0x0000000010000ac0       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
-                0x0000000010000ac0                gpio_set_input_enabled
+                0x0000000010001044       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
+                0x0000000010001044                gpio_set_input_enabled
  .text.gpio_init
-                0x0000000010000ae8       0x3c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
-                0x0000000010000ae8                gpio_init
+                0x000000001000106c       0x3c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
+                0x000000001000106c                gpio_init
  .text.running_on_fpga
-                0x0000000010000b24       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_platform/platform.c.obj
-                0x0000000010000b24                running_on_fpga
+                0x00000000100010a8       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_platform/platform.c.obj
+                0x00000000100010a8                running_on_fpga
  .text.hw_claim_lock
-                0x0000000010000b34       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
-                0x0000000010000b34                hw_claim_lock
+                0x00000000100010b8       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
+                0x00000000100010b8                hw_claim_lock
  .text.hw_claim_unlock
-                0x0000000010000b4c       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
-                0x0000000010000b4c                hw_claim_unlock
+                0x00000000100010d0       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
+                0x00000000100010d0                hw_claim_unlock
  .text.hw_claim_or_assert
-                0x0000000010000b60       0x44 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
-                0x0000000010000b60                hw_claim_or_assert
+                0x00000000100010e4       0x44 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
+                0x00000000100010e4                hw_claim_or_assert
  .text.hw_claim_unused_from_range
-                0x0000000010000ba4       0x9c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
-                0x0000000010000ba4                hw_claim_unused_from_range
+                0x0000000010001128       0x9c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
+                0x0000000010001128                hw_claim_unused_from_range
  .text.spin_locks_reset
-                0x0000000010000c40       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
-                0x0000000010000c40                spin_locks_reset
+                0x00000000100011c4       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
+                0x00000000100011c4                spin_locks_reset
  .text.next_striped_spin_lock_num
-                0x0000000010000c5c       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
-                0x0000000010000c5c                next_striped_spin_lock_num
+                0x00000000100011e0       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
+                0x00000000100011e0                next_striped_spin_lock_num
  .text.spin_lock_claim_unused
-                0x0000000010000c74       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
-                0x0000000010000c74                spin_lock_claim_unused
+                0x00000000100011f8       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
+                0x00000000100011f8                spin_lock_claim_unused
  .text.irq_set_enabled
-                0x0000000010000c94       0x24 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000c94                irq_set_enabled
+                0x0000000010001218       0x24 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010001218                irq_set_enabled
  .text.irq_set_pending
-                0x0000000010000cb8       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000cb8                irq_set_pending
+                0x000000001000123c       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x000000001000123c                irq_set_pending
  .text.irq_has_shared_handler
-                0x0000000010000cc8       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000cc8                irq_has_shared_handler
+                0x000000001000124c       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x000000001000124c                irq_has_shared_handler
  .text.irq_get_vtable_handler
-                0x0000000010000cf4       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000cf4                irq_get_vtable_handler
+                0x0000000010001278       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010001278                irq_get_vtable_handler
  .text.irq_set_exclusive_handler
-                0x0000000010000d04       0x54 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000d04                irq_set_exclusive_handler
+                0x0000000010001288       0x54 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010001288                irq_set_exclusive_handler
  .text.irq_add_shared_handler
-                0x0000000010000d58      0x1e8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000d58                irq_add_shared_handler
+                0x00000000100012dc      0x1e8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x00000000100012dc                irq_add_shared_handler
  .text.irq_remove_handler
-                0x0000000010000f40      0x1b0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000f40                irq_remove_handler
+                0x00000000100014c4      0x1b0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x00000000100014c4                irq_remove_handler
  .text.irq_add_tail_to_free_list
-                0x00000000100010f0       0xb4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x00000000100010f0                irq_add_tail_to_free_list
+                0x0000000010001674       0xb4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010001674                irq_add_tail_to_free_list
  .text.irq_init_priorities
-                0x00000000100011a4       0x24 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x00000000100011a4                irq_init_priorities
+                0x0000000010001728       0x24 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010001728                irq_init_priorities
  .text.user_irq_claim_unused
-                0x00000000100011c8       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x00000000100011c8                user_irq_claim_unused
+                0x000000001000174c       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x000000001000174c                user_irq_claim_unused
  .text.lock_init
-                0x00000000100011f0       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_sync/lock_core.c.obj
-                0x00000000100011f0                lock_init
+                0x0000000010001774       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_sync/lock_core.c.obj
+                0x0000000010001774                lock_init
  .text.mutex_init
-                0x0000000010001200       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_sync/mutex.c.obj
-                0x0000000010001200                mutex_init
+                0x0000000010001784       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_sync/mutex.c.obj
+                0x0000000010001784                mutex_init
  .text.recursive_mutex_init
-                0x000000001000121c       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_sync/mutex.c.obj
-                0x000000001000121c                recursive_mutex_init
+                0x00000000100017a0       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_sync/mutex.c.obj
+                0x00000000100017a0                recursive_mutex_init
  .text.critical_section_init
-                0x0000000010001238       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_sync/critical_section.c.obj
-                0x0000000010001238                critical_section_init
+                0x00000000100017bc       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_sync/critical_section.c.obj
+                0x00000000100017bc                critical_section_init
  .text.critical_section_init_with_lock_num
-                0x0000000010001258       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_sync/critical_section.c.obj
-                0x0000000010001258                critical_section_init_with_lock_num
+                0x00000000100017dc       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_sync/critical_section.c.obj
+                0x00000000100017dc                critical_section_init_with_lock_num
  .text.timer_pool_entry_comparator
-                0x000000001000126c       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
-                0x000000001000126c                timer_pool_entry_comparator
+                0x00000000100017f0       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x00000000100017f0                timer_pool_entry_comparator
  .text.sleep_until_callback
-                0x00000000100012a0       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001824       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
  .text.add_alarm_under_lock.isra.0
-                0x00000000100012d0      0x100 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001854      0x100 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
  .text.alarm_pool_alarm_callback
-                0x00000000100013d0      0x1bc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001954      0x1bc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
  .text.alarm_pool_init_default
-                0x000000001000158c       0x6c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
-                0x000000001000158c                alarm_pool_init_default
+                0x0000000010001b10       0x6c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001b10                alarm_pool_init_default
  .text.alarm_pool_get_default
-                0x00000000100015f8        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
-                0x00000000100015f8                alarm_pool_get_default
+                0x0000000010001b7c        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001b7c                alarm_pool_get_default
  .text.alarm_pool_add_alarm_at
-                0x0000000010001600      0x178 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010001600                alarm_pool_add_alarm_at
+                0x0000000010001b84      0x178 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001b84                alarm_pool_add_alarm_at
  .text.alarm_pool_core_num
-                0x0000000010001778        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010001778                alarm_pool_core_num
+                0x0000000010001cfc        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001cfc                alarm_pool_core_num
  .text.sleep_until
-                0x000000001000177c       0xc4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
-                0x000000001000177c                sleep_until
+                0x0000000010001d00       0xc4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001d00                sleep_until
  .text.sleep_us
-                0x0000000010001840       0x24 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010001840                sleep_us
+                0x0000000010001dc4       0x24 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001dc4                sleep_us
  .text.sleep_ms
-                0x0000000010001864       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010001864                sleep_ms
+                0x0000000010001de8       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001de8                sleep_ms
  .text.best_effort_wfe_or_timeout
-                0x0000000010001898       0xd4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010001898                best_effort_wfe_or_timeout
+                0x0000000010001e1c       0xd4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001e1c                best_effort_wfe_or_timeout
  .text.hardware_alarm_irq_handler
-                0x000000001000196c       0xbc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001ef0       0xbc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
  .text.hardware_alarm_claim
-                0x0000000010001a28       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001a28                hardware_alarm_claim
+                0x0000000010001fac       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001fac                hardware_alarm_claim
  .text.time_us_64
-                0x0000000010001a40       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001a40                time_us_64
+                0x0000000010001fc4       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001fc4                time_us_64
  .text.busy_wait_us
-                0x0000000010001a54       0x54 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001a54                busy_wait_us
+                0x0000000010001fd8       0x54 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001fd8                busy_wait_us
  .text.busy_wait_until
-                0x0000000010001aa8       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001aa8                busy_wait_until
+                0x000000001000202c       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x000000001000202c                busy_wait_until
  .text.hardware_alarm_set_callback
-                0x0000000010001ac8       0x8c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001ac8                hardware_alarm_set_callback
+                0x000000001000204c       0x8c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x000000001000204c                hardware_alarm_set_callback
  .text.hardware_alarm_set_target
-                0x0000000010001b54       0xd4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001b54                hardware_alarm_set_target
+                0x00000000100020d8       0xd4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x00000000100020d8                hardware_alarm_set_target
  .text.hardware_alarm_cancel
-                0x0000000010001c28       0x3c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001c28                hardware_alarm_cancel
+                0x00000000100021ac       0x3c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x00000000100021ac                hardware_alarm_cancel
  .text.ph_merge_nodes
-                0x0000000010001c64       0x68 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x00000000100021e8       0x68 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
  .text.ph_post_alloc_init
-                0x0000000010001ccc       0x3c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
-                0x0000000010001ccc                ph_post_alloc_init
+                0x0000000010002250       0x3c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x0000000010002250                ph_post_alloc_init
  .text.ph_merge_two_pass
-                0x0000000010001d08       0x90 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
-                0x0000000010001d08                ph_merge_two_pass
+                0x000000001000228c       0x90 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x000000001000228c                ph_merge_two_pass
  .text.ph_remove_any_head
-                0x0000000010001d98      0x100 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x000000001000231c      0x100 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
  .text.ph_remove_head
-                0x0000000010001e98      0x104 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
-                0x0000000010001e98                ph_remove_head
+                0x000000001000241c      0x104 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x000000001000241c                ph_remove_head
  .text.ph_remove_and_free_node
-                0x0000000010001f9c       0x7c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
-                0x0000000010001f9c                ph_remove_and_free_node
+                0x0000000010002520       0x7c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x0000000010002520                ph_remove_and_free_node
  .text.uart_init
-                0x0000000010002018      0x188 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
-                0x0000000010002018                uart_init
+                0x000000001000259c      0x188 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
+                0x000000001000259c                uart_init
  .text.uart_set_format
-                0x00000000100021a0       0x7c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
-                0x00000000100021a0                uart_set_format
+                0x0000000010002724       0x7c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
+                0x0000000010002724                uart_set_format
  .text.uart_set_fifo_enabled
-                0x000000001000221c       0x64 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
-                0x000000001000221c                uart_set_fifo_enabled
+                0x00000000100027a0       0x64 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
+                0x00000000100027a0                uart_set_fifo_enabled
  .text.clocks_init
-                0x0000000010002280      0x2d0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
-                0x0000000010002280                clocks_init
+                0x0000000010002804      0x2d0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
+                0x0000000010002804                clocks_init
  .text.clock_get_hz
-                0x0000000010002550        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
-                0x0000000010002550                clock_get_hz
+                0x0000000010002ad4        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
+                0x0000000010002ad4                clock_get_hz
  .text.pll_init
-                0x000000001000255c       0xa0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj
-                0x000000001000255c                pll_init
+                0x0000000010002ae0       0xa0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj
+                0x0000000010002ae0                pll_init
  .text.watchdog_start_tick
-                0x00000000100025fc       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
-                0x00000000100025fc                watchdog_start_tick
+                0x0000000010002b80       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
+                0x0000000010002b80                watchdog_start_tick
  .text.watchdog_reboot
-                0x000000001000260c       0x98 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
-                0x000000001000260c                watchdog_reboot
+                0x0000000010002b90       0x98 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
+                0x0000000010002b90                watchdog_reboot
  .text.xosc_init
-                0x00000000100026a4       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj
-                0x00000000100026a4                xosc_init
+                0x0000000010002c28       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj
+                0x0000000010002c28                xosc_init
  .text.runtime_init
-                0x00000000100026cc       0xf0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x00000000100026cc                runtime_init
- .text._exit    0x00000000100027bc        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x00000000100027bc                _exit
- .text.exit     0x00000000100027c0        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x00000000100027c0                exit
- .text.panic    0x00000000100027c8       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x00000000100027c8                panic
+                0x0000000010002c50       0xf0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x0000000010002c50                runtime_init
+ .text._exit    0x0000000010002d40        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x0000000010002d40                _exit
+ .text.exit     0x0000000010002d44        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x0000000010002d44                exit
+ .text.panic    0x0000000010002d4c       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x0000000010002d4c                panic
  .text.hard_assertion_failure
-                0x00000000100027f8        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x00000000100027f8                hard_assertion_failure
+                0x0000000010002d7c        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x0000000010002d7c                hard_assertion_failure
  .text._out_null
-                0x0000000010002804        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010002d88        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._out_rev
-                0x0000000010002808       0x9c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010002d8c       0x9c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._ntoa_format
-                0x00000000100028a4      0x1cc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010002e28      0x1cc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._out_char
-                0x0000000010002a70       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010002ff4       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._out_fct
-                0x0000000010002a80       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
- .text._etoa    0x0000000010002a90      0x44c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
- .text._ftoa    0x0000000010002edc      0x398 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010003004       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+ .text._etoa    0x0000000010003014      0x44c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+ .text._ftoa    0x0000000010003460      0x398 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._vsnprintf
-                0x0000000010003274      0xb04 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x00000000100037f8      0xb04 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text.vfctprintf
-                0x0000000010003d78       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
-                0x0000000010003d78                vfctprintf
+                0x00000000100042fc       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x00000000100042fc                vfctprintf
  .text.weak_raw_vprintf
-                0x0000000010003d98       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
-                0x0000000010003d98                weak_raw_vprintf
- .text          0x0000000010003dc8       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj
- .text.ctzsi    0x0000000010003dd8        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj
-                0x0000000010003dd8                __wrap___ctzsi2
+                0x000000001000431c       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x000000001000431c                weak_raw_vprintf
+ .text          0x000000001000434c       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj
+ .text.ctzsi    0x000000001000435c        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj
+                0x000000001000435c                __wrap___ctzsi2
  .text.rom_func_lookup
-                0x0000000010003de4       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
-                0x0000000010003de4                rom_func_lookup
+                0x0000000010004368       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
+                0x0000000010004368                rom_func_lookup
  .text.rom_data_lookup
-                0x0000000010003df4       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
-                0x0000000010003df4                rom_data_lookup
+                0x0000000010004378       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
+                0x0000000010004378                rom_data_lookup
  .text.rom_funcs_lookup
-                0x0000000010003e04       0x44 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
-                0x0000000010003e04                rom_funcs_lookup
+                0x0000000010004388       0x44 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
+                0x0000000010004388                rom_funcs_lookup
  .text.__wrap___aeabi_idiv
-                0x0000000010003e48       0x50 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
-                0x0000000010003e48                __wrap___aeabi_idivmod
-                0x0000000010003e48                divmod_s32s32
-                0x0000000010003e48                div_s32s32
-                0x0000000010003e48                __wrap___aeabi_idiv
-                0x0000000010003e50                divmod_s32s32_unsafe
-                0x0000000010003e7c                divmod_s32s32_savestate
+                0x00000000100043cc       0x50 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
+                0x00000000100043cc                __wrap___aeabi_idivmod
+                0x00000000100043cc                divmod_s32s32
+                0x00000000100043cc                div_s32s32
+                0x00000000100043cc                __wrap___aeabi_idiv
+                0x00000000100043d4                divmod_s32s32_unsafe
+                0x0000000010004400                divmod_s32s32_savestate
  .text.__wrap___aeabi_uidiv
-                0x0000000010003e98       0x4c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
-                0x0000000010003e98                __wrap___aeabi_uidiv
-                0x0000000010003e98                __wrap___aeabi_uidivmod
-                0x0000000010003e98                div_u32u32
-                0x0000000010003e98                divmod_u32u32
-                0x0000000010003ea0                divmod_u32u32_unsafe
-                0x0000000010003ec8                divmod_u32u32_savestate
+                0x000000001000441c       0x4c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
+                0x000000001000441c                __wrap___aeabi_uidiv
+                0x000000001000441c                __wrap___aeabi_uidivmod
+                0x000000001000441c                div_u32u32
+                0x000000001000441c                divmod_u32u32
+                0x0000000010004424                divmod_u32u32_unsafe
+                0x000000001000444c                divmod_u32u32_savestate
  .text.__wrap___aeabi_ldiv
-                0x0000000010003ee4      0x424 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
-                0x0000000010003ee4                div_s64s64
-                0x0000000010003ee4                divmod_s64s64
-                0x0000000010003ee4                __wrap___aeabi_ldivmod
-                0x0000000010003f14                div_u64u64
-                0x0000000010003f14                divmod_u64u64
-                0x0000000010003f14                __wrap___aeabi_uldivmod
-                0x0000000010003f24                divmod_u64u64_savestate
-                0x0000000010003f44                divmod_s64s64_unsafe
-                0x0000000010003fcc                divmod_u64u64_unsafe
+                0x0000000010004468      0x424 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
+                0x0000000010004468                div_s64s64
+                0x0000000010004468                divmod_s64s64
+                0x0000000010004468                __wrap___aeabi_ldivmod
+                0x0000000010004498                div_u64u64
+                0x0000000010004498                divmod_u64u64
+                0x0000000010004498                __wrap___aeabi_uldivmod
+                0x00000000100044a8                divmod_u64u64_savestate
+                0x00000000100044c8                divmod_s64s64_unsafe
+                0x0000000010004550                divmod_u64u64_unsafe
  .text.__wrap___aeabi_darithmetic
-                0x0000000010004308       0x80 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x0000000010004308                __wrap___aeabi_drsub
-                0x000000001000430e                __wrap___aeabi_dsub
-                0x0000000010004320                __wrap___aeabi_dadd
-                0x0000000010004332                __wrap___aeabi_ddiv
-                0x000000001000436e                __wrap___aeabi_dmul
+                0x000000001000488c       0x80 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x000000001000488c                __wrap___aeabi_drsub
+                0x0000000010004892                __wrap___aeabi_dsub
+                0x00000000100048a4                __wrap___aeabi_dadd
+                0x00000000100048b6                __wrap___aeabi_ddiv
+                0x00000000100048f2                __wrap___aeabi_dmul
  .text.__wrap___aeabi_cdcmple
-                0x0000000010004388       0x6c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x0000000010004388                __wrap___aeabi_cdrcmple
-                0x0000000010004398                __wrap___aeabi_cdcmple
-                0x0000000010004398                __wrap___aeabi_cdcmpeq
+                0x000000001000490c       0x6c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x000000001000490c                __wrap___aeabi_cdrcmple
+                0x000000001000491c                __wrap___aeabi_cdcmple
+                0x000000001000491c                __wrap___aeabi_cdcmpeq
  .text.__wrap___aeabi_dcmplt
-                0x00000000100043f4        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x00000000100043f4                __wrap___aeabi_dcmplt
+                0x0000000010004978        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004978                __wrap___aeabi_dcmplt
  .text.__wrap___aeabi_dcmple
-                0x0000000010004400       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x0000000010004400                __wrap___aeabi_dcmple
+                0x0000000010004984       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004984                __wrap___aeabi_dcmple
  .text.__wrap___aeabi_dcmpge
-                0x0000000010004410       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x0000000010004410                __wrap___aeabi_dcmpge
+                0x0000000010004994       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004994                __wrap___aeabi_dcmpge
  .text.__wrap___aeabi_dcmpgt
-                0x0000000010004420        0xa CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x0000000010004420                __wrap___aeabi_dcmpgt
+                0x00000000100049a4        0xa CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x00000000100049a4                __wrap___aeabi_dcmpgt
  .text.__wrap___aeabi_dcmpun
-                0x000000001000442a       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x000000001000442a                __wrap___aeabi_dcmpun
- *fill*         0x0000000010004446        0x2 
+                0x00000000100049ae       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x00000000100049ae                __wrap___aeabi_dcmpun
+ *fill*         0x00000000100049ca        0x2 
  .text.__wrap___aeabi_i2d
-                0x0000000010004448       0x38 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x0000000010004448                __wrap___aeabi_ui2d
-                0x0000000010004450                __wrap___aeabi_i2d
+                0x00000000100049cc       0x38 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x00000000100049cc                __wrap___aeabi_ui2d
+                0x00000000100049d4                __wrap___aeabi_i2d
  .text.__wrap___aeabi_d2iz
-                0x0000000010004480       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x0000000010004480                __wrap___aeabi_d2iz
-                0x0000000010004480                double2int_z
+                0x0000000010004a04       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004a04                __wrap___aeabi_d2iz
+                0x0000000010004a04                double2int_z
  .text.__wrap___aeabi_d2uiz
-                0x00000000100044c8       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x00000000100044c8                double2uint
-                0x00000000100044c8                __wrap___aeabi_d2uiz
+                0x0000000010004a4c       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004a4c                double2uint
+                0x0000000010004a4c                __wrap___aeabi_d2uiz
  .text.__aeabi_double_init
-                0x00000000100044e0       0x94 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
-                0x00000000100044e0                __aeabi_double_init
+                0x0000000010004a64       0x94 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
+                0x0000000010004a64                __aeabi_double_init
  .text.double_table_shim_on_use_helper
-                0x0000000010004574       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
-                0x0000000010004574                double_table_shim_on_use_helper
+                0x0000000010004af8       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
+                0x0000000010004af8                double_table_shim_on_use_helper
  .text.__wrap___aeabi_dsub
-                0x00000000100045a0       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
-                0x00000000100045a0                drsub_shim
-                0x00000000100045a6                dsub_shim
+                0x0000000010004b24       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
+                0x0000000010004b24                drsub_shim
+                0x0000000010004b2a                dsub_shim
  .text.dadd_shim
-                0x00000000100045b0      0x15c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
-                0x00000000100045b0                dadd_shim
+                0x0000000010004b34      0x15c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
+                0x0000000010004b34                dadd_shim
  .text.dmul_shim
-                0x000000001000470c      0x15c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
-                0x000000001000470c                dmul_shim
+                0x0000000010004c90      0x15c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
+                0x0000000010004c90                dmul_shim
  .text.ddiv_shim
-                0x0000000010004868      0x1b0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
-                0x0000000010004868                ddiv_shim
+                0x0000000010004dec      0x1b0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
+                0x0000000010004dec                ddiv_shim
  .text.double2uint_shim
-                0x0000000010004a18        0xe CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
-                0x0000000010004a18                double2uint_shim
-                0x0000000010004a1a                double2ufix_shim
- *fill*         0x0000000010004a26        0x2 
+                0x0000000010004f9c        0xe CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
+                0x0000000010004f9c                double2uint_shim
+                0x0000000010004f9e                double2ufix_shim
+ *fill*         0x0000000010004faa        0x2 
  .text.double2uint64_shim
-                0x0000000010004a28       0x70 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
-                0x0000000010004a28                double2uint64_shim
-                0x0000000010004a2a                double2ufix64_shim
-                0x0000000010004a4a                d2fix_a
+                0x0000000010004fac       0x70 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
+                0x0000000010004fac                double2uint64_shim
+                0x0000000010004fae                double2ufix64_shim
+                0x0000000010004fce                d2fix_a
  .text.dunpacks
-                0x0000000010004a98       0x3c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
-                0x0000000010004a98                dunpacks
+                0x000000001000501c       0x3c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
+                0x000000001000501c                dunpacks
  .text.__aeabi_lmul
-                0x0000000010004ad4       0x32 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj
-                0x0000000010004ad4                __wrap___aeabi_lmul
- *fill*         0x0000000010004b06        0x2 
+                0x0000000010005058       0x32 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj
+                0x0000000010005058                __wrap___aeabi_lmul
+ *fill*         0x000000001000508a        0x2 
  .text.__wrap___aeabi_farithmetic
-                0x0000000010004b08       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
-                0x0000000010004b08                __wrap___aeabi_frsub
-                0x0000000010004b0e                __wrap___aeabi_fsub
-                0x0000000010004b14                __wrap___aeabi_fadd
-                0x0000000010004b1a                __wrap___aeabi_fdiv
-                0x0000000010004b42                __wrap___aeabi_fmul
+                0x000000001000508c       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x000000001000508c                __wrap___aeabi_frsub
+                0x0000000010005092                __wrap___aeabi_fsub
+                0x0000000010005098                __wrap___aeabi_fadd
+                0x000000001000509e                __wrap___aeabi_fdiv
+                0x00000000100050c6                __wrap___aeabi_fmul
+ .text.__wrap___aeabi_cfcmple
+                0x00000000100050d4       0x50 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x00000000100050d4                __wrap___aeabi_cfrcmple
+                0x00000000100050e0                __wrap___aeabi_cfcmpeq
+                0x00000000100050e0                __wrap___aeabi_cfcmple
+ .text.__wrap___aeabi_fcmple
+                0x0000000010005124       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x0000000010005124                __wrap___aeabi_fcmple
+ .text.__wrap___aeabi_fcmpge
+                0x0000000010005134       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x0000000010005134                __wrap___aeabi_fcmpge
  .text.__wrap___aeabi_ui2f
-                0x0000000010004b50        0xa CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
-                0x0000000010004b50                __wrap___aeabi_ui2f
- *fill*         0x0000000010004b5a        0x2 
+                0x0000000010005144        0xa CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x0000000010005144                __wrap___aeabi_ui2f
+ *fill*         0x000000001000514e        0x2 
  .text.__wrap___aeabi_i2f
-                0x0000000010004b5c       0x44 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
-                0x0000000010004b5c                __wrap___aeabi_i2f
+                0x0000000010005150       0x44 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x0000000010005150                __wrap___aeabi_i2f
  .text.__wrap___aeabi_f2uiz
-                0x0000000010004ba0        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
-                0x0000000010004ba0                __wrap___aeabi_f2uiz
+                0x0000000010005194        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x0000000010005194                __wrap___aeabi_f2uiz
+ .text.__wrap___aeabi_f2d
+                0x00000000100051a0       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x00000000100051a0                __wrap___aeabi_f2d
  .text.__aeabi_float_init
-                0x0000000010004bac       0x64 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
-                0x0000000010004bac                __aeabi_float_init
+                0x00000000100051b4       0x64 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
+                0x00000000100051b4                __aeabi_float_init
  .text.float_table_shim_on_use_helper
-                0x0000000010004c10       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj
-                0x0000000010004c10                float_table_shim_on_use_helper
- .text          0x0000000010004c3c       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
-                0x0000000010004c3c                __aeabi_mem_init
- .text.memset   0x0000000010004c4c        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
-                0x0000000010004c4c                __wrap_memset
- .text.memcpy   0x0000000010004c58        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
-                0x0000000010004c58                __wrap___aeabi_memcpy
-                0x0000000010004c58                __wrap_memcpy
+                0x0000000010005218       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj
+                0x0000000010005218                float_table_shim_on_use_helper
+ .text.float2double_shim
+                0x0000000010005244       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim.S.obj
+                0x0000000010005244                float2double_shim
+ .text          0x0000000010005274       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
+                0x0000000010005274                __aeabi_mem_init
+ .text.memset   0x0000000010005284        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
+                0x0000000010005284                __wrap_memset
+ .text.memcpy   0x0000000010005290        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
+                0x0000000010005290                __wrap___aeabi_memcpy
+                0x0000000010005290                __wrap_memcpy
  .text.stdio_out_chars_no_crlf
-                0x0000000010004c64       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x000000001000529c       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
  .text.stdio_out_chars_crlf
-                0x0000000010004c74       0xb4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x00000000100052ac       0xb4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
  .text.stdio_buffered_printer
-                0x0000000010004d28       0x64 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010005360       0x64 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
  .text.stdio_put_string.isra.0
-                0x0000000010004d8c       0xfc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x00000000100053c4       0xfc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
  .text.__wrap_putchar
-                0x0000000010004e88       0x98 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004e88                __wrap_putchar
+                0x00000000100054c0       0x98 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x00000000100054c0                __wrap_putchar
  .text.__wrap_puts
-                0x0000000010004f20       0x3c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004f20                __wrap_puts
+                0x0000000010005558       0x3c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010005558                __wrap_puts
  .text.stdio_set_driver_enabled
-                0x0000000010004f5c       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004f5c                stdio_set_driver_enabled
+                0x0000000010005594       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010005594                stdio_set_driver_enabled
  .text.__wrap_vprintf
-                0x0000000010004f8c       0xd8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004f8c                __wrap_vprintf
+                0x00000000100055c4       0xd8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x00000000100055c4                __wrap_vprintf
  .text.__wrap_printf
-                0x0000000010005064       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010005064                __wrap_printf
+                0x000000001000569c       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x000000001000569c                __wrap_printf
  .text.stdio_init_all
-                0x000000001000507c        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x000000001000507c                stdio_init_all
+                0x00000000100056b4        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x00000000100056b4                stdio_init_all
  .text.resetd_init
-                0x0000000010005084        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x00000000100056bc        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .text.resetd_reset
-                0x0000000010005088        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x00000000100056c0        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .text.resetd_open
-                0x0000000010005094       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x00000000100056cc       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .text.resetd_xfer_cb
-                0x00000000100050bc        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x00000000100056f4        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .text.resetd_control_xfer_cb
-                0x00000000100050c0       0x64 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x00000000100056f8       0x64 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .text.usbd_app_driver_get_cb
-                0x0000000010005124        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
-                0x0000000010005124                usbd_app_driver_get_cb
+                0x000000001000575c        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x000000001000575c                usbd_app_driver_get_cb
  .text.tud_cdc_line_coding_cb
-                0x0000000010005130       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
-                0x0000000010005130                tud_cdc_line_coding_cb
+                0x0000000010005768       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x0000000010005768                tud_cdc_line_coding_cb
  .text.stdio_usb_set_chars_available_callback
-                0x0000000010005164       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x0000000010005164                stdio_usb_set_chars_available_callback
- .text.usb_irq  0x0000000010005178       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x000000001000579c       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x000000001000579c                stdio_usb_set_chars_available_callback
+ .text.usb_irq  0x00000000100057b0       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
  .text.timer_task
-                0x0000000010005188       0x54 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x00000000100057c0       0x54 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
  .text.stdio_usb_in_chars
-                0x00000000100051dc       0x90 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x00000000100051dc                stdio_usb_in_chars
+                0x0000000010005814       0x90 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010005814                stdio_usb_in_chars
  .text.stdio_usb_out_chars
-                0x000000001000526c      0x100 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x00000000100058a4      0x100 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
  .text.low_priority_worker_irq
-                0x000000001000536c       0xa8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x00000000100059a4       0xa8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
  .text.tud_cdc_rx_cb
-                0x0000000010005414       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x0000000010005414                tud_cdc_rx_cb
+                0x0000000010005a4c       0x20 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010005a4c                tud_cdc_rx_cb
  .text.stdio_usb_init
-                0x0000000010005434       0xdc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x0000000010005434                stdio_usb_init
+                0x0000000010005a6c       0xdc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010005a6c                stdio_usb_init
  .text.stdio_usb_connected
-                0x0000000010005510        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x0000000010005510                stdio_usb_connected
+                0x0000000010005b48        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010005b48                stdio_usb_connected
  .text.tud_descriptor_device_cb
-                0x000000001000551c        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
-                0x000000001000551c                tud_descriptor_device_cb
+                0x0000000010005b54        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+                0x0000000010005b54                tud_descriptor_device_cb
  .text.tud_descriptor_configuration_cb
-                0x0000000010005524        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
-                0x0000000010005524                tud_descriptor_configuration_cb
+                0x0000000010005b5c        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+                0x0000000010005b5c                tud_descriptor_configuration_cb
  .text.tud_descriptor_string_cb
-                0x000000001000552c       0x74 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
-                0x000000001000552c                tud_descriptor_string_cb
+                0x0000000010005b64       0x74 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+                0x0000000010005b64                tud_descriptor_string_cb
  .text.startup._retrieve_unique_id_on_boot
-                0x00000000100055a0       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
+                0x0000000010005bd8       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
  .text.pico_get_unique_board_id_string
-                0x00000000100055b0      0x1a8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
-                0x00000000100055b0                pico_get_unique_board_id_string
+                0x0000000010005be8      0x1a8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
+                0x0000000010005be8                pico_get_unique_board_id_string
  .text.flash_get_unique_id
-                0x0000000010005758       0x40 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
-                0x0000000010005758                flash_get_unique_id
+                0x0000000010005d90       0x40 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
+                0x0000000010005d90                flash_get_unique_id
  .text.dcd_int_enable
-                0x0000000010005798        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x0000000010005798                dcd_int_enable
+                0x0000000010005dd0        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005dd0                dcd_int_enable
  .text.dcd_set_address
-                0x00000000100057a4       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x00000000100057a4                dcd_set_address
+                0x0000000010005ddc       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005ddc                dcd_set_address
  .text.dcd_connect
-                0x00000000100057b8       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x00000000100057b8                dcd_connect
+                0x0000000010005df0       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005df0                dcd_connect
  .text.dcd_init
-                0x00000000100057c8       0x98 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x00000000100057c8                dcd_init
+                0x0000000010005e00       0x98 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005e00                dcd_init
  .text.dcd_edpt0_status_complete
-                0x0000000010005860       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x0000000010005860                dcd_edpt0_status_complete
+                0x0000000010005e98       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005e98                dcd_edpt0_status_complete
  .text.dcd_edpt_open
-                0x000000001000587c      0x108 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x000000001000587c                dcd_edpt_open
+                0x0000000010005eb4      0x108 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005eb4                dcd_edpt_open
  .text.dcd_edpt_close_all
-                0x0000000010005984        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x0000000010005984                dcd_edpt_close_all
+                0x0000000010005fbc        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005fbc                dcd_edpt_close_all
  .text.dcd_edpt_xfer
-                0x000000001000598c       0x24 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x000000001000598c                dcd_edpt_xfer
+                0x0000000010005fc4       0x24 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005fc4                dcd_edpt_xfer
  .text.dcd_edpt_stall
-                0x00000000100059b0       0x38 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x00000000100059b0                dcd_edpt_stall
+                0x0000000010005fe8       0x38 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005fe8                dcd_edpt_stall
  .text.dcd_edpt_clear_stall
-                0x00000000100059e8       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x00000000100059e8                dcd_edpt_clear_stall
+                0x0000000010006020       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010006020                dcd_edpt_clear_stall
  .text.rp2040_usb_init
-                0x0000000010005a18       0x4c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
-                0x0000000010005a18                rp2040_usb_init
+                0x0000000010006050       0x4c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
+                0x0000000010006050                rp2040_usb_init
  .text.hw_endpoint_xfer_start
-                0x0000000010005a64       0x50 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
-                0x0000000010005a64                hw_endpoint_xfer_start
+                0x000000001000609c       0x50 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
+                0x000000001000609c                hw_endpoint_xfer_start
  .text.tud_mounted
-                0x0000000010005ab4       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010005ab4                tud_mounted
+                0x00000000100060ec       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x00000000100060ec                tud_mounted
  .text.tud_suspended
-                0x0000000010005ac4       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010005ac4                tud_suspended
+                0x00000000100060fc       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x00000000100060fc                tud_suspended
  .text.tud_inited
-                0x0000000010005ad4       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010005ad4                tud_inited
+                0x000000001000610c       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x000000001000610c                tud_inited
  .text.tud_init
-                0x0000000010005ae8       0xe4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010005ae8                tud_init
+                0x0000000010006120       0xe4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010006120                tud_init
  .text.tud_task_ext
-                0x0000000010005bcc      0x854 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010005bcc                tud_task_ext
+                0x0000000010006204      0x854 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010006204                tud_task_ext
  .text.usbd_open_edpt_pair
-                0x0000000010006420       0x9c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010006420                usbd_open_edpt_pair
+                0x0000000010006a58       0x9c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010006a58                usbd_open_edpt_pair
  .text.usbd_defer_func
-                0x00000000100064bc       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x00000000100064bc                usbd_defer_func
+                0x0000000010006af4       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010006af4                usbd_defer_func
  .text.usbd_edpt_open
-                0x0000000010006504       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010006504                usbd_edpt_open
+                0x0000000010006b3c       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010006b3c                usbd_edpt_open
  .text.usbd_edpt_claim
-                0x0000000010006538       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010006538                usbd_edpt_claim
+                0x0000000010006b70       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010006b70                usbd_edpt_claim
  .text.usbd_edpt_release
-                0x0000000010006560       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010006560                usbd_edpt_release
+                0x0000000010006b98       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010006b98                usbd_edpt_release
  .text.usbd_edpt_xfer
-                0x0000000010006588       0x4c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010006588                usbd_edpt_xfer
+                0x0000000010006bc0       0x4c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010006bc0                usbd_edpt_xfer
  .text.tud_control_status
-                0x00000000100065d4       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100065d4                tud_control_status
+                0x0000000010006c0c       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x0000000010006c0c                tud_control_status
  .text.tud_control_xfer
-                0x0000000010006604       0xbc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x0000000010006604                tud_control_xfer
+                0x0000000010006c3c       0xbc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x0000000010006c3c                tud_control_xfer
  .text.usbd_control_reset
-                0x00000000100066c0       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100066c0                usbd_control_reset
+                0x0000000010006cf8       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x0000000010006cf8                usbd_control_reset
  .text.usbd_control_set_complete_callback
-                0x00000000100066d4        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100066d4                usbd_control_set_complete_callback
+                0x0000000010006d0c        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x0000000010006d0c                usbd_control_set_complete_callback
  .text.usbd_control_set_request
-                0x00000000100066e0       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100066e0                usbd_control_set_request
+                0x0000000010006d18       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x0000000010006d18                usbd_control_set_request
  .text.usbd_control_xfer_cb
-                0x00000000100066fc       0xfc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100066fc                usbd_control_xfer_cb
+                0x0000000010006d34       0xfc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x0000000010006d34                usbd_control_xfer_cb
  .text.tud_cdc_n_connected
-                0x00000000100067f8       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x00000000100067f8                tud_cdc_n_connected
+                0x0000000010006e30       0x30 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010006e30                tud_cdc_n_connected
  .text.tud_cdc_n_available
-                0x0000000010006828       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006828                tud_cdc_n_available
+                0x0000000010006e60       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010006e60                tud_cdc_n_available
  .text.tud_cdc_n_read
-                0x0000000010006840       0x70 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006840                tud_cdc_n_read
+                0x0000000010006e78       0x70 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010006e78                tud_cdc_n_read
  .text.tud_cdc_n_write_flush
-                0x00000000100068b0       0x78 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x00000000100068b0                tud_cdc_n_write_flush
+                0x0000000010006ee8       0x78 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010006ee8                tud_cdc_n_write_flush
  .text.tud_cdc_n_write
-                0x0000000010006928       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006928                tud_cdc_n_write
+                0x0000000010006f60       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010006f60                tud_cdc_n_write
  .text.tud_cdc_n_write_available
-                0x000000001000695c       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x000000001000695c                tud_cdc_n_write_available
+                0x0000000010006f94       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010006f94                tud_cdc_n_write_available
  .text.cdcd_init
-                0x0000000010006974       0x7c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006974                cdcd_init
+                0x0000000010006fac       0x7c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010006fac                cdcd_init
  .text.cdcd_reset
-                0x00000000100069f0       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x00000000100069f0                cdcd_reset
+                0x0000000010007028       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010007028                cdcd_reset
  .text.cdcd_open
-                0x0000000010006a1c       0xe8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006a1c                cdcd_open
+                0x0000000010007054       0xe8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010007054                cdcd_open
  .text.cdcd_control_xfer_cb
-                0x0000000010006b04       0xe4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006b04                cdcd_control_xfer_cb
+                0x000000001000713c       0xe4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x000000001000713c                cdcd_control_xfer_cb
  .text.cdcd_xfer_cb
-                0x0000000010006be8      0x148 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006be8                cdcd_xfer_cb
+                0x0000000010007220      0x148 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010007220                cdcd_xfer_cb
  .text.tusb_init
-                0x0000000010006d30        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006d30                tusb_init
+                0x0000000010007368        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x0000000010007368                tusb_init
  .text.tusb_inited
-                0x0000000010006d3c        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006d3c                tusb_inited
+                0x0000000010007374        0x8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x0000000010007374                tusb_inited
  .text.tu_edpt_claim
-                0x0000000010006d44       0x50 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006d44                tu_edpt_claim
+                0x000000001000737c       0x50 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x000000001000737c                tu_edpt_claim
  .text.tu_edpt_release
-                0x0000000010006d94       0x38 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006d94                tu_edpt_release
+                0x00000000100073cc       0x38 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x00000000100073cc                tu_edpt_release
  .text.tu_edpt_validate
-                0x0000000010006dcc       0x78 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006dcc                tu_edpt_validate
+                0x0000000010007404       0x78 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x0000000010007404                tu_edpt_validate
  .text.tu_edpt_bind_driver
-                0x0000000010006e44       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006e44                tu_edpt_bind_driver
+                0x000000001000747c       0x34 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x000000001000747c                tu_edpt_bind_driver
  .text.tu_fifo_config
-                0x0000000010006e78       0x70 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006e78                tu_fifo_config
+                0x00000000100074b0       0x70 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x00000000100074b0                tu_fifo_config
  .text.tu_fifo_count
-                0x0000000010006ee8       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006ee8                tu_fifo_count
+                0x0000000010007520       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010007520                tu_fifo_count
  .text.tu_fifo_empty
-                0x0000000010006f14       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006f14                tu_fifo_empty
+                0x000000001000754c       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x000000001000754c                tu_fifo_empty
  .text.tu_fifo_remaining
-                0x0000000010006f24       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006f24                tu_fifo_remaining
+                0x000000001000755c       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x000000001000755c                tu_fifo_remaining
  .text.tu_fifo_read
-                0x0000000010006f50       0xa0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006f50                tu_fifo_read
+                0x0000000010007588       0xa0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010007588                tu_fifo_read
  .text.tu_fifo_read_n
-                0x0000000010006ff0       0xec CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006ff0                tu_fifo_read_n
+                0x0000000010007628       0xec CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010007628                tu_fifo_read_n
  .text.tu_fifo_write
-                0x00000000100070dc       0x88 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x00000000100070dc                tu_fifo_write
+                0x0000000010007714       0x88 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010007714                tu_fifo_write
  .text.tu_fifo_write_n
-                0x0000000010007164      0x168 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010007164                tu_fifo_write_n
+                0x000000001000779c      0x168 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x000000001000779c                tu_fifo_write_n
  .text.tu_fifo_clear
-                0x00000000100072cc       0x40 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x00000000100072cc                tu_fifo_clear
+                0x0000000010007904       0x40 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010007904                tu_fifo_clear
  .text.tu_fifo_set_overwritable
-                0x000000001000730c       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x000000001000730c                tu_fifo_set_overwritable
+                0x0000000010007944       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010007944                tu_fifo_set_overwritable
  .text.pio_can_add_program
-                0x0000000010007354       0x68 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
-                0x0000000010007354                pio_can_add_program
+                0x000000001000798c       0x68 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
+                0x000000001000798c                pio_can_add_program
  .text.pio_add_program
-                0x00000000100073bc       0xc8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
-                0x00000000100073bc                pio_add_program
+                0x00000000100079f4       0xc8 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
+                0x00000000100079f4                pio_add_program
  .text.pio_sm_set_pins_with_mask
-                0x0000000010007484       0xa4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
-                0x0000000010007484                pio_sm_set_pins_with_mask
+                0x0000000010007abc       0xa4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
+                0x0000000010007abc                pio_sm_set_pins_with_mask
  .text.pio_sm_set_pindirs_with_mask
-                0x0000000010007528       0xa4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
-                0x0000000010007528                pio_sm_set_pindirs_with_mask
+                0x0000000010007b60       0xa4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
+                0x0000000010007b60                pio_sm_set_pindirs_with_mask
+ .text.pio_sm_set_consecutive_pindirs
+                0x0000000010007c04       0xb0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
+                0x0000000010007c04                pio_sm_set_consecutive_pindirs
  .text.pio_sm_init
-                0x00000000100075cc       0x8c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
-                0x00000000100075cc                pio_sm_init
- .text          0x0000000010007658       0x5c /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strlen-stub.o)
-                0x0000000010007658                strlen
+                0x0000000010007cb4       0x8c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
+                0x0000000010007cb4                pio_sm_init
+ .text          0x0000000010007d40       0x5c /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strlen-stub.o)
+                0x0000000010007d40                strlen
  *(.fini)
- .fini          0x00000000100076b4        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crti.o
-                0x00000000100076b4                _fini
- .fini.__stub   0x00000000100076b8       0xe0 linker stubs
+ .fini          0x0000000010007d9c        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crti.o
+                0x0000000010007d9c                _fini
+ .fini.__stub   0x0000000010007da0       0xe0 linker stubs
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
@@ -2158,140 +2177,145 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
  *(.eh_frame*)
- .eh_frame      0x0000000010007798        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
-                0x0000000010007798                . = ALIGN (0x4)
+ .eh_frame      0x0000000010007e80        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+                0x0000000010007e80                . = ALIGN (0x4)
 
-.glue_7         0x0000000010007798        0x0
- .glue_7        0x0000000010007798        0x0 linker stubs
+.glue_7         0x0000000010007e80        0x0
+ .glue_7        0x0000000010007e80        0x0 linker stubs
 
-.glue_7t        0x0000000010007798        0x0
- .glue_7t       0x0000000010007798        0x0 linker stubs
+.glue_7t        0x0000000010007e80        0x0
+ .glue_7t       0x0000000010007e80        0x0 linker stubs
 
-.vfp11_veneer   0x0000000010007798        0x0
- .vfp11_veneer  0x0000000010007798        0x0 linker stubs
+.vfp11_veneer   0x0000000010007e80        0x0
+ .vfp11_veneer  0x0000000010007e80        0x0 linker stubs
 
-.v4_bx          0x0000000010007798        0x0
- .v4_bx         0x0000000010007798        0x0 linker stubs
+.v4_bx          0x0000000010007e80        0x0
+ .v4_bx         0x0000000010007e80        0x0 linker stubs
 
-.iplt           0x0000000010007798        0x0
- .iplt          0x0000000010007798        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+.iplt           0x0000000010007e80        0x0
+ .iplt          0x0000000010007e80        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
 
-.rodata         0x0000000010007798      0xc04
+.rodata         0x0000000010007e80      0xd24
  *(EXCLUDE_FILE(*libm.a: *libc.a:*lib_a-mem*.o *libgcc.a:) .rodata*)
- .rodata.run_investigation_1_and_2.str1.4
-                0x0000000010007798      0x427 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
- *fill*         0x0000000010007bbf        0x1 
- .rodata.run_investigation_3_sweep.str1.4
-                0x0000000010007bc0      0x1c2 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
- *fill*         0x0000000010007d82        0x2 
+ .rodata.run_test_1.str1.4
+                0x0000000010007e80      0x154 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+ .rodata.run_test_2.str1.4
+                0x0000000010007fd4      0x30d CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+ *fill*         0x00000000100082e1        0x3 
+ .rodata.run_test_3.str1.4
+                0x00000000100082e4      0x1a0 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
  .rodata.main.str1.4
-                0x0000000010007d84       0x95 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
- *fill*         0x0000000010007e19        0x3 
- .rodata        0x0000000010007e1c       0x28 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+                0x0000000010008484      0x1b0 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+ .rodata.ln485_pulse_measure_program
+                0x0000000010008634        0x6 CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+ *fill*         0x000000001000863a        0x2 
+ .rodata.ln485_pulse_measure_program_instructions
+                0x000000001000863c        0xe CMakeFiles/rpr4_m2_pio_rs485.dir/main.c.obj
+ *fill*         0x000000001000864a        0x2 
  .rodata.ln485_tx_program
-                0x0000000010007e44        0x6 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
- *fill*         0x0000000010007e4a        0x2 
+                0x000000001000864c        0x6 CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
+ *fill*         0x0000000010008652        0x2 
  .rodata.ln485_tx_program_instructions
-                0x0000000010007e4c       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
+                0x0000000010008654       0x1c CMakeFiles/rpr4_m2_pio_rs485.dir/ln485_driver.c.obj
  .rodata.spin_lock_claim_unused.str1.4
-                0x0000000010007e68       0x1b CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
- *fill*         0x0000000010007e83        0x1 
+                0x0000000010008670       0x1b CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
+ *fill*         0x000000001000868b        0x1 
  .rodata.user_irq_claim_unused.str1.4
-                0x0000000010007e84       0x1b CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
- *fill*         0x0000000010007e9f        0x1 
+                0x000000001000868c       0x1b CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+ *fill*         0x00000000100086a7        0x1 
  .rodata.hardware_alarm_claim.str1.4
-                0x0000000010007ea0       0x22 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
- *fill*         0x0000000010007ec2        0x2 
+                0x00000000100086a8       0x22 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+ *fill*         0x00000000100086ca        0x2 
  .rodata.panic.str1.4
-                0x0000000010007ec4       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x00000000100086cc       0x10 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
                                          0x12 (size before relaxing)
  .rodata.hard_assertion_failure.str1.4
-                0x0000000010007ed4        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x00000000100086dc        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
  .rodata._ftoa.str1.4
-                0x0000000010007ee0       0x15 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
- *fill*         0x0000000010007ef5        0x3 
+                0x00000000100086e8       0x15 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+ *fill*         0x00000000100086fd        0x3 
  .rodata._vsnprintf
-                0x0000000010007ef8      0x1e0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010008700      0x1e0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .rodata.pow10.0
-                0x00000000100080d8       0x50 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x00000000100088e0       0x50 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .rodata.str1.4
-                0x0000000010008128       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008930       0x48 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .rodata.__bi_44
-                0x0000000010008170        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008978        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .rodata.__bi_75
-                0x000000001000817c        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008984        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .rodata.__bi_81
-                0x0000000010008188        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008990        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .rodata.crlf_str.0
-                0x0000000010008194        0x2 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
- *fill*         0x0000000010008196        0x2 
+                0x000000001000899c        0x2 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+ *fill*         0x000000001000899e        0x2 
  .rodata._resetd_driver
-                0x0000000010008198       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x00000000100089a0       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .rodata.str1.4
-                0x00000000100081b0       0x13 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
- *fill*         0x00000000100081c3        0x1 
+                0x00000000100089b8       0x13 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+ *fill*         0x00000000100089cb        0x1 
  .rodata.__bi_182.0
-                0x00000000100081c4        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x00000000100089cc        0xc CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
  .rodata.str1.4
-                0x00000000100081d0       0x2a CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
- *fill*         0x00000000100081fa        0x2 
+                0x00000000100089d8       0x2a CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+ *fill*         0x0000000010008a02        0x2 
  .rodata.usbd_desc_cfg
-                0x00000000100081fc       0x54 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+                0x0000000010008a04       0x54 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
  .rodata.usbd_desc_device
-                0x0000000010008250       0x12 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
- *fill*         0x0000000010008262        0x2 
+                0x0000000010008a58       0x12 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+ *fill*         0x0000000010008a6a        0x2 
  .rodata.usbd_desc_str
-                0x0000000010008264       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+                0x0000000010008a6c       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
  .rodata.str1.4
-                0x000000001000827c       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010008a84       0x14 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
  .rodata.str1.4
-                0x0000000010008290       0x53 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
- *fill*         0x00000000100082e3        0x1 
+                0x0000000010008a98       0x53 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
+ *fill*         0x0000000010008aeb        0x1 
  .rodata.tud_task_ext
-                0x00000000100082e4       0x8c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010008aec       0x8c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .rodata._usbd_driver
-                0x0000000010008370       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010008b78       0x18 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .rodata.pio_add_program.str1.4
-                0x0000000010008388       0x11 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
-                0x000000001000839c                . = ALIGN (0x4)
- *fill*         0x0000000010008399        0x3 
+                0x0000000010008b90       0x11 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
+                0x0000000010008ba4                . = ALIGN (0x4)
+ *fill*         0x0000000010008ba1        0x3 
  *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.flashdata*)))
-                0x000000001000839c                . = ALIGN (0x4)
+                0x0000000010008ba4                . = ALIGN (0x4)
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x000000001000839c                __exidx_start = .
+                0x0000000010008ba4                __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x000000001000839c                __exidx_end = .
-                0x000000001000839c                . = ALIGN (0x4)
-                0x000000001000839c                __binary_info_start = .
+                0x0000000010008ba4                __exidx_end = .
+                0x0000000010008ba4                . = ALIGN (0x4)
+                0x0000000010008ba4                __binary_info_start = .
 
-.binary_info    0x000000001000839c       0x20
+.binary_info    0x0000000010008ba4       0x20
  *(.binary_info.keep.*)
  .binary_info.keep.__bi_ptr22
-                0x000000001000839c        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008ba4        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr30
-                0x00000000100083a0        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008ba8        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr38
-                0x00000000100083a4        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008bac        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr44
-                0x00000000100083a8        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008bb0        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr50
-                0x00000000100083ac        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008bb4        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr75
-                0x00000000100083b0        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008bb8        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr81
-                0x00000000100083b4        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010008bbc        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  *(.binary_info.*)
  .binary_info.__bi_ptr182
-                0x00000000100083b8        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x00000000100083bc                __binary_info_end = .
+                0x0000000010008bc0        0x4 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010008bc4                __binary_info_end = .
 
-.rel.dyn        0x00000000100083bc        0x0
- .rel.iplt      0x00000000100083bc        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
-                0x00000000100083bc                . = ALIGN (0x4)
+.rel.dyn        0x0000000010008bc4        0x0
+ .rel.iplt      0x0000000010008bc4        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+                0x0000000010008bc4                . = ALIGN (0x4)
 
 .ram_vector_table
                 0x0000000020000000       0xc0
@@ -2300,7 +2324,7 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
                 0x0000000020000000       0xc0 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
                 0x0000000020000000                ram_vector_table
 
-.data           0x00000000200000c0      0xea0 load address 0x00000000100083bc
+.data           0x00000000200000c0      0xea0 load address 0x0000000010008bc4
                 0x00000000200000c0                __data_start__ = .
  *(vtable)
  *(.time_critical*)
@@ -2436,36 +2460,36 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
  *(.jcr)
                 0x0000000020000f60                . = ALIGN (0x4)
                 0x0000000020000f60                __data_end__ = .
-                0x00000000100083bc                __etext = LOADADDR (.data)
+                0x0000000010008bc4                __etext = LOADADDR (.data)
 
 .tm_clone_table
-                0x0000000020000f60        0x0 load address 0x000000001000925c
+                0x0000000020000f60        0x0 load address 0x0000000010009a64
  .tm_clone_table
                 0x0000000020000f60        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
  .tm_clone_table
                 0x0000000020000f60        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtend.o
 
-.igot.plt       0x0000000020000f60        0x0 load address 0x000000001000925c
+.igot.plt       0x0000000020000f60        0x0 load address 0x0000000010009a64
  .igot.plt      0x0000000020000f60        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
 
 .uninitialized_data
-                0x0000000020000f60        0x0 load address 0x000000001000925c
+                0x0000000020000f60        0x0 load address 0x0000000010009a64
                 0x0000000020000f60                . = ALIGN (0x4)
  *(.uninitialized_data*)
 
-.scratch_x      0x0000000020040000        0x0 load address 0x000000001000925c
+.scratch_x      0x0000000020040000        0x0 load address 0x0000000010009a64
                 0x0000000020040000                __scratch_x_start__ = .
  *(.scratch_x.*)
                 0x0000000020040000                . = ALIGN (0x4)
                 0x0000000020040000                __scratch_x_end__ = .
-                0x000000001000925c                __scratch_x_source__ = LOADADDR (.scratch_x)
+                0x0000000010009a64                __scratch_x_source__ = LOADADDR (.scratch_x)
 
-.scratch_y      0x0000000020041000        0x0 load address 0x000000001000925c
+.scratch_y      0x0000000020041000        0x0 load address 0x0000000010009a64
                 0x0000000020041000                __scratch_y_start__ = .
  *(.scratch_y.*)
                 0x0000000020041000                . = ALIGN (0x4)
                 0x0000000020041000                __scratch_y_end__ = .
-                0x000000001000925c                __scratch_y_source__ = LOADADDR (.scratch_y)
+                0x0000000010009a64                __scratch_y_source__ = LOADADDR (.scratch_y)
 
 .bss            0x0000000020000f60      0xda8
                 0x0000000020000f60                . = ALIGN (0x4)
@@ -2588,8 +2612,8 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
  *(.stack*)
  .stack         0x0000000020041000      0x800 CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj
 
-.flash_end      0x000000001000925c        0x0
-                0x000000001000925c                PROVIDE (__flash_binary_end = .)
+.flash_end      0x0000000010009a64        0x0
+                0x0000000010009a64                PROVIDE (__flash_binary_end = .)
                 0x0000000020040000                __StackLimit = (ORIGIN (RAM) + LENGTH (RAM))
                 0x0000000020041000                __StackOneTop = (ORIGIN (SCRATCH_X) + LENGTH (SCRATCH_X))
                 0x0000000020042000                __StackTop = (ORIGIN (SCRATCH_Y) + LENGTH (SCRATCH_Y))
@@ -2670,7 +2694,7 @@ LOAD CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/tusb.
 LOAD CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
 LOAD CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj
 LOAD CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
-LOAD /tmp/ccr5tvw6.o
+LOAD /tmp/cczpIdDG.o
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libstdc++.a
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a
 START GROUP
@@ -2790,7 +2814,7 @@ LOAD linker stubs
  .ARM.attributes
                 0x0000000000000800       0x2c CMakeFiles/rpr4_m2_pio_rs485.dir/home/ubuntu/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
  .ARM.attributes
-                0x000000000000082c       0x22 /tmp/ccr5tvw6.o
+                0x000000000000082c       0x22 /tmp/cczpIdDG.o
  .ARM.attributes
                 0x000000000000084e       0x1e /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .ARM.attributes

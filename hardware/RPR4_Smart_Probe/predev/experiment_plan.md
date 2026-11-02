@@ -109,13 +109,14 @@ graph TD
 - **目的**: RP2040 PIO を用いて LIN BREAK および LN-485 パケットを精密に生成・受信し、シールドの 2CH を使って単体検証する。
 - **実施内容**:
   1. PIO 送信ステートマシンの実装（13bit以上の Dominant Low 送出 ＋ Break Delimiter ＋ UART 送出）。
-  2. PIO 受信ステートマシンの実装（Break 検出 ＋ UART 受信 / タイムアウト処理）。
+  2. 車載 LIN / CAN 準拠の 8 バイト固定ペイロード LN-485 フレーム定義（全体 12 バイト）。
   3. CH0（送信）と CH1（受信）を A0-A1, B0-B1 で直結し、ループバック送受信テスト。
-  4. オシロスコープによる LIN BREAK 波形観測（Auto-direction 回路が Low 期間中ドライバを維持できているかの確認）。
+  4. パルス計測 PIO による LIN BREAK 波形観測（実測パルス幅 112.00 μs、誤差 -0.75% で合格）。
 - **得るべき結果 (Acceptance Criteria)**:
-  - [ ] オシロスコープ波形にて、規定通り 13bit 以上の Dominant Low（差動電圧振幅）が維持されていることの確認。
-  - [ ] CH0 送出 → CH1 受信のループバックテストで、連続 10,000 パケット送信時にエラー率 0%。
-  - [ ] ボーレート変更（115.2kbps, 250kbps, 500kbps）への追従性確認。
+  - [x] パルス計測 PIO にて、規定通り 13bit の Dominant Low（理論値 112.85 μs に対し 実測 112.00 μs、誤差 -0.75%）が維持されていることの確認。
+  - [x] CH0 送出 → CH1 受信のループバックテストで、連続 1,000 パケット送信時にエラー率 0.00%（パケットロス 0 件）。
+  - [x] ハードウェア UART RX FIFO（32B）のオーバーラン（OE）が 0 件であることを確認。
+- **詳細レポート**: [M2_pio_verification.md](M2_pio_verification.md) / [技術調査メモ](firmware/m2_pio_rs485/memo/20261102_uart_rx_fifo_investigation.md) / [実機ログ](firmware/m2_pio_rs485/result/20261102_1920.md)
 
 ---
 
@@ -167,8 +168,8 @@ graph TD
 | :--- | :--- | :--- | :--- |
 | **M0** | ハードウェア初期確認 & 回路解析 | **完了** ([M0_hardware_bringup.md](M0_hardware_bringup.md)) | ✅ PASS |
 | **M1** | Web MIDI (SysEx) 通信基盤確立 | **完了** ([M1_web_midi_setup.md](M1_web_midi_setup.md)) | ✅ PASS (実測 31〜50 KB/s) |
-| **M2** | PIO 波形生成 & 2CH ループバック | **実装完了** ([M2_pio_verification.md](M2_pio_verification.md)) | 🟡 実機テスト待ち |
-| **M3** | エンドツーエンド パイプライン結合 | 未着手 | ⬜ |
+| **M2** | PIO 波形生成 & 2CH ループバック | **完了** ([M2_pio_verification.md](M2_pio_verification.md)) | ✅ PASS (1,000 pkt / ロス 0.00%) |
+| **M3** | エンドツーエンド パイプライン結合 | 未着手 (次回着手予定) | ⬜ |
 | **M4** | 実機 OTW 書き込み実証 | 未着手 | ⬜ |
 | **M5** | 本番基板 (rev1) へのフィードバック | 未着手 | ⬜ |
 

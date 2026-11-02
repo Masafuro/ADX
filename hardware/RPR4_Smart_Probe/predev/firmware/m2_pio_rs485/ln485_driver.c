@@ -43,6 +43,35 @@ void ln485_tx_send_frame(ln485_tx_t *dev, const uint8_t *data, size_t len, bool 
     }
 }
 
+uint8_t ln485_calc_checksum(uint8_t pid, const uint8_t *data, size_t len, bool enhanced) {
+    uint16_t sum = enhanced ? pid : 0;
+    for (size_t i = 0; i < len; i++) {
+        sum += data[i];
+        if (sum > 0xFF) sum -= 0xFF;
+    }
+    return (uint8_t)(~sum);
+}
+
+void ln485_tx_send_standard_frame(ln485_tx_t *dev, uint8_t pid, const uint8_t payload[LN485_PAYLOAD_SIZE]) {
+    // 1. LIN BREAK
+    ln485_tx_send_break(dev);
+
+    // 2. SYNC (0x55)
+    ln485_tx_send_byte(dev, LN485_SYNC_BYTE);
+
+    // 3. PID / CMD
+    ln485_tx_send_byte(dev, pid);
+
+    // 4. Data Payload (8 Bytes)
+    for (int i = 0; i < LN485_PAYLOAD_SIZE; i++) {
+        ln485_tx_send_byte(dev, payload[i]);
+    }
+
+    // 5. Enhanced Checksum (PID + 8B Data)
+    uint8_t chk = ln485_calc_checksum(pid, payload, LN485_PAYLOAD_SIZE, true);
+    ln485_tx_send_byte(dev, chk);
+}
+
 void ln485_tx_wait_idle(ln485_tx_t *dev) {
     // 1. TX FIFO が空になるのを待つ
     while (!pio_sm_is_tx_fifo_empty(dev->pio, dev->sm)) {
