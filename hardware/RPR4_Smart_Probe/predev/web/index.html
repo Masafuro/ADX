@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADX RPR4 Smart Probe - Web MIDI Console (M1)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>
+        ADX RPR4 Smart Probe
+        <span id="conn-badge" class="badge badge-disconnected">未接続</span>
+      </h1>
+      <p>Milestone 1: Web MIDI API (SysEx) 通信基盤・スループット評価ベンチマーク</p>
+    </header>
+
+    <div class="grid grid-2">
+      <!-- 接続設定カード -->
+      <div class="card">
+        <div class="card-title">1. MIDI デバイス接続</div>
+        <div class="form-group">
+          <button id="btn-request-midi" class="btn btn-primary" style="width: 100%;">
+            Web MIDI アクセス要求 / 検出
+          </button>
+        </div>
+        <div class="form-group">
+          <label for="midi-in-select">MIDI 入力 (Probe ➡️ Web):</label>
+          <select id="midi-in-select" disabled>
+            <option value="">(未検出)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="midi-out-select">MIDI 出力 (Web ➡️ Probe):</label>
+          <select id="midi-out-select" disabled>
+            <option value="">(未検出)</option>
+          </select>
+        </div>
+        <button id="btn-connect" class="btn btn-secondary" style="width: 100%;" disabled>
+          ポート接続
+        </button>
+      </div>
+
+      <!-- PING & 基本コマンド -->
+      <div class="card">
+        <div class="card-title">2. PING 疎通確認</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+          SysEx で <code>CMD_PING (0x01)</code> を送信し、プローブのハードウェア情報とファームウェアバージョンを取得します。
+        </p>
+        <button id="btn-ping" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;" disabled>
+          PING 送信 (疎通確認)
+        </button>
+        <div id="ping-result" class="stat-box" style="text-align: left; font-size: 0.85rem; display: none;">
+          <div><strong>デバイス応答:</strong> <span id="ping-info" style="color: var(--primary);">--</span></div>
+          <div style="margin-top: 4px;"><strong>往復レイテンシ (RTT):</strong> <span id="ping-rtt" style="color: var(--success); font-weight: bold;">-- ms</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 単発エコーテスト & 16KBベンチマーク -->
+    <div class="grid grid-2" style="margin-top: 20px;">
+      <!-- エコーテスト -->
+      <div class="card">
+        <div class="card-title">3. 単発エコーバックテスト</div>
+        <div class="form-group">
+          <label for="echo-input">送信テストデータ (文字列):</label>
+          <input type="text" id="echo-input" value="Hello RPR4 Smart Probe! Testing Web MIDI SysEx 2026.">
+        </div>
+        <button id="btn-echo" class="btn btn-secondary" style="width: 100%;" disabled>
+          エコー送信 & 検証
+        </button>
+        <div id="echo-status" style="margin-top: 8px; font-size: 0.85rem;"></div>
+      </div>
+
+      <!-- 16KB ベンチマーク -->
+      <div class="card">
+        <div class="card-title">4. 16KB スループットベンチマーク</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">
+          ADX ATtiny1616 Flash全領域相当（16KB）を連続送信し、実効転送レートとパケットロスを計測します。
+        </p>
+        <div class="form-group">
+          <label for="chunk-size">1パケットのサイズ:</label>
+          <select id="chunk-size">
+            <option value="64">64 バイト (Flash 1ページ相当 / 推奨)</option>
+            <option value="128">128 バイト</option>
+            <option value="32">32 バイト</option>
+          </select>
+        </div>
+        <button id="btn-benchmark" class="btn btn-primary" style="width: 100%;" disabled>
+          16KB ベンチマーク開始
+        </button>
+
+        <div class="progress-bar-container">
+          <div id="bench-progress" class="progress-bar"></div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div id="stat-speed" class="stat-value">--</div>
+            <div class="stat-label">実効速度 (KB/s)</div>
+          </div>
+          <div class="stat-box">
+            <div id="stat-time" class="stat-value">--</div>
+            <div class="stat-label">所要時間 (ms)</div>
+          </div>
+          <div class="stat-box">
+            <div id="stat-loss" class="stat-value">--</div>
+            <div class="stat-label">エラー / ロス</div>
+          </div>
+          <div class="stat-box">
+            <div id="stat-rtt" class="stat-value">--</div>
+            <div class="stat-label">平均 RTT (ms)</div>
+          </div>
+        </div>
+        <div id="bench-eval" style="margin-top: 10px; text-align: center; font-weight: bold; font-size: 0.9rem;"></div>
+      </div>
+    </div>
+
+    <!-- パケット通信ログ -->
+    <div class="card" style="margin-top: 20px;">
+      <div class="card-title">
+        <span>リアルタイム通信ログ</span>
+        <button id="btn-clear-log" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;">クリア</button>
+      </div>
+      <div id="log-console" class="log-box"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

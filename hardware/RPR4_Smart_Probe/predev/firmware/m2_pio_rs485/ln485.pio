@@ -1,0 +1,117 @@
+;
+; LN-485 Protocol PIO Assembly for Raspberry Pi Pico (RP2040)
+;
+; 1. ln485_tx:
+;    自律型 LIN BREAK + UART 8N1 送信ステートマシン
+;    - 1 bit = 8 PIO クロックサイクル
+;    - FIFO 入力 (下位9bit):
+;        bit 0 == 1 : LIN BREAK 送出 (13 bit Low + 1 bit High Break Delimiter)
+;        bit 0 == 0 : 通常 UART 送出 (Start 1bit Low + Data 8bit [bit 1..8] + Stop 1bit High)
+;
+; 2. ln485_pulse_measure:
+;    Dominant Low パルス幅精密計測ステートマシン
+;    - 入力ピンが Low になっている期間のクロックサイクル数をカウント
+;
+
+.program ln485_tx
+.side_set 1 opt
+
+.wrap_target
+entry:
+    pull block                  ; FIFO から 32bit データを取得 (下位9bit使用)
+    out x, 1                    ; bit 0 (コマンドフラグ: 1=BREAK, 0=UART) を x に取り出し
+    jmp !x uart_tx              ; x == 0 なら通常 UART 送信へ
+
+break_tx:
+    ; LIN BREAK 送出: 13 bit Dominant Low + 1 bit Recessive High
+    ; 13 bit * 8 cycles = 104 cycles (Low)
+    set y, 12           side 0  ; 13 bit 分のカウント
+break_loop:
+    nop                 [6]     ; 7 cycles
+    jmp y-- break_loop  side 0  ; 1 cycle (計 8 cycles * 13 = 104 cycles)
+
+    ; Break Delimiter (1 bit Recessive High = 8 cycles)
+    nop                 [6] side 1 ; 7 cycles High
+    jmp entry           side 1     ; 1 cycle High (計 8 cycles High)
+
+uart_tx:
+    ; 通常の UART 8N1 送信 (Start 1bit + Data 8bit + Stop 1bit)
+    ; Start bit (1 bit Low = 8 cycles)
+    nop                 [6] side 0
+    set y, 7            side 0
+
+data_loop:
+    out pins, 1         [6]     ; 7 cycles (bit 1..8 を順次出力: LSB first)
+    jmp y-- data_loop           ; 1 cycle (計 8 cycles * 8 bits = 64 cycles)
+
+    ; Stop bit (1 bit High = 8 cycles)
+    nop                 [6] side 1
+    nop                 side 1
+.wrap
+
+% c-sdk {
+#include "hardware/clocks.h"
+
+static inline void ln485_tx_program_init(PIO pio, uint sm, uint offset, uint pin_tx, uint baud) {
+    pio_sm_set_pins_with_mask(pio, sm, 1u << pin_tx, 1u << pin_tx);
+    pio_sm_set_pindirs_with_mask(pio, sm, 1u << pin_tx, 1u << pin_tx);
+    pio_gpio_init(pio, pin_tx);
+
+    pio_sm_config c = ln485_tx_program_get_default_config(offset);
+    
+    // OUT ピンおよび sideset ピンを pin_tx に設定
+    sm_config_set_out_pins(&c, pin_tx, 1);
+    sm_config_set_sideset_pins(&c, pin_tx);
+
+    // シフト設定: 右シフト (LSB first)、オートプルなし、閾値 9bit
+    sm_config_set_out_shift(&c, true, false, 9);
+
+    // クロック分周比設定: 1 bit = 8 cycles
+    float div = (float)clock_get_hz(clk_sys) / (8.0f * (float)baud);
+    sm_config_set_clkdiv(&c, div);
+
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}
+
+
+.program ln485_pulse_measure
+
+; 入力ピンの Low パルス幅をカウントする (1 ループ = 2 クロック)
+; 戻り値: 経過ループ回数 (~x)
+
+.wrap_target
+start:
+    wait 1 pin 0                ; High になるのを待つ
+    wait 0 pin 0                ; Low への立ち下がりエッジを待つ
+    mov x, ~null                ; カウンタ x を最大値 (0xFFFFFFFF) にリセット
+
+count_loop:
+    jmp pin high_detected       ; ピンが High に戻ったらループ終了 (1 cycle)
+    jmp x-- count_loop          ; x をデクリメントしてループ (1 cycle)
+
+high_detected:
+    mov isr, ~x                 ; カウント経過値 (~x) を ISR に格納
+    push noblock                ; FIFO にプッシュ
+.wrap
+
+% c-sdk {
+static inline void ln485_pulse_measure_program_init(PIO pio, uint sm, uint offset, uint pin_rx) {
+    // ※ pio_gpio_init() は呼ばず、GPIO_FUNC_UART との共存を維持する
+    gpio_set_input_enabled(pin_rx, true);
+    pio_sm_set_consecutive_pindirs(pio, sm, pin_rx, 1, false); // PIO 入力方向設定
+
+    pio_sm_config c = ln485_pulse_measure_program_get_default_config(offset);
+    sm_config_set_in_pins(&c, pin_rx);
+    sm_config_set_jmp_pin(&c, pin_rx);
+
+    // 2MHz (1サイクル = 0.5us) で動作
+    // 1ループ = 2サイクル = 1.0us (1カウント = 1us)
+    float div = (float)clock_get_hz(clk_sys) / 2000000.0f;
+    sm_config_set_clkdiv(&c, div);
+
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}

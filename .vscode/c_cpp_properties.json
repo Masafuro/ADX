@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "name": "Pico",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "/home/ubuntu/pico-sdk/**"
+      ],
+      "defines": [
+        "PICO_BOARD=\"pico\"",
+        "CFG_TUD_ENABLED=1",
+        "CFG_TUD_MIDI=1",
+        "CFG_TUSB_MCU=OPT_MCU_RP2040",
+        "CFG_TUSB_OS=OPT_OS_NONE"
+      ],
+      "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "linux-gcc-arm",
+      "compileCommands": "${workspaceFolder}/hardware/RPR4_Smart_Probe/predev/firmware/m1_usb_midi/build/compile_commands.json"
+    }
+  ],
+  "version": 4
+}
+
