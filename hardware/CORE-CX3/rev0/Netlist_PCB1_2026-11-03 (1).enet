@@ -1,0 +1,1036 @@
+{
+  "version": "2.0.0",
+  "components": {
+    "gge10_0": {
+      "props": {
+        "Footprint": "7b700b3d80f9ebee",
+        "Designator": "USB_Serge",
+        "LCSC Part Name": "单向ESD 5V截止 峰值脉冲电流：6A",
+        "Supplier Part": "C2827654",
+        "Manufacturer": "TECH PUBLIC(台舟)",
+        "Manufacturer Part": "USBLC6-2SC6",
+        "Supplier Footprint": "SOT-23-6",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/USBLC6-2SC6/2973336.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "1370be37a17e44418ae52e2b4cc1f5e5|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "SOT-23-6_L2.9-W1.6-H1.5-LS2.8-P0.95",
+        "3D Model Transform": "110.236,113.364,0,90,0,0,0.0005,0.0005,0",
+        "Polarity": "Unidirectional",
+        "Reverse Stand-Off Voltage (Vrwm)": "5V",
+        "Clamping Voltage": "12V",
+        "Peak Pulse Current (Ipp)": "6A",
+        "Peak Pulse Power Dissipation (Ppp)": "150W",
+        "Voltage - Breakdown": "6V",
+        "Reverse Leakage Current (Ir)": "80nA",
+        "Number of Channels": "2",
+        "Operating Temperature": "-55℃~+125℃",
+        "level of protection": "IEC 61000-4-2；IEC 61000-4-4；IEC 61000-4-5",
+        "Type": "ESD",
+        "Junction Capacitance": "0.35pF",
+        "Name": "USBLC6-2SC6",
+        "Description": "Polarity:Unidirectional Reverse Stand-Off Voltage (Vrwm):5V Clamping Voltage:12V Peak Pulse Current (Ipp):6A Peak Pulse Power Dissipation (Ppp):150W Voltage - Breakdown:6V Reverse Leakage Current (Ir):80nA Number of Channels:2 Operating Temperature:-55℃~+",
+        "Device": "a242a1ef4bb2764e",
+        "Unique ID": "gge10_0",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I13",
+        "DeviceName": "USBLC6-2SC6_C2827654",
+        "FootprintName": "SOT-23-6_L2.9-W1.6-P0.95-LS2.8-BL",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        },
+        "3": {
+          "name": "",
+          "number": "3",
+          "net": ""
+        },
+        "4": {
+          "name": "",
+          "number": "4",
+          "net": ""
+        },
+        "5": {
+          "name": "",
+          "number": "5",
+          "net": ""
+        },
+        "6": {
+          "name": "",
+          "number": "6",
+          "net": ""
+        }
+      }
+    },
+    "gge34": {
+      "props": {
+        "Footprint": "8a54c123446f79bc",
+        "Designator": "LDO1",
+        "LCSC Part Name": "3.3V 500mA 6V",
+        "Supplier Part": "C82942",
+        "Manufacturer": "MICRONE(南京微盟)",
+        "Manufacturer Part": "ME6211C33M5G-N",
+        "Supplier Footprint": "SOT-23-5",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/ME6211C33M5G-N/84106.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "3168b22659ce4998ae232d44bb704e0a|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "SOT-23-5_L2.9-W1.6-H1.1-LS2.8-P0.95",
+        "3D Model Transform": "118.60433,114.173,0,90,0,0,0.0005,0.0005,0",
+        "Output Configuration": "Positive",
+        "Voltage - Supply": "6V",
+        "Output Voltage": "3.3V",
+        "Output Current": "500mA",
+        "Power Supply Rejection Ratio (PSRR)": "70dB@(1kHz)",
+        "Voltage Dropout": "120mV@(100mA)",
+        "standby current": "60uA",
+        "Noise": "50uVrms",
+        "Features": "Enable control；Short Circuit Protection；Over Current Protection",
+        "Operating Temperature": "-40℃~+150℃",
+        "Output Type": "Fixed",
+        "Number of Outputs": "1",
+        "Name": "ME6211C33M5G-N",
+        "Description": "Output Configuration:Positive Voltage - Supply:6V Output Voltage:3.3V Output Voltage:3.3V Output Current:500mA Power Supply Rejection Ratio (PSRR):70dB@(1kHz) Voltage Dropout:120mV@(100mA) standby current:60uA Noise:50uVrms Features:Enable control；Short C",
+        "Device": "65ad6bfe5d856f47",
+        "Unique ID": "gge34",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I10",
+        "DeviceName": "ME6211C33M5G-N",
+        "FootprintName": "SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BL",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        },
+        "3": {
+          "name": "",
+          "number": "3",
+          "net": ""
+        },
+        "4": {
+          "name": "",
+          "number": "4",
+          "net": ""
+        },
+        "5": {
+          "name": "",
+          "number": "5",
+          "net": ""
+        }
+      }
+    },
+    "gge1_0": {
+      "props": {
+        "Footprint": "30269408f11be9f5",
+        "Designator": "ADX_exHeader",
+        "LCSC Part Name": "2.54mm 2x10P 排数:2 每排P数:10",
+        "Supplier Part": "C3405",
+        "Manufacturer": "BOOMELE(博穆精密)",
+        "Manufacturer Part": "2.54-2*10P简牛",
+        "Supplier Footprint": "插件,P=2.54mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/2.54-2*10P%25E7%25AE%2580%25E7%2589%259B/3806.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "9ae6aba742c44fc3912e773b9a357ef6|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "IDC-TH_20P-P2.54-V-R2-C10-S2.54",
+        "3D Model Transform": "1299.21,358.267,0,0,0,0,0,5.906,-118.11",
+        "Connector Type": "IDC Header",
+        "Pitch": "2.54mm",
+        "Number of Positions or Pins": "2x10P",
+        "Current Rating": "3A",
+        "Holder Type": "Through Hole",
+        "Row Spacing": "2.54mm",
+        "Number of Rows": "2",
+        "Number of PINs Per Row": "10",
+        "Contact Material": "Brass",
+        "Contact Plating": "Gold",
+        "Operating Temperature": "-55℃~+105℃",
+        "Color": "Black",
+        "Name": "2.54-2*10P简牛",
+        "Description": "Connector Type:IDC Header Pitch:2.54mm Number of Positions or Pins:2x10P Current Rating:3A Holder Type:Through Hole Row Spacing:2.54mm Number of Rows:2 Number of PINs Per Row:10 Contact Material:Brass Contact Plating:Gold Operating Temperature:-55℃~+105℃ ",
+        "Device": "8083e3ae206fd28e",
+        "Unique ID": "gge1_0",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I9",
+        "DeviceName": "2.54-2*10P简牛",
+        "FootprintName": "IDC-TH_20P-P2.54-V-R2-C10-S2.54",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        },
+        "3": {
+          "name": "",
+          "number": "3",
+          "net": ""
+        },
+        "4": {
+          "name": "",
+          "number": "4",
+          "net": ""
+        },
+        "5": {
+          "name": "",
+          "number": "5",
+          "net": ""
+        },
+        "6": {
+          "name": "",
+          "number": "6",
+          "net": ""
+        },
+        "7": {
+          "name": "",
+          "number": "7",
+          "net": ""
+        },
+        "8": {
+          "name": "",
+          "number": "8",
+          "net": ""
+        },
+        "9": {
+          "name": "",
+          "number": "9",
+          "net": ""
+        },
+        "10": {
+          "name": "",
+          "number": "10",
+          "net": ""
+        },
+        "11": {
+          "name": "",
+          "number": "11",
+          "net": ""
+        },
+        "12": {
+          "name": "",
+          "number": "12",
+          "net": ""
+        },
+        "13": {
+          "name": "",
+          "number": "13",
+          "net": ""
+        },
+        "14": {
+          "name": "",
+          "number": "14",
+          "net": ""
+        },
+        "15": {
+          "name": "",
+          "number": "15",
+          "net": ""
+        },
+        "16": {
+          "name": "",
+          "number": "16",
+          "net": ""
+        },
+        "17": {
+          "name": "",
+          "number": "17",
+          "net": ""
+        },
+        "18": {
+          "name": "",
+          "number": "18",
+          "net": ""
+        },
+        "19": {
+          "name": "",
+          "number": "19",
+          "net": ""
+        },
+        "20": {
+          "name": "",
+          "number": "20",
+          "net": ""
+        }
+      }
+    },
+    "gge207": {
+      "props": {
+        "Footprint": "4d603bb91953c2fe",
+        "Designator": "USB_TVS",
+        "LCSC Part Name": "双向TVS 5V截止 峰值浪涌电流：21.7A@10/1000us",
+        "Supplier Part": "C7473196",
+        "Manufacturer": "MSKSEMI(美森科)",
+        "Manufacturer Part": "SMF5.0CA-MS",
+        "Supplier Footprint": "SOD-123FL",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/SMF5.0CA-MS/8533570.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "b9b61be8277a4179907f42c1376e29de|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "SOD-123FL_L2.8-W1.8-LS3.7-BI",
+        "3D Model Transform": "145.669,70.866,0,0,0,0,0,0,0",
+        "Polarity": "Bidirectional",
+        "Reverse Stand-Off Voltage (Vrwm)": "5V",
+        "Clamping Voltage": "9.2V",
+        "Peak Pulse Current (Ipp)": "21.7A@10/1000us",
+        "Peak Pulse Power Dissipation (Ppp)": "200W@10/1000us",
+        "Voltage - Breakdown": "7V",
+        "Reverse Leakage Current (Ir)": "400uA",
+        "Number of Channels": "1",
+        "Operating Temperature": "-55℃~+150℃",
+        "Type": "TVS",
+        "Name": "SMF5.0CA-MS",
+        "Description": "Polarity:Bidirectional Reverse Stand-Off Voltage (Vrwm):5V Clamping Voltage:9.2V Peak Pulse Current (Ipp):21.7A@10/1000us Peak Pulse Power Dissipation (Ppp):200W@10/1000us Voltage - Breakdown:7V Reverse Leakage Current (Ir):400uA Number of Channels:1 Oper",
+        "Device": "e59ed94fd0331538",
+        "Unique ID": "gge207",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I12",
+        "DeviceName": "SMF5.0CA-MS",
+        "FootprintName": "SOD-123FL_L2.8-W1.8-LS3.7-BI",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        }
+      }
+    },
+    "gge199": {
+      "props": {
+        "Footprint": "8a54c123446f79bc",
+        "Designator": "VBUS_CONTROLLER",
+        "LCSC Part Name": "低损耗功率分配开关",
+        "Supplier Part": "C55136",
+        "Manufacturer": "Silergy(矽力杰)",
+        "Manufacturer Part": "SY6280AAC",
+        "Supplier Footprint": "SOT-23-5",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/SY6280AAC/56162.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "3168b22659ce4998ae232d44bb704e0a|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "SOT-23-5_L2.9-W1.6-H1.1-LS2.8-P0.95",
+        "3D Model Transform": "118.60433,114.173,0,90,0,0,0.0005,0.0005,0",
+        "Type": "High Side Switch",
+        "Number of Channels": "1",
+        "Control Input Logic": "Active High",
+        "Voltage - Supply": "2.4V~5.5V",
+        "Maximum Continuous Current": "2A",
+        "RDS(on)": "80mΩ",
+        "Features": "Short-Circuit  Protection；Overcurrent Protection；Reverse current blocking；Output discharge function；Over temperature protection",
+        "Operating Temperature\t-": "-40℃~+125℃",
+        "Name": "SY6280AAC",
+        "Description": "Type:High Side Switch Number of Channels:1 Control Input Logic:Active High Voltage - Supply:2.4V~5.5V Voltage - Supply:2.4V~5.5V Maximum Continuous Current:2A RDS(on):80mΩ Features:Short-Circuit  Protection；Overcurrent Protection；Reverse current blocking；",
+        "Device": "42211d6946fa1fbd",
+        "Unique ID": "gge199",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I6",
+        "DeviceName": "SY6280AAC_C55136",
+        "FootprintName": "SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BL",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        },
+        "3": {
+          "name": "",
+          "number": "3",
+          "net": ""
+        },
+        "4": {
+          "name": "",
+          "number": "4",
+          "net": ""
+        },
+        "5": {
+          "name": "",
+          "number": "5",
+          "net": ""
+        }
+      }
+    },
+    "gge209": {
+      "props": {
+        "Footprint": "0c18ee9d07919741",
+        "Designator": "USB_Conn_ONLY",
+        "LCSC Part Name": "Type-C 母 卧贴",
+        "Supplier Part": "C36936538",
+        "Manufacturer": "BXCONN(宝讯)",
+        "Manufacturer Part": "UC09-0B16F00P11",
+        "Supplier Footprint": "SMD",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/UC09-0B16F00P11/38663614.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "6cb2cfa2a26e4b6489ea5c421605a17a|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "USB-C_UC09-0B16F00P11",
+        "3D Model Transform": "351.9678,301.181,0,0,0,0,0,-47.638,-39.37",
+        "Connector Type": "Type-C",
+        "Gender": "Female",
+        "Mounting Type": "Surface Mount, Right Angle",
+        "Number of Contacts": "16P",
+        "Number of Ports": "1",
+        "Current Rating-Power": "3A",
+        "Voltage Rating": "20V",
+        "Connect-Disconnect Life": "10,000 cycles",
+        "Length": "7.35mm",
+        "Operating Temperature": "-45℃~+85℃",
+        "Name": "UC09-0B16F00P11",
+        "Description": "Connector Type:Type-C Gender:Female Mounting Type:Surface Mount, Right Angle Number of Contacts:16P Number of Ports:1 Current Rating-Power:3A Voltage Rating:20V Connect-Disconnect Life:10,000 cycles Length:7.35mm Operating Temperature:-45℃~+85℃ Operating ",
+        "Device": "7d41c5a4dd21c740",
+        "Unique ID": "gge209",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I18",
+        "DeviceName": "UC09-0B16F00P11",
+        "FootprintName": "USB-C_UC09-0B16F00P11",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "17": {
+          "name": "",
+          "number": "17",
+          "net": ""
+        },
+        "18": {
+          "name": "",
+          "number": "18",
+          "net": ""
+        },
+        "19": {
+          "name": "",
+          "number": "19",
+          "net": ""
+        },
+        "20": {
+          "name": "",
+          "number": "20",
+          "net": ""
+        },
+        "A12": {
+          "name": "",
+          "number": "A12",
+          "net": ""
+        },
+        "B1": {
+          "name": "",
+          "number": "B1",
+          "net": ""
+        },
+        "A9": {
+          "name": "",
+          "number": "A9",
+          "net": ""
+        },
+        "B4": {
+          "name": "",
+          "number": "B4",
+          "net": ""
+        },
+        "B5": {
+          "name": "",
+          "number": "B5",
+          "net": ""
+        },
+        "A8": {
+          "name": "",
+          "number": "A8",
+          "net": ""
+        },
+        "B6": {
+          "name": "",
+          "number": "B6",
+          "net": ""
+        },
+        "A7": {
+          "name": "",
+          "number": "A7",
+          "net": ""
+        },
+        "A6": {
+          "name": "",
+          "number": "A6",
+          "net": ""
+        },
+        "B7": {
+          "name": "",
+          "number": "B7",
+          "net": ""
+        },
+        "A5": {
+          "name": "",
+          "number": "A5",
+          "net": ""
+        },
+        "B8": {
+          "name": "",
+          "number": "B8",
+          "net": ""
+        },
+        "B9": {
+          "name": "",
+          "number": "B9",
+          "net": ""
+        },
+        "A4": {
+          "name": "",
+          "number": "A4",
+          "net": ""
+        },
+        "B12": {
+          "name": "",
+          "number": "B12",
+          "net": ""
+        },
+        "A1": {
+          "name": "",
+          "number": "A1",
+          "net": ""
+        }
+      }
+    },
+    "gge208": {
+      "props": {
+        "Footprint": "c467dbc879f54363",
+        "Designator": "MCU",
+        "LCSC Part Name": "基于QingKe RISC - V内核的工业级微控制器",
+        "Supplier Part": "C7437027",
+        "Manufacturer": "WCH(南京沁恒)",
+        "Manufacturer Part": "CH32X035G8U6",
+        "Supplier Footprint": "QFN-28(4X4)",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/CH32X035G8U6/8457379.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "0707d60634214b2f95144a900cb187a9|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "QFN-28_L4.0-W4.0-P0.40-BL-EP2.8",
+        "3D Model Transform": "157.48,157.48,0,0,0,0,0,0,0",
+        "CPU Core": "RISC-V4C",
+        "CPU Maximum Speed": "48MHz",
+        "Core Size": "32 Bit",
+        "Program Storage Size": "62KB",
+        "Program Memory Type": "FLASH",
+        "RAM Size": "20KB",
+        "EEPROM": "-",
+        "Number of I/O": "27",
+        "ADC (Bit)": "12bit",
+        "DAC (Bit)": "-",
+        "Oscillator Type": "Built-in",
+        "Voltage - Supply": "3.3V；5V",
+        "Operating Temperature": "-40℃~+85℃",
+        "Features": "-",
+        "Name": "CH32X035G8U6",
+        "Description": "CPU Core:RISC-V4C CPU Maximum Speed:48MHz Core Size:32 Bit Program Storage Size:62KB Program Memory Type:FLASH RAM Size:20KB EEPROM:- Number of I/O:27 ADC (Bit):12bit DAC (Bit):- Oscillator Type:Built-in Voltage - Supply:3.3V；5V Voltage - Supply:3.3V；5V O",
+        "Device": "4743877301aabd1b",
+        "Unique ID": "gge208",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I17",
+        "DeviceName": "CH32X035G8U6",
+        "FootprintName": "QFN-28_L4.0-W4.0-P0.40-BL-EP2.8",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        },
+        "3": {
+          "name": "",
+          "number": "3",
+          "net": ""
+        },
+        "4": {
+          "name": "",
+          "number": "4",
+          "net": ""
+        },
+        "5": {
+          "name": "",
+          "number": "5",
+          "net": ""
+        },
+        "6": {
+          "name": "",
+          "number": "6",
+          "net": ""
+        },
+        "7": {
+          "name": "",
+          "number": "7",
+          "net": ""
+        },
+        "8": {
+          "name": "",
+          "number": "8",
+          "net": ""
+        },
+        "9": {
+          "name": "",
+          "number": "9",
+          "net": ""
+        },
+        "10": {
+          "name": "",
+          "number": "10",
+          "net": ""
+        },
+        "11": {
+          "name": "",
+          "number": "11",
+          "net": ""
+        },
+        "12": {
+          "name": "",
+          "number": "12",
+          "net": ""
+        },
+        "13": {
+          "name": "",
+          "number": "13",
+          "net": ""
+        },
+        "14": {
+          "name": "",
+          "number": "14",
+          "net": ""
+        },
+        "15": {
+          "name": "",
+          "number": "15",
+          "net": ""
+        },
+        "16": {
+          "name": "",
+          "number": "16",
+          "net": ""
+        },
+        "17": {
+          "name": "",
+          "number": "17",
+          "net": ""
+        },
+        "18": {
+          "name": "",
+          "number": "18",
+          "net": ""
+        },
+        "19": {
+          "name": "",
+          "number": "19",
+          "net": ""
+        },
+        "20": {
+          "name": "",
+          "number": "20",
+          "net": ""
+        },
+        "21": {
+          "name": "",
+          "number": "21",
+          "net": ""
+        },
+        "22": {
+          "name": "",
+          "number": "22",
+          "net": ""
+        },
+        "23": {
+          "name": "",
+          "number": "23",
+          "net": ""
+        },
+        "24": {
+          "name": "",
+          "number": "24",
+          "net": ""
+        },
+        "25": {
+          "name": "",
+          "number": "25",
+          "net": ""
+        },
+        "26": {
+          "name": "",
+          "number": "26",
+          "net": ""
+        },
+        "27": {
+          "name": "",
+          "number": "27",
+          "net": ""
+        },
+        "28": {
+          "name": "",
+          "number": "28",
+          "net": ""
+        },
+        "29": {
+          "name": "",
+          "number": "29",
+          "net": ""
+        }
+      }
+    },
+    "gge210": {
+      "props": {
+        "Footprint": "9236b8634b565b7d",
+        "Designator": "USB_Pow_ONLY",
+        "LCSC Part Name": "Type-C 母 卧贴",
+        "Supplier Part": "C36936554",
+        "Manufacturer": "BXCONN(宝讯)",
+        "Manufacturer Part": "UC17-0B06F68011",
+        "Supplier Footprint": "SMD",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/UC17-0B06F68011/38663630.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "0115328903a340ffb25ea638b6f8c011|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "USB-C-SMD_UC17-0B06F68011",
+        "3D Model Transform": "351.9678,281.4955,0,0,0,0,-0.001,-31.455,-47.244",
+        "Connector Type": "Type-C",
+        "Gender": "Female",
+        "Mounting Type": "Surface Mount, Right Angle",
+        "Number of Contacts": "6P",
+        "Number of Ports": "1",
+        "Current Rating-Power": "3A",
+        "Voltage Rating": "5V",
+        "Connect-Disconnect Life": "5000 cycles",
+        "Length": "6.7mm",
+        "Operating Temperature": "-20℃~+85℃",
+        "Name": "UC17-0B06F68011",
+        "Description": "Connector Type:Type-C Gender:Female Mounting Type:Surface Mount, Right Angle Number of Contacts:6P Number of Ports:1 Current Rating-Power:3A Voltage Rating:5V Connect-Disconnect Life:5000 cycles Length:6.7mm Operating Temperature:-20℃~+85℃ Operating Tempe",
+        "Device": "d7795901bac30615",
+        "Unique ID": "gge210",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I19",
+        "DeviceName": "UC17-0B06F68011",
+        "FootprintName": "USB-C-SMD_UC17-0B06F68011",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "13": {
+          "name": "",
+          "number": "13",
+          "net": ""
+        },
+        "14": {
+          "name": "",
+          "number": "14",
+          "net": ""
+        },
+        "B12": {
+          "name": "",
+          "number": "B12",
+          "net": ""
+        },
+        "B9": {
+          "name": "",
+          "number": "B9",
+          "net": ""
+        },
+        "A5": {
+          "name": "",
+          "number": "A5",
+          "net": ""
+        },
+        "B5": {
+          "name": "",
+          "number": "B5",
+          "net": ""
+        },
+        "A9": {
+          "name": "",
+          "number": "A9",
+          "net": ""
+        },
+        "A12": {
+          "name": "",
+          "number": "A12",
+          "net": ""
+        }
+      }
+    },
+    "gge211": {
+      "props": {
+        "Footprint": "cd1c520ab268a451",
+        "Designator": "DFU_SW",
+        "LCSC Part Name": "按键开关5.8x5.8x10侧插自锁六脚",
+        "Supplier Part": "C25168854",
+        "Manufacturer": "hanxia(韩下)",
+        "Manufacturer Part": "HX PS5.8x5.8-6P CC",
+        "Supplier Footprint": "插件-6P,5.8x5.8mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/HX%2520PS5.8x5.8-6P%2520CC/26898596.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "256611a20b194ccaa40e49bcb237e014|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "SW-TH_HX-PS5.8X5.8-6P-CC",
+        "3D Model Transform": "263.779,411.4165,0,0,0,0,0,134.842,-98.425",
+        "Circuit": "DPDT",
+        "Self Lock / No Lock": "Latching",
+        "Actuator Style": "Square Button",
+        "IP Rating": "-",
+        "Mounting Type": "Right Angle",
+        "Contact Current": "100mA",
+        "Voltage Rating": "30V",
+        "Actuator/Cap Color": "White",
+        "With Lamp": "Without",
+        "Termination Style": "PC Pin",
+        "Operating Force": "1.8N",
+        "Operating Temperature": "-20℃~+70℃",
+        "Life": "5,000 cycles",
+        "Name": "HX PS5.8x5.8-6P CC",
+        "Description": "Circuit:DPDT Self Lock / No Lock:Latching Actuator Style:Square Button IP Rating:- Mounting Type:Right Angle Contact Current:100mA Voltage Rating:30V Actuator/Cap Color:White With Lamp:Without Termination Style:PC Pin Operating Force:1.8N Operating Temper",
+        "Device": "5aa6d3242f7f748c",
+        "Unique ID": "gge211",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I20",
+        "DeviceName": "HX PS5.8x5.8-6P CC",
+        "FootprintName": "SW-TH_HX-PS5.8X5.8-6P-CC",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        },
+        "3": {
+          "name": "",
+          "number": "3",
+          "net": ""
+        },
+        "4": {
+          "name": "",
+          "number": "4",
+          "net": ""
+        },
+        "5": {
+          "name": "",
+          "number": "5",
+          "net": ""
+        },
+        "6": {
+          "name": "",
+          "number": "6",
+          "net": ""
+        }
+      }
+    },
+    "gge212": {
+      "props": {
+        "Footprint": "cd1c520ab268a451",
+        "Designator": "POW_SW",
+        "LCSC Part Name": "按键开关5.8x5.8x10侧插自锁六脚",
+        "Supplier Part": "C25168854",
+        "Manufacturer": "hanxia(韩下)",
+        "Manufacturer Part": "HX PS5.8x5.8-6P CC",
+        "Supplier Footprint": "插件-6P,5.8x5.8mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/HX%2520PS5.8x5.8-6P%2520CC/26898596.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "3D Model": "256611a20b194ccaa40e49bcb237e014|0819f05c4eef4c71ace90d822a990e87",
+        "3D Model Title": "SW-TH_HX-PS5.8X5.8-6P-CC",
+        "3D Model Transform": "263.779,411.4165,0,0,0,0,0,134.842,-98.425",
+        "Circuit": "DPDT",
+        "Self Lock / No Lock": "Latching",
+        "Actuator Style": "Square Button",
+        "IP Rating": "-",
+        "Mounting Type": "Right Angle",
+        "Contact Current": "100mA",
+        "Voltage Rating": "30V",
+        "Actuator/Cap Color": "White",
+        "With Lamp": "Without",
+        "Termination Style": "PC Pin",
+        "Operating Force": "1.8N",
+        "Operating Temperature": "-20℃~+70℃",
+        "Life": "5,000 cycles",
+        "Name": "HX PS5.8x5.8-6P CC",
+        "Description": "Circuit:DPDT Self Lock / No Lock:Latching Actuator Style:Square Button IP Rating:- Mounting Type:Right Angle Contact Current:100mA Voltage Rating:30V Actuator/Cap Color:White With Lamp:Without Termination Style:PC Pin Operating Force:1.8N Operating Temper",
+        "Device": "5aa6d3242f7f748c",
+        "Unique ID": "gge212",
+        "Reuse Block": "",
+        "Group ID": "",
+        "Channel ID": "$1I21",
+        "DeviceName": "HX PS5.8x5.8-6P CC",
+        "FootprintName": "SW-TH_HX-PS5.8X5.8-6P-CC",
+        "PCB Layer": "TopLayer",
+        "Convert to PCB": "yes"
+      },
+      "footprintAttrKeys": [
+        "Footprint",
+        "Designator"
+      ],
+      "pinInfoMap": {
+        "1": {
+          "name": "",
+          "number": "1",
+          "net": ""
+        },
+        "2": {
+          "name": "",
+          "number": "2",
+          "net": ""
+        },
+        "3": {
+          "name": "",
+          "number": "3",
+          "net": ""
+        },
+        "4": {
+          "name": "",
+          "number": "4",
+          "net": ""
+        },
+        "5": {
+          "name": "",
+          "number": "5",
+          "net": ""
+        },
+        "6": {
+          "name": "",
+          "number": "6",
+          "net": ""
+        }
+      }
+    }
+  },
+  "designRule": {
+    "trackPhysics": {
+      "copperThickness1oz": {
+        "name": "copperThickness1oz",
+        "isDefault": true,
+        "unit": "mm",
+        "strokeValue": {
+          "1": {
+            "default": 0.254,
+            "min": 0.127,
+            "max": 2.54
+          }
+        }
+      },
+      "copperThickness2oz": {
+        "name": "copperThickness2oz",
+        "isDefault": false,
+        "unit": "mm",
+        "strokeValue": {
+          "1": {
+            "default": 0.254,
+            "min": 0.20299934,
+            "max": 2.54
+          }
+        }
+      }
+    },
+    "netRule": {}
+  },
+  "netClass": {},
+  "equalLengthNetGroup": {},
+  "differentialPair": {}
+}
