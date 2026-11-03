@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # ADX 20-Pin Bus Specification
 
-**Standard Identifier**: ADX-BUS-SPEC-v4.0  
+**Standard Identifier**: ADX-BUS-SPEC-v4.1  
 **Category**: Core Electrical & Interconnect Specification (Single Source of Truth)  
 **Status**: Standard (Release)  
 **Maintained by**: ADX Hardware Standards Committee  
@@ -52,10 +52,10 @@ This document serves as the authoritative **Single Source of Truth (SSOT)** for 
 | Pin | Net Name | Signal Type | Electrical Standard | Primary Function / Role | Shield & Topology Role |
 | :---: | :--- | :--- | :--- | :--- | :--- |
 | **1** | **GND** | Power / Shield | 0V Return | Cable Outer Edge Shield & Signal Return | Wire #1 (Edge ESD / Mechanical Guard) |
-| **2** | **OWD** | Bi-dir (1-Wire)| 3.3V LVCMOS (Weak PU) | One-Wire Debug & Production Flash (UPDI / SDI) | Wire #2 (Quasi-static Test Line) |
+| **2** | **OWD** | System / Bi-dir | 3.3V LVCMOS (Weak PU) | System Debug & Factory Flash (UPDI / SWDIO) | Wire #2 (Quasi-static Test Line) |
 | **3** | **AIN** | Analog In | 0V – 3.3V Analog | High-Precision Analog Input (ADC) / Opt. DAC | Wire #3 (Coplanar Shielded by Pins 1 & 4) |
 | **4** | **GND** | Power / Shield | 0V Return | Analog / Clock Isolation Shield | Wire #4 (EXTCLK Coplanar Guard ①) |
-| **5** | **EXTCLK** | Digital / GPIO | 3.3V LVCMOS | External Clock Input / High-Speed Timer / PWM | Wire #5 (Clock Waveguide Trace) |
+| **5** | **EXTCLK** | System / Digital| 3.3V LVCMOS | External Clock Input / Debug Clock (SWCLK) / Timer PWM | Wire #5 (Clock Waveguide Trace) |
 | **6** | **GND** | Power / Shield | 0V Return | Clock / Communications Isolation Shield | Wire #6 (EXTCLK Coplanar Guard ②) |
 | **7** | **UART_TX** | Digital Out | 3.3V LVCMOS | Asynchronous Serial Transmit (TXD) | Wire #7 (UART Balanced Pair) |
 | **8** | **UART_RX** | Digital In | 3.3V LVCMOS | Asynchronous Serial Receive (RXD) | Wire #8 (UART Balanced Pair) |
@@ -91,17 +91,25 @@ This document serves as the authoritative **Single Source of Truth (SSOT)** for 
 - **Fault Isolation Barrier**: Pin 16 is dedicated as a solid `GND` return directly flanking the high-power `VBUS` cluster (Pins 17–20).
 - **Crimp Misalignment Protection**: In flat ribbon cabling, should a manufacturing crimp misalignment or conductor fray occur along the power boundary, `VBUS` shorts directly to `GND` (Pin 16). This safely triggers upstream over-current protection rather than exposing low-voltage logic lines (Pins 1–15) to $5\,\text{V}$ bus power.
 
-### 4.3 One-Wire Debug & Production Flash Interface (`Pin 2: OWD`)
-- **Signal Definition**: 3.3V LVCMOS bidirectional 1-wire serial debug and programming interface with an onboard weak pull-up ($10\,\text{k}\Omega \sim 47\,\text{k}\Omega$ to 3.3V) on the Core board.
-- **Primary Function**:
-  1. Automated functional testing, unique ID (UID) readout, and factory firmware / bootloader flashing via the 20-pin IDC Eject Header test bench fixture during manufacturing.
-  2. Direct hardware debugger connection (WCH-LinkE, SerialUPDI, or 1-Wire SWD probe).
-- **Card-Side Mandatory Rules (MUST)**:
-  - Addon expansion Cards **MUST leave Pin 2 unconnected (N.C.)** under normal operation.
-  - Dedicated factory test fixtures or debugging adapters are the sole modules permitted to drive Pin 2.
-  - **Direct Grounding Prohibited**: Cards MUST NOT connect push-buttons or hardware pull-down switches directly between Pin 2 and GND.
-- **System Reset Architecture**:
-  System-level resets are governed via primary `VBUS` power cycling, internal watchdog timers (WDT), or verified protocol commands over communication buses (USB / RS-485).
+### 4.3 System Debug & Factory Programming Architecture (`Pins 2 & 5`)
+
+#### 4.3.1 Primary Programming Channels
+The ADX bus standard accommodates both 1-wire and 2-wire serial programming topologies to ensure universal compatibility across microcontrollers (8-bit architectures through 32-bit RISC-V/ARM controllers):
+- **Pin 2 (`OWD / PROG`)**: 3.3V LVCMOS bidirectional programming data line (`UPDI` / `SWDIO`) with an onboard weak pull-up ($10\,\text{k}\Omega \sim 47\,\text{k}\Omega$ to 3.3V) on the Core board.
+- **Pin 5 (`EXTCLK / PROG_CLK`)**: 3.3V LVCMOS clock and timer line. On architectures requiring 2-wire serial debug (e.g., WCH CH32X035 `SWCLK`, RP2040 `SWCLK`), Pin 5 acts as the high-speed synchronous debug clock during automated test bench programming. Pin 5 is shielded by Pin 4 (`GND`) and Pin 6 (`GND`), suppressing clock switching radiation (EMI) across the ribbon cable.
+
+#### 4.3.2 Card-Side Isolation & DNP Recommendation Rules (MUST / RECOMMENDED)
+To guarantee cross-architecture interoperability among different Core boards without signal collision, boot interference, or programming disruption:
+1. **Pin 2 (`OWD`) Isolation (MUST)**:
+   - Addon expansion Cards **MUST leave Pin 2 unconnected (N.C.)** under normal operation.
+   - Dedicated factory test fixtures, programming harnesses, or specialized diagnostic adapters are the sole modules permitted to drive Pin 2.
+   - **Direct Grounding Prohibited**: Cards MUST NOT connect push-buttons or hardware pull-down switches directly between Pin 2 and GND.
+2. **Pin 5 (`EXTCLK`) DNP Isolation Recommendation (RECOMMENDED / SHOULD)**:
+   - Where an expansion Card module features an on-card clock source (e.g., an external oscillator feeding clock into host MCUs such as ATtiny1616 master cards) or connects monitoring circuitry to Pin 5, the Card **SHOULD insert a series $0\,\Omega$ resistor (or solder jumper) to allow complete electrical disconnection (DNP: Do Not Populate)**.
+   - **Interoperability Rationale**: When such a Card is mated with Core controllers operating from internal oscillators and utilizing Pin 5 as `SWCLK` (e.g., CORE-CX3) or timer PWM output, depopulating the $0\,\Omega$ resistor prevents bus collisions and ensures transparent plug-and-play compatibility across all Core variants.
+
+#### 4.3.3 System Reset Architecture
+System-level resets are governed via primary `VBUS` power cycling, internal watchdog timers (WDT), or verified protocol commands over communication buses (USB / RS-485).
 
 ### 4.4 Coplanar Shielded Analog Channel (`Pin 3: AIN`)
 - **Coplanar Ground Guard**: Pin 3 (`AIN`) is flanked by Pin 1 (`GND`) on the outer cable perimeter and Pin 4 (`GND`) on the inner boundary.
@@ -109,7 +117,7 @@ This document serves as the authoritative **Single Source of Truth (SSOT)** for 
 - **Signal Range**: $0\,\text{V} \sim 3.3\,\text{V}$ single-ended analog input for ADC acquisition. Where host MCUs support pin multiplexing (e.g., ATtiny1616), Pin 3 may optionally function as a true analog DAC output.
 
 ### 4.5 Digital Signal Integrity & Logic Levels
-- **Clock Isolation Sandwich**: Pin 5 (`EXTCLK`) is guarded by Pin 4 (`GND`) and Pin 6 (`GND`), suppressing clock harmonic radiation (EMI).
+- **Clock Isolation Sandwich**: Pin 5 (`EXTCLK`) is guarded by Pin 4 (`GND`) and Pin 6 (`GND`), suppressing high-frequency clock harmonic radiation (EMI from `EXTCLK` or synchronous debug clock `SWCLK`).
 - **Bus Group Segregation**: Pin 11 (`GND`) separates open-drain, pull-up dependent lines (I2C) from high-speed push-pull lines (SPI).
 - **Native 3.3V LVCMOS Levels**: All digital I/O lines (Pins 2, 5, 7–10, 12–15) operate strictly at **3.3V LVCMOS**:
   - $V_{IL} \le 0.8\,\text{V}$
@@ -135,3 +143,12 @@ For detailed pin multiplexing (PORTMUX), timer mapping, and register-level confi
 To maintain absolute specification integrity, this document (`docs/spec/ADX_PINOUT.md`) is maintained strictly in **English as the Single Source of Truth (SSOT)**.
 
 Explanatory architecture guides in Japanese ([`docs/ja/ADX_pinout.md`](../ja/ADX_pinout.md)) and English ([`docs/en/ADX_pinout.md`](../en/ADX_pinout.md)) provide background design rationale, historical context, and application guidelines without duplicating authoritative tables, ensuring all future specification revisions are maintained in exactly one place.
+
+---
+
+## 7. Revision History
+
+| Version | Date | Description |
+| :---: | :---: | :--- |
+| **v4.0** | 2026-10-16 | Initial unified release of the 20-Pin Bus Specification with Gravity Fail-Safe power architecture, Pin 2 OWD, and coplanar analog shield. |
+| **v4.1** | 2026-11-03 | Explicitly define Pins 2 and 5 as system management lines. Establish Card-side $0\,\Omega$ DNP isolation recommendation for Pin 5 to support both 1-wire and 2-wire serial programming topologies across Core variants. |
