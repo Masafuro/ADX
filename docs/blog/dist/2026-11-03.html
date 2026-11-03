@@ -11,11 +11,11 @@
 <p>For the past several months, we tried repeatedly to bring that same convenience to our industrial core controller (the long-dormant CORE-U project).</p>
 <p>We failed, repeatedly.</p>
 <p>It took dozens of design iterations, rejected prototypes, and a painful economic reality check to realize something uncomfortable: <strong>single-cable USB debugging is an anti-pattern for field-deployed industrial controllers.</strong></p>
-<p>Here is the story of how 100-piece production limits, Arduino's vintage barrel jack, and a \$0.15 RISC-V chip forced us to rethink hardware ergonomics from scratch.</p>
+<p>Here is the story of how 100-piece production limits, Arduino's vintage barrel jack, and a $0.15 RISC-V chip forced us to rethink hardware ergonomics from scratch.</p>
 <hr />
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">1. The Small-Batch Wall: Why ATtiny1616 Hit a Ceiling</h2>
 <p>When you design open hardware, you are competing against the staggering economies of scale enjoyed by giants like the Raspberry Pi Foundation or Arduino.</p>
-<p>A Raspberry Pi Pico sells for \$4 to \$5. Arduino clones sell for \$3. Behind those prices are dedicated high-speed SMT lines running 24/7 and wafer-level component procurement across hundreds of thousands of units.</p>
+<p>A Raspberry Pi Pico sells for $4 to $5. Arduino clones sell for $3. Behind those prices are dedicated high-speed SMT lines running 24/7 and wafer-level component procurement across hundreds of thousands of units.</p>
 <p>When you are an indie hardware developer manufacturing in <strong>100-piece runs (100 pcs / 1 lot)</strong> using turn-key PCBA services like JLCPCB or PCBWay, the economics look completely different:<br />
 - Base SMT setup fees and stencil costs weigh heavily on unit pricing.<br />
 - Each unique BOM line and Extended Component (requiring manual feeder changes) adds immediate fee penalties.<br />
@@ -37,7 +37,7 @@
 <p>We had to strip away the clutter and find a microcontroller with native silicon support.</p>
 <hr />
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">2. From CH32V003 (CX3) to CH32X035 (CORE-CX5)</h2>
-<p>When WCH released the famous <strong>CH32V003</strong> (a \$0.10 RISC-V chip), we briefly investigated a concept codenamed "CORE-CX3." But the V003 still lacked a USB PHY and topped out at 16 KB Flash, leaving us back at square one.</p>
+<p>When WCH released the famous <strong>CH32V003</strong> (a $0.10 RISC-V chip), we briefly investigated a concept codenamed "CORE-CX3." But the V003 still lacked a USB PHY and topped out at 16 KB Flash, leaving us back at square one.</p>
 <p>The true breakthrough came with WCH's <strong>CH32X035G8U6</strong> (QFN-28):<br />
 - <strong>Integrated USB 2.0 Full-Speed PHY</strong>: Zero external bridge IC, zero external crystals. Pure single-chip USB.<br />
 - <strong>Spec Leap</strong>: 32-bit RISC-V4C running at 48 MHz, <strong>62 KB Flash</strong>, and <strong>20 KB SRAM</strong> (a 4x Flash and 10x RAM upgrade over ATtiny1616).<br />
@@ -53,7 +53,14 @@
    └── [ 2.1mm DC Barrel Jack (Round) ] ──&gt; Motor / Relay / Real Load Power (7-12V, 2A+)
 </code></pre>
 <p>For two decades, through dozens of revisions, Arduino stubbornly refused to eliminate the 2.1mm round DC barrel jack.</p>
-<p>Why? Because PC USB ports are <strong>fundamentally inadequate power sources</strong> for real-world physical computing. A USB 2.0 port provides at most $5\,\text{V} / 500\,\text{mA} = 2.5\,\text{W}$. The moment you stack a shield driving stepper motors, relays, or high-draw sensors, power requirements jump to $1\,\text{A} \sim 2\,\text{A}$.</p>
+<p>Why? Because PC USB ports are <strong>fundamentally inadequate power sources</strong> for real-world physical computing. A USB 2.0 port provides at most <strong>5V @ 500mA (2.5W)</strong>. The moment you stack a shield driving stepper motors, relays, or high-draw sensors, power requirements easily jump to <strong>1A to 2A (5W to 10W)</strong>.</p>
+<pre style="background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; font-family: Consolas, monospace; font-size: 0.9em; margin: 18px 0; line-height: 1.5;"><code class="language-text">┌────────────────────────────────────────────────────────────────────────┐
+│                       THE REAL-WORLD POWER GAP                         │
+├────────────────────────────────────────────────────────────────────────┤
+│ Standard PC USB 2.0 Port :  5V × 0.5A =  2.5W  (Bare MCU / Logic only) │
+│ Real Actuator Load (Card):  5V × 2.0A = 10.0W  (4× deficit!)           │
+└────────────────────────────────────────────────────────────────────────┘
+</code></pre>
 <p>The genius of the Arduino UNO was its <strong>physical affordance</strong>: the square USB port and the round DC jack felt completely different. You never confused code development with field deployment.</p>
 <h3>The Modern Trap: Type-C Homogenization</h3>
 <p>Fast-forward to 2026: 5V 2A–3A USB Type-C wall adapters have replaced the round DC wall wart everywhere on Earth.</p>
@@ -87,13 +94,13 @@ If external power is missing, the board should not power up by a single millivol
 </code></pre>
 <ol>
 <li><strong>VBUS on the Comm Port is Completely N.C. (Not Connected)</strong>:<br />
-   There is zero copper connecting the Comm Type-C VBUS pin to the board. The risk of back-feeding high voltage into a \$2,000 laptop motherboard is physically <strong>0.00%</strong>.</li>
+   There is zero copper connecting the Comm Type-C VBUS pin to the board. The risk of back-feeding high voltage into a $2,000 laptop motherboard is physically <strong>0%</strong>.</li>
 <li><strong>Arc-Free Power Switching via eFuse</strong>:<br />
-   Rather than passing 2A through a mechanical slide switch (which causes contact degradation and arcing), the board's <code>POW_SW</code> pulls the active-high <code>EN</code> pin of an on-board <strong>SY6280AAC eFuse</strong> to ground. The switch handles a negligible $0.5\,\text{mA}$, while the eFuse provides built-in soft-start and programmable over-current limiting ($1.5\,\text{A} \sim 2.0\,\text{A}$).</li>
+   Rather than passing 2A through a mechanical slide switch (which causes contact degradation and arcing), the board's <code>POW_SW</code> pulls the active-high <code>EN</code> pin of an on-board <strong>SY6280AAC eFuse</strong> to ground. The switch handles a negligible <strong>0.5 mA</strong>, while the eFuse provides built-in soft-start and programmable over-current limiting (<strong>1.5A to 2.0A</strong>).</li>
 <li><strong>Latching DFU Switch with Hardwired Warning LED</strong>:<br />
    Momentary boot buttons (holding a button while inserting a cable) require two hands. CORE-CX5 uses an <strong>alternate-action latching switch (<code>HX PS5.8x5.8-6P</code>)</strong>. Because it is DPDT (double-pole double-throw), pole 1 drives the MCU boot pin, while pole 2 <strong>physically powers an ultra-bright red warning LED directly from 3.3V</strong>. If the board is left in DFU mode, the red LED stays lit regardless of software state.</li>
 <li><strong>Local Transient Decoupling (<code>06-C1</code>)</strong>:<br />
-   Independent of the LDO's phase-compensation capacitor, an extra $100\,\text{nF}$ ceramic capacitor (<code>06-C1</code>) is placed within $1.5\,\text{mm}$ of MCU Pin 2 (<code>VDD</code>) and the exposed thermal ground pad (<code>EPAD</code>) to suppress high-frequency transient switching sag during 48 MHz RISC-V execution.</li>
+   Independent of the LDO's phase-compensation capacitor, an extra <strong>100nF</strong> ceramic capacitor (<code>06-C1</code>) is placed within <strong>1.5 mm</strong> of MCU Pin 2 (<code>VDD</code>) and the exposed thermal ground pad (<code>EPAD</code>) to suppress high-frequency transient switching sag during 48 MHz RISC-V execution.</li>
 </ol>
 <hr />
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">5. Tearing Down Our Own Hype: From "Gravity Fail-Safe" to Honest Panel Topology</h2>
