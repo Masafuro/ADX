@@ -9,6 +9,7 @@ ADX CORE-CX3 の rev1 ハードウェア開発ディレクトリです。
 
 ## ドキュメント一覧
 
+- **[netlist_review.md](netlist_review.md)**: rev1 WIP ネットリストの進捗状況、回路ブロック別評価、合意事項および課題整理書
 - **[pinout_study.md](pinout_study.md)**: CH32X035G8U6 (QFN-28) のデータシート精査結果、ADX 20-Pin Bus への配線検討、オンボード回路ピン割り当て、PCB配線トポロジーの検討書
 
 ## リビジョン概要
