@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 - **ステータス**: COMPLETED / 適用完了
 - **作成日**: 2026-11-03
 - **完了日**: 2026-11-03
-- **対象ドキュメント**: `docs/spec/`, `docs/ja/`, `docs/en/`, `hardware/CORE-CX3/` 配下全般
+- **対象ドキュメント**: `docs/spec/`, `docs/ja/`, `docs/en/`, `hardware/CORE-CX5/` 配下全般
 - **目的**: 「重力フェイルセーフ (Gravity Fail-Safe)」の過剰・誇大表現を是正し、産業用制御盤の実務原則（弱電上・強電下）および基板前面 I/O 端子との直線的配置（非交差トポロジー）に基づく地に足のついた技術仕様表現へリフレーミングする。
 
 ---
@@ -78,9 +78,9 @@ SPDX-License-Identifier: CC-BY-4.0
 | **`docs/en/ADX_pinout.md`** | 2.1 節「Gravity Fail-Safe Power Placement」 | 上記 JA 版と完全同期させ、盤内トポロジー整合性を前面に出した記述へ改訂。 | **P0 (最優先)** |
 | **`docs/ja/README.md`** | 特徴一覧「重力フェイルセーフ電源」表記 | 「盤内配線トポロジー適合電源（最下部 $2 \times 2$ 大電流バス）」等へ適正化。 | **P1 (重要)** |
 | **`docs/en/README.md`** | 特徴一覧「Gravity Fail-Safe Power」表記 | 「Panel-Aligned Power Bus (Bottom $2 \times 2$ Cluster)」等へ適正化。 | **P1 (重要)** |
-| **`hardware/CORE-CX3/concept.md`** | 基本仕様表「重力フェイルセーフ」表記 | 「ADX 20-Pin Bus v4.1 準拠 (Pins 17–20: VBUS 底面電源クラスタ)」へ更新。 | **P1 (重要)** |
-| **`hardware/CORE-CX3/rev1/pinout_study.md`** | 表 5「重力フェイルセーフ給電クラスタ」表記 | 「底面大電流給電クラスタ ($2 \times 2$ ベタ銅箔プレーン)」へ更新。 | **P1 (重要)** |
-| **`hardware/CORE-CX3/rev1/README.md`** | 概要「重力フェイルセーフ」表記 | 「底面電源クラスタ」へ適正化。 | **P1 (重要)** |
+| **`hardware/CORE-CX5/concept.md`** | 基本仕様表「重力フェイルセーフ」表記 | 「ADX 20-Pin Bus v4.1 準拠 (Pins 17–20: VBUS 底面電源クラスタ)」へ更新。 | **P1 (重要)** |
+| **`hardware/CORE-CX5/rev1/pinout_study.md`** | 表 5「重力フェイルセーフ給電クラスタ」表記 | 「底面大電流給電クラスタ ($2 \times 2$ ベタ銅箔プレーン)」へ更新。 | **P1 (重要)** |
+| **`hardware/CORE-CX5/rev1/README.md`** | 概要「重力フェイルセーフ」表記 | 「底面電源クラスタ」へ適正化。 | **P1 (重要)** |
 
 ---
 
@@ -144,7 +144,7 @@ Pins 17〜20 に大電流幹線（`VBUS`）を集中配置したのは、制御�
 - `docs/ja/README.md` および `docs/en/README.md` の概要・特徴リストの文言適正化。
 
 ### フェーズ 3: ハードウェア開発検討書の改訂 (P1)
-- `hardware/CORE-CX3/concept.md`、`hardware/CORE-CX3/rev1/pinout_study.md`、`README.md` の表記更新。
+- `hardware/CORE-CX5/concept.md`、`hardware/CORE-CX5/rev1/pinout_study.md`、`README.md` の表記更新。
 
 ---
 

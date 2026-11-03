@@ -75,7 +75,7 @@ Placing the high-current external power bus (`VBUS`) at Pins 17–20 aligns the 
 - **Integration of 1-Wire and 2-Wire Programming Topologies:**  
   To provide universal programming support across microcontrollers from 8-bit to 32-bit RISC-V/ARM architectures, Pins 2 and 5 form a dedicated system management pair:
   - **CORE-A5 (ATtiny1616)**: Pin 2 operates as `PA0` (UPDI) for 1-wire factory programming.
-  - **CORE-CX3 (CH32X035)**: Pin 2 operates as `PC18` (SWDIO) and Pin 5 as `PC19` (SWCLK). **Mating the 20-pin IDC Eject Header to the factory test fixture completes both power injection and 2-wire SDI programming with zero pogo pins required.**
+  - **CORE-CX5 (CH32X035)**: Pin 2 operates as `PC18` (SWDIO) and Pin 5 as `PC19` (SWCLK). **Mating the 20-pin IDC Eject Header to the factory test fixture completes both power injection and 2-wire SDI programming with zero pogo pins required.**
 - **Production & Field Lifecycle:**  
   Enables automated testing and initial bootloader (UF2) flashing via the 20-pin IDC Eject Header during assembly, while end users perform driverless drag-and-drop sketch maintenance over USB in the field.
 
@@ -91,7 +91,7 @@ Developers designing ADX-compliant expansion Cards should observe the following 
    Standard Cards **MUST leave Pin 2 unconnected (N.C.)**. Direct connections to push-buttons or hardware pull-downs to GND are strictly prohibited.
 3. **Pin 5 (EXTCLK) Isolation Recommendation (RECOMMENDED / SHOULD):**  
    Where a Card module feeds an external clock into the host MCU or connects monitoring circuitry to Pin 5, the Card **SHOULD insert a series $0\,\Omega$ resistor (or solder jumper) to allow complete electrical disconnection (DNP: Do Not Populate)**.  
-   - **Interoperability Rationale**: Populating the $0\,\Omega$ resistor supplies external clock on ATtiny1616 hosts, while depopulating (DNP) ensures transparent compatibility with Core boards utilizing Pin 5 as `SWCLK` (e.g., CORE-CX3) or timer PWM outputs without signal collisions.
+   - **Interoperability Rationale**: Populating the $0\,\Omega$ resistor supplies external clock on ATtiny1616 hosts, while depopulating (DNP) ensures transparent compatibility with Core boards utilizing Pin 5 as `SWCLK` (e.g., CORE-CX5) or timer PWM outputs without signal collisions.
 4. **I2C Pull-Up Resistors:**  
    Pins 9 (`I2C_SCL`) and 10 (`I2C_SDA`) may not have pull-up resistors on the Core board. Provide one pair of pull-ups ($2.2\,\text{k}\Omega \sim 4.7\,\text{k}\Omega$ to 3.3V) on the Card or bus backplane.
 5. **Return Paths:**  
@@ -104,5 +104,5 @@ Developers designing ADX-compliant expansion Cards should observe the following 
 For low-level register configuration, timer mapping, and PORTMUX settings, refer to the authoritative mapping specifications:
 
 - **Microchip ATtiny1616 (CORE-A5):** 👉 [`docs/spec/mcu_mapping/attiny1616.md`](../spec/mcu_mapping/attiny1616.md)
-- **WCH CH32X035 (CORE-CX3):** 👉 [`docs/spec/mcu_mapping/ch32x035.md`](../spec/mcu_mapping/ch32x035.md)
+- **WCH CH32X035 (CORE-CX5):** 👉 [`docs/spec/mcu_mapping/ch32x035.md`](../spec/mcu_mapping/ch32x035.md)
 - **Raspberry Pi RP2040 (CORE-R):** 👉 [`docs/spec/mcu_mapping/rp2040.md`](../spec/mcu_mapping/rp2040.md)

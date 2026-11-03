@@ -3,15 +3,15 @@ Copyright (c) 2026 ADX Project Contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADX CORE-CX3 (rev1) ネットリスト進捗・評価および課題整理書
-(ADX CORE-CX3 rev1 Netlist Review & Next Tasks)
+# ADX CORE-CX5 (rev1) ネットリスト進捗・評価および課題整理書
+(ADX CORE-CX5 rev1 Netlist Review & Next Tasks)
 
-- **対象ファイル**: [`hardware/CORE-CX3/rev1/adx_core-cx3_rev1-wip.enet`](adx_core-cx3_rev1-wip.enet) (EasyEDA Pro 形式)
+- **対象ファイル**: [`hardware/CORE-CX5/rev1/adx_core-cx5_rev1-wip.enet`](adx_core-cx5_rev1-wip.enet) (EasyEDA Pro 形式)
 - **リビジョン**: rev1 WIP (Work In Progress)
 - **評価実施日**: 2026-11-03
 - **参照仕様**:
-  - [ADX CORE-CX3 ハードウェア構想書](../concept.md)
-  - [ADX CORE-CX3 rev1 ハードウェア配線・ピンアサイン検討書](pinout_study.md)
+  - [ADX CORE-CX5 ハードウェア構想書](../concept.md)
+  - [ADX CORE-CX5 rev1 ハードウェア配線・ピンアサイン検討書](pinout_study.md)
   - [ADX 20-Pin Bus Specification v4.1](../../../docs/spec/ADX_PINOUT.md)
 
 ---

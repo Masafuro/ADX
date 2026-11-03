@@ -3,10 +3,10 @@ Copyright (c) 2026 ADX Project Contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADX CORE-CX3 (rev1) ハードウェア配線・ピンアサイン検討書
-(ADX CORE-CX3 rev1 Hardware Pinout & Architecture Study)
+# ADX CORE-CX5 (rev1) ハードウェア配線・ピンアサイン検討書
+(ADX CORE-CX5 rev1 Hardware Pinout & Architecture Study)
 
-- **ボード名称**: ADX CORE-CX3 (The Enclosure-Native USB Core)
+- **ボード名称**: ADX CORE-CX5 (The Enclosure-Native USB Core)
 - **リビジョン**: rev1 (検討段階)
 - **最新改訂日**: 2026-11-03
 - **準拠規格**: [ADX 20-Pin Bus Specification v4.0](../../docs/spec/ADX_PINOUT.md) (SSOT)
@@ -18,7 +18,7 @@ SPDX-License-Identifier: CC-BY-4.0
 ## 1. 検討の背景と目的
 
 ### 1.1 プロダクト概要
-ADX CORE-CX3 は、WCH 製 32-bit RISC-V マイコン **CH32X035G8U6** を採用し、産業用 8748 フォームファクタとデュアル Type-C ポート（通信用 16P ＋ 電源用 6P 完全物理分離）を組み合わせた筐体組込ネイティブのエッジコントローラです。
+ADX CORE-CX5 は、WCH 製 32-bit RISC-V マイコン **CH32X035G8U6** を採用し、産業用 8748 フォームファクタとデュアル Type-C ポート（通信用 16P ＋ 電源用 6P 完全物理分離）を組み合わせた筐体組込ネイティブのエッジコントローラです。
 
 ### 1.2 本検討書の目的
 データシート（`docs/datasheet/CH32X035G8U6.pdf` V2.2）の実仕様に基づき、以下を精査・確定することを目的とします：
@@ -56,7 +56,7 @@ ADX CORE-CX3 は、WCH 製 32-bit RISC-V マイコン **CH32X035G8U6** を採用
 #### 1. システムピン・ペア（Pins 2, 5）による 20P IDC 単体書込の実現
 - **クロック入力の実態**:
   - CH32X035 のシステムクロック源は **内蔵 48MHz RC 発振器（HSI）のみ** です（外部クリスタル入力ピンや外部クロック注入端子はチップ上に存在しません）。
-  - そのため、Pin 5 (`EXTCLK`) を MCU システムクロック入力として使うシーンは CORE-CX3 では存在しません。
+  - そのため、Pin 5 (`EXTCLK`) を MCU システムクロック入力として使うシーンは CORE-CX5 では存在しません。
 - **デバッグ仕様（2-wire SDI）**:
   - WCH-LinkE による書き込みには `SWDIO`（PC18）と `SWCLK`（PC19）の 2 線が必要です（NRST 接続は不要）。
 - **Pin 2 ＋ Pin 5 への割り当ての必然性**:
@@ -93,7 +93,7 @@ Core ボード側の MCU 多様化（ATtiny1616、RP2040、CH32X035 等）に伴
 > 2. **Pin 5 (`EXTCLK`)**:  
 >    Card 側からクロックを発振・供給する場合、または Pin 5 の信号を受信・監視する場合、**直列に 0Ω 抵抗（例: `R_EXTCLK`）またはソルダーブリッジジャンパを配置し、電気的に完全切断（DNP）可能な構造とすることを「推奨（RECOMMENDED / SHOULD）」とする。**
 >    - **ATtiny1616（CORE-A5）マスター構成**: 0Ω 抵抗を実装し、Card 上の発振器から Pin 5 へシステムクロックを供給。
->    - **CH32X035（CORE-CX3）構成**: 0Ω 抵抗を未実装（DNP）とすることで、Card 側のクロックと Core 側のデバッグピン（SWCLK）の衝突を未然に防止。同一の Card 基板で全 Core ボードへの完全対応が可能。
+>    - **CH32X035（CORE-CX5）構成**: 0Ω 抵抗を未実装（DNP）とすることで、Card 側のクロックと Core 側のデバッグピン（SWCLK）の衝突を未然に防止。同一の Card 基板で全 Core ボードへの完全対応が可能。
 
 ---
 
@@ -186,7 +186,7 @@ Core ボード側の MCU 多様化（ATtiny1616、RP2040、CH32X035 等）に伴
 ## 6. オンボード機能と周辺回路仕様
 
 ### 6.1 デュアル Type-C ポート電源トポロジー
-現場での PC 逆流破壊事故を物理的に防止する CORE-CX3 独自の電源構成です：
+現場での PC 逆流破壊事故を物理的に防止する CORE-CX5 独自の電源構成です：
 
 1. **通信専用 16P Type-C ポート**:
    - データ線: `PC16 (UDM)`、`PC17 (UDP)` に ESD 保護ダイオード（USBLC6-2SC6 等）を介して直結。
@@ -230,7 +230,7 @@ QFN-28 パッケージのピン配置と本配線案は、PCB アートワーク
 1. **ドキュメント反映**:
    - 本検討書の内容を反映し、SSOT 仕様書 [`docs/spec/mcu_mapping/ch32x035.md`](../../docs/spec/mcu_mapping/ch32x035.md) を正式改訂する。
    - [`docs/spec/ADX_PINOUT.md`](../../docs/spec/ADX_PINOUT.md) の拡張 Card 設計推奨事項に「システムピン（Pins 2, 5）の 0Ω アイソレーション推奨」を追記する。
-   - [`hardware/CORE-CX3/concept.md`](../concept.md) のハードウェア記述を整合させる。
+   - [`hardware/CORE-CX5/concept.md`](../concept.md) のハードウェア記述を整合させる。
 2. **回路図設計 (rev1 回路図・ネットリスト着手)**:
    - KiCad または EDA ツールにて、本ピンアサインに基づきシンボル・回路図を作成。
    - デュアル Type-C ポート、LDO、PTC ヒューズ、SBD、および 20-Pin IDC Eject Header の回路設計を確定する。

@@ -3,9 +3,9 @@ Copyright (c) 2026 ADX Project Contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADX CORE-CX3 (rev1)
+# ADX CORE-CX5 (rev1)
 
-ADX CORE-CX3 の rev1 ハードウェア開発ディレクトリです。
+ADX CORE-CX5 の rev1 ハードウェア開発ディレクトリです。
 
 ## ドキュメント一覧
 

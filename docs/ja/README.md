@@ -24,7 +24,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 | やりたいこと | 主なドキュメント | リンク |
 | :--- | :--- | :--- |
-| 🚀 **USB でサクッと動かしたい** | 次世代 USB Core ボード CORE-CX3 の構想と仕様 | [CORE-CX3 構想書](../../hardware/CORE-CX3/concept.md) |
+| 🚀 **USB でサクッと動かしたい** | 次世代 USB Core ボード CORE-CX5 の構想と仕様 | [CORE-CX5 構想書](../../hardware/CORE-CX5/concept.md) |
 | 🛡 **現場用・高耐熱端末を作りたい** | 絶縁 RS-485 搭載 CORE-A5 の詳細回路と BOM | [CORE-A5 仕様検討書](../../hardware/CORE-A5/spec_study.md) |
 | 🔌 **拡張基板 (CARD) を作りたい** | 共通 20ピンバスの厳密なピン定義と設計ルール | [ADX 20ピンバス仕様書 (SSOT)](../spec/ADX_PINOUT.md) (v4.1) |
 | 📖 **ピン配置の設計思想を知りたい** | 産業盤配線トポロジー適合やシールド構造の解説 | [ADX Pinout 設計・解説ガイド](ADX_pinout.md) |
@@ -65,7 +65,7 @@ ADXの土台となるのは、マイコンやモジュールが様々なケー�
             ┌──────────────────────────┴──────────────────────────┐
             ▼                                                     ▼
    【 メイン Core シリーズ 】                            【 モジュール式 CARD群 】
-     ・ADX CORE-CX3 (USB Flagship / CH32X035 / UF2)        ADX CARD エコシステム
+     ・ADX CORE-CX5 (USB Flagship / CH32X035 / UF2)        ADX CARD エコシステム
      ・ADX CORE-A5  (高耐環境 RS-485 / -40℃〜+105℃)       ・Prototyping CARD (試作基板)
      ・デュアル Type-C または 絶縁スプリング端子台         ・Power CARD (電源受電)
      ・20P IDC 治具による出荷時自動検査・書込              ・3Dプリント用ケース / マウントSTL
@@ -101,7 +101,7 @@ Core ボードと拡張 CARD は、標準の 2×10ピン IDC コネクタでシ�
 
 用途と環境に応じて、最適な Core ボードを選択できます：
 
-1. **[ADX CORE-CX3](../../hardware/CORE-CX3/concept.md) (次世代標準 USB Core)**:
+1. **[ADX CORE-CX5](../../hardware/CORE-CX5/concept.md) (次世代標準 USB Core)**:
    - **MCU**: WCH CH32X035 (32-bit RISC-V 48MHz, Flash 62KB, SRAM 20KB)
    - **特徴**: 内蔵 USB PHY、デュアル Type-C（通信専用 16P ＋ 電源専用 6P）、PC 逆流保護、UF2 ドラッグ＆ドロップ書き換え対応。手軽でパワフルな標準機。
 2. **[ADX CORE-A5](../../hardware/CORE-A5/spec_study.md) (高耐環境・高信頼エッジ端末)**:

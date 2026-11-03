@@ -3,11 +3,11 @@ Copyright (c) 2026 ADX Project Contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADX CORE-CX3 ハードウェア構想書
-(ADX CORE-CX3 Hardware Concept & Architecture Note)
+# ADX CORE-CX5 ハードウェア構想書
+(ADX CORE-CX5 Hardware Concept & Architecture Note)
 
 - **ステータス**: APPROVED / 回路設計着手
-- **対象ボード**: ADX CORE-CX3 (The Enclosure-Native USB Core)
+- **対象ボード**: ADX CORE-CX5 (The Enclosure-Native USB Core)
 - **最新改訂日**: 2026-11-03
 - **準拠規格**: [ADX 20-Pin Bus Specification v4.1](../../docs/spec/ADX_PINOUT.md) (SSOT)
 - **ペリフェラル仕様**: [WCH CH32X035 Hardware Mapping](../../docs/spec/mcu_mapping/ch32x035.md)
@@ -22,8 +22,8 @@ USB 型の ADX CORE は、これまで CORE-U など様々な構想が検討さ�
 2. **部品点数と原価の増大**: USB シリアル変換 IC（CH340/CH342 等）や外付け発振子が必要となり、BOM コストが跳ね上がる。
 3. **電源共有の取り回しの難しさ**: PC からの給電と外部電源（ADX VBUS）が不用意に衝突・逆流し、現場組み込み時のデバッグや保守で PC ポートの遮断や素子破壊を招きやすかった。
 
-### 1.2 CORE-CX3 のブレークスルー
-本構想 **ADX CORE-CX3** は、メイン MCU に **WCH CH32X035**（32-bit RISC-V4C, 48MHz）を採用します。
+### 1.2 CORE-CX5 のブレークスルー
+本構想 **ADX CORE-CX5** は、メイン MCU に **WCH CH32X035**（32-bit RISC-V4C, 48MHz）を採用します。
 - **1チップ化による圧倒的な原価低減**:  
   MCU 内蔵の USB 2.0 Full-Speed PHY と自動クロックトリミング機能により、**USB-UART ブリッジ IC および外付けクリスタルを全廃**。
 - **桁違いのスペック向上**:  
@@ -97,7 +97,7 @@ USB 型の ADX CORE は、これまで CORE-U など様々な構想が検討さ�
 ┌────────────────────────────────────────────────────────────────────────┐
 │                   【 現場運用・長期保守 (5年後) 】                     │
 │   通信 16P Type-C を挿入 (BOOT ボタン押下起動)                         │
-│   ➔ PC / スマホに USB ドライブ `ADX-CX3` が自動マウント                │
+│   ➔ PC / スマホに USB ドライブ `ADX-CX5` が自動マウント                │
 │   ➔ `firmware.uf2` をドラッグ＆ドロップするだけで即座に書換完了       │
 │   ※ ブラウザ・専用アプリ・ドライバ・管理者権限は一切不要               │
 └────────────────────────────────────────────────────────────────────────┘

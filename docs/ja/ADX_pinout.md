@@ -70,7 +70,7 @@ Pins 17〜20 に大電流幹線（`VBUS`）を集中配置したのは、制御�
 - **1線式および2線式プログラミングの完全統合:**  
   8-bit MCU から 32-bit RISC-V/ARM まで多様なアーキテクチャをサポートするため、Pin 2 と Pin 5 をシステム制御ペアとして定義しています。
   - **CORE-A5 (ATtiny1616)**: Pin 2 に `PA0` (UPDI) を割り当て、1線で出荷検査・書き込みを実施。
-  - **CORE-CX3 (CH32X035)**: Pin 2 に `PC18` (SWDIO)、Pin 5 に `PC19` (SWCLK) を割り当て、**20-Pin IDC ヘッダーを治具に 1 本挿すだけで給電と 2-wire SDI 書き込みが 100% 完結**（ポゴピン治具が不要）。
+  - **CORE-CX5 (CH32X035)**: Pin 2 に `PC18` (SWDIO)、Pin 5 に `PC19` (SWCLK) を割り当て、**20-Pin IDC ヘッダーを治具に 1 本挿すだけで給電と 2-wire SDI 書き込みが 100% 完結**（ポゴピン治具が不要）。
 - **製造と現場保守のシナリオ:**  
   工場検査時は 20P IDC ヘッダーから自動テストとブートローダー（UF2等）の書き込みを実施し、現場運用時は通信ポート経由でドラッグ＆ドロップ保守を行う運用を標準化します。
 
@@ -101,5 +101,5 @@ ADX 準拠の拡張 Card（アドオン基板）を設計する際は、以下�
 各 Core ボードの内部レジスタ設定、タイマー割り当て、ペリフェラル多重化（PORTMUX）の詳細については、以下の専用リファレンス（英語 SSOT）を参照してください：
 
 - **Microchip ATtiny1616 (CORE-A5):** 👉 [`docs/spec/mcu_mapping/attiny1616.md`](../spec/mcu_mapping/attiny1616.md)
-- **WCH CH32X035 (CORE-CX3):** 👉 [`docs/spec/mcu_mapping/ch32x035.md`](../spec/mcu_mapping/ch32x035.md)
+- **WCH CH32X035 (CORE-CX5):** 👉 [`docs/spec/mcu_mapping/ch32x035.md`](../spec/mcu_mapping/ch32x035.md)
 - **Raspberry Pi RP2040 (CORE-R):** 👉 [`docs/spec/mcu_mapping/rp2040.md`](../spec/mcu_mapping/rp2040.md)

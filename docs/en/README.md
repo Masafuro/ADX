@@ -24,7 +24,7 @@ Find what you need based on what you want to achieve:
 
 | What do you want to do? | Key Documentation | Primary Links |
 | :--- | :--- | :--- |
-| 🚀 **Build with USB & UF2** | Next-generation USB Core board with CH32X035 | [CORE-CX3 Concept](../../hardware/CORE-CX3/concept.md) |
+| 🚀 **Build with USB & UF2** | Next-generation USB Core board with CH32X035 | [CORE-CX5 Concept](../../hardware/CORE-CX5/concept.md) |
 | 🛡 **Deploy tough RS-485 nodes** | High-temp (-40℃ ~ +105℃) isolated Core board | [CORE-A5 Specification](../../hardware/CORE-A5/spec_study.md) |
 | 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](../spec/ADX_PINOUT.md) (v4.1) |
 | 📖 **Learn pinout engineering rationale**| Panel-aligned topology & coplanar shielding details | [ADX Pinout Architecture Guide](ADX_pinout.md) |
@@ -64,7 +64,7 @@ The ADX ecosystem is built upon two open, modular physical standards:
             ┌──────────────────────────┴──────────────────────────┐
             ▼                                                     ▼
    【 Main Core Boards 】                                【 Modular CARDs 】
-     ・ADX CORE-CX3 (USB Flagship / CH32X035 / UF2)        ADX CARD Ecosystem
+     ・ADX CORE-CX5 (USB Flagship / CH32X035 / UF2)        ADX CARD Ecosystem
      ・ADX CORE-A5  (Tough Isolated RS-485 / -40℃~+105℃)   ・Prototyping CARD
      ・Dual Type-C or Isolated Push-in Terminals           ・Power Supply CARDs
      ・Automated 20P IDC Fixture Inspection & Flashing     ・3D-Printable Enclosures
@@ -99,7 +99,7 @@ All Core boards and Card modules interconnect via a standardized 2×10-pin shrou
 
 Choose the right Core board based on your operating environment and connectivity needs:
 
-1. **[ADX CORE-CX3](../../hardware/CORE-CX3/concept.md) (Standard USB Core)**:
+1. **[ADX CORE-CX5](../../hardware/CORE-CX5/concept.md) (Standard USB Core)**:
    - **MCU**: WCH CH32X035 (32-bit RISC-V 48MHz, Flash 62KB, SRAM 20KB)
    - **Highlights**: Internal USB PHY, Dual Type-C ports (Communication 16P + Power 6P), PC reverse protection, cross-platform UF2 drag-and-drop sketch updating.
 2. **[ADX CORE-A5](../../hardware/CORE-A5/spec_study.md) (High-Reliability Edge Slave)**:

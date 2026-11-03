@@ -15,7 +15,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## 1. 改訂の総括と3大イノベーション (Key Innovations in v4.0)
 
-ADX 共通拡張バス（2×10ピン 20P IDC コネクタ）は、現場での過酷な長期運用、筐体スロットイン構造、および次世代MCU（CORE-CX3 / CH32X035等）への展開を見据え、**「ADX-BUS-SPEC-v4.0」** として全面刷新します。
+ADX 共通拡張バス（2×10ピン 20P IDC コネクタ）は、現場での過酷な長期運用、筐体スロットイン構造、および次世代MCU（CORE-CX5 / CH32X035等）への展開を見据え、**「ADX-BUS-SPEC-v4.0」** として全面刷新します。
 
 v4.0 では、以下の**3つの決定的な設計革新（イノベーション）**が導入されます。
 
@@ -123,7 +123,7 @@ v4.0 では、以下の**3つの決定的な設計革新（イノベーション
 
 ## 4. コントローラ別ハードウェア・マッピング比較
 
-| バス信号 | ピン番号 | CORE-A5 (ATtiny1616) | CORE-CX3 (CH32X035) | CORE-R (RP2040) |
+| バス信号 | ピン番号 | CORE-A5 (ATtiny1616) | CORE-CX5 (CH32X035) | CORE-R (RP2040) |
 | :--- | :---: | :--- | :--- | :--- |
 | **GND** | **1** | GND | GND | GND |
 | **OWD** | **2** | **PA0** (UPDI mode) | **PD7** (SDI / SWDIO) | RUN (例外割当) |
@@ -159,6 +159,6 @@ v4.0 では、以下の**3つの決定的な設計革新（イノベーション
 ### フェーズ 2: MCUマッピングおよびハードウェア構想書の更新
 1. **[`docs/spec/mcu_mapping/attiny1616.md`](../../docs/spec/mcu_mapping/attiny1616.md)**:
    - v4.0 ピン配置に合わせた PORTMUX およびピン対応表の更新。
-2. **[`hardware/CORE-CX3/concept.md`](../../hardware/CORE-CX3/concept.md)**:
+2. **[`hardware/CORE-CX5/concept.md`](../../hardware/CORE-CX5/concept.md)**:
    - CH32X035 の v4.0 バス準拠（Pin 2=PD7/SDI, Pins 17〜20=VBUS, 通信16P/電源6P切り分け, UF2運用）を明記。
-3. **新規作成**: `docs/spec/mcu_mapping/ch32x035.md`（CORE-CX3用ペリフェラルマッピング）。
+3. **新規作成**: `docs/spec/mcu_mapping/ch32x035.md`（CORE-CX5用ペリフェラルマッピング）。

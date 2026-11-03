@@ -109,7 +109,7 @@ To guarantee cross-architecture interoperability among different Core boards wit
    - **Direct Grounding Prohibited**: Cards MUST NOT connect push-buttons or hardware pull-down switches directly between Pin 2 and GND.
 2. **Pin 5 (`EXTCLK`) DNP Isolation Recommendation (RECOMMENDED / SHOULD)**:
    - Where an expansion Card module features an on-card clock source (e.g., an external oscillator feeding clock into host MCUs such as ATtiny1616 master cards) or connects monitoring circuitry to Pin 5, the Card **SHOULD insert a series $0\,\Omega$ resistor (or solder jumper) to allow complete electrical disconnection (DNP: Do Not Populate)**.
-   - **Interoperability Rationale**: When such a Card is mated with Core controllers operating from internal oscillators and utilizing Pin 5 as `SWCLK` (e.g., CORE-CX3) or timer PWM output, depopulating the $0\,\Omega$ resistor prevents bus collisions and ensures transparent plug-and-play compatibility across all Core variants.
+   - **Interoperability Rationale**: When such a Card is mated with Core controllers operating from internal oscillators and utilizing Pin 5 as `SWCLK` (e.g., CORE-CX5) or timer PWM output, depopulating the $0\,\Omega$ resistor prevents bus collisions and ensures transparent plug-and-play compatibility across all Core variants.
 
 #### 4.3.3 System Reset Architecture
 System-level resets are governed via primary `VBUS` power cycling, internal watchdog timers (WDT), or verified protocol commands over communication buses (USB / RS-485).
@@ -136,7 +136,7 @@ System-level resets are governed via primary `VBUS` power cycling, internal watc
 For detailed pin multiplexing (PORTMUX), timer mapping, and register-level configurations for each supported controller, refer to the dedicated specification references:
 
 - **Microchip ATtiny1616 (CORE-A5)**: [`mcu_mapping/attiny1616.md`](mcu_mapping/attiny1616.md)
-- **WCH CH32X035 (CORE-CX3)**: [`mcu_mapping/ch32x035.md`](mcu_mapping/ch32x035.md)
+- **WCH CH32X035 (CORE-CX5)**: [`mcu_mapping/ch32x035.md`](mcu_mapping/ch32x035.md)
 - **Raspberry Pi RP2040 (CORE-R)**: [`mcu_mapping/rp2040.md`](mcu_mapping/rp2040.md)
 
 ---
