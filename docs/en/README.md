@@ -26,8 +26,8 @@ Find what you need based on what you want to achieve:
 | :--- | :--- | :--- |
 | 🚀 **Build with USB & UF2** | Next-generation USB Core board with CH32X035 | [CORE-CX3 Concept](../../hardware/CORE-CX3/concept.md) |
 | 🛡 **Deploy tough RS-485 nodes** | High-temp (-40℃ ~ +105℃) isolated Core board | [CORE-A5 Specification](../../hardware/CORE-A5/spec_study.md) |
-| 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](../spec/ADX_PINOUT.md) (v4.0) |
-| 📖 **Learn pinout engineering rationale**| Gravity fail-safe & coplanar shielding details | [ADX Pinout Architecture Guide](ADX_pinout.md) |
+| 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](../spec/ADX_PINOUT.md) (v4.1) |
+| 📖 **Learn pinout engineering rationale**| Panel-aligned topology & coplanar shielding details | [ADX Pinout Architecture Guide](ADX_pinout.md) |
 | 📦 **Design or 3D-print cases** | Dimensions, M3 hole spacing & rail margins | [8748 Form Factor Specification](8748_formfactor.md) |
 
 ---
@@ -58,7 +58,7 @@ The ADX ecosystem is built upon two open, modular physical standards:
          ・8748 Form Factor (87.0 mm × 48.0 mm standardized profile)
          ・Corner M3 Mounting Holes with Φ5.0 mm Washer Clearances
          ・Unidirectional I/F Edge (All field wiring on a single face)
-         ・ADX Pinout v4.0 (Gravity-Safe Power, Edge Guard, Native 3.3V)
+         ・ADX Pinout v4.1 (Panel-Aligned Power, Edge Guard, Native 3.3V)
        ════════════════════════════════════════════════════════════════════
                                        │
             ┌──────────────────────────┴──────────────────────────┐
@@ -80,16 +80,16 @@ The ADX ecosystem is built upon two open, modular physical standards:
 External field connections (power and communications) are strictly aligned along **one single edge of the PCB**.  
 By eliminating multi-directional wire routing, enclosure cutouts and front-panel machining are simplified to a single opening.
 
-### 2.3 Universal 20-Pin Bus (ADX-BUS-SPEC-v4.0)
+### 2.3 Universal 20-Pin Bus (ADX-BUS-SPEC-v4.1)
 All Core boards and Card modules interconnect via a standardized 2×10-pin shrouded IDC connector:
-- **Gravity Fail-Safe Power (`VBUS`: Pins 17–20)**:  
-  High-current power bus ($4.5\text{V} \sim 5.0\text{V}$ / up to **2.0A–3.0A continuous**) is positioned at the bottom of the connector. In vertical slot-in mounts, disconnected power wires drop downward under gravity, physically preventing shorts against communication lines.
+- **Panel-Aligned Power Bus (`VBUS`: Pins 17–20)**:  
+  Directly matches industrial wiring practices (weak signals on top, heavy power on bottom), routing straight into front terminals with zero trace crossings. Secondarily guards against loose wiring contact. Continuous $2 \times 2$ grid rated for **2.0A–3.0A continuous**.
 - **Protective Boundary Wall (`Pin 16: GND`)**:  
   Direct short barrier directly above VBUS, safely grounding crimp misalignments.
 - **Outer Edge Guard & Coplanar Analog (`Pins 1–4`)**:  
   Pin 1 (GND) protects cable perimeter; Pin 3 (AIN) is shielded between Pins 1 and 4 from high-speed digital switching.
-- **One-Wire Maintenance (`Pin 2: OWD`)**:  
-  Unified 1-wire test and UF2 bootloader flashing interface via IDC test fixture.
+- **System Programming & Debug (`Pins 2 & 5`)**:  
+  Unified 1-wire (UPDI) and 2-wire (SDI) automated flashing via the 20-pin IDC fixture with Card-side DNP isolation rules.
 - **Native 3.3V Logic**: All digital pins (UART, I2C, SPI) operate at **3.3V LVCMOS**.
 - *Reference (SSOT)*: [ADX 20-Pin Bus Specification](../spec/ADX_PINOUT.md) | [Architecture Guide](ADX_pinout.md)
 

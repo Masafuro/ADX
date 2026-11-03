@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 - **ステータス**: APPROVED / 回路設計着手
 - **対象ボード**: ADX CORE-CX3 (The Enclosure-Native USB Core)
 - **最新改訂日**: 2026-11-03
-- **準拠規格**: [ADX 20-Pin Bus Specification v4.0](../../docs/spec/ADX_PINOUT.md) (SSOT)
+- **準拠規格**: [ADX 20-Pin Bus Specification v4.1](../../docs/spec/ADX_PINOUT.md) (SSOT)
 - **ペリフェラル仕様**: [WCH CH32X035 Hardware Mapping](../../docs/spec/mcu_mapping/ch32x035.md)
 
 ---
@@ -39,12 +39,12 @@ USB 型の ADX CORE は、これまで CORE-U など様々な構想が検討さ�
 | :--- | :--- | :--- |
 | **フォームファクタ** | **ADX 8748** (`87.0 mm × 48.0 mm`) | M3 ネジ穴 (77×38mm ピッチ)、スロットイン対応 |
 | **メイン MCU** | WCH **`CH32X035G8U6`** (QFN-28) | 32-bit RISC-V, 48MHz, Flash: 62KB, SRAM: 20KB |
-| **拡張バス規格** | **ADX 20-Pin Bus v4.0** 準拠 | 重力フェイルセーフ (Pins 17–20: VBUS), Pin 2: OWD |
+| **拡張バス規格** | **ADX 20-Pin Bus v4.1** 準拠 | 底面大電流電源 (Pins 17–20: VBUS), Pins 2 & 5: システムプログラミング |
 | **USB ポート構成** | **デュアル Type-C ポート** | 通信専用 16P ＋ 電源専用 6P による完全分離 |
 | **論理レベル** | **3.3V LVCMOS ネイティブ** | 全 GPIO 5V トレラント入力対応 |
 | **クロック源** | 48MHz 内蔵高精度 HSI | USB クロック自動トリミング（外付け水晶発振子不要） |
 | **保守・書込方式** | **USB Mass Storage (UF2)** | OS 非依存・ゼロインストール（ドラッグ＆ドロップ書込） |
-| **製造・検査 I/F** | **20P IDC Pin 2 (`OWD`)** | 治具検査時に WCH-LinkE (SDI) 経由で UF2 を自動書き込み |
+| **製造・検査 I/F** | **20P IDC Pins 2 & 5 (SDI)** | 治具検査時に 20P IDC 単体で WCH-LinkE (2-wire SDI) 書込（ポゴピン不要） |
 
 ---
 
@@ -90,7 +90,7 @@ USB 型の ADX CORE は、これまで CORE-U など様々な構想が検討さ�
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
 │                   【 工場出荷時 (自動検査治具) 】                      │
-│   20P IDC Eject Header (Pin 2: OWD / SDI) 経由で治具が接続             │
+│   20P IDC Eject Header (Pins 2 & 5: SDI) 経由で治具が接続 (ポゴピン不要)│
 │   ➔ 自己診断テスト合格後、Flash 下位 10KB に UF2 ブートローダーを書込 │
 └────────────────────────────────────┬───────────────────────────────────┘
                                      │

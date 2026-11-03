@@ -67,18 +67,21 @@ This document serves as the authoritative **Single Source of Truth (SSOT)** for 
 | **14** | **SPI_MISO**| Digital In | 3.3V LVCMOS | SPI Controller In / Peripheral Out | Wire #14 (SPI Bus Group) |
 | **15** | **SPI_SCK** | Digital Out | 3.3V LVCMOS | SPI Serial Clock | Wire #15 (SPI Bus Group) |
 | **16** | **GND** | Power / Shield | 0V Return | VBUS Short-Circuit Barrier Wall & SPI Return | Wire #16 (Protective Boundary Wall) |
-| **17** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Gravity Fail-Safe Cluster) | Wire #17 ($2 \times 2$ Solid Power Plane) |
-| **18** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Gravity Fail-Safe Cluster) | Wire #18 ($2 \times 2$ Solid Power Plane) |
-| **19** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Gravity Fail-Safe Cluster) | Wire #19 ($2 \times 2$ Solid Power Plane) |
-| **20** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Gravity Fail-Safe Cluster) | Wire #20 ($2 \times 2$ Solid Power Plane) |
+| **17** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Panel-Aligned Bottom Cluster) | Wire #17 ($2 \times 2$ Solid Power Plane) |
+| **18** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Panel-Aligned Bottom Cluster) | Wire #18 ($2 \times 2$ Solid Power Plane) |
+| **19** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Panel-Aligned Bottom Cluster) | Wire #19 ($2 \times 2$ Solid Power Plane) |
+| **20** | **VBUS** | Power | 4.5V – 5.0V DC (2.0A–3.0A) | Main Power Bus (Panel-Aligned Bottom Cluster) | Wire #20 ($2 \times 2$ Solid Power Plane) |
 
 ---
 
 ## 4. Electrical Requirements & Design Rules
 
-### 4.1 Gravity Fail-Safe Power Architecture (`VBUS`: Pins 17–20)
-- **Bottom-Heavy Physical Placement**:  
-  Pins 17, 18, 19, and 20 are positioned at the lowest physical row of the connector. When modules are slotted vertically (e.g., in DIN-rail enclosures or vertical chassis), high-current and external power wiring remains at the bottom of the assembly. If an external supply wire disconnects due to mechanical vibration or screw-terminal loosening, gravity pulls the conductor downward toward the chassis floor or wiring duct, physically preventing unintended contact with delicate communication lines (RS-485, I2C, SPI) or analog inputs located higher on the assembly.
+### 4.1 Panel-Aligned Power Bus Architecture (`VBUS`: Pins 17–20)
+- **Topology & Enclosure Alignment (Weak-Signal Top, Heavy-Power Bottom)**:  
+  In industrial control panels and vertical DIN-rail enclosures, standard wiring practice mandates physical segregation between high-current power wiring (bottom ducts) and sensitive instrumentation/communication signals (top ducts). Pins 17, 18, 19, and 20 are dedicated to `VBUS` at the lowest physical row of the connector to mirror this architecture:
+  1. **Direct Straight-Through Routing**: High-current power planes run straight along the bottom edge of the PCB directly into front-panel power terminals and high-current connectors, without traversing or coupling noise into low-voltage signals above.
+  2. **Zero Signal Crossings**: Eliminates magnetic and capacitive crosstalk into sensitive analog (`AIN`) and high-speed communication pairs (`UART`, `SPI`) across both the backplane and module boards.
+  3. **Secondary Physical Safety**: As an inherent physical side-effect of this bottom placement, should an external terminal connection come loose in vertical mounts, the loose conductor hangs or drops downward toward the lower wiring duct, preventing accidental contact with communication lines routed above.
 - **Operating Voltage Window**: Nominal $5.0\,\text{V} \pm 10\%$ ($4.5\,\text{V} \sim 5.0\,\text{V}$ operating range).
 - **Current Carrying Capacity**: Rated for **$2.0\,\text{A} \sim 3.0\,\text{A}$ continuous** across Pins 17–20 combined.
 - **$2 \times 2$ Grid Copper Plane**: Pins 17, 18, 19, and 20 form a symmetrical $2 \times 2$ square grid. PCB layouts MUST bond all four pins together into a continuous solid copper pour on outer and inner layers to minimize IR drop and parasitic inductance.
@@ -151,4 +154,4 @@ Explanatory architecture guides in Japanese ([`docs/ja/ADX_pinout.md`](../ja/ADX
 | Version | Date | Description |
 | :---: | :---: | :--- |
 | **v4.0** | 2026-10-16 | Initial unified release of the 20-Pin Bus Specification with Gravity Fail-Safe power architecture, Pin 2 OWD, and coplanar analog shield. |
-| **v4.1** | 2026-11-03 | Explicitly define Pins 2 and 5 as system management lines. Establish Card-side $0\,\Omega$ DNP isolation recommendation for Pin 5 to support both 1-wire and 2-wire serial programming topologies across Core variants. |
+| **v4.1** | 2026-11-03 | Explicitly define Pins 2 and 5 as system management lines. Establish Card-side $0\,\Omega$ DNP isolation recommendation for Pin 5 to support both 1-wire and 2-wire serial programming topologies. Refine power topology rationale to emphasize industrial panel alignment (weak-signal top, heavy-power bottom) and straight-through non-crossing layout. |

@@ -13,6 +13,6 @@ ADX CORE-CX3 の rev1 ハードウェア開発ディレクトリです。
 
 ## リビジョン概要
 - **MCU**: WCH CH32X035G8U6 (QFN-28)
-- **規格**: ADX 20-Pin Bus Specification v4.0 (3.3V LVCMOS / 重力フェイルセーフ)
+- **規格**: ADX 20-Pin Bus Specification v4.1 (3.3V LVCMOS / 盤トポロジー適合・底面大電流電源)
 - **ステータス**: 配線・回路検討中
 

@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-4.0
 # ADX Hardware Mapping: Microchip ATtiny1616
 (Target Boards: ADX CORE-A, ADX CORE-A5)
 
-**Standard Reference**: [ADX 20-Pin Bus Specification (ADX_PINOUT.md)](../ADX_PINOUT.md) (Standard: `ADX-BUS-SPEC-v4.0`)  
+**Standard Reference**: [ADX 20-Pin Bus Specification (ADX_PINOUT.md)](../ADX_PINOUT.md) (Standard: `ADX-BUS-SPEC-v4.1`)  
 **Target MCU**: Microchip ATtiny1616-MNR (QFN-20 / SOIC-20)  
 **Operating Condition**: 3.3V DC / 10 MHz internal high-frequency oscillator  
 
@@ -14,7 +14,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## 1. Overview
 
-This document specifies how the universal signals of the **ADX 20-Pin Bus (v4.0)** are mapped to the physical pins, peripherals, and PORTMUX channels of the **Microchip ATtiny1616** microcontroller.
+This document specifies how the universal signals of the **ADX 20-Pin Bus (v4.1)** are mapped to the physical pins, peripherals, and PORTMUX channels of the **Microchip ATtiny1616** microcontroller.
 
 ---
 
@@ -38,10 +38,10 @@ This document specifies how the universal signals of the **ADX 20-Pin Bus (v4.0)
 | **14**| **SPI_MISO**| **PC1** | 16 | **SPI0 MISO (Alternate)** / TCD0 WOD | SPI Controller In / Peripheral Out |
 | **15**| **SPI_SCK** | **PC0** | 15 | **SPI0 SCK (Alternate)** / TCD0 WOC / TCB0 WO | SPI Serial Clock |
 | **16**| **GND** | - | - | VBUS Protective Boundary Wall & SPI Return | Direct short barrier above VBUS |
-| **17**| **VBUS** | - | - | Gravity Fail-Safe Main Power Bus (4.5V–5.0V) | Pins 17–20 $2 \times 2$ solid plane |
-| **18**| **VBUS** | - | - | Gravity Fail-Safe Main Power Bus (4.5V–5.0V) | Pins 17–20 $2 \times 2$ solid plane |
-| **19**| **VBUS** | - | - | Gravity Fail-Safe Main Power Bus (4.5V–5.0V) | Pins 17–20 $2 \times 2$ solid plane |
-| **20**| **VBUS** | - | - | Gravity Fail-Safe Main Power Bus (4.5V–5.0V) | Pins 17–20 $2 \times 2$ solid plane |
+| **17**| **VBUS** | - | - | Main High-Current Power Bus (4.5V–5.0V) | Pins 17–20 $2 \times 2$ solid plane (Panel-aligned bottom cluster) |
+| **18**| **VBUS** | - | - | Main High-Current Power Bus (4.5V–5.0V) | Pins 17–20 $2 \times 2$ solid plane (Panel-aligned bottom cluster) |
+| **19**| **VBUS** | - | - | Main High-Current Power Bus (4.5V–5.0V) | Pins 17–20 $2 \times 2$ solid plane (Panel-aligned bottom cluster) |
+| **20**| **VBUS** | - | - | Main High-Current Power Bus (4.5V–5.0V) | Pins 17–20 $2 \times 2$ solid plane (Panel-aligned bottom cluster) |
 
 ---
 
