@@ -24,8 +24,8 @@ Find what you need based on what you want to achieve:
 
 | What do you want to do? | Key Documentation | Primary Links |
 | :--- | :--- | :--- |
-| 🚀 **Build with USB & UF2** | Next-generation USB Core board with CH32X035 | [CORE-CX5 Concept](../../hardware/CORE-CX5/concept.md) |
-| 🛡 **Deploy tough RS-485 nodes** | High-temp (-40℃ ~ +105℃) isolated Core board | [CORE-A5 Specification](../../hardware/CORE-A5/spec_study.md) |
+| 🚀 **Build with USB** | Standard USB Core board with ATtiny1616 & CH342K | [CORE-U Specification](../../hardware/CORE-U/spec_proposal.md) |
+| 🛡 **Deploy tough RS-485 nodes** | High-temp (-40℃ ~ +105℃) isolated Core board | [CORE-A5 Specification](../../hardware/archive/CORE-A5/spec_study.md) |
 | 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](../spec/ADX_PINOUT.md) (v4.1) |
 | 📖 **Learn pinout engineering rationale**| Panel-aligned topology & coplanar shielding details | [ADX Pinout Architecture Guide](ADX_pinout.md) |
 | 📦 **Design or 3D-print cases** | Dimensions, M3 hole spacing & rail margins | [8748 Form Factor Specification](8748_formfactor.md) |
@@ -64,10 +64,10 @@ The ADX ecosystem is built upon two open, modular physical standards:
             ┌──────────────────────────┴──────────────────────────┐
             ▼                                                     ▼
    【 Main Core Boards 】                                【 Modular CARDs 】
-     ・ADX CORE-CX5 (USB Flagship / CH32X035 / UF2)        ADX CARD Ecosystem
-     ・ADX CORE-A5  (Tough Isolated RS-485 / -40℃~+105℃)   ・Prototyping CARD
-     ・Dual Type-C or Isolated Push-in Terminals           ・Power Supply CARDs
-     ・Automated 20P IDC Fixture Inspection & Flashing     ・3D-Printable Enclosures
+     ・ADX CORE-U   (USB Standard / ATtiny1616 / Case-Friendly)        ADX CARD Ecosystem
+     ・ADX CORE-A24 (Industrial DC24V & Isolated RS-485 / Planning)   ・Prototyping CARD
+     ・Dual Type-C or Push-in Terminals                               ・Power Supply CARDs
+     ・Automated 20P IDC Fixture Inspection & Flashing                ・3D-Printable Enclosures
 ```
 
 ### 2.1 8748 Form Factor & Mechanical Mounting
@@ -99,9 +99,9 @@ All Core boards and Card modules interconnect via a standardized 2×10-pin shrou
 
 Choose the right Core board based on your operating environment and connectivity needs:
 
-1. **[ADX CORE-CX5](../../hardware/CORE-CX5/concept.md) (Standard USB Core)**:
-   - **MCU**: WCH CH32X035 (32-bit RISC-V 48MHz, Flash 62KB, SRAM 20KB)
-   - **Highlights**: Internal USB PHY, Dual Type-C ports (Communication 16P + Power 6P), PC reverse protection, cross-platform UF2 drag-and-drop sketch updating.
-2. **[ADX CORE-A5](../../hardware/CORE-A5/spec_study.md) (High-Reliability Edge Slave)**:
+1. **[ADX CORE-U](../../hardware/CORE-U/spec_proposal.md) (Standard USB Core)**:
+   - **MCU**: Microchip ATtiny1616-MNR (8-bit AVR 3.3V 10MHz, Flash 16KB, SRAM 2KB)
+   - **Highlights**: Case-friendly development UX (no buttons needed), Dual Type-C ports (5V/2A Power + Com), CH342K dual USB-UART bridge (Port 1: SerialUPDI / Port 2: Serial Monitor), full compatibility with Arduino IDE 1.8.x & megaTinyCore.
+2. **[ADX CORE-A5](../../hardware/archive/CORE-A5/spec_study.md) / CORE-A24 (Industrial Edge)**:
    - **MCU**: Microchip ATtiny1616-MNR (8-bit 10MHz, negligible self-heating)
-   - **Highlights**: Industrial -40℃ to +105℃ rated components, 2500V galvanic isolated RS-485, push-in spring clamp terminals, CCL autonomous break-reset.
+   - **Highlights**: Industrial -40℃ to +105℃ rated components, 2500V galvanic isolated RS-485, push-in spring clamp terminals. (CORE-A24 with native DC24V support is currently in planning).

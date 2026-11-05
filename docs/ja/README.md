@@ -24,8 +24,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 | やりたいこと | 主なドキュメント | リンク |
 | :--- | :--- | :--- |
-| 🚀 **USB でサクッと動かしたい** | 次世代 USB Core ボード CORE-CX5 の構想と仕様 | [CORE-CX5 構想書](../../hardware/CORE-CX5/concept.md) |
-| 🛡 **現場用・高耐熱端末を作りたい** | 絶縁 RS-485 搭載 CORE-A5 の詳細回路と BOM | [CORE-A5 仕様検討書](../../hardware/CORE-A5/spec_study.md) |
+| 🚀 **USB でサクッと動かしたい** | 標準 USB Core ボード CORE-U の構想と仕様 | [CORE-U 技術仕様案](../../hardware/CORE-U/spec_proposal.md) |
+| 🛡 **現場用・高耐熱端末を作りたい** | 絶縁 RS-485 搭載 CORE-A5 の詳細回路と BOM | [CORE-A5 仕様検討書](../../hardware/archive/CORE-A5/spec_study.md) |
 | 🔌 **拡張基板 (CARD) を作りたい** | 共通 20ピンバスの厳密なピン定義と設計ルール | [ADX 20ピンバス仕様書 (SSOT)](../spec/ADX_PINOUT.md) (v4.1) |
 | 📖 **ピン配置の設計思想を知りたい** | 産業盤配線トポロジー適合やシールド構造の解説 | [ADX Pinout 設計・解説ガイド](ADX_pinout.md) |
 | 📦 **ケースを設計・3Dプリントしたい** | 8748 外形寸法、ネジ穴位置、レールマージン | [8748 フォームファクタ仕様書](8748_formfactor.md) |
@@ -65,10 +65,10 @@ ADXの土台となるのは、マイコンやモジュールが様々なケー�
             ┌──────────────────────────┴──────────────────────────┐
             ▼                                                     ▼
    【 メイン Core シリーズ 】                            【 モジュール式 CARD群 】
-     ・ADX CORE-CX5 (USB Flagship / CH32X035 / UF2)        ADX CARD エコシステム
-     ・ADX CORE-A5  (高耐環境 RS-485 / -40℃〜+105℃)       ・Prototyping CARD (試作基板)
-     ・デュアル Type-C または 絶縁スプリング端子台         ・Power CARD (電源受電)
-     ・20P IDC 治具による出荷時自動検査・書込              ・3Dプリント用ケース / マウントSTL
+     ・ADX CORE-U   (標準 USB / ATtiny1616 / 筐体フレンドリー)            ADX CARD エコシステム
+     ・ADX CORE-A24 (産業 DC24V ＆ 絶縁 RS-485 / 構想中)                 ・Prototyping CARD (試作基板)
+     ・デュアル Type-C または 絶縁スプリング端子台                        ・Power CARD (電源受電)
+     ・20P IDC 治具による出荷時自動検査・書込                             ・3Dプリント用ケース / マウントSTL
 ```
 
 ### 2.1 8748 フォームファクタと確実なネジ固定
@@ -101,9 +101,9 @@ Core ボードと拡張 CARD は、標準の 2×10ピン IDC コネクタでシ�
 
 用途と環境に応じて、最適な Core ボードを選択できます：
 
-1. **[ADX CORE-CX5](../../hardware/CORE-CX5/concept.md) (次世代標準 USB Core)**:
-   - **MCU**: WCH CH32X035 (32-bit RISC-V 48MHz, Flash 62KB, SRAM 20KB)
-   - **特徴**: 内蔵 USB PHY、デュアル Type-C（通信専用 16P ＋ 電源専用 6P）、PC 逆流保護、UF2 ドラッグ＆ドロップ書き換え対応。手軽でパワフルな標準機。
-2. **[ADX CORE-A5](../../hardware/CORE-A5/spec_study.md) (高耐環境・高信頼エッジ端末)**:
+1. **[ADX CORE-U](../../hardware/CORE-U/spec_proposal.md) (標準 USB Core)**:
+   - **MCU**: Microchip ATtiny1616-MNR (8-bit AVR 3.3V 10MHz, Flash 16KB, SRAM 2KB)
+   - **特徴**: 筐体フレンドリー設計（ボタン操作一切不要）、デュアル Type-C（給電専用 5V2A ＋ 通信専用）、CH342K デュアル UART（Port 1: SerialUPDI / Port 2: Serial モニタ）、Arduino IDE 1.8系 × megaTinyCore 完全対応。
+2. **[ADX CORE-A5](../../hardware/archive/CORE-A5/spec_study.md) / CORE-A24 (産業向けエッジ端末)**:
    - **MCU**: Microchip ATtiny1616-MNR (8-bit 10MHz, 極小自己発熱)
-   - **特徴**: -40℃〜+105℃ 耐熱部品、2500V 絶縁 RS-485、スプリング端子台、CCL 自律 OTW リセット。配電盤や屋外過酷環境の守護神。
+   - **特徴**: -40℃〜+105℃ 耐熱部品、2500V 絶縁 RS-485、スプリング端子台。（現在、産業DC24V電源に最適化した後継機 CORE-A24 を構想中）。
