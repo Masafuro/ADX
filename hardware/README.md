@@ -17,8 +17,8 @@ ADXのハードウェアは、**8748 Form Factor**（`87.0 mm × 48.0 mm`）お�
 
 | ボード名 | グレード | 保護・通信構造 | 状態・概要 | リンク |
 | :--- | :--- | :--- | :--- | :--- |
-| **ADX CORE-U** | **Production / Standard** | **デュアル Type-C（5V2A給電 / UPDI・Serial独立）** | **標準 USB Core ボード（Arduino UNO R3/R4対抗）。** ATtiny1616 (3.3V 10MHz) ＋ CH342K、Arduino IDE 1.8系 × megaTinyCore 完全対応、筐体フレンドリー設計。 | [構想書](CORE-U/concept.md) / [技術仕様案](CORE-U/spec_proposal.md) |
-| **ADX CORE-A24** | **Planning / Active** | **2500V 絶縁RS-485 / DC24V受電** | **次世代の現場・制御盤向けエッジ端末（構想中）。** CORE-A5の後継として産業DC24V電源環境に最適化。 | — |
+| **ADX CORE-U** | **Production / Standard** | **デュアル Type-C（5V2A給電 / UPDI・Serial独立）** | **標準 USB Core ボード（Arduino UNO R3/R4代替）。** ATtiny1616 (3.3V 10MHz) ＋ CH342K、Arduino IDE 1.8系 × megaTinyCore 最適化、筐体フレンドリー設計。 | [構想書](CORE-U/concept.md) / [技術仕様案](CORE-U/spec_proposal.md) / [比較・設計思想](CORE-U/comparison.md) |
+| **ADX CORE-A24** | **Planning / Active** | **2500V 絶縁RS-485 / DC24V受電** | **次世代の現場・制御盤向けエッジ端末（構想中）。** CORE-A5の後継としてDC24V電源環境に最適化。 | — |
 | **ADX CORE-A5** | **Archive** | **2500V 絶縁RS-485 / VBUS幹線受電** | 旧現場向けモデル。-40℃〜+105℃耐熱部品、前面5VIN端子台（CORE-A24へ発展継承）。 | [旧構想書](archive/CORE-A5/concept.md) / [旧仕様書](archive/CORE-A5/spec_study.md) |
 | **ADX CORE-CX5** | **Archive / Research** | **デュアル Type-C（通信/電源分離）** | USB Core 試作研究モデル。WCH CH32X035（32-bit RISC-V 48MHz）、USB-PHY 内蔵。 | [研究構想書](OLD/CORE-CX5/concept.md) / [Mapping 仕様](../docs/spec/mcu_mapping/ch32x035.md) |
 | **ADX CORE-U (旧版)** | **Archive** | **PC保護回路** | 旧USB構想ボード。ATtiny1616初期試作。 | [旧検討ノート](archive/CORE-U_OLD/concept.md) |
