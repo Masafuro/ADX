@@ -5,7 +5,11 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # ADX (Advanced Devices eXtended)
 
-[ **English** | [日本語 (docs/ja/README.md)](docs/ja/README.md) ]
+<p align="center">
+  <strong>[ English | <a href="docs/ja/README.md">日本語</a> ]</strong><br>
+  <a href="https://arle.cc">🌐 <strong>Official Brand Website (ARLE.cc)</strong></a> &nbsp;|&nbsp;
+  <a href="https://hackaday.io/project/205547-adx-enclosure-native-modular-hardware-standard">🛠 <strong>Hackaday.io Project</strong></a>
+</p>
 
 <p align="center">
   <img src="docs/images/hero_no_photo.svg" alt="ADX: The Working Arduino" width="100%">
@@ -14,7 +18,7 @@ SPDX-License-Identifier: CC-BY-4.0
 ### *The Working Arduino*
 > **A tougher, enclosure-native board engineered to run your Arduino sketches reliably in the real world.**
 
-**ADX** is an open-hardware modular ecosystem designed for projects that need to step off the workbench and run continuously inside real enclosures—neatly mounted, cleanly wired, and shielded with field-ready protections.
+**ADX** is an open-hardware modular ecosystem developed by **[ARLE.cc](https://arle.cc)** (backed by Furukawa Kikaku, Nagasaki, Japan). It is engineered for projects that need to step off the workbench and run continuously inside real enclosures—neatly mounted, cleanly wired, and shielded with field-ready protections.
 
 ---
 
@@ -25,8 +29,8 @@ Find what you need based on what you want to achieve:
 | What do you want to do? | Key Documentation | Primary Links |
 | :--- | :--- | :--- |
 | 🚀 **Build with USB** | Standard USB Core board with ATtiny1616 & CH342K | [CORE-U Specification](hardware/CORE-U/spec_proposal.md) |
-| 🛡 **Deploy tough RS-485 nodes** | High-temp (-40℃ ~ +105℃) isolated Core board | [CORE-A5 Specification](hardware/archive/CORE-A5/spec_study.md) |
-| 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](docs/spec/ADX_PINOUT.md) (v4.0) |
+| 🛡 **Deploy Industrial DC24V / RS-485** | Galvanic isolated field controller (Active Planning) | [CORE-A24 Concept](hardware/README.md#11-core-シリーズ-メインmcuボード) |
+| 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](docs/spec/ADX_PINOUT.md) |
 | 📖 **Learn pinout engineering rationale**| Gravity fail-safe & coplanar shielding details | [ADX Pinout Architecture Guide](docs/en/ADX_pinout.md) |
 | 📦 **Design or 3D-print cases** | Dimensions, M3 hole spacing & rail margins | [8748 Form Factor Specification](docs/en/8748_formfactor.md) |
 
@@ -99,9 +103,22 @@ All Core boards and Card modules interconnect via a standardized 2×10-pin shrou
 
 Choose the right Core board based on your operating environment and connectivity needs:
 
-1. **[ADX CORE-U](hardware/CORE-U/spec_proposal.md) (Standard USB Core)**:
+1. **[ADX CORE-U](hardware/CORE-U/spec_proposal.md) (Standard USB Core / Production)**:
    - **MCU**: Microchip ATtiny1616-MNR (8-bit AVR 3.3V 10MHz, Flash 16KB, SRAM 2KB)
    - **Highlights**: Case-friendly development UX (no buttons needed), Dual Type-C ports (5V/2A Power + Com), CH342K dual USB-UART bridge (Port 1: SerialUPDI / Port 2: Serial Monitor), full compatibility with Arduino IDE 1.8.x & megaTinyCore.
-2. **[ADX CORE-A5](hardware/archive/CORE-A5/spec_study.md) / CORE-A24 (Industrial Edge)**:
+2. **ADX CORE-A24 (Industrial Edge / Active Planning)**:
    - **MCU**: Microchip ATtiny1616-MNR (8-bit 10MHz, negligible self-heating)
-   - **Highlights**: Industrial -40℃ to +105℃ rated components, 2500V galvanic isolated RS-485, push-in spring clamp terminals. (CORE-A24 with native DC24V support is currently in planning).
+   - **Highlights**: Industrial -40℃ to +105℃ rated components, 2500V galvanic isolated RS-485, push-in spring clamp terminals, native DC24V power input. (Successor to CORE-A5).
+3. **ADX CORE-A5 (Archive)**:
+   - Predecessor 5V field controller, archived in favor of CORE-A24 ([Archive Spec](hardware/archive/CORE-A5/spec_study.md)).
+
+---
+
+## 4. Brand & Governance
+
+- **Brand & Manufacturer**: **[ARLE.cc](https://arle.cc)** — An independent hardware label creating field-ready, enclosure-native computing tools.
+- **Engineering Heritage**: Backed by **Furukawa Kikaku (古川企画)**, an embedded engineering firm based in Sasebo, Nagasaki, Japan ([furukawakikaku.jp](https://furukawakikaku.jp)).
+- **Licensing Model (Tri-License)**:
+  - **Hardware Designs**: [CERN-OHL-P-v2](LICENSES/CERN-OHL-P-2.0.txt) (Strongly Reciprocal)
+  - **Firmware & Software**: [MIT License](LICENSES/MIT.txt)
+  - **Documentation & Specifications**: [CC-BY-4.0](LICENSES/CC-BY-4.0.txt)

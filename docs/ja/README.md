@@ -5,7 +5,11 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # ADX (Advanced Devices eXtended)
 
-[ English (../../README.md) | **日本語** ]
+<p align="center">
+  <strong>[ <a href="../../README.md">English</a> | 日本語 ]</strong><br>
+  <a href="https://arle.cc">🌐 <strong>公式ブランドサイト (ARLE.cc)</strong></a> &nbsp;|&nbsp;
+  <a href="https://hackaday.io/project/205547-adx-enclosure-native-modular-hardware-standard">🛠 <strong>Hackaday.io プロジェクト</strong></a>
+</p>
 
 <p align="center">
   <img src="../images/hero_no_photo.svg" alt="ADX: はたらくArduino" width="100%">
@@ -14,7 +18,7 @@ SPDX-License-Identifier: CC-BY-4.0
 ### *はたらくArduino (The Working Arduino)*
 > **Arduinoよりちょっとタフで、箱にいれやすい。あなたのスケッチを現場で動かすためのボード。**
 
-**ADX** は、ブレッドボードの上で作った電子工作プロジェクトを実際の暮らしや現場の空間へ連れ出し、ケースに収めて安心して長く動かし続けるために生まれたオープンハードウェアのモジュラーエコシステムです。
+**ADX** は、グローバルハードウェアブランド **[ARLE.cc](https://arle.cc)**（長崎・佐世保の「古川企画」発）が開発するオープンハードウェアのモジュラーエコシステムです。ブレッドボードの上で作った電子工作プロジェクトを実際の暮らしや現場の空間へ連れ出し、ケースに収めて安心して長く動かし続けるために生まれました。
 
 ---
 
@@ -25,8 +29,8 @@ SPDX-License-Identifier: CC-BY-4.0
 | やりたいこと | 主なドキュメント | リンク |
 | :--- | :--- | :--- |
 | 🚀 **USB でサクッと動かしたい** | 標準 USB Core ボード CORE-U の構想と仕様 | [CORE-U 技術仕様案](../../hardware/CORE-U/spec_proposal.md) |
-| 🛡 **現場用・高耐熱端末を作りたい** | 絶縁 RS-485 搭載 CORE-A5 の詳細回路と BOM | [CORE-A5 仕様検討書](../../hardware/archive/CORE-A5/spec_study.md) |
-| 🔌 **拡張基板 (CARD) を作りたい** | 共通 20ピンバスの厳密なピン定義と設計ルール | [ADX 20ピンバス仕様書 (SSOT)](../spec/ADX_PINOUT.md) (v4.1) |
+| 🛡 **産業用DC24V・絶縁RS-485端末を作りたい** | 現場向けエッジ端末 CORE-A24（構想・計画中） | [CORE-A24 構想](../../hardware/README.md#11-core-シリーズ-メインmcuボード) |
+| 🔌 **拡張基板 (CARD) を作りたい** | 共通 20ピンバスの厳密なピン定義と設計ルール | [ADX 20ピンバス仕様書 (SSOT)](../spec/ADX_PINOUT.md) |
 | 📖 **ピン配置の設計思想を知りたい** | 産業盤配線トポロジー適合やシールド構造の解説 | [ADX Pinout 設計・解説ガイド](ADX_pinout.md) |
 | 📦 **ケースを設計・3Dプリントしたい** | 8748 外形寸法、ネジ穴位置、レールマージン | [8748 フォームファクタ仕様書](8748_formfactor.md) |
 
@@ -59,7 +63,7 @@ ADXの土台となるのは、マイコンやモジュールが様々なケー�
          ・四隅の M3 取付穴 ＆ Φ5.0 mm ワッシャークリアランス
          ・レール滑り込み（スロットイン）や爪留め（スナップフィット）用の掴み幅
          ・単一の「I/F辺」に外部配線を集約（加工面が1面で完結）
-         ・ADX Pinout v4.1 (底面大電流電源、最外端GND、3.3V ネイティブ GPIO)
+         ・ADX Pinout v4.0 (底面大電流電源、最外端GND、3.3V ネイティブ GPIO)
        ════════════════════════════════════════════════════════════════════
                                        │
             ┌──────────────────────────┴──────────────────────────┐
@@ -81,7 +85,7 @@ ADXの土台となるのは、マイコンやモジュールが様々なケー�
 外部配線と接続する端子部は、**基板の単一の一辺（I/F辺）に集約**されています。  
 コネクタが四方八方に飛び出さないため、ケースの開口加工や3Dプリントケースのフタ設計が「1面だけ」で完結します。
 
-### 2.3 共通 20ピンバス (ADX-BUS-SPEC-v4.1)
+### 2.3 共通 20ピンバス (ADX-BUS-SPEC-v4.0)
 Core ボードと拡張 CARD は、標準の 2×10ピン IDC コネクタでシームレスに結合します：
 - **産業盤トポロジー適合・底面大電流電源 (`VBUS`: Pins 17〜20)**:  
   制御盤の配線原則（弱電上部・強電下部）に一致させ、前面電源端子台へ直進配線（基板内信号交差全廃）。副次的に縦型スロット時の落線混触も防止。$2 \times 2$ ベタパターンで最大 **2A〜3A 連続** を供給。
@@ -90,7 +94,7 @@ Core ボードと拡張 CARD は、標準の 2×10ピン IDC コネクタでシ�
 - **最外端ガード ＆ AIN コプレーナ保護 (`Pins 1〜4`)**:  
   外周の Pin 1 (GND) と Pin 4 (GND) で微弱な Pin 3 (AIN) を挟み込み、高周波ノイズを遮断。
 - **システムプログラミング＆デバッグ (`Pins 2 & 5`)**:  
-  治具 IDC ヘッダー 1 本で 1線(UPDI)〜2線(SDI) 自動書込・検査を完結。Card 側は 0Ω 抵抗による DNP アイソレーション推奨。
+  治具 IDC ヘッダー 1 本で 1線(UPDI)〜2線(SDI) 自動書込・検査を完結。
 - **3.3V ネイティブ統一**:  
   全デジタル信号（UART, I2C, SPI）を **3.3V LVCMOS** に統一。
 - *詳細仕様 (SSOT)*: [ADX 20ピンバス仕様書 (英語)](../spec/ADX_PINOUT.md) | [設計解説ガイド (日本語)](ADX_pinout.md)
@@ -101,9 +105,22 @@ Core ボードと拡張 CARD は、標準の 2×10ピン IDC コネクタでシ�
 
 用途と環境に応じて、最適な Core ボードを選択できます：
 
-1. **[ADX CORE-U](../../hardware/CORE-U/spec_proposal.md) (標準 USB Core)**:
+1. **[ADX CORE-U](../../hardware/CORE-U/spec_proposal.md) (標準 USB Core / Production)**:
    - **MCU**: Microchip ATtiny1616-MNR (8-bit AVR 3.3V 10MHz, Flash 16KB, SRAM 2KB)
    - **特徴**: 筐体フレンドリー設計（ボタン操作一切不要）、デュアル Type-C（給電専用 5V2A ＋ 通信専用）、CH342K デュアル UART（Port 1: SerialUPDI / Port 2: Serial モニタ）、Arduino IDE 1.8系 × megaTinyCore 完全対応。
-2. **[ADX CORE-A5](../../hardware/archive/CORE-A5/spec_study.md) / CORE-A24 (産業向けエッジ端末)**:
+2. **ADX CORE-A24 (産業向けエッジ端末 / 構想・計画中)**:
    - **MCU**: Microchip ATtiny1616-MNR (8-bit 10MHz, 極小自己発熱)
-   - **特徴**: -40℃〜+105℃ 耐熱部品、2500V 絶縁 RS-485、スプリング端子台。（現在、産業DC24V電源に最適化した後継機 CORE-A24 を構想中）。
+   - **特徴**: -40℃〜+105℃ 耐熱部品、2500V 絶縁 RS-485、スプリング端子台、産業用DC24V電源入力。（旧 CORE-A5 の後継発展機）。
+3. **ADX CORE-A5 (アーカイブ)**:
+   - 旧現場向けモデル。CORE-A24 への移行に伴いアーカイブ化（[仕様書](../../hardware/archive/CORE-A5/spec_study.md)）。
+
+---
+
+## 4. ブランド ＆ ガバナンス (Brand & Governance)
+
+- **ブランド ＆ 製造元**: **[ARLE.cc](https://arle.cc)** — 現場生まれのタフなオープンハードウェアを生み出すグローバルメーカーブランド。
+- **エンジニアリング母体**: **古川企画 (Furukawa Kikaku)** — 日本・長崎県佐世保市を拠点とする組込システム開発ファーム（[furukawakikaku.jp](https://furukawakikaku.jp)）。
+- **ライセンス体系 (Tri-License)**:
+  - **ハードウェア設計データ**: [CERN-OHL-P-v2](../../LICENSES/CERN-OHL-P-2.0.txt) (Strongly Reciprocal)
+  - **ファームウェア ＆ ソフトウェア**: [MIT License](../../LICENSES/MIT.txt)
+  - **ドキュメント ＆ 規格仕様書**: [CC-BY-4.0](../../LICENSES/CC-BY-4.0.txt)
