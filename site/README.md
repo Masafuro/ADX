@@ -52,3 +52,4 @@ This directory is designed to be deployed directly as the root of the `arle.cc` 
   - Build command: (None for static HTML, or `npm run build` if using SSG/Vite)
   - Output directory: `.` (or `dist` if built)
 - **Domain**: `arle.cc`
+

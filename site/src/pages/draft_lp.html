@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARLE.cc | Hardware Engineered for the Real World</title>
+  <meta name="description" content="ARLE.cc is an independent hardware label creating field-ready, enclosure-native computing tools. Born from industrial embedded engineering in Sasebo, Japan.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0d10;
+      --bg-surface: #14161c;
+      --bg-surface-elevated: #1b1e26;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --accent: #2563eb;
+      --accent-glow: rgba(37, 99, 235, 0.15);
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    header {
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(12, 13, 16, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .nav-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      filter: invert(1);
+    }
+
+    .brand-logo img {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-cta {
+      background: var(--text-primary);
+      color: var(--bg) !important;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s ease !important;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.9;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 13px;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .hero-pill span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 64px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: clamp(17px, 2vw, 20px);
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--text-primary);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: #e5e7eb;
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-surface-elevated);
+      border-color: var(--border-strong);
+    }
+
+    /* Section Styling */
+    section {
+      padding: 96px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 64px;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 17px;
+      color: var(--text-secondary);
+    }
+
+    /* Product Feature Grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+
+    .card-mono {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* Showcase Banner */
+    .showcase {
+      background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .showcase-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(37, 99, 235, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(37, 99, 235, 0.3);
+    }
+
+    .showcase-content h2 {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .showcase-content p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      max-width: 680px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    /* Heritage / About Section */
+    .heritage {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-surface);
+    }
+
+    .heritage-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .heritage-text {
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .heritage-text h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .heritage-text p {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .heritage-logo {
+      padding: 24px 32px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      filter: invert(1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .heritage-logo img {
+      max-height: 48px;
+      width: auto;
+    }
+
+    /* Footer */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .hero {
+        padding: 80px 0 60px;
+      }
+      .showcase {
+        padding: 32px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="container nav-inner">
+      <a href="/" class="brand-logo" aria-label="ARLE.cc">
+        <img src="public/assets/logos/arle_logo.png" alt="ARLE.cc">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#ecosystem">ADX Ecosystem</a></li>
+        <li><a href="#standards">Standards</a></li>
+        <li><a href="#origin">Engineering Origin</a></li>
+        <li><a href="https://github.com/Masafuro/ADX" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://github.com/Masafuro/ADX" class="nav-cta" target="_blank" rel="noopener">Explore Code</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-pill">
+          <span></span> Field-Ready Open Hardware
+        </div>
+        <h1>Hardware Engineered for the Real World.</h1>
+        <p>
+          ARLE.cc creates enclosure-native computing tools and open-hardware standards. 
+          Bridging the gap between creative workbench prototypes and permanent, harsh installations.
+        </p>
+        <div class="hero-actions">
+          <a href="#ecosystem" class="btn btn-primary">Discover ADX Ecosystem</a>
+          <a href="https://github.com/Masafuro/ADX" class="btn btn-secondary" target="_blank" rel="noopener">GitHub Repository</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADX Showcase Section -->
+    <section id="ecosystem">
+      <div class="container">
+        <div class="showcase">
+          <div class="showcase-badge">Flagship Standard & Ecosystem</div>
+          <div class="showcase-content">
+            <h2>ADX (Advanced Devices eXtended)</h2>
+            <p>
+              Prototyping on a workbench with jumper wires is where great ideas start. 
+              But deploying them inside factory control cabinets, outdoor fixtures, or custom enclosures requires a different kind of hardware.
+              ADX is our physical and electrical answer: <em>"The Working Arduino."</em>
+            </p>
+            <div class="grid-3">
+              <div class="card">
+                <div class="card-mono">01 / FORM FACTOR</div>
+                <h3>8748 Physical Profile</h3>
+                <p>
+                  Standardized 87.0 × 48.0 mm footprint. Generous Φ5.0 mm washer clearances for real M3 screws, 
+                  plus edge grab margins for slide-in rails and 3D-printed snap cases.
+                </p>
+              </div>
+              <div class="card">
+                <div class="card-mono">02 / WIRING HARNESS</div>
+                <h3>Unidirectional Edge</h3>
+                <p>
+                  All external power and field communication lines strictly aligned along a single PCB edge. 
+                  Say goodbye to four-sided wire routing and multi-cutout enclosure panels.
+                </p>
+              </div>
+              <div class="card">
+                <div class="card-mono">03 / MODULAR BUS</div>
+                <h3>Universal 20-Pin Bus</h3>
+                <p>
+                  Gravity fail-safe high-current power routing, co-planar analog shielding, 
+                  and 3.3V native logic interconnecting Core controllers and Card expansions.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Lineup Section -->
+    <section id="standards">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-eyebrow">Modular Architecture</div>
+          <h2 class="section-title">One Ecosystem, Infinite Configurations</h2>
+          <p class="section-desc">
+            Designed around single-responsibility modules: Core controllers do compute; Cards handle power and physical isolation.
+          </p>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-mono">CORE CONTROLLER</div>
+            <h3>ADX CORE-U</h3>
+            <p>
+              Standard USB development core. Dual Type-C ports (5V/2A power + dual USB-UART), ATtiny1616 MCU, 
+              and case-friendly flashing with zero button requirements.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-mono">INDUSTRIAL CONTROLLER</div>
+            <h3>ADX CORE-A</h3>
+            <p>
+              Harsh environment controller. -40°C to +105°C industrial rating, 2500V galvanic isolated RS-485, 
+              and tool-free push-in spring clamp terminals for rock-solid field wiring.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-mono">EXPANSION CARDS</div>
+            <h3>CARD Ecosystem</h3>
+            <p>
+              Modular expansion cards including isolated DC 12V/24V power supplies, AAA battery autonomy cards, 
+              and pass-through prototyping boards.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engineering Origin / Backed by Furukawa Kikaku -->
+    <section id="origin" class="heritage">
+      <div class="container heritage-inner">
+        <div class="heritage-text">
+          <div class="section-eyebrow">Engineering Heritage</div>
+          <h3>Backed by Furukawa Kikaku (古川企画)</h3>
+          <p>
+            ARLE.cc is an independent global hardware brand founded by Furukawa Kikaku, 
+            an embedded engineering firm based in Sasebo, Nagasaki, Japan.
+          </p>
+          <p>
+            With years of experience delivering robust firmware, custom electronics, and industrial control systems 
+            across Japan, our philosophy is simple: engineering integrity above all. 
+            We build open-hardware tools that honor physical laws, respect engineering constraints, and run reliably in the real world.
+          </p>
+        </div>
+        <div class="heritage-logo">
+          <a href="https://furukawakikaku.jp" target="_blank" rel="noopener" title="古川企画 (Furukawa Kikaku)">
+            <img src="public/assets/logos/furukawakikaku_logo.png" alt="古川企画 Furukawa Kikaku">
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        &copy; 2026 ARLE.cc / Furukawa Kikaku. All rights reserved.
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/Masafuro/ADX" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://furukawakikaku.jp" target="_blank" rel="noopener">Furukawa Kikaku (Japan)</a></li>
+        <li><a href="https://github.com/Masafuro/ADX/blob/main/LICENSE.md" target="_blank" rel="noopener">Licenses</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
+
