@@ -1,0 +1,67 @@
+# ==========================================
+# Build Artifacts & Intermediate Directories
+# ==========================================
+**/build/
+bin/
+obj/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile.cmake
+*.ninja
+.ninja_*
+
+# ==========================================
+# Compile & Assembly Intermediates
+# ==========================================
+*.o
+*.obj
+*.d
+*.map
+*.dis
+*.out
+
+# ==========================================
+# Language Server & IDE Caches
+# ==========================================
+.cache/
+.clangd/
+
+# ==========================================
+# Android & Gradle
+# ==========================================
+.gradle/
+local.properties
+
+# ==========================================
+# Python
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# ==========================================
+# Hardware / EDA
+# ==========================================
+*-save.kicad_*
+_autosave-*
+*.kicad_prl
+*.bak
+
+# ==========================================
+# OS & Editor
+# ==========================================
+.DS_Store
+Thumbs.db
+*~
+*.swp
+
+# VSCode: ignore workspace storage and user cache, keep configs
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/c_cpp_properties.json
