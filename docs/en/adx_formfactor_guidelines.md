@@ -86,12 +86,13 @@ To achieve this balance, this guideline defines three requirement tiers based on
   - **DIY / General Add-ons [MAY]:** Standard boxed shrouded headers or simple pin headers may be used where low profile or minimal cost is prioritized.
 
 ### 4.2 Board Dimensions & Stacking
-- **Official Standard [SHOULD]: 8748 Form Factor:**
-  - Board Outline: **`87.0 mm × 48.0 mm`**
-  - Mounting Holes: **4× M3 clearance holes (Φ3.3 mm)**
-  - Hole Pitch: **`77.0 mm × 38.0 mm`** (`5.0 mm` margin from board edges)
-  - Corner Treatment: **C3 Chamfer**
-  - *(Refer to [8748 Form Factor Specification](8748_formfactor.md) for full CAD details).*
+- **Official Standard [SHOULD]: 8854 Form Factor (Next-Gen Standard):**
+  - Board Outline: **`88.0 mm × 54.0 mm`**
+  - Mounting Holes: **4× M3 clearance holes (Φ3.3 mm NPTH)**
+  - Hole Pitch: **`76.0 mm × 42.0 mm`** (`6.0 mm` margin from board edges, $\Phi 10.0\,\text{mm}$ washer keep-out)
+  - Corner Treatment: **C0 (Right angles, continuous straight V-cut ready)**
+  - Underside Structure: **SMD-only zone outside 66.0 mm I/O Edge** (enables bottom slide-in rails and snap-fits)
+  - *(Refer to [8854 Form Factor Specification](8854_formfactor.md) for full CAD details; legacy: [8748 Form Factor](8748_formfactor.md)).*
 - **Third-Party / Custom Shapes [MAY]:**
   - Custom outline shapes (compact daughterboards, full-size carrier shields, L-shapes) are fully permitted as long as the 20-pin IDC interface aligns electrically.
 
@@ -129,7 +130,7 @@ Before releasing or sending a PCB for fabrication (JLCPCB PCBA):
 - [ ] **[MUST]** Does the 20-pin IDC connector pin assignment strictly match ADX Bus Spec v3.0 (`ADX_PINOUT.md`)?
 - [ ] **[SHOULD]** Did you use a transformer-isolated DC-DC converter for industrial 24V/48V inputs?
 - [ ] **[SHOULD]** Did you select a latched Eject Header if intended for high-vibration applications?
-- [ ] **[SHOULD]** Does the board outline match the 8748 pitch (`77.0 mm × 38.0 mm`) for enclosure compatibility?
+- [ ] **[SHOULD]** Does the board outline match the 8854 pitch (`76.0 mm × 42.0 mm`) or legacy 8748 pitch (`77.0 mm × 38.0 mm`) for enclosure compatibility?
 
 ---
 

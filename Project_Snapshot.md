@@ -74,7 +74,7 @@ SPDX-License-Identifier: CC-BY-4.0
 - **ADX ハードウェア・フォームファクタ開発ガイドライン (`docs/ja/adx_formfactor_guidelines.md`)**:
   - RFC 2119 準拠の3段階要件定義（MUST / SHOULD / MAY）を策定。
   - 【MUST】Power CARDの逆流阻止義務（電池破裂防止）、Pin 5アイソレーション帯厳守。
-  - 【SHOULD】ラッチ付き Eject Header、産業用トランス絶縁DCDC、8748寸法、-40℃〜+105℃耐熱。
+  - 【SHOULD】Vertical IDC Header、産業用トランス絶縁DCDC、8854寸法（旧8748互換考慮）、-40℃〜+105℃耐熱。
   - 【MAY】非絶縁DCDC、ボックスヘッダ、自由な基板形状、独自センサー実装。
 
 ---
@@ -82,7 +82,7 @@ SPDX-License-Identifier: CC-BY-4.0
 ## 4. 直近のマイルストーン & 今後の課題 (Next Milestones)
 
 1. **CORE-A rev2 のアートワーク設計 ＆ 試作発注**:
-   - 8748サイズ内での前面端子台・Type-C・牛角Eject Headerの配置最適化。
+   - 8854サイズ内での前面端子台・Type-C・Vertical IDC Headerの配置最適化。
 2. **`optiboot_MR32` ブートローダーファームウェア実装**:
    - 32バイト固定長、16B×4ブロックFlash書き込み、CRC16検証（1024バイト上限厳守）。
 3. **Web Flasher（PWA）プロトタイプ実装 ＆ 市販ドングル検証**:

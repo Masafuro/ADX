@@ -12,7 +12,7 @@ The ADX (Advanced Devices eXtended) Project uses a multi-licensing model to prov
 
 ## 1. Documentation License (CC BY 4.0)
 
-All documentation, specification documents (including the 8748 Form Factor and ADX Pinout specifications), illustrations, and explanatory text within the `docs/` and `memo/` directories are licensed under the **Creative Commons Attribution 4.0 International License**.
+All documentation, specification documents (including the 8854 and 8748 Form Factor, and ADX Pinout specifications), illustrations, and explanatory text within the `docs/` and `memo/` directories are licensed under the **Creative Commons Attribution 4.0 International License**.
 
 * You are free to share (copy and redistribute) and adapt (remix, transform, and build upon) the material for any purpose, including commercial use.
 * **Attribution Requirement:** You must give appropriate credit to the **ADX Project Contributors**, provide a link to the license, and indicate if changes were made.
@@ -65,4 +65,4 @@ SOFTWARE.
 The "ADX" name, logo, and project badges located in `logo/` are trademarks/identifiers of the ADX Project. 
 
 * Open-source licenses grant rights to copyright and hardware design, but **do not grant permission to use the project logo or brand name in a way that implies official endorsement or certification** of third-party hardware.
-* Third-party products compatible with ADX standards are encouraged to use phrases such as *"Designed for ADX"* or *"ADX 8748 Compatible"*, rather than naming their product *"Official ADX..."*.
+* Third-party products compatible with ADX standards are encouraged to use phrases such as *"Designed for ADX"* or *"ADX 8854 / 8748 Compatible"*, rather than naming their product *"Official ADX..."*.

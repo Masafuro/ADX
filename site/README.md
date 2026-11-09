@@ -24,7 +24,7 @@ Official brand website for **ARLE.cc** (https://arle.cc).
 ┌─────────────────────────────────────────────────────────────────┐
 │ 【 オープン規格 ＆ プロダクトエコシステム 】                     │
 │  ADX (Advanced Devices eXtended)                                │
-│  ・"The Working Arduino" / 8748 フォームファクタ規格             │
+│  ・"The Working Arduino" / 8854 フォームファクタ規格 (旧8748)      │
 │  ・CORE-U / CORE-A / CARD シリーズ / MR32 通信規格              │
 └─────────────────────────────────────────────────────────────────┘
 ```

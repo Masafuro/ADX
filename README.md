@@ -32,7 +32,7 @@ Find what you need based on what you want to achieve:
 | 🛡 **Deploy Industrial DC24V / RS-485** | Galvanic isolated field controller (Active Planning) | [CORE-A24 Concept](hardware/README.md#11-core-シリーズ-メインmcuボード) |
 | 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](docs/spec/ADX_PINOUT.md) |
 | 📖 **Learn pinout engineering rationale**| Gravity fail-safe & coplanar shielding details | [ADX Pinout Architecture Guide](docs/en/ADX_pinout.md) |
-| 📦 **Design or 3D-print cases** | Dimensions, M3 hole spacing & rail margins | [8748 Form Factor Specification](docs/en/8748_formfactor.md) |
+| 📦 **Design or 3D-print cases** | Dimensions, M3 hole spacing & rail margins | [8854 Form Factor Specification](docs/en/8854_formfactor.md) |
 
 ---
 
@@ -59,26 +59,27 @@ The ADX ecosystem is built upon two open, modular physical standards:
 ```text
        ════════════════════════════════════════════════════════════════════
                          【 ADX ECOSYSTEM ARCHITECTURE 】
-         ・8748 Form Factor (87.0 mm × 48.0 mm standardized profile)
-         ・Corner M3 Mounting Holes with Φ5.0 mm Washer Clearances
-         ・Unidirectional I/F Edge (All field wiring on a single face)
-         ・ADX Pinout v4.0 (Gravity-Safe Power, Edge Guard, Native 3.3V)
+         ・8854 Form Factor (88.0 mm × 54.0 mm profile, straight V-cut ready)
+         ・Corner M3 Mounting Holes (76.0 mm × 42.0 mm pitch) with Φ10 mm Clearances
+         ・Unidirectional I/F Edge (66.0 mm span on bottom edge)
+         ・ADX Pinout v4.1 (Industrial-Aligned Power, Edge Guard, Native 3.3V)
        ════════════════════════════════════════════════════════════════════
                                        │
             ┌──────────────────────────┴──────────────────────────┐
             ▼                                                     ▼
    【 Main Core Boards 】                                【 Modular CARDs 】
      ・ADX CORE-U   (USB Standard / ATtiny1616 / Case-Friendly)        ADX CARD Ecosystem
-     ・ADX CORE-A24 (Industrial DC24V & Isolated RS-485 / Planning)   ・Prototyping CARD
+     ・ADX CORE-A24 (Industrial DC24V & Isolated RS-485 / Planning)   ・Reference CARD v0 / Proto CARD
      ・Dual Type-C or Push-in Terminals                               ・Power Supply CARDs
      ・Automated 20P IDC Fixture Inspection & Flashing                ・3D-Printable Enclosures
 ```
 
-### 2.1 8748 Form Factor & Mechanical Mounting
-- **Dimensions**: Standardized `87.0 mm × 48.0 mm` (`3425 mil × 1890 mil`).
-- **Clearance for Real Screws**: Four-corner M3 mounting holes (`77.0 mm × 38.0 mm` pitch) with generous **Φ5.0 mm washer clearances**, ensuring screws and lock washers never bite into traces.
-- **Enclosure Grab Margins**: Dedicated keep-out zones along both long edges support **slot-in rail mounting** and **3D-printed snap-fit tabs**.
-- *Reference*: [8748 Form Factor Specification](docs/en/8748_formfactor.md)
+### 2.1 8854 Form Factor & Mechanical Mounting
+- **Dimensions**: Standardized `88.0 mm × 54.0 mm` (`3465 mil × 2126 mil`).
+- **Clearance for Real Screws**: Four-corner M3 mounting holes (`76.0 mm × 42.0 mm` pitch, `6.0 mm` edge margin) with generous **Φ10.0 mm washer clearances**, ensuring screws and lock washers never bite into traces while leaving a solid 1.0 mm PCB meat margin.
+- **DFM & Mass Production Panelization**: Pure rectangular C0 profile allows straight continuous **V-scoring panelization** ($2 \times 3 = 6\,\text{pcs}$ / panel, $186\,\text{mm} \times 162\,\text{mm}$), aligning with fab sweet spots and cognitive ergonomics (Miller's Law / Magical Number 7).
+- **Enclosure Grab & Slide Margins**: Dedicated 3.0 mm card guide keep-out zones and underside **SMD-only zones** support **slot-in rail mounting** and **3D-printed snap-fit tabs** without pin lead interference.
+- *Reference*: [8854 Form Factor Specification](docs/en/8854_formfactor.md) *(Legacy: [8748 Form Factor Specification](docs/en/8748_formfactor.md))*
 
 ### 2.2 Unidirectional Interface Edge
 External field connections (power and communications) are strictly aligned along **one single edge of the PCB**.  

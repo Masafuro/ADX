@@ -11,7 +11,7 @@ SPDX-License-Identifier: CERN-OHL-P-2.0
 
 ## 1. ハードウェアラインナップ
 
-ADXのハードウェアは、**8748 Form Factor**（`87.0 mm × 48.0 mm`）および共通の **20ピン IDC 拡張バス（ADX Pinout v4.0）** を共有する「Coreシリーズ（MCUボード）」と「CARDシリーズ（機能拡張基板）」で構成されます。
+ADXのハードウェアは、**8854 Form Factor**（`88.0 mm × 54.0 mm`、旧8748）および共通の **20ピン IDC 拡張バス（ADX Pinout v4.1）** を共有する「Coreシリーズ（MCUボード）」と「CARDシリーズ（機能拡張基板）」で構成されます。
 
 ### 1.1 Core シリーズ (メインMCUボード)
 
@@ -30,12 +30,14 @@ ADXのハードウェアは、**8748 Form Factor**（`87.0 mm × 48.0 mm`）お�
 
 | ボード名 | 概要 | リンク |
 | :--- | :--- | :--- |
+| **ADX Reference CARD v0** | 8854 Form Factorの物理寸法・キープアウト・ピン配置を可視化した公式リファレンスボード。 | [仕様書](CARD/Reference/concept.md) |
 | **ADX Prototyping CARD** | 下列20P ADXバス引き出し ＋ 上列20P ユニバーサル試作エリアを備えたプロトタイピング拡張基板。 | [仕様書](CARD/Prototyping/proposal.md) |
 
 ### 1.3 フォームファクタ & 規格仕様
 
-- **8748 フォームファクタ定義**: [`Formfactor/`](Formfactor/) / [仕様書](../docs/ja/8748_formfactor.md)
-- **ADX 20ピンバス規格 (SSOT)**: [普遍的バス規格書 (英語・アルファベット)](../docs/spec/ADX_PINOUT.md)（Standard: `ADX-BUS-SPEC-v4.0`）
+- **8854 フォームファクタ定義 (次世代標準)**: [8854 仕様書](../docs/ja/8854_formfactor.md) *(旧仕様: [8748 仕様書](../docs/ja/8748_formfactor.md))*
+- **フォームファクタ移行計画書**: [`memo/PLAN/8854_FORMFACTOR_MIGRATION_PLAN.md`](../memo/PLAN/8854_FORMFACTOR_MIGRATION_PLAN.md)
+- **ADX 20ピンバス規格 (SSOT)**: [普遍的バス規格書 (英語・アルファベット)](../docs/spec/ADX_PINOUT.md)（Standard: `ADX-BUS-SPEC-v4.1`）
 - **ADX ピン配置 設計ガイド**: [日本語仕様解説](../docs/ja/ADX_pinout.md) / [English Architecture Guide](../docs/en/ADX_pinout.md)
 
 ---
