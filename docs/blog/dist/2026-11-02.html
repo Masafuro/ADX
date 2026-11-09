@@ -73,8 +73,8 @@ void sysex_pack_7to8(const uint8_t *src, size_t src_len, uint8_t *dst, size_t *d
 <p>Because there is zero capacitive timing delay, holding <code>TX</code> Low holds the differential bus Low indefinitely. We had the green light: this off-the-shelf shield could generate real automotive-grade LIN BREAK signals.</p>
 <hr />
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">3. Precision Pulse Generation with RP2040 PIO</h2>
-<p>A LIN BREAK requires holding the bus Low for at least 13 bit-times (at 115,200 baud, that is $13 \times 8.68\,\mu\text{s} \approx 112.85\,\mu\text{s}$), followed by a 1-bit Recessive High delimiter.</p>
-<p>Relying on software bit-banging or OS sleep timers to generate a $112\,\mu\text{s}$ pulse is a recipe for timing jitter. If an interrupt fires, your pulse stretches to $140\,\mu\text{s}$ and the target MCU aborts the sync window.</p>
+<p>A LIN BREAK requires holding the bus Low for at least 13 bit-times (at 115,200 baud, that is 13 × 8.68 μs ≈ 112.85 μs), followed by a 1-bit Recessive High delimiter.</p>
+<p>Relying on software bit-banging or OS sleep timers to generate a 112 μs pulse is a recipe for timing jitter. If an interrupt fires, your pulse stretches to 140 μs and the target MCU aborts the sync window.</p>
 <p>Enter the RP2040's secret weapon: the <strong>Programmable I/O (PIO)</strong> state machine.</p>
 <pre style="background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; font-family: Consolas, monospace; font-size: 0.9em; margin: 18px 0; line-height: 1.5;"><code class="language-pico-pio">.program ln485_tx
 .side_set 1 opt
@@ -97,10 +97,10 @@ jmp done
 do_uart_byte:
 ; Normal 8N1 transmission sequence...
 </code></pre>
-<p>To verify the timing without dragging out a heavy bench oscilloscope, we configured a second PIO state machine on Channel 1 (GP5) acting as a high-speed pulse timer clocked at 2.0 MHz ($0.5\,\mu\text{s}$ resolution).</p>
+<p>To verify the timing without dragging out a heavy bench oscilloscope, we configured a second PIO state machine on Channel 1 (GP5) acting as a high-speed pulse timer clocked at 2.0 MHz (0.5 μs resolution).</p>
 <ul style="line-height: 1.8; margin-left: 20px; margin-bottom: 18px;">
-<li><strong>Theoretical BREAK Duration:</strong> $112.85\,\mu\text{s}$</li>
-<li><strong>Measured BREAK Duration:</strong> <strong>$112.00\,\mu\text{s}$</strong> (an error of just <strong>$-0.75\%$</strong>)</li>
+<li><strong>Theoretical BREAK Duration:</strong> 112.85 μs</li>
+<li><strong>Measured BREAK Duration:</strong> <strong>112.00 μs</strong> (an error of just <strong>-0.75\%</strong>)</li>
 </ul>
 <p>A sub-one-percent timing accuracy, achieved completely autonomously in silicon without consuming a single cycle of the main ARM cores.</p>
 <hr />
@@ -118,7 +118,7 @@ Received (30B): &quot;RPR4-PIO-RS485-LN485-TEST-2026&quot;  &lt;-- Null terminat
 2. The PL011 has a dedicated hardware RX FIFO depth of <strong>exactly 32 bytes</strong>.<br />
 3. When a LIN BREAK is detected, the PL011 records a framing error and pushes a dummy <code>0x00</code> break marker into the FIFO.<br />
 4. Total incoming stream:<br />
-   $$\text{Total Bytes} = 1\,(\text{BREAK: } 0x00) + 1\,(\text{SYNC: } 0x55) + 31\,(\text{Payload}) = \mathbf{33\text{ Bytes}}$$</p>
+   Total Bytes = 1 (BREAK: 0x00) + 1 (SYNC: 0x55) + 31 (Payload) = 33\text{ Bytes}</p>
 <p>Because our test routine waited for the transmission to complete before reading the receive buffer, <strong>the 33rd byte hit a full FIFO and was discarded by the silicon</strong>.</p>
 <h3>The Smoking Gun: UARTRSR Register</h3>
 <p>Instead of guessing, we inspected the raw hardware status register:</p>
@@ -203,8 +203,8 @@ printf(&quot;UARTRSR: 0x%02X | OE (Overrun Error): %s\n&quot;,
 </code></pre>
 <p>Adopting a strict 8-byte payload structure unlocked four massive advantages:</p>
 <ol>
-<li><strong>Guaranteed Zero FIFO Overrun:</strong> At 12 total bytes per frame, the packet occupies just $37.5\%$ of the PL011's 32-byte FIFO. Two full frames can queue up without a single dropped bit.</li>
-<li><strong>Bit-Shift Math on ATtiny:</strong> The flash page size of an ATtiny1616 is 64 bytes. Dividing 64 by 8 equals exactly <strong>8 frames per page</strong>. Because $8 = 2^3$, the bootloader needs zero division or modulus math. It indexes pages using simple right-shifts (<code>&gt;&gt; 3</code>) and bitwise masks (<code>&amp; 0x07</code>), saving precious bytes of flash memory.</li>
+<li><strong>Guaranteed Zero FIFO Overrun:</strong> At 12 total bytes per frame, the packet occupies just 37.5\% of the PL011's 32-byte FIFO. Two full frames can queue up without a single dropped bit.</li>
+<li><strong>Bit-Shift Math on ATtiny:</strong> The flash page size of an ATtiny1616 is 64 bytes. Dividing 64 by 8 equals exactly <strong>8 frames per page</strong>. Because 8 = 2^3, the bootloader needs zero division or modulus math. It indexes pages using simple right-shifts (<code>&gt;&gt; 3</code>) and bitwise masks (<code>&amp; 0x07</code>), saving precious bytes of flash memory.</li>
 <li><strong>Noise Immunity:</strong> In electrically noisy industrial environments, shorter frames dramatically lower the probability of bit flips caused by motor EMI. If a frame fails its LIN 2.x enhanced checksum, retransmitting 8 bytes costs virtually nothing.</li>
 <li><strong>Throughput:</strong> At 115,200 baud, flashing a full 16 KB application image across 8-byte frames takes approximately <strong>2.35 seconds</strong> of raw wire time.</li>
 </ol>

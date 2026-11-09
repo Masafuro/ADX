@@ -154,6 +154,89 @@ def parse_frontmatter(content: str):
     return frontmatter, body
 
 
+def transform_latex_math(m: str) -> str:
+    """Transform LaTeX math commands into clean Unicode/HTML representation."""
+    # 1. Strip \text{...}, \mathrm{...}, etc.
+    m = re.sub(r"\\(?:text|mathrm|mathbf|mathit)\s*\{([^}]*)\}", r"\1", m)
+    # 2. Degree symbols
+    m = re.sub(r"\^\{\s*\\circ\s*\}|\^\\circ", "°", m)
+    m = re.sub(r"\\circ", "°", m)
+    # 3. Greek & special symbols
+    m = re.sub(r"\\Phi\s*", "Φ", m)
+    m = re.sub(r"\\phi\s*", "φ", m)
+    m = re.sub(r"\\Omega|\\ohm", "Ω", m)
+    m = re.sub(r"\\mu\s*", "μ", m)
+    m = re.sub(r"\\Delta", "Δ", m)
+    # 4. Math operators
+    m = re.sub(r"\\times", "×", m)
+    m = re.sub(r"\\pm", "±", m)
+    m = re.sub(r"\\mp", "∓", m)
+    m = re.sub(r"\\approx", "≈", m)
+    m = re.sub(r"\\sim", "~", m)
+    m = re.sub(r"\\leq|\\le", "≤", m)
+    m = re.sub(r"\\geq|\\ge", "≥", m)
+    m = re.sub(r"\\neq", "≠", m)
+    m = re.sub(r"\\cdot", "·", m)
+    m = re.sub(r"\\rightarrow|\\to", "→", m)
+    m = re.sub(r"\\leftarrow", "←", m)
+    # 5. Superscripts and subscripts
+    m = re.sub(r"\^\{([^}]+)\}", r"<sup>\1</sup>", m)
+    m = re.sub(r"_\{([^}]+)\}", r"<sub>\1</sub>", m)
+    # 6. Spacing macros
+    m = re.sub(r"\\(?:,|;|quad|qquad|\s)", " ", m)
+    # 7. Collapse spaces
+    m = re.sub(r"\s+", " ", m).strip()
+    return m
+
+
+def sanitize_latex_in_text(text: str) -> str:
+    """
+    Sanitize LaTeX math markup in text while protecting code blocks and inline code.
+    Replaces $$...$$ and $...$ with clean plain-text/Unicode/HTML tags.
+    Preserves currency references like $4 to $5, $100.
+    """
+    # Protect fenced code blocks (```...```)
+    code_blocks = []
+    def save_code_block(match):
+        code_blocks.append(match.group(0))
+        return f"__HACKADAY_CODEBLOCK_{len(code_blocks) - 1}__"
+
+    text = re.sub(r"```.*?```", save_code_block, text, flags=re.DOTALL)
+
+    # Protect inline code (`...`)
+    inline_codes = []
+    def save_inline_code(match):
+        inline_codes.append(match.group(0))
+        return f"__HACKADAY_INLINE_{len(inline_codes) - 1}__"
+
+    text = re.sub(r"`[^`\n]+`", save_inline_code, text)
+
+    # 1. Display math $$...$$
+    text = re.sub(r"\$\$(.+?)\$\$", lambda m: transform_latex_math(m.group(1)), text, flags=re.DOTALL)
+
+    # 2. Inline math $...$
+    def replace_inline_math(match):
+        inner = match.group(1)
+        # Check if it contains LaTeX syntax, Greek letters, or math operators
+        has_latex = ("\\" in inner or any(k in inner for k in ["±", "×", "≤", "≥", "≠", "≈", "^", "_"]))
+        if has_latex:
+            return transform_latex_math(inner)
+        # If it doesn't look like LaTeX math, keep as-is (e.g., currency)
+        return match.group(0)
+
+    text = re.sub(r"(?<!\\)\$(?!\s)([^$\n]+?)(?<!\s)\$", replace_inline_math, text)
+
+    # Restore inline code
+    for i, code in enumerate(inline_codes):
+        text = text.replace(f"__HACKADAY_INLINE_{i}__", code)
+
+    # Restore code blocks
+    for i, block in enumerate(code_blocks):
+        text = text.replace(f"__HACKADAY_CODEBLOCK_{i}__", block)
+
+    return text
+
+
 def convert_markdown_to_html(md_text: str) -> str:
     """Convert markdown body to raw HTML."""
     if HAS_MARKDOWN:
@@ -264,6 +347,11 @@ def build_single_post(post_path: Path, dirs: dict, image_map: dict, cdn_provider
     print(f"\n[Post] Building: {post_path.name}")
     content = post_path.read_text(encoding="utf-8")
     frontmatter, body = parse_frontmatter(content)
+
+    # Sanitize any LaTeX math markup in frontmatter summary and body
+    if "summary" in frontmatter:
+        frontmatter["summary"] = sanitize_latex_in_text(frontmatter["summary"])
+    body = sanitize_latex_in_text(body)
 
     cdn_base_url = CDN_PROVIDERS.get(cdn_provider, CDN_PROVIDERS[DEFAULT_CDN_PROVIDER])
     html_body = convert_markdown_to_html(body)
