@@ -155,41 +155,41 @@ flowchart TD
 
 ## 7. 一人での量産制作パイプライン
 
-### 台本の記述フォーマット（通信ログ風 Markdown仕様）
-IDEでのプレビュー表示が美しく、かつPython等のプログラムで確実にパースできるよう、台本は以下の「通信ログ風 Markdown」で記述します。
+### 台本の記述フォーマット（`@name: English_text` + コメント形式）
+TTSツール等へのそのままの入力と、Python等のプログラムによる確実なパースを両立するため、台本は以下の形式（英語セリフ＋`#` 日本語対訳コメント）で記述します。
 
-```markdown
-# エピソードタイトル
-*サブタイトル*
+```text
+# エピソードタイトル / サブタイトル
 
----
+@ECHO: English_text
+# （日本語文）
 
-### [ECHO]
-> **EN:** 英語セリフ（TTS生成用）
-> 
-> **JA:** 日本語対訳（字幕・編集確認用）
-
----
-
-### [DEV]
-> **EN:** 英語セリフ
-> 
-> **JA:** 日本語対訳
+@DEV: English_text
+# （日本語文）
 ```
+
+* **`@ECHO:` / `@DEV:`**: 英語セリフ（TTS生成用・1行完結）
+* **`# （日本語文）`**: 直下行に記載する日本語対訳（字幕・編集確認用のコメント行。`#` 行を除外するだけで英語のみの `@name: text` 形式になる）
 
 #### プログラム（Python）での抽出コード例
 ```python
 import re
 
-def parse_script(markdown_text):
-    pattern = r'### \[(DEV|ECHO)\]\s*>\s*\*\*EN:\*\*\s*(.*?)\s*>\s*\*\*JA:\*\*\s*(.*?)(?=\n---\n|\Z)'
-    matches = re.findall(pattern, markdown_text, re.DOTALL)
+def parse_script(script_text):
+    pattern = r'^@(DEV|ECHO):\s*(.+?)\r?\n#\s*(.+)$'
+    matches = re.findall(pattern, script_text, re.MULTILINE)
     return [{"speaker": m[0], "en": m[1].strip(), "ja": m[2].strip()} for m in matches]
+
+def to_tts_script(script_text):
+    return "\n".join(
+        line for line in script_text.splitlines()
+        if not line.lstrip().startswith("#")
+    )
 ```
 
 ### 制作手順
 1. **スクリプト生成（AIペアプロ）**:
-   * 直近のGitコミットや開発メモから、本Show Bibleの「3大黄金ルール」を適用して上記Markdownを作成。
+   * 直近のGitコミットや開発メモから、本Show Bibleの「4大黄金ルール」を適用して上記フォーマットの台本を作成。
 2. **音声生成（TTS自動化）**:
    * 上記パーサーで抽出したテキストを、`speaker` に応じてDEV（低音ドライ職人）とECHO（透明感・無線AI）のボイスIDへ送信し、mp3を一括生成。
 3. **画面録画（10分）**:
