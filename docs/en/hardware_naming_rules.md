@@ -7,24 +7,22 @@ SPDX-License-Identifier: CC-BY-4.0
 
 [ **English** | [日本語 (../ja/hardware_naming_rules.md)](../ja/hardware_naming_rules.md) ]
 
-This document defines the official product naming syntax and safety classification standards for hardware products (boards, modules, daughtercards) in the ADX ecosystem. It establishes the strict distinction between **"Production Grade (Commercial/Standard)"** and **"Professional / DIY Grade (`-P`)"**.
+This document defines the official product naming syntax and grade classification standards for hardware products (boards, modules, daughtercards) in the ADX ecosystem. It establishes the clear distinction between **"Standard Grade (Unmarked: Workbench & Prototyping)"** and **"`PRO` Grade (Field / Industrial: Testable & Deployment-Ready)"**.
 
 ---
 
 ## 1. Background & Philosophy
 
-ADX aims to bridge the gap between "the accessible UX of Arduino" and "reliable physical deployment in real-world enclosures."
+ADX aims to bridge the gap between "the accessible developer experience of Arduino" and "reliable physical deployment in real-world enclosures."
 
-When dealing with fieldbuses (RS-485) and diverse power domains, there is a fundamental physical tradeoff between **"miniaturization/cost reduction"** and **"broad resilience against common wiring errors"**:
+However, when designing boards for accessible consumer PCBA manufacturing, there is a fundamental engineering tradeoff between **"the convenience of consumer desktop connectors (such as USB Type-C and Grove)"** and **"the mechanical/electrical testability required to define strict industrial ratings (thermal, vibration, and continuous load)."**
 
-- **Non-isolated / Common GND:**
-  Allows reducing component count and producing compact boards. However, during power reverse-polarity or ground-loop voltage differentials, the ground plane can float, risking **cascading destruction** back into connected upstream equipment (laptops, PLCs, precision test instruments) through communication lines.
-- **Fully Isolated:**
-  Electrical domains are strictly separated, preventing cascading destruction even under severe wiring mistakes or ground faults. However, digital isolators and isolated DC-DC converters add BOM cost and board surface area.
+- **Workbench & Prototyping Models with USB Type-C / Grove (Unmarked / Standard):**
+  Allow instant development with a single USB cable and direct connection to consumer ecosystems such as M5Unit and Grove. Because USB Type-C and compact friction-fit connectors are inherently non-latching and designed for manual plugging/unplugging, guaranteeing board-wide industrial vibration and continuous-deployment ratings is structurally impractical.
+- **Field-Deployable Models Built Exclusively with Rugged Primitives (`PRO`):**
+  By combining mechanically/electrically robust components—such as push-in spring clamp terminals, latched IDC box headers, and isolated RS-485—boards remain affordable to manufacture via standard PCBA while achieving genuine **testability and rated field reliability**.
 
-Rather than locking away low-cost, non-isolated designs as "too dangerous," ADX adopts a dual-tier portfolio: providing open design files as **"Professional / DIY Grade (`-P`)"** for experienced engineers who manage risks, while providing reliable **"Production Grade"** hardware for general users.
-
-This clear naming convention conveys this distinction immediately.
+Rather than forcing both goals onto a single compromised board, ADX adopts a two-tier portfolio: **prototype effortlessly on the workbench with Standard (unmarked) boards, then migrate your code and 20-pin CARD modules seamlessly onto `PRO` boards for field deployment.**
 
 ---
 
@@ -33,7 +31,7 @@ This clear naming convention conveys this distinction immediately.
 Official ADX hardware model numbers follow this syntax:
 
 ```text
-ADX [FAMILY]-[TYPE][-SUFFIX]
+ADX [FAMILY]-[TYPE] [GRADE]
 ```
 
 ### Syntax Elements
@@ -41,9 +39,9 @@ ADX [FAMILY]-[TYPE][-SUFFIX]
 | Element | Meaning | Definitions & Examples |
 | :--- | :--- | :--- |
 | **`ADX`** | Brand / Platform Prefix | Fixed prefix for all official ADX hardware. |
-| **`[FAMILY]`** | Board Category / Form Factor | • `CORE`: Main MCU processor board (8748 Form Factor)<br/>• `CARD`: Expansion add-on card (8748 Form Factor)<br/>• `PWR`: Power supply / distribution module<br/>• `BASE`: Backplane / baseboard carrier |
-| **`[TYPE]`** | Function & Architecture | • `A`: Absolute (Universal industrial-grade isolated model)<br/>• `I`: Isolated (Dual-isolated architecture)<br/>• `S`: Standard (General baseline pinout)<br/>• `D`: Development / Debug (Internal R&D testbed)<br/>• `RELAY`: Relay output card<br/>• `DIO`: Digital I/O card |
-| **`[-SUFFIX]`** | **Safety & Delivery Grade** | • **(None)**: **Production Grade (Commercial / Foolproof)**<br/>• **`-P`**: **Professional / DIY Grade (Expert DIY, User Risk)** |
+| **`[FAMILY]`** | Board Category / Form Factor | • `CORE`: Main MCU processor board (8854 / 8748 Form Factor)<br/>• `CARD`: Expansion add-on card (8854 / 8748 Form Factor)<br/>• `PWR`: Power supply / distribution module<br/>• `BASE`: Backplane / baseboard carrier |
+| **`[TYPE]`** | Function & Architecture | • `G`: Grove / M5Unit focused single Type-C model<br/>• `U`: Standard USB development model<br/>• `A` / `A24`: Isolated RS-485 field edge model<br/>• `D`: Development / Debug (Internal R&D testbed)<br/>• `RELAY`: Relay output card<br/>• `DIO`: Digital I/O card |
+| **`[GRADE]`** | **Target Domain & Rating Grade** | • **(Unmarked)**: **Standard Grade (Workbench, Prototyping & General Use)**<br/>• **`PRO`**: **PRO Grade (Field / Industrial Deployment, Rated & Testable)** |
 
 ---
 
@@ -53,57 +51,51 @@ When a designer develops a new board, its grade is assigned according to the fol
 
 ```mermaid
 graph TD
-    Start["New Board Circuit Design"] --> Q1{"Are upstream devices physically protected<br/>from cascading destruction during power reverse<br/>or fieldbus short circuits?"}
-    Q1 -- "Yes (Fully Isolated / Protected)" --> Q2{"Does the board avoid requiring special<br/>operational workarounds<br/>(e.g., disconnecting cables before power-on)?"}
-    Q1 -- "No (Common GND / Non-isolated)" --> TierP["【Professional Grade】<br/>Append '-P' suffix"]
-    Q2 -- "Yes (Safe for anyone)" --> TierProd["【Production Grade】<br/>Standard Part Number (No Suffix)"]
-    Q2 -- "No (Operational dependency)" --> TierP
+    Start["New Board Circuit & Mechanical Design"] --> Q1{"Does the board expose USB Type-C or non-latching consumer connectors<br/>(such as Grove/HY2.0) as active operational interfaces?"}
+    Q1 -- "Yes" --> TierStd["[Standard Grade (Unmarked)]<br/>No suffix (e.g., ADX CORE-G, CORE-U)"]
+    Q1 -- "No (Spring terminals / Latched IDC only)" --> Q2{"Are temperature ratings defined for the entire BOM,<br/>and can thermal, vibration, and continuous-operation test conditions be established?"}
+    Q2 -- "Yes (Includes required electrical isolation/protection)" --> TierPro["[PRO Grade]<br/>Append 'PRO' (e.g., ADX CORE-A PRO)"]
+    Q2 -- "No" --> TierStd
 ```
 
-### 3.1 Production Grade (Standard / No Suffix)
+### 3.1 Standard Grade (Unmarked / No Suffix)
 
-- **Definition:** The standard model designed for anyone from beginners to professional system integrators to connect freely and safely.
-- **Safety Requirements:**
-  1. **Cascading Destruction Prevention:** Even if power is reversed, fieldbus wires are shorted, or ground-loop voltage differentials occur, connected PCs or upstream devices are never damaged (signal and power isolation, or equivalent hardware protection).
-  2. **Operational Independence:** No awkward operating constraints (such as "disconnect ribbon cables before switching on mains power").
-- **Distribution:**
-  - Assembled, tested, and commercially sold with official warranty/support.
-  - Complete schematics and BOM published open-source.
+- **Definition:** Standard models optimized for workbench prototyping, education, hobbyist use, M5Unit / Grove integration, and general light-duty applications.
+- **Design Position:**
+  1. **Developer Experience & Cost Efficiency:** Permits USB Type-C direct PC connection and consumer ecosystems such as Grove (HY2.0).
+  2. **Baseline Safety Protections:** Incorporates eFuse overcurrent limiting, ESD protection, and back-feed prevention for safe everyday workbench handling.
+  3. **Scope Exclusion:** Due to consumer connector mechanics, these boards are explicitly outside the scope of industrial vibration or long-term continuous field-rating certifications.
 
-### 3.2 Professional / DIY Grade (`-P` Version)
+### 3.2 PRO Grade (`PRO` Suffix)
 
-- **Definition:** High-density, cost-optimized designs intended exclusively for experienced engineers with circuit comprehension and wiring control.
-- **Tradeoffs:**
-  1. **Common Ground / Non-isolated:** Due to cost or board area constraints, wiring mistakes may cause dangerous loop currents or back-feed.
-  2. **High Cost Efficiency:** Omitting isolators allows affordable production via JLCPCB PCBA.
-- **Distribution & Policy:**
-  - **Not commercially sold as pre-assembled finished goods.**
-  - Open design files (Gerber, BOM, CPL, EasyEDA/KiCad projects) released for users to order and fabricate at their own responsibility.
-  - Must include explicit cascading destruction warnings and liability disclaimers.
+- **Definition:** Field-ready industrial tier engineered for **full testability** inside control cabinets, machinery, and permanent installations.
+- **Mandatory Requirements:**
+  1. **No Consumer USB Bottlenecks:** USB Type-C is not exposed as an always-on operational power or communication interface (USB-less, or strictly non-exposed maintenance-only service access).
+  2. **Mechanical Robustness:** Uses only connectors with well-defined retention and environmental specs, such as push-in spring clamp terminals and latched/ejected IDC box headers.
+  3. **Electrical Isolation & Safety:** Incorporates galvanic isolation (e.g., isolated RS-485, isolated power boundaries) to prevent cascading destruction from wiring faults, ground loops, or surges.
+  4. **Complete BOM & Test Definition:** Every BOM component has a verified operating temperature rating, enabling formal thermal, vibration, and continuous-load qualification specs.
 
 ---
 
 ## 4. Part Number Examples
 
-| Part Number | Grade | Isolation | Primary Applications & Target Audience |
+| Part Number | Grade | Key Interfaces | Primary Applications & Target Audience |
 | :--- | :--- | :--- | :--- |
-| **`ADX CORE-A`** | Production | **Fully Isolated** | **High-Durability Field Model.** 2500V isolated RS-485, 5V power, PC back-feed protection. Built for harsh environments such as industrial control panels and vehicle cabins. |
-| **`ADX CORE-I`** | Production | **Dual Isolated** | General deployment with external PLCs, PCs, and different power domains. |
-| **`ADX CORE-S-P`** | Professional | **Non-isolated** | Enclosed equipment, internal test fixtures, robot wiring, cost-critical prototypes. DIY fabrication at own risk. |
-| **`ADX Core-D`** | Development | Non-isolated | Internal verification testbed for LN-485 bootloader and firmware. |
-| **`ADX CARD-RELAY`** | Production | **Isolated** | Universal optocoupler-isolated relay output card. |
-| **`ADX CARD-RELAY-P`**| Professional | **Non-isolated** | High-density relay card with shared ground for space/cost-limited setups. |
+| **`ADX CORE-G`** | Standard (Unmarked) | 1× USB Type-C / 3× Grove (5V M5Unit) | **Grove / M5Unit Prototyping Core.** Cost-effective entry board for workbench development and CARD evaluation. |
+| **`ADX CORE-U`** | Standard (Unmarked) | Dual USB Type-C / Expansion I/O | **Standard USB Core.** Bench development and Arduino IDE workflow. |
+| **`ADX CORE-A PRO`** | **`PRO`** | Isolated RS-485 / Spring Terminals / 20P IDC | **Field-Ready Edge Node.** USB-less industrial-temp design with definable qualification test conditions. |
+| **`ADX CORE-A24 PRO`** | **`PRO`** | Isolated DC24V / Isolated RS-485 / Terminals | **Control-Panel Edge Node.** Direct DC24V industrial power integration. |
+| **`ADX CARD-RELAY`** | Standard (Unmarked) | 20P IDC Bus / Standard Terminals | General-purpose relay expansion card for bench evaluation. |
+| **`ADX CARD-RELAY PRO`** | **`PRO`** | 20P Latched IDC / Isolated Rated Terminals | Industrial relay card qualified for continuous rated field operation. |
+
+> **Note on Internal R&D and Legacy Boards:**  
+> Dedicated internal R&D/bootloader testbeds (e.g., `ADX Core-D`) and archived exploratory designs (e.g., `CORE-S`) fall outside the two-tier commercial/open-standard classification.
 
 ---
 
-## 5. Disclaimer & Open-Source Policy
+## 5. Open Hardware Policy & License
 
-Users fabricating or operating Professional Grade (`-P`) hardware designs are subject to the following disclaimer:
-
-> ### [Professional Grade Disclaimer]
-> 1. Design files (schematics, artwork, BOM, manufacturing files) are provided "AS-IS" under the CERN-OHL-P-v2 license without warranties of any kind, either express or implied.
-> 2. The ADX Project and its contributors accept no liability for any direct, indirect, incidental, or consequential damages (including hardware failure, destruction of connected PCs/PLCs, electrical fire, or data loss) resulting from manufacturing, assembly, powering, or operating these boards.
-> 3. Users assume all responsibility for verifying electrical specifications and safety precautions before fabrication and deployment.
+All ADX hardware design files (schematics, PCB layout, BOM, fabrication outputs) are published under the CERN-OHL-P-v2 license. Users fabricating or deploying boards from source files are responsible for verifying that their operating environment matches the board's designated grade (Standard workbench use vs. `PRO` rated conditions).
 
 ---
 
