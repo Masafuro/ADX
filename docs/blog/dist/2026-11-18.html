@@ -11,18 +11,18 @@
 <hr />
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">1. The Challenge: Breadboard Heroes Struggle Inside Boxes</h2>
 <p>On paper, building a new board around an 8-bit <strong>ATtiny1616</strong> (16 KB Flash, 2 KB SRAM, 3.3V @ 10 MHz) looks ridiculous next to a $4 Raspberry Pi Pico or an Arduino UNO R4 Minima.</p>
-<p>We stopped trying to win that spec sheet comparison. Instead, we surveyed real build logs from makers putting Arduino and ESP32 boards inside 3D-printed enclosures (<code>hardware/CORE-U/rev4/UX_report.md</code>). The failure modes are rarely "not enough CPU MHz." They are almost always physical and electrical:</p>
+<p>We stopped trying to win that spec sheet comparison. Instead, we surveyed real build logs from makers putting Arduino and ESP32 boards inside 3D-printed enclosures. The failure modes are rarely "not enough CPU MHz." They are almost always physical and electrical:</p>
 <ul style="line-height: 1.8; margin-left: 20px; margin-bottom: 18px;">
 <li><strong>Brownouts on 500 mA PC USB</strong>: Everything works on the desk until you drive a motor, relay, or LED strip inside the case.</li>
 <li><strong>Trapped Reset / BOOT Buttons</strong>: Once the lid is screwed shut, a firmware hang that drops the MCU's native USB stack forces you to crack open the enclosure.</li>
 <li><strong>Mounting &amp; Wiring Friction</strong>: Boards without consistent M3 mounting holes end up hot-glued in place, while loose Dupont jumper wires vibrate free or snag against enclosure walls.</li>
 </ul>
-<p>So we drew a clean line in our lineup (<code>docs/en/hardware_naming_rules.md</code>):</p>
+<p>So we drew a clean line in our lineup:</p>
 <ul style="line-height: 1.8; margin-left: 20px; margin-bottom: 18px;">
 <li><strong><code>PRO</code> Grade</strong> (<code>CORE-A24 PRO</code>): USB-less, vibration-tested spring terminals, isolated RS-485, full industrial BOM temperature qualification.</li>
 <li><strong>Standard Grade</strong> (<code>CORE-U</code>): A tough, low-cost USB core designed specifically to survive inside 3D-printed enclosures and desktop rigs.</li>
 </ul>
-<p>We also archived our Grove-focused <code>CORE-G</code> concept (<code>hardware/archive/CORE-G/</code>). Non-locking <code>HY2.0</code> / <code>XH</code> friction headers and generic third-party cables made it nearly impossible to define consistent electrical or mechanical test boundaries.</p>
+<p>We also archived our Grove-focused <code>CORE-G</code> concept. Non-locking <code>HY2.0</code> / <code>XH</code> friction headers and generic third-party cables made it nearly impossible to define consistent electrical or mechanical test boundaries.</p>
 <hr />
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">2. Four Revisions of Subtraction (rev1 → rev4)</h2>
 <p>Looking back at <code>rev1</code> through <code>rev4</code>, the pattern is clear—every time we tried to make the core board "helpful" by adding onboard peripherals, we made expansion and assembly worse:</p>
@@ -107,7 +107,7 @@ A microcontroller core inside an enclosure shouldn't hoard buzzers, SD slots, or
 <li><strong>Two cables on the bench</strong>: Because <code>USB-COM</code> cannot power the board, you <em>must</em> plug in <code>USB-PWR</code> even for quick desk tests.</li>
 <li><strong>Not a standalone breakout</strong>: Without discrete screw terminals or pin headers on the PCB, hooking up external hardware requires plugging an ADX expansion Card (or ribbon breakout) into <code>CN1</code>.</li>
 </ol>
-<p>Right now, the <code>rev4</code> netlist (<code>hardware/CORE-U/rev4/Netlist_PCB1_2026-11-18_wip.enet</code>) is in final cleanup—wiring up the remaining <code>CH342K</code>, MCU power pins, and LED current-limiting resistors before we start PCB routing. Alongside the hardware work, we also drafted a small dialog memo on switching our RPR4 field probe from WebSerial to <strong>Web MIDI SysEx + RP2040 PIO</strong> to survive Android browser restrictions (<code>docs/contents/memo/script_web_midi_en.md</code>).</p>
+<p>Right now, the <code>rev4</code> netlist is in final cleanup—wiring up the remaining <code>CH342K</code>, MCU power pins, and LED current-limiting resistors before we start PCB routing.</p>
 <hr />
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">Let's Hear From You</h2>
 <ol>
