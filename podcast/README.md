@@ -8,23 +8,16 @@
 podcast/
 ├── README.md                 # 本ドキュメント（区画案内）
 └── contents/
-    ├── v1/                   # 【試作】2人掛け合い型（DEV vs ECHO）
-    │   ├── talk_show_bible.md
-    │   ├── recent_dev_summary.md
-    │   └── script_*.md
-    ├── v2/                   # 【試作】ECHO独白型（仮: ECHO’s Audit Log）
-    │   ├── show_bible.md
-    │   └── episodes/
-    ├── v3/                   # 【試作】DEV独白＋ECHO引用型
-    │   ├── show_bible.md
-    │   └── episodes/
-    └── v4/                   # 【最新案】"I"-to-"You" 直接語り・演説型（架空AI設定なし）
-        ├── show_bible.md
-        └── episodes/
+    ├── show_bible.md         # 【採用版: v5】2段階制作パイプライン設計書（v1対話抽出 → v4演説変換）
+    ├── drafts/               # Stage 1: v1対話によるネタ出し・反論・比喩抽出ドラフト
+    ├── episodes/             # Stage 2: v4形式（"I"-to-"You" @DEV:）の本番台本
+    └── archive/              # 検討過程のアーカイブ（v1〜v4）
+        ├── v1/               # 2人掛け合い型（DEV vs ECHO）
+        ├── v2/               # ECHO独白型
+        ├── v3/               # DEV独白＋ECHO引用型
+        └── v4/               # 直接語り型（単体運用版）
 ```
 
-## バージョン変遷
-* **v1 (`contents/v1/`)**: 現場エンジニア `DEV` と AI `ECHO` の2人掛け合い形式。
-* **v2 (`contents/v2/`)**: `ECHO` が監査ログを単独朗読し、`DEV` をコミット引用として扱う独白形式。
-* **v3 (`contents/v3/`)**: `DEV` が一人称で語りつつ、背景の監査AI `ECHO` の指摘をネタとして引用する形式。
-* **v4 (`contents/v4/`)**: 架空のAI設定を外し、語り手（`"I"`）が聴き手（`"You"`）の疑問を直接受け止めながら語り切る、英語圏ネイティブな演説・直接対話型。
+## 現行ワークフロー（v5採用）
+1. **Stage 1 (`drafts/`)**: 開発トピックを `DEV vs ECHO` の対話で揉み、禁忌フック・反論・耳でわかる比喩・数値オチを抽出する。
+2. **Stage 2 (`episodes/`)**: 5つの変換ルールに沿って `ECHO` を聴き手（`"You"`）へ溶かし込み、`@DEV:` の演説的モノローグ台本へ仕上げる。
