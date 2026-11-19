@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # ADX Hardware & Form Factor Design Guidelines
 
-[ **English** | [日本語 (../ja/adx_formfactor_guidelines.md)](../ja/adx_formfactor_guidelines.md) ]
+[ **English** | [日本語](../ja/adx_formfactor_guidelines.md) ]
 
 ---
 
@@ -28,46 +28,47 @@ To achieve this balance, this guideline defines three requirement tiers based on
 | Level | Keyword | Definition & Scope |
 | :---: | :---: | :--- |
 | **Level 1** | **[MUST] Mandatory**<br>*(Shall / Required)* | **Mandatory constraints required to prevent electrical fires, physical destruction, or danger to human life.**<br>Must be strictly obeyed by all ADX hardware without exception (Official, third-party, and DIY). |
-| **Level 2** | **[SHOULD] Official Standard**<br>*(Recommended)* | **Industrial-grade quality and reliability standards met by official ADX products.**<br>Designed for automotive, extreme temperatures, and critical infrastructure. DIY and specialized cards may deviate. |
+| **Level 2** | **[SHOULD] Official Standard**<br>*(Recommended)* | **Industrial-grade quality and reliability standards met by official ADX products.**<br>Designed for demanding environments and long-term reliability. DIY and specialized cards may deviate. |
 | **Level 3** | **[MAY] Developer Freedom**<br>*(Optional)* | **Areas left entirely to the developer's creativity, cost targets, and design requirements.** |
 
 ---
 
 ## 3. Power & Electrical Safety Rules
 
-### 3.1 Common 5V Power Trunk (VDD) Baseline
-- **Voltage Specification:** **DC 5.0V (±10%)** (4.5V to 5.5V)
-- **Current Rating:** **Up to 2.0A** (Delivered via 2×2 pin block)
+### 3.1 Common 5V Power Trunk (`VBUS`) Baseline
+- **Voltage Specification:** **DC 5.0V (±10%)** (4.5V to 5.0V operating window; 4.75V–5.25V recommended)
+- **Current Rating:** **Up to 2.0A–3.0A continuous** (Delivered via Pins 17–20 $2 \times 2$ bottom power cluster)
 - **Bidirectionality:** Power may flow either from Core board (USB Type-C) to CARDs, or from a Power CARD to the Core board.
+- **Point of Load (PoL) Rule:** 3.3V logic power is NOT distributed across the 20-pin bus. Cards requiring 3.3V must regulate locally from `VBUS` via an onboard LDO or DC-DC converter.
 
 ### 3.2 Power CARD Design Rules (Separation of Responsibilities)
 
-```
+```text
                  [ Double Check-Valve Architecture ]
 
-   [ USB Type-C 6P ]
+   [ Core Board (USB Type-C / External Supply) ]
           │
-     [ ⛔ Back-Feed Blocking (LM66100) ⛔ ] ──► (Prevents VDD back-powering PC host)
+     [ ⛔ Protection & Reverse Blocking (eFuse / Ideal Diode) ⛔ ] ──► (Blocks back-feed into host)
           │
           ▼
    ┌────────────────────────────────────────────────────────┐
-   │  Common 5V VDD Trunk (Pins 1–4)                        │
+   │  Common 5V VBUS Trunk (Pins 17–20 / 2×2 Bottom Grid)   │
    └────────────────────────────────────────────────────────┘
           ▲
           │
      [ ⛔ Reverse Blocking (Diode/FET) ⛔ ] ──► [MUST] Mandatory for Power CARDs!
-          │                                   (Blocks VDD from entering external battery)
+          │                                   (Blocks VBUS from entering external battery)
    [ ⚡ Protection / Surge / Regulators ⚡ ]
           │
    [ External Power (Dry Batteries / Factory 24V / Telecom -48V) ]
 ```
 
 1. **[MUST] Reverse-Current Blocking for Power CARDs (Mandatory):**
-   - Any CARD injecting power into the 20-pin bus (Pins 1–4: VDD) **MUST provide a reverse-current blocking mechanism at its output** (Schottky diode, ideal diode, or synchronous DCDC with reverse-blocking capability).
-   - *(Reason: When a core board (such as CORE-U) is plugged into a PC via USB Type-C on the workbench, the 5.0V USB rail must be prevented from back-feeding into external alkaline batteries, mitigating **battery rupture and electrolyte leakage risks**).*
-2. **[MUST] Strict Isolation of Pin 5 (N.C.):**
-   - Pin 5 acts as a short-circuit prevention isolation buffer between the high-current VDD zone (Pins 1–4) and sensitive signals (Pin 6 onwards). **No traces, copper pours, or vias may connect to Pin 5**.
-   - Prevents fatal short-circuits during ribbon cable crimping misalignment or manufacturing tolerances.
+   - Any CARD injecting power into the 20-pin bus (Pins 17–20: `VBUS`) **MUST provide reverse-current blocking and over-current / short-circuit protection at its output** (Schottky diode, ideal diode, eFuse, or synchronous DCDC with reverse-blocking capability).
+   - *(Reason: When a core board such as CORE-U is externally powered on the workbench, 5.0V must be prevented from back-feeding into external batteries or regulators, mitigating **battery rupture and electrolyte leakage risks**).*
+2. **[MUST] Protective Barrier (`Pin 16: GND`) & System Pin (`S00` / Pin 2: `OWD`) Isolation:**
+   - **Pin 16 (`GND`)** directly flanks the `VBUS` power cluster (Pins 17–20) as a short-circuit protective wall and MUST be solidly bonded to the PCB ground plane.
+   - Standard expansion Cards **MUST leave `S00` (Pin 2: `OWD`) unconnected (N.C.)** and MUST NOT connect push-buttons or pull-downs directly to GND.
 3. **[SHOULD] Transformer Isolation for High-Voltage Inputs (DC 12V/24V/48V):**
    - **Official ADX Grade:** To suppress common-mode noise, ground differentials, and lightning surges in factory panels, use a **transformer-isolated DC-DC converter (isolated 5V output)**.
    - **DIY / Hobby Grade [MAY]:** In controlled single-ground indoor environments, low-cost non-isolated buck converters are acceptable. Battery cards may also be non-isolated.
@@ -78,11 +79,13 @@ To achieve this balance, this guideline defines three requirement tiers based on
 
 ## 4. Mechanical & Connector Rules
 
-### 4.1 20-Pin Expansion Connector (ADX Pinout v2)
+### 4.1 20-Pin Expansion Connector (`ADX-BUS-SPEC-v4.2`)
 - **[MUST] Electrical Pinout Adherence:**
-  - All boards must strictly adhere to the [ADX Pinout Specification (v2)](ADX_pinout.md).
+  - All boards must strictly adhere to the [ADX 20-Pin Bus Specification (SSOT: v4.2)](../spec/ADX_PINOUT.md) and [Architecture Guide](ADX_pinout.md).
+- **[SHOULD] `P02` (Pin 5: `EXTCLK`) 0Ω Isolation:**
+  - Cards connecting clock sources or GPIO circuits to `P02` should insert a series 0Ω resistor (DNP-capable) or solder jumper to remain compatible with Core boards using `P02` as 2-wire `SWCLK` (e.g., CORE-CX5).
 - **Connector Type Selection:**
-  - **Official Standard [SHOULD]:** To prevent dislodging under heavy vibration and avoid misaligned blind insertion in tight spaces, use **MIL-DTL-83503 compliant Latched Eject Headers (牛角 / Ejector)**.
+  - **Official Standard [SHOULD]:** To prevent dislodging under heavy vibration and avoid misaligned blind insertion in tight spaces, use **MIL-DTL-83503 compliant Latched Eject Headers** or shrouded box headers.
   - **DIY / General Add-ons [MAY]:** Standard boxed shrouded headers or simple pin headers may be used where low profile or minimal cost is prioritized.
 
 ### 4.2 Board Dimensions & Stacking
@@ -112,12 +115,12 @@ To achieve this balance, this guideline defines three requirement tiers based on
 
 ## 6. Optional Features & Signal Routing [MAY]
 
-The following signals may be utilized flexibly depending on application requirements:
+The following signals may be utilized flexibly depending on application requirements using MCU-independent Logical Pin IDs (`P01`–`P10` / code macros `ADX_P01`–`ADX_P10`):
 
 1. **Battery Level / Bus Voltage Telemetry:**
-   - External raw battery voltage can be divided down and routed to Pin 7 (`PA6/AIN (DAC)`) for analog voltage monitoring or waveform generation by the MCU.
-2. **BMC-Coupled Sleep Shutdown:**
-   - For ultra-low-power standby, connect Pin 18 (`PC3`) to the Enable (EN) pin of the CARD's DC-DC converter to completely shut down peripheral power rails during MCU sleep. (May be tied high if unused).
+   - External raw battery voltage can be divided down (within 0–3.3V) and routed to **`P01` (IDC Pin 3 / `AIN`)** for analog voltage monitoring by the MCU.
+2. **General-Purpose GPIO & Power Control Repurposing:**
+   - When SPI, UART, or I2C is unused on a Card, those pins (e.g., **`P07` [IDC Pin 12 / `SPI_CS`]**) may be freely repurposed as 3.3V digital GPIOs—such as driving LEDs, reading switches, or controlling an on-card DC-DC Enable (EN) pin for low-power sleep.
 
 ---
 
@@ -125,9 +128,11 @@ The following signals may be utilized flexibly depending on application requirem
 
 Before releasing or sending a PCB for fabrication (JLCPCB PCBA):
 
-- [ ] **[MUST]** Did you place reverse-current blocking and autonomous short-circuit/over-current protection on any Power CARD injecting into VBUS?
-- [ ] **[MUST]** Is Pin 5 properly tied to the primary ground return and zone barrier plane?
-- [ ] **[MUST]** Does the 20-pin IDC connector pin assignment strictly match ADX Bus Spec v3.0 (`ADX_PINOUT.md`)?
+- [ ] **[MUST]** Did you place reverse-current blocking and autonomous short-circuit/over-current protection on any Power CARD injecting into `VBUS`?
+- [ ] **[MUST]** Are Pins 17–20 (`VBUS`) bonded into a $2 \times 2$ solid copper pour, and are Pin 16 (`GND` barrier wall) plus Pins 1, 4, 6, 11 tied solidly to the ground plane?
+- [ ] **[MUST]** Is the system maintenance pin **`S00` (Pin 2: `OWD`)** left unconnected (N.C.) on standard expansion Cards?
+- [ ] **[MUST]** Does the 20-pin IDC connector pin assignment (`S00`, `P01`–`P10`, `GND`, `VBUS`) strictly match **`ADX-BUS-SPEC-v4.2`** ([`docs/spec/ADX_PINOUT.md`](../spec/ADX_PINOUT.md))?
+- [ ] **[SHOULD]** If the Card connects to `P02` (Pin 5: `EXTCLK`), did you insert a series 0Ω resistor (DNP-capable) for 2-wire SWD Core compatibility?
 - [ ] **[SHOULD]** Did you use a transformer-isolated DC-DC converter for industrial 24V/48V inputs?
 - [ ] **[SHOULD]** Did you select a latched Eject Header if intended for high-vibration applications?
 - [ ] **[SHOULD]** Does the board outline match the 8854 pitch (`76.0 mm × 42.0 mm`) or legacy 8748 pitch (`77.0 mm × 38.0 mm`) for enclosure compatibility?

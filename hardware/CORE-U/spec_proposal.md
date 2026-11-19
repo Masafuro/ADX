@@ -131,48 +131,50 @@ ATtiny1616 の PORTMUX 機能により、用途に応じて USART0 を切り替�
 ## 5. ピン配分と ADX 20P IDC アサイン (Pin Assignment)
 
 ### 5.1 ATtiny1616-MNR（20ピン QFN）割り当て状況
-rev4 ネットリスト（作業中データ）における 20 ピンの割り当ては以下の通りです：
+rev4 ネットリスト（作業中データ）における 20 ピンの割り当て（`ADX-BUS-SPEC-v4.2` 準拠）は以下の通りです：
 
-| ピン番号 | ポート名 | 接続先 | 主な役割 |
-| :---: | :--- | :--- | :--- |
-| **1** | `PA2/RX` | `CH342K` 側予定 | USART0 Alt-RX（PC デバッグ受信） |
-| **2** | `PA3/EXTCLK` | `CN1` Pin 5 | 外部クロック / 汎用 GPIO |
-| **3** | `GND` | `GND` | システムグラウンド |
-| **4** | `VDD` | `3V3` | 内部ロジック電源 (3.3V) |
-| **5** | `PA4/PWM` | オンボード LED 候補 | PWM / CCL LUT0 / AIN4 / GPIO |
-| **6** | `PA5/AIN` | オンボード LED 候補 | AIN5 / VREFA / GPIO |
-| **7** | `PA6/AIN` | `CN1` Pin 3 | ADX バス標準アナログ入力 |
-| **8** | `PA7/FLG` | `03-eFuse` Pin 3 | eFuse 過電流・過熱フラグ入力（`03-R2` 10kΩ プルアップ） |
-| **9** | `PB5/PWM` | オンボード LED 候補 | TCB1 PWM / GPIO |
-| **10** | `PB4/NEOP` | オンボード LED 候補 | GPIO（旧 NeoPixel 枠） |
-| **11** | `PB3/RX` | `CN1` Pin 8 | USART0 Default-RX（外部拡張 UART） |
-| **12** | `PB2/TX` | `CN1` Pin 7 | USART0 Default-TX（外部拡張 UART） |
-| **13** | `PB1/SDA` | `CN1` Pin 10 | I2C SDA (TWI0) |
-| **14** | `PB0/SCL` | `CN1` Pin 9 | I2C SCL (TWI0) |
-| **15** | `PC0/SCK` | `CN1` Pin 15 | SPI SCK (SPI0) |
-| **16** | `PC1/MISO` | `CN1` Pin 14 | SPI MISO (SPI0) |
-| **17** | `PC2/MOSI` | `CN1` Pin 13 | SPI MOSI (SPI0) |
-| **18** | `PC3/CS` | `CN1` Pin 12 | SPI CS (SPI0) |
-| **19** | `PA0/UPDI` | `CN1` Pin 2 & `CH342K` | UPDI 書込 ＆ ADX バス共有 |
-| **20** | `PA1/TX` | `CH342K` 側予定 | USART0 Alt-TX（PC デバッグ送信） |
-| **21** | `EP` | `GND` | サーマルパッド |
+| ピン番号 | ポート名 | 接続先 | ADX 論理 ID / コードマクロ | 主な役割 |
+| :---: | :--- | :--- | :--- | :--- |
+| **1** | `PA2/RX` | `CH342K` 側予定 | *(オンボード)* | USART0 Alt-RX（PC デバッグ受信） |
+| **2** | `PA3/EXTCLK` | `CN1` Pin 5 | **`P02`** (`ADX_P02` / `ADX_CLK`) | 外部クロック / 汎用 GPIO / ADC0 |
+| **3** | `GND` | `GND` | `GND` | システムグラウンド |
+| **4** | `VDD` | `3V3` | *(オンボード)* | 内部ロジック電源 (3.3V) |
+| **5** | `PA4/PWM` | オンボード LED 候補 | *(オンボード)* | PWM / CCL LUT0 / AIN4 / GPIO |
+| **6** | `PA5/AIN` | オンボード LED 候補 | *(オンボード)* | AIN5 / VREFA / GPIO |
+| **7** | `PA6/AIN` | `CN1` Pin 3 | **`P01`** (`ADX_P01` / `ADX_AIN`) | ADX バス標準アナログ入力 / DAC0 / GPIO |
+| **8** | `PA7/FLG` | `03-eFuse` Pin 3 | *(オンボード `ADX_EFUSE_FLG`)* | eFuse 過電流・過熱フラグ入力（`03-R2` 10kΩ プルアップ） |
+| **9** | `PB5/PWM` | オンボード LED 候補 | *(オンボード)* | TCB1 PWM / GPIO |
+| **10** | `PB4/NEOP` | オンボード LED 候補 | *(オンボード)* | GPIO（旧 NeoPixel 枠） |
+| **11** | `PB3/RX` | `CN1` Pin 8 | **`P04`** (`ADX_P04` / `ADX_RX`) | USART0 Default-RX（外部拡張 UART） |
+| **12** | `PB2/TX` | `CN1` Pin 7 | **`P03`** (`ADX_P03` / `ADX_TX`) | USART0 Default-TX（外部拡張 UART） |
+| **13** | `PB1/SDA` | `CN1` Pin 10 | **`P06`** (`ADX_P06` / `ADX_SDA`) | I2C SDA (TWI0) / ADC0 |
+| **14** | `PB0/SCL` | `CN1` Pin 9 | **`P05`** (`ADX_P05` / `ADX_SCL`) | I2C SCL (TWI0) / ADC0 |
+| **15** | `PC0/SCK` | `CN1` Pin 15 | **`P10`** (`ADX_P10` / `ADX_SCK`) | SPI SCK (SPI0 Alt) / TCD0 WOC |
+| **16** | `PC1/MISO` | `CN1` Pin 14 | **`P09`** (`ADX_P09` / `ADX_MISO`) | SPI MISO (SPI0 Alt) / TCD0 WOD |
+| **17** | `PC2/MOSI` | `CN1` Pin 13 | **`P08`** (`ADX_P08` / `ADX_MOSI`) | SPI MOSI (SPI0 Alt) |
+| **18** | `PC3/CS` | `CN1` Pin 12 | **`P07`** (`ADX_P07` / `ADX_CS`) | SPI CS (SPI0 Alt) |
+| **19** | `PA0/UPDI` | `CN1` Pin 2 & `CH342K` | **`S00`** *(システム専用・通常未定義)* | UPDI 書込 ＆ ADX バス共有（Card 側 N.C. 必須） |
+| **20** | `PA1/TX` | `CH342K` 側予定 | *(オンボード)* | USART0 Alt-TX（PC デバッグ送信） |
+| **21** | `EP` | `GND` | `GND` | サーマルパッド |
 
 > **Note:** オンボード 3 色 LED（`LED_R`, `LED_Y`, `LED_W`）への具体的なピン割り当ては、余剰 GPIO 4 本（`PA4`, `PA5`, `PB4`, `PB5`）の中から配線時に確定します。
 
-### 5.2 ADX 20P IDC (`CN1`: `321020MG0CBK00A01`) ピン配列
+### 5.2 ADX 20P IDC (`CN1`: `321020MG0CBK00A01`) ピン配列 (`ADX-BUS-SPEC-v4.2`)
 
-| Pin | ネット名 | Pin | ネット名 |
-| :---: | :--- | :---: | :--- |
-| **1** | `GND` | **2** | `PA0/UPDI` |
-| **3** | `PA6/AIN` | **4** | `GND` |
-| **5** | `PA3/EXTCLK` | **6** | `GND` |
-| **7** | `PB2/TX` | **8** | `PB3/RX` |
-| **9** | `PB0/SCL` | **10** | `PB1/SDA` |
-| **11** | `GND` | **12** | `PC3/CS` |
-| **13** | `PC2/MOSI` | **14** | `PC1/MISO` |
-| **15** | `PC0/SCK` | **16** | `GND` |
-| **17** | `VBUS_PROT` (5V) | **18** | `VBUS_PROT` (5V) |
-| **19** | `VBUS_PROT` (5V) | **20** | `VBUS_PROT` (5V) |
+| Pin | 論理 ID | ネット名 (MCU) | Pin | 論理 ID | ネット名 (MCU) |
+| :---: | :---: | :--- | :---: | :---: | :--- |
+| **1** | `GND` | `GND` | **2** | **`S00`** | `PA0/UPDI` *(Card N.C.)* |
+| **3** | **`P01`** | `PA6/AIN` | **4** | `GND` | `GND` |
+| **5** | **`P02`** | `PA3/EXTCLK` | **6** | `GND` | `GND` |
+| **7** | **`P03`** | `PB2/TX` | **8** | **`P04`** | `PB3/RX` |
+| **9** | **`P05`** | `PB0/SCL` | **10** | **`P06`** | `PB1/SDA` |
+| **11** | `GND` | `GND` | **12** | **`P07`** | `PC3/CS` |
+| **13** | **`P08`** | `PC2/MOSI` | **14** | **`P09`** | `PC1/MISO` |
+| **15** | **`P10`** | `PC0/SCK` | **16** | `GND` | `GND` |
+| **17** | `VBUS` | `VBUS_PROT` (5V) | **18** | `VBUS` | `VBUS_PROT` (5V) |
+| **19** | `VBUS` | `VBUS_PROT` (5V) | **20** | `VBUS` | `VBUS_PROT` (5V) |
+
+> **ソフトウェア抽象化 (`ADX_CORE_U.h`)**: ファームウェア開発では `PIN_PA6` 等の MCU 生名ではなく、他 Core ボードと共通の `ADX_P01`〜`ADX_P10`（および機能エイリアス `ADX_AIN`, `ADX_CS` 等）を使用します（詳細は [`docs/spec/ADX_PINOUT.md`](../../docs/spec/ADX_PINOUT.md) Section 5 参照）。
 
 ---
 

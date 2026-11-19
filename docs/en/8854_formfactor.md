@@ -78,13 +78,13 @@ Dimensional definitions for PCB designers (KiCad, Altium, EasyEDA Pro, etc.) in 
 
 The 8854 Form Factor integrates the standardized vertical box header in full compliance with the [ADX 20-Pin Bus Specification (SSOT)](../spec/ADX_PINOUT.md).
 
-### 4.1 Header Pinout (Top View)
-```
-[Upper Row (Odd / PROG side)]
-OWD/PROG | GND | GND     | UART_RX | I2C_SDA | SPI_CS | SPI_MISO | GND     | VBUS | VBUS
+### 4.1 Header Pinout (Top View / `ADX-BUS-SPEC-v4.2`)
+```text
+[Upper Row (Even Pins / PROG side: Pins 2, 4, ..., 20)]
+S00/OWD  | GND     | GND        | P04/RX   | P06/SDA  | P07/CS   | P09/MISO | GND      | VBUS | VBUS
 
-[Lower Row (Even / AIN side)]
-GND      | AIN | EXT_CLK | UART_TX | I2C_SCL | GND    | SPI_MOSI | SPI_SCK | VBUS | VBUS
+[Lower Row (Odd Pins / Pin 1 & AIN side: Pins 1, 3, ..., 19)]
+GND      | P01/AIN | P02/EXTCLK | P03/TX   | P05/SCL  | GND      | P08/MOSI | P10/SCK  | VBUS | VBUS
 ```
 
 ### 4.2 Power Sourcing Requirements (VBUS Supply)

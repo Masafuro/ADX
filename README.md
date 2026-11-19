@@ -62,7 +62,7 @@ The ADX ecosystem is built upon two open, modular physical standards:
          ・8854 Form Factor (88.0 mm × 54.0 mm profile, straight V-cut ready)
          ・Corner M3 Mounting Holes (76.0 mm × 42.0 mm pitch) with Φ10 mm Clearances
          ・Unidirectional I/F Edge (66.0 mm span on bottom edge)
-         ・ADX Pinout v4.1 (Industrial-Aligned Power, Edge Guard, Native 3.3V)
+         ・ADX Pinout v4.2 (S00 / P01–P10 Abstraction, Bottom VBUS, Native 3.3V)
        ════════════════════════════════════════════════════════════════════
                                        │
             ┌──────────────────────────┴──────────────────────────┐
@@ -85,17 +85,19 @@ The ADX ecosystem is built upon two open, modular physical standards:
 External field connections (power and communications) are strictly aligned along **one single edge of the PCB**.  
 By eliminating multi-directional wire routing, enclosure cutouts and front-panel machining are simplified to a single opening.
 
-### 2.3 Universal 20-Pin Bus (ADX-BUS-SPEC-v4.0)
+### 2.3 Universal 20-Pin Bus (ADX-BUS-SPEC-v4.2)
 All Core boards and Card modules interconnect via a standardized 2×10-pin shrouded IDC connector:
-- **Gravity Fail-Safe Power (`VBUS`: Pins 17–20)**:  
-  High-current power bus ($4.5\text{V} \sim 5.0\text{V}$ / up to **2.0A–3.0A continuous**) is positioned at the bottom of the connector. In vertical slot-in mounts, disconnected power wires drop downward under gravity, physically preventing shorts against communication lines.
+- **MCU-Independent Logical Pin IDs (`S00`, `P01`–`P10`)**:  
+  Power rails (`GND`, `VBUS`) are unnumbered; Pin 2 (`OWD`) is visually separated as **`S00`** (System), and the 10 user/Card signals use flat role-neutral IDs **`P01`–`P10`** (mapped to collision-safe `ADX_P01`–`ADX_P10` macros in `ADX_<BOARD>.h`).
+- **Panel-Aligned Bottom Power (`VBUS`: Pins 17–20)**:  
+  High-current power bus ($4.5\text{V} \sim 5.0\text{V}$ / up to **2.0A–3.0A continuous**) is positioned at the bottom of the connector to match industrial control-panel wiring practices (weak signals top, heavy power bottom) with zero trace crossings.
 - **Protective Boundary Wall (`Pin 16: GND`)**:  
   Direct short barrier directly above VBUS, safely grounding crimp misalignments.
 - **Outer Edge Guard & Coplanar Analog (`Pins 1–4`)**:  
-  Pin 1 (GND) protects cable perimeter; Pin 3 (AIN) is shielded between Pins 1 and 4 from high-speed digital switching.
-- **One-Wire Maintenance (`Pin 2: OWD`)**:  
-  Unified 1-wire test and UF2 bootloader flashing interface via IDC test fixture.
-- **Native 3.3V Logic**: All digital pins (UART, I2C, SPI) operate at **3.3V LVCMOS**.
+  Pin 1 (GND) protects cable perimeter; `P01` (Pin 3: `AIN`) is shielded between Pins 1 and 4 from high-speed digital switching.
+- **System Programming & Debug (`S00` [Pin 2] & `P02` [Pin 5])**:  
+  Unified 1-wire (UPDI) and 2-wire (SDI/SWD) automated factory flashing via the 20-pin IDC header.
+- **Native 3.3V Logic**: All digital pins (`P01`–`P10`) operate at **3.3V LVCMOS**.
 - *Reference (SSOT)*: [ADX 20-Pin Bus Specification](docs/spec/ADX_PINOUT.md) | [Architecture Guide](docs/en/ADX_pinout.md)
 
 ---

@@ -83,15 +83,17 @@ SPDX-License-Identifier: CC-BY-4.0
   - 短絡保護 (Short-Circuit Protection)
   - 逆流防止 (Reverse Current Blocking)
 
-### 4.3 ピン配置シルク表記 (ADX PINOUT)
+### 4.3 ピン配置シルク表記 (ADX PINOUT / `ADX-BUS-SPEC-v4.2` 対応)
 
-```
-[上列 (奇数/PROG側)]
-OWD/PROG | GND | GND     | UART_RX | I2C_SDA | SPI_CS | SPI_MISO | GND     | VBUS | VBUS
+```text
+[上列 (偶数ピン / PROG 側: Pins 2, 4, ..., 20)]
+S00 (OWD/PROG) | GND | GND         | P04 (UART_RX) | P06 (I2C_SDA) | P07 (SPI_CS)   | P09 (SPI_MISO) | GND           | VBUS | VBUS
 
-[下列 (偶数/AIN側)]
-GND      | AIN | EXT_CLK | UART_TX | I2C_SCL | GND    | SPI_MOSI | SPI_SCK | VBUS | VBUS
+[下列 (奇数ピン / Pin 1・AIN 側: Pins 1, 3, ..., 19)]
+GND            | P01 (AIN) | P02 (EXT_CLK) | P03 (UART_TX) | P05 (I2C_SCL) | GND            | P08 (SPI_MOSI) | P10 (SPI_SCK) | VBUS | VBUS
 ```
+
+> ※ 2026-11-09 生成済みの v0 ガーバー基板上のシルクは `ADX-BUS-SPEC-v4.1` のバス機能名（`OWD/PROG`, `AIN`, ...）表記です。電気的・物理的配列は `v4.2`（`S00`, `P01`〜`P10`）と 100% 同一であり、次期リビジョン以降で論理ピン ID の併記を推奨します。
 
 ---
 
