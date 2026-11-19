@@ -68,7 +68,8 @@ Dimensional definitions for PCB designers (KiCad, Altium, EasyEDA Pro, etc.) in 
 * **Drill Diameters:**
   - Mounting Holes (NPTH): `130 mil` (approx. 3.30 mm)
   - 20-Pin Bus (PTH): `43 mil` (approx. 1.10 mm)
-* **20-Pin IDC Header Center:** `(44.0, 48.0) mm` / `[1732, 1890] mil` (centered on long edge, 6.0 mm from top edge)
+* **20-Pin IDC Header Center:** `(44.0, 47.0) mm` / `[1732, 1850] mil` (centered on long edge, `7.0 mm` from top edge — standardized to provide adequate board-edge and solder-fillet margin for SMD vertical IDC headers while also increasing clearance for THT headers)
+  > *Note: The `Reference CARD v0 (2026-11-09)` preview above shows the initial `(44|48)` silkscreen; the current 8854 standard center is **`(44.0, 47.0) mm`**.*
 * **Trace Clearance to Edge:** `20 mil` from upper and lower board edges
 * **Recommended Grid:** `100 mil` or `50 mil`
 
@@ -107,6 +108,7 @@ Theoretical rounding error between metric and mil definitions is under 12 micron
 | **X-axis Pitch** | 76.0 mm | 2992 mil | 75.997 mm | `-0.003 mm` (-3 μm) | Absorbed in M3 clearance |
 | **Y-axis Pitch** | 42.0 mm | 1654 mil | 42.012 mm | `+0.012 mm` (+12 μm) | High precision |
 | **Hole Edge Margin**| 6.0 mm | 236 mil | 5.994 mm | `-0.006 mm` (-6 μm) | Measured from edges |
+| **IDC Center Y** | 47.0 mm | 1850 mil | 46.990 mm | `-0.010 mm` (-10 μm) | Compatible with SMD & THT headers |
 
 ---
 

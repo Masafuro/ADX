@@ -1,0 +1,266 @@
+PROTEL NETLIST 2.0
+[
+DESIGNATOR
+H1
+FOOTPRINT
+HDR-TH_40P-P2.54-V-M-R2-C20-S2.54
+PARTTYPE
+2.54mm 2*20P直排针
+DESCRIPTION
+Pin Structure:2x20P Pitch:2.54mm Row Spacing:2.54mm Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:2 Number of Pins:40P Current Rating:3A Voltage Rating (Max):- Length of Mating Pin:6mm Insulation Height:- Length of End Con
+Component Kind
+Standard
+Footprint
+HDR-TH_40P-P2.54-V-M-R2-C20-S2.54
+Designator
+H1
+LCSC Part Name
+2x20P 间距:2.54mm 方针 直插
+Supplier Part
+C50980
+Manufacturer
+BOOMELE(博穆精密)
+Manufacturer Part
+2.54mm 2*20P直排针
+Supplier Footprint
+插件,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/2.54mm%25202*20P%25E7%259B%25B4%25E6%258E%2592%25E9%2592%2588/51992.html
+Supplier
+LCSC
+Add into BOM
+no
+Pin Structure
+2x20P
+Pitch
+2.54mm
+Row Spacing
+2.54mm
+Circluar Pins/Square Pins
+Pin Header
+Mounting Type
+Through Hole
+Number of Rows
+2
+Number of Pins
+40P
+Current Rating
+3A
+Voltage Rating (Max)
+-
+Length of Mating Pin
+6mm
+Insulation Height
+-
+Length of End Connection Pin
+3mm
+Contact Material
+Brass
+Contact Plating
+-
+Operating Temperature
+-40℃~+105℃
+Color
+Black
+Name
+2.54mm 2*20P直排针
+Description
+Pin Structure:2x20P Pitch:2.54mm Row Spacing:2.54mm Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:2 Number of Pins:40P Current Rating:3A Voltage Rating (Max):- Length of Mating Pin:6mm Insulation Height:- Length of End Con
+Unique ID
+gge256
+3D Model Title
+
+Reuse Block
+
+Group ID
+
+Channel ID
+$3I220
+Device
+2.54mm 2*20P直排针
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+U1
+FOOTPRINT
+IDC-TH_20P-P2.54-V-R2-C10-S2.54
+PARTTYPE
+DS1013-20SSiB1-B-0
+DESCRIPTION
+Connector Type:IDC Header Pitch:2.54mm Number of Positions or Pins:2x10P Current Rating:3A Holder Type:Through Hole Row Spacing:2.54mm Number of Rows:2 Number of PINs Per Row:10 Contact Plating:Gold Operating Temperature:-40℃~+105℃ Operating Temperature:-
+Component Kind
+Standard
+Footprint
+IDC-TH_20P-P2.54-V-R2-C10-S2.54
+Designator
+U1
+LCSC Part Name
+2.54mm 2x10P 排数:2 每排P数:10
+Supplier Part
+C109406
+Manufacturer
+CONNFLY
+Manufacturer Part
+DS1013-20SSiB1-B-0
+Supplier Footprint
+插件,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/DS1013-20SSiB1-B-0/110627.html
+Supplier
+LCSC
+Add into BOM
+yes
+Connector Type
+IDC Header
+Pitch
+2.54mm
+Number of Positions or Pins
+2x10P
+Current Rating
+3A
+Holder Type
+Through Hole
+Row Spacing
+2.54mm
+Number of Rows
+2
+Number of PINs Per Row
+10
+Contact Plating
+Gold
+Operating Temperature
+-40℃~+105℃
+Color
+Black
+Name
+DS1013-20SSiB1-B-0
+Description
+Connector Type:IDC Header Pitch:2.54mm Number of Positions or Pins:2x10P Current Rating:3A Holder Type:Through Hole Row Spacing:2.54mm Number of Rows:2 Number of PINs Per Row:10 Contact Plating:Gold Operating Temperature:-40℃~+105℃ Operating Temperature:-
+Unique ID
+gge257
+3D Model Title
+
+Reuse Block
+
+Group ID
+
+Channel ID
+$3I246
+Device
+DS1013-20SSiB1-B-0
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+(
+GND 
+H1-1 2.54mm 2*20P直排针-1 Passive 
+H1-2 2.54mm 2*20P直排针-2 Passive 
+H1-7 2.54mm 2*20P直排针-7 Passive 
+H1-8 2.54mm 2*20P直排针-8 Passive 
+H1-11 2.54mm 2*20P直排针-11 Passive 
+H1-12 2.54mm 2*20P直排针-12 Passive 
+H1-21 2.54mm 2*20P直排针-21 Passive 
+H1-22 2.54mm 2*20P直排针-22 Passive 
+H1-31 2.54mm 2*20P直排针-31 Passive 
+H1-32 2.54mm 2*20P直排针-32 Passive 
+U1-1 DS1013-20SSiB1-B-0-1 Passive 
+U1-4 DS1013-20SSiB1-B-0-4 Passive 
+U1-6 DS1013-20SSiB1-B-0-6 Passive 
+U1-11 DS1013-20SSiB1-B-0-11 Passive 
+U1-16 DS1013-20SSiB1-B-0-16 Passive 
+)
+(
+S00/OWD 
+H1-3 2.54mm 2*20P直排针-3 Passive 
+H1-4 2.54mm 2*20P直排针-4 Passive 
+U1-2 DS1013-20SSiB1-B-0-2 Passive 
+)
+(
+P01/AIN 
+H1-5 2.54mm 2*20P直排针-5 Passive 
+H1-6 2.54mm 2*20P直排针-6 Passive 
+U1-3 DS1013-20SSiB1-B-0-3 Passive 
+)
+(
+P02/EXTCLK 
+H1-9 2.54mm 2*20P直排针-9 Passive 
+H1-10 2.54mm 2*20P直排针-10 Passive 
+U1-5 DS1013-20SSiB1-B-0-5 Passive 
+)
+(
+P03/TX 
+H1-13 2.54mm 2*20P直排针-13 Passive 
+H1-14 2.54mm 2*20P直排针-14 Passive 
+U1-7 DS1013-20SSiB1-B-0-7 Passive 
+)
+(
+P04/RX 
+H1-15 2.54mm 2*20P直排针-15 Passive 
+H1-16 2.54mm 2*20P直排针-16 Passive 
+U1-8 DS1013-20SSiB1-B-0-8 Passive 
+)
+(
+P05/SCL 
+H1-17 2.54mm 2*20P直排针-17 Passive 
+H1-18 2.54mm 2*20P直排针-18 Passive 
+U1-9 DS1013-20SSiB1-B-0-9 Passive 
+)
+(
+P06/SDA 
+H1-19 2.54mm 2*20P直排针-19 Passive 
+H1-20 2.54mm 2*20P直排针-20 Passive 
+U1-10 DS1013-20SSiB1-B-0-10 Passive 
+)
+(
+P07/CS 
+H1-23 2.54mm 2*20P直排针-23 Passive 
+H1-24 2.54mm 2*20P直排针-24 Passive 
+U1-12 DS1013-20SSiB1-B-0-12 Passive 
+)
+(
+P08/MOSI 
+H1-25 2.54mm 2*20P直排针-25 Passive 
+H1-26 2.54mm 2*20P直排针-26 Passive 
+U1-13 DS1013-20SSiB1-B-0-13 Passive 
+)
+(
+P09/MISO 
+H1-27 2.54mm 2*20P直排针-27 Passive 
+H1-28 2.54mm 2*20P直排针-28 Passive 
+U1-14 DS1013-20SSiB1-B-0-14 Passive 
+)
+(
+P10/SCK 
+H1-29 2.54mm 2*20P直排针-29 Passive 
+H1-30 2.54mm 2*20P直排针-30 Passive 
+U1-15 DS1013-20SSiB1-B-0-15 Passive 
+)
+(
+VBUS_PROT 
+H1-33 2.54mm 2*20P直排针-33 Passive 
+H1-34 2.54mm 2*20P直排针-34 Passive 
+H1-35 2.54mm 2*20P直排针-35 Passive 
+H1-36 2.54mm 2*20P直排针-36 Passive 
+H1-37 2.54mm 2*20P直排针-37 Passive 
+H1-38 2.54mm 2*20P直排针-38 Passive 
+H1-39 2.54mm 2*20P直排针-39 Passive 
+H1-40 2.54mm 2*20P直排针-40 Passive 
+U1-17 DS1013-20SSiB1-B-0-17 Passive 
+U1-18 DS1013-20SSiB1-B-0-18 Passive 
+U1-19 DS1013-20SSiB1-B-0-19 Passive 
+U1-20 DS1013-20SSiB1-B-0-20 Passive 
+)

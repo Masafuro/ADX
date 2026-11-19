@@ -32,7 +32,7 @@ ADXのハードウェアは、**8854 Form Factor**（`88.0 mm × 54.0 mm`、旧8
 | ボード名 | 概要 | リンク |
 | :--- | :--- | :--- |
 | **ADX Reference CARD v0** | 8854 Form Factorの物理寸法・キープアウト・ピン配置を可視化した公式リファレンスボード。 | [仕様書](CARD/Reference/concept.md) |
-| **ADX Prototyping CARD** | 下列20P ADXバス引き出し ＋ 上列20P ユニバーサル試作エリアを備えたプロトタイピング拡張基板。 | [仕様書](CARD/Prototyping/proposal.md) |
+| **ADX Prototype CARD** | 8854 準拠、2×20P ADX バス引き出し ＋ THT / SMD ユニバーサル試作エリアを備えたプロトタイピング拡張基板。 | [仕様書](CARD/Prototype/proposal.md) |
 
 ### 1.3 フォームファクタ & 規格仕様
 

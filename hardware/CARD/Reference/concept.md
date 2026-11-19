@@ -73,8 +73,10 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ### 4.1 コネクタ配置
 - **形式**: $2 \times 10$ ピン 2.54 mm ピッチ バーティカル IDC ボックスヘッダー
-- **中心座標**: **$(44.0, 48.0)\,\text{mm}$**（基板長辺88mmの完全センター、上端から6.0mm）
+- **8854 規格標準 中心座標**: **$(44.0, 47.0)\,\text{mm}$**（基板長辺 88 mm の完全センター、上端から 7.0 mm。SMD 型ヘッダーの基板端マージン確保および THT 型での余裕拡大のため標準化）
 - **ドリル径**: $\Phi 1.10\,\text{mm}$（PTH）
+
+> ※ 2026-11-09 生成済みの v0 ガーバー基板の IDC 中心座標は初期案の $(44.0, 48.0)\,\text{mm}$（上端から 6.0 mm）です。次期リビジョン以降で現行標準の $(44.0, 47.0)\,\text{mm}$ へ更新します。
 
 ### 4.2 電源供給仕様 (VBUS Supply)
 - **推奨電圧範囲**: $4.75\,\text{V} \sim 5.25\,\text{V}$
@@ -105,6 +107,6 @@ GND            | P01 (AIN) | P02 (EXT_CLK) | P03 (UART_TX) | P05 (I2C_SCL) | GND
 | :--- | :--- | :--- |
 | `Gerber_BoardOutlineLayer.GKO` | 外形線 | $88.0 \times 54.0\,\text{mm}$ 完全矩形 |
 | `Drill_NPTH_Through.DRL` | 取付穴 | $\Phi 3.3\,\text{mm}$ × 4穴、ピッチ $76 \times 42\,\text{mm}$ |
-| `Drill_PTH_Through.DRL` | IDCヘッダー | $\Phi 1.1\,\text{mm}$ × 20穴、ピッチ 2.54mm、中心 $(44.0, 48.0)$ |
+| `Drill_PTH_Through.DRL` | IDCヘッダー | $\Phi 1.1\,\text{mm}$ × 20穴、ピッチ 2.54mm、中心 $(44.0, 48.0)$（※v0初期座標。現行8854標準は $(44.0, 47.0)$） |
 | `Gerber_TopSilkscreenLayer.GTO` | 表面シルク | 各種寸法・ピンアサイン・クリアランス明記 |
 | `How-to-order-PCB.txt` | 発注ガイド | EasyEDA Pro 標準ガーバー出力準拠 |
