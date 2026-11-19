@@ -331,11 +331,13 @@ def style_for_hackaday(html_content: str, frontmatter: dict, image_map: dict, cd
     if summary:
         top_section += f'<p style="font-size: 1.1em; line-height: 1.6; color: #222;"><strong>{summary}</strong></p>\n\n'
 
-    # 7. Fixed Call-to-Action (CTA) Footer (Clean GitHub-only link)
+    # 7. Fixed Call-to-Action (CTA) Footer (Minimal GitHub + Podcast 1-line link)
     cta_footer = """
 <hr style="margin: 36px 0 20px; border: 0; border-top: 1px solid #e2e8f0;">
 <p style="text-align: center; font-size: 0.95em; color: #475569; margin: 24px 0 12px;">
-  📂 <strong>Open Source Hardware &amp; Code:</strong> <a href="https://github.com/Masafuro/ADX" target="_blank" style="color: #0284c7; text-decoration: underline;">GitHub Repository (Masafuro/ADX)</a>
+  📂 <strong>Open Source Hardware &amp; Code:</strong> <a href="https://github.com/Masafuro/ADX" target="_blank" style="color: #0284c7; text-decoration: underline;">GitHub (Masafuro/ADX)</a>
+  &nbsp;|&nbsp;
+  🎙️ <strong>Podcast:</strong> <a href="https://open.spotify.com/show/79cvRtpnEFaMkGB9mDjPpd" target="_blank" style="color: #0284c7; text-decoration: underline;">Off the Breadboard (Spotify)</a>
 </p>
 """
 

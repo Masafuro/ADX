@@ -5,20 +5,20 @@
 
 <p style="font-size: 1.1em; line-height: 1.6; color: #222;"><strong>Stripping CORE-U down to a single 20-pin IDC bus meant we needed a clean way to prototype the very first expansion circuit—without leaking MCU-specific pin names onto every board. Here is how ADX-BUS-SPEC-v4.2 introduces collision-safe logical pin IDs (S00, P01–P10) and how ADX Prototype CARD v0 turns 8854's underside keep-out wings into 240 SMD pads alongside 342 THT holes.</strong></p>
 
-<p>In yesterday's log (<em>"The Art of Subtraction"</em>), we stripped our USB Core board (<strong><code>ADX CORE-U rev4</code></strong>) down to dual Type-C ports, an eFuse, a <code>CH342K</code>, four LEDs, and <strong>one</strong> 20-pin IDC expansion bus (<code>CN1</code>).</p>
-<p>That left us with an obvious practical trade-off: with zero onboard screw terminals or loose pin headers, you cannot wire up even a single sensor or MOSFET until you plug an expansion Card into <code>CN1</code>.</p>
-<p>Today, we finished and generated Gerbers for that very first companion board—<strong><code>ADX Prototype CARD v0</code></strong>—and finalized <strong><code>ADX-BUS-SPEC-v4.2</code></strong>, the logical pin-naming layer printed across its silkscreen.</p>
+<p>In yesterday's log (<em>"The Art of Subtraction"</em>), we stripped our USB Core board (<strong>ADX CORE-U rev4</strong>) down to dual Type-C ports, an eFuse, a <strong>CH342K</strong>, four LEDs, and <strong>one</strong> 20-pin IDC expansion bus (<strong>CN1</strong>).</p>
+<p>That left us with an obvious practical trade-off: with zero onboard screw terminals or loose pin headers, you cannot wire up even a single sensor or MOSFET until you plug an expansion Card into CN1.</p>
+<p>Today, we finished and generated Gerbers for that very first companion board—<strong>ADX Prototype CARD v0</strong>—and finalized <strong>ADX-BUS-SPEC-v4.2</strong>, the logical pin-naming layer printed across its silkscreen.</p>
 <hr />
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">1. The Challenge: Three Friction Points Before Soldering Pin 1</h2>
 <p>Designing a "simple" prototyping board quickly ran into three non-obvious problems:</p>
 <ol>
-<li><strong>MCU port names don't survive across architectures</strong>: Calling a bus line <code>PA0</code>, <code>PB2</code>, or <code>PC19</code> makes sense on a single-chip project. Once your Core lineup spans an 8-bit <code>ATtiny1616</code>, a 32-bit RISC-V <code>CH32X035</code>, and a planned <code>RP2040</code>, printing native silicon port names on expansion Cards breaks portability immediately.</li>
+<li><strong>MCU port names don't survive across architectures</strong>: Calling a bus line <strong>PA0</strong>, <strong>PB2</strong>, or <strong>PC19</strong> makes sense on a single-chip project. Once your Core lineup spans an 8-bit <strong>ATtiny1616</strong>, a 32-bit RISC-V <strong>CH32X035</strong>, and a planned <strong>RP2040</strong>, printing native silicon port names on expansion Cards breaks portability immediately.</li>
 <li><strong>8854's underside keep-out leaves awkward margins</strong>: On the <strong>8854 Form Factor</strong> (88.0 mm × 54.0 mm), the underside outside the central 66.0 mm I/O edge is an <strong>SMD-Only zone</strong> (no protruding through-hole leads) so enclosure guide rails and snap-fit clips can slide under cleanly. On a conventional perfboard, those left and right wings just become wasted fiberglass.</li>
-<li><strong>One more millimeter on the IDC header</strong>: Moving <code>CORE-U rev4</code> to an all-SMD vertical 20-pin IDC box header revealed that our original <code>Y = 48.0 mm</code> center coordinate (6.0 mm from the top edge) was tight for SMD outer solder fillets and V-cut edge clearance.</li>
+<li><strong>One more millimeter on the IDC header</strong>: Moving CORE-U rev4 to an all-SMD vertical 20-pin IDC box header revealed that our original <strong>Y = 48.0 mm</strong> center coordinate (6.0 mm from the top edge) was tight for SMD outer solder fillets and V-cut edge clearance.</li>
 </ol>
 <hr />
-<h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">2. <code>ADX-BUS-SPEC-v4.2</code>: Why <code>S00</code>, <code>P01</code>–<code>P10</code>, and the <code>#define P00</code> Trap</h2>
-<p>Version <code>v4.2</code> maintains <strong>full electrical and physical backward compatibility</strong> with <code>v4.1</code>, while inserting an MCU-independent <strong>Logical Pin ID</strong> layer between physical IDC pin numbers (<code>Pin 1</code>–<code>20</code>) and guaranteed peripheral functions:</p>
+<h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">2. ADX-BUS-SPEC-v4.2: Why S00, P01–P10, and the "#define P00" Trap</h2>
+<p>Version <strong>v4.2</strong> maintains <strong>full electrical and physical backward compatibility</strong> with v4.1, while inserting an MCU-independent <strong>Logical Pin ID</strong> layer between physical IDC pin numbers (Pin 1–20) and guaranteed peripheral functions:</p>
 <table>
 <thead>
 <tr>
@@ -31,73 +31,73 @@
 <tbody>
 <tr>
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;"><code>GND</code></td>
+<td style="text-align: center;"><strong>GND</strong></td>
 <td style="text-align: left;">0V Return</td>
 <td style="text-align: left;">Outer edge ESD / mechanical shield</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>2</strong></td>
-<td style="text-align: center;"><strong><code>S00</code></strong></td>
-<td style="text-align: left;"><code>OWD</code> (<code>UPDI</code> / <code>SWDIO</code>)</td>
+<td style="text-align: center;"><strong>S00</strong></td>
+<td style="text-align: left;"><strong>OWD</strong> (UPDI / SWDIO)</td>
 <td style="text-align: left;"><strong>System debug only — Cards MUST leave N.C.</strong></td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;"><code>P01</code></td>
-<td style="text-align: left;"><code>AIN</code> / 3.3V GPIO</td>
-<td style="text-align: left;">Coplanar shielded analog input (flanked by Pins 1 &amp; 4 <code>GND</code>)</td>
+<td style="text-align: center;"><strong>P01</strong></td>
+<td style="text-align: left;"><strong>AIN</strong> / 3.3V GPIO</td>
+<td style="text-align: left;">Coplanar shielded analog input (flanked by Pins 1 &amp; 4 GND)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>4</strong></td>
-<td style="text-align: center;"><code>GND</code></td>
+<td style="text-align: center;"><strong>GND</strong></td>
 <td style="text-align: left;">0V Return</td>
 <td style="text-align: left;">Analog / clock isolation guard</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>5</strong></td>
-<td style="text-align: center;"><code>P02</code></td>
-<td style="text-align: left;"><code>EXTCLK</code> / <code>SWCLK</code> / GPIO</td>
-<td style="text-align: left;">Clock waveguide (flanked by Pins 4 &amp; 6 <code>GND</code>; 0 Ω DNP recommended on Cards)</td>
+<td style="text-align: center;"><strong>P02</strong></td>
+<td style="text-align: left;"><strong>EXTCLK</strong> / SWCLK / GPIO</td>
+<td style="text-align: left;">Clock waveguide (flanked by Pins 4 &amp; 6 GND; 0 Ω DNP recommended on Cards)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>6</strong></td>
-<td style="text-align: center;"><code>GND</code></td>
+<td style="text-align: center;"><strong>GND</strong></td>
 <td style="text-align: left;">0V Return</td>
 <td style="text-align: left;">Clock / comm isolation guard</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>7–8</strong></td>
-<td style="text-align: center;"><code>P03</code>–<code>P04</code></td>
-<td style="text-align: left;"><code>UART_TX</code> / <code>UART_RX</code></td>
+<td style="text-align: center;"><strong>P03–P04</strong></td>
+<td style="text-align: left;"><strong>UART_TX</strong> / <strong>UART_RX</strong></td>
 <td style="text-align: left;">Async serial pair (or 3.3V GPIO)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>9–10</strong></td>
-<td style="text-align: center;"><code>P05</code>–<code>P06</code></td>
-<td style="text-align: left;"><code>I2C_SCL</code> / <code>I2C_SDA</code></td>
+<td style="text-align: center;"><strong>P05–P06</strong></td>
+<td style="text-align: left;"><strong>I2C_SCL</strong> / <strong>I2C_SDA</strong></td>
 <td style="text-align: left;">3.3V open-drain I2C (pull-ups required)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>11</strong></td>
-<td style="text-align: center;"><code>GND</code></td>
+<td style="text-align: center;"><strong>GND</strong></td>
 <td style="text-align: left;">0V Return</td>
 <td style="text-align: left;">Open-drain (I2C) to push-pull (SPI) barrier</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>12–15</strong></td>
-<td style="text-align: center;"><code>P07</code>–<code>P10</code></td>
-<td style="text-align: left;"><code>SPI_CS</code> / <code>MOSI</code> / <code>MISO</code> / <code>SCK</code></td>
+<td style="text-align: center;"><strong>P07–P10</strong></td>
+<td style="text-align: left;"><strong>SPI_CS</strong> / MOSI / MISO / SCK</td>
 <td style="text-align: left;">High-speed SPI bus group (or 3.3V GPIO)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>16</strong></td>
-<td style="text-align: center;"><code>GND</code></td>
+<td style="text-align: center;"><strong>GND</strong></td>
 <td style="text-align: left;">0V Return</td>
-<td style="text-align: left;">Short-circuit barrier wall guarding logic lines from <code>VBUS</code></td>
+<td style="text-align: left;">Short-circuit barrier wall guarding logic lines from VBUS</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>17–20</strong></td>
-<td style="text-align: center;"><code>VBUS</code></td>
+<td style="text-align: center;"><strong>VBUS</strong></td>
 <td style="text-align: left;">5.0V Power (2–3A)</td>
 <td style="text-align: left;">2×2 solid copper grid (no 3.3V rail on bus — PoL only)</td>
 </tr>
@@ -105,9 +105,9 @@
 </table>
 <p>Three small design decisions did most of the heavy lifting here:</p>
 <ul style="line-height: 1.8; margin-left: 20px; margin-bottom: 18px;">
-<li><strong>Flat <code>P01</code>–<code>P10</code> instead of <code>D</code>/<code>A</code> splits</strong>: Legacy Arduino numbering splits pins into digital (<code>D</code>) and analog (<code>A</code>), which gets confusing fast when <code>A0</code> is digital and I2C shares analog pins. A neutral flat series (<code>P01</code>–<code>P10</code>, uniform 3-character alignment) keeps silkscreens and schematics clean, while clearly separating the <strong>guaranteed bus contract</strong> (works on every Core) from MCU-specific bonus features (extra ADC/PWM/DAC channels).</li>
-<li><strong><code>S00</code> visually quarantines the programming line</strong>: Power rails stay unnumbered, and Pin 2 gets its own prefix (<code>S</code> = System). Even at a glance on a cramped silkscreen, <code>S00</code> does not look like a user GPIO.</li>
-<li><strong>Why firmware macros MUST be <code>ADX_P01</code>, never bare <code>P01</code></strong>: We originally considered defining bare <code>P01</code>–<code>P10</code> constants in board headers. Then we checked common Arduino I2C GPIO expander libraries—<code>PCF8575</code> and <code>PCA9555</code> libraries routinely ship global <code>#define P00 0</code> through <code>#define P07 7</code> and <code>#define P10 8</code>. Because C preprocessor macros ignore C++ <code>namespace</code> boundaries, bare <code>Pxx</code> identifiers are a ticking compile-time landmine. Prefixing every pin with <code>ADX_</code> (and intentionally leaving <code>S00</code> undefined in user headers) avoids the collision cleanly:</li>
+<li><strong>Flat P01–P10 instead of D/A splits</strong>: Legacy Arduino numbering splits pins into digital (D) and analog (A), which gets confusing fast when A0 is digital and I2C shares analog pins. A neutral flat series (<strong>P01–P10</strong>, uniform 3-character alignment) keeps silkscreens and schematics clean, while clearly separating the <strong>guaranteed bus contract</strong> (works on every Core) from MCU-specific bonus features (extra ADC/PWM/DAC channels).</li>
+<li><strong>S00 visually quarantines the programming line</strong>: Power rails stay unnumbered, and Pin 2 gets its own prefix (<strong>S</strong> = System). Even at a glance on a cramped silkscreen, <strong>S00</strong> does not look like a user GPIO.</li>
+<li><strong>Why firmware macros MUST be ADX_P01, never bare P01</strong>: We originally considered defining bare P01–P10 constants in board headers. Then we checked common Arduino I2C GPIO expander libraries—<strong>PCF8575</strong> and <strong>PCA9555</strong> libraries routinely ship global <strong>#define P00 0</strong> through <strong>#define P07 7</strong> and <strong>#define P10 8</strong>. Because C preprocessor macros ignore C++ namespaces, bare Pxx identifiers are a ticking compile-time landmine. Prefixing every pin with <strong>ADX_</strong> (and intentionally leaving S00 undefined in user headers) avoids the collision cleanly:</li>
 </ul>
 <pre style="background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; font-family: Consolas, monospace; font-size: 0.9em; margin: 18px 0; line-height: 1.5;"><code class="language-cpp">// Swap one header line when moving a sketch between Core architectures
 #include &quot;ADX_CORE_U.h&quot;     // or &quot;ADX_CORE_CX5.h&quot;
@@ -122,51 +122,53 @@ void loop() {
 }
 </code></pre>
 <hr />
-<h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">3. Turning a Keep-Out Into a Feature: Inside <code>ADX Prototype CARD v0</code></h2>
-<p>Once <code>v4.2</code> settled, we laid out <code>ADX Prototype CARD v0</code> as the first board carrying the new labels—and looked for a way to make every square millimeter of 8854 useful without violating a single enclosure keep-out:</p>
+<h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">3. Turning a Keep-Out Into a Feature: Inside ADX Prototype CARD v0</h2>
+<p>Once v4.2 settled, we laid out <strong>ADX Prototype CARD v0</strong> as the first board carrying the new labels—and looked for a way to make every square millimeter of 8854 useful without violating a single enclosure keep-out:</p>
 <h3>1. Dual-Pitch Universal Deck (342 THT + 240 SMD)</h3>
 <ul style="line-height: 1.8; margin-left: 20px; margin-bottom: 18px;">
-<li><strong>Center <code>66.0 mm</code> zone</strong>: Standard <strong>2.54 mm pitch THT</strong> grid (<code>12×26 + (5×3)×2</code> = <strong>342 independent plated holes</strong>, <code>Φ0.91 mm</code> drill / <code>Φ1.52 mm</code> pad) safely inside the through-hole permitted span.</li>
-<li><strong>Left &amp; right underside SMD-Only wings</strong>: Instead of leaving those side zones blank, we populated the <strong>Top Layer only</strong> with <strong>1.27 mm (50 mil) pitch SMD</strong> arrays (<code>(24×5)×2</code> = <strong>240 independent <code>0.89 × 0.89 mm</code> pads</strong>, <code>~0.38 mm</code> gap). That gives you dedicated landings for SOIC breakouts, SOT-23 transistors, or 0603/0805 passives while keeping the underside flat for enclosure rails—with <code>3.10 mm</code> edge clearance for 3.0 mm card guides and <code>5.53 mm</code> clearance to the nearest M3 mounting center.</li>
+<li><strong>Center 66.0 mm zone</strong>: Standard <strong>2.54 mm pitch THT</strong> grid (12×26 + (5×3)×2 = <strong>342 independent plated holes</strong>, Φ0.91 mm drill / Φ1.52 mm pad) safely inside the through-hole permitted span.</li>
+<li><strong>Left &amp; right underside SMD-Only wings</strong>: Instead of leaving those side zones blank, we populated the <strong>Top Layer only</strong> with <strong>1.27 mm (50 mil) pitch SMD</strong> arrays ((24×5)×2 = <strong>240 independent 0.89 × 0.89 mm pads</strong>, ~0.38 mm gap). That gives you dedicated landings for SOIC breakouts, SOT-23 transistors, or 0603/0805 passives while keeping the underside flat for enclosure rails—with <strong>3.10 mm</strong> edge clearance for 3.0 mm card guides and <strong>5.53 mm</strong> clearance to the nearest M3 mounting center.</li>
 </ul>
-<h3>2. 2×20P Unrolled Breakout (<code>H1</code>) &amp; Unbroken Bottom GND</h3>
+<h3>2. 2×20P Unrolled Breakout (H1) &amp; Unbroken Bottom GND</h3>
 <ul style="line-height: 1.8; margin-left: 20px; margin-bottom: 18px;">
-<li>Directly beneath the 20-pin IDC header (<code>U1</code>), a <code>2×20P</code> breakout row unrolls all 20 pins in flat-ribbon wire order (<code>Pin 1</code> to <code>Pin 20</code>), giving <strong>two vertically bridged holes per signal</strong>—one to solder circuit wires, one to clip an oscilloscope probe or jumper.</li>
-<li>Every signal trace between <code>U1</code> and <code>H1</code> stays strictly on the <strong>Top Layer</strong>, leaving an <strong>unbroken Bottom-Layer GND plane</strong> underneath. The four <code>VBUS</code> pins flow through a solid top-layer copper pour straight into all 8 <code>5VBUS</code> breakout holes.</li>
+<li>Directly beneath the 20-pin IDC header (<strong>U1</strong>), a <strong>2×20P</strong> breakout row unrolls all 20 pins in flat-ribbon wire order (Pin 1 to Pin 20), giving <strong>two vertically bridged holes per signal</strong>—one to solder circuit wires, one to clip an oscilloscope probe or jumper.</li>
+<li>Every signal trace between U1 and H1 stays strictly on the <strong>Top Layer</strong>, leaving an <strong>unbroken Bottom-Layer GND plane</strong> underneath. The four VBUS pins flow through a solid top-layer copper pour straight into all 8 <strong>5VBUS</strong> breakout holes.</li>
 </ul>
 <h3>3. Silkscreen as Poka-Yoke (Visual Error-Proofing)</h3>
 <ul style="line-height: 1.8; margin-left: 20px; margin-bottom: 18px;">
-<li><strong><code>S00</code> carries a double underline</strong> as a visual stop sign (<em>do not wire tactile switches or pull-downs here</em>).</li>
-<li><strong><code>GPIO3V3</code> sits directly above the boxed <code>5VBUS</code></strong> to reinforce the Point-of-Load (PoL) rule: the bus brings 5V power only, while all I/O runs at 3.3V LVCMOS—regulate 3.3V locally on-card.</li>
-<li><strong><code>ADX_*</code></strong> in the top-left corner cues the firmware macro prefix, and the bottom silkscreen prints exact pitches and matrix counts (<code>2.54mm: 12x26+(5x3)x2</code>, <code>1.27mm: 24x5x2</code>) so you never have to count holes by hand.</li>
+<li><strong>S00 carries a double underline</strong> as a visual stop sign (<em>do not wire tactile switches or pull-downs here</em>).</li>
+<li><strong>GPIO3V3 sits directly above the boxed 5VBUS</strong> to reinforce the Point-of-Load (PoL) rule: the bus brings 5V power only, while all I/O runs at 3.3V LVCMOS—regulate 3.3V locally on-card.</li>
+<li><strong>ADX_*</strong> in the top-left corner cues the firmware macro prefix, and the bottom silkscreen prints exact pitches and matrix counts (2.54mm: 12x26+(5x3)x2, 1.27mm: 24x5x2) so you never have to count holes by hand.</li>
 </ul>
 <blockquote style="border-left: 4px solid #10b981; padding: 10px 16px; margin: 18px 0; background: rgba(16, 185, 129, 0.08); border-radius: 0 4px 4px 0;"><p><strong>Key Takeaway:</strong><br />
-Mechanical keep-outs don't have to mean wasted PCB real estate, and silkscreen doesn't have to be decorative. Turning an underside THT exclusion zone into top-side 1.27 mm SMD pads—and printing voltage boundaries (<code>GPIO3V3</code> vs. <code>5VBUS</code>) plus <code>S00</code> warnings right next to the pads—prevents real bench mistakes before power is ever applied.</p>
+Mechanical keep-outs don't have to mean wasted PCB real estate, and silkscreen doesn't have to be decorative. Turning an underside THT exclusion zone into top-side 1.27 mm SMD pads—and printing voltage boundaries (<strong>GPIO3V3</strong> vs. <strong>5VBUS</strong>) plus <strong>S00</strong> warnings right next to the pads—prevents real bench mistakes before power is ever applied.</p>
 </blockquote>
 <hr />
-<h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">4. One More Millimeter &amp; the <code>$0.97</code> Bare-Board Economics</h2>
+<h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">4. One More Millimeter &amp; the $0.97 Bare-Board Economics</h2>
 <p>Two practical notes from finalizing the Gerbers today:</p>
 <ol>
-<li><strong>8854 IDC Center Moved <code>1.0 mm</code> Inward (<code>Y: 48.0 → 47.0 mm</code>)</strong>:<br />
-   In our November 9 <em>Reference CARD v0</em> prototype, the 20-pin IDC center sat 6.0 mm from the top board edge (<code>Y = 48.0 mm</code>). Once <code>CORE-U rev4</code> adopted an <strong>SMD vertical 20P box header</strong>, 6.0 mm left uncomfortably little clearance for outer SMD fillets and V-cut scoring. Shifting the 8854 standard center down by <strong>1.0 mm</strong> to <strong><code>(44.0, 47.0) mm</code></strong> (7.0 mm from the top edge; <code>[1732, 1850] mil</code>, a <code>-10 µm</code> metric/imperial delta) solves it for both SMD and THT headers. <code>Prototype CARD v0</code> is the first Gerber package built to <code>(44.0, 47.0) mm</code>.</li>
+<li><strong>8854 IDC Center Moved 1.0 mm Inward (Y: 48.0 → 47.0 mm)</strong>:<br />
+   In our November 9 <em>Reference CARD v0</em> prototype, the 20-pin IDC center sat 6.0 mm from the top board edge (Y = 48.0 mm). Once CORE-U rev4 adopted an <strong>SMD vertical 20P box header</strong>, 6.0 mm left uncomfortably little clearance for outer SMD fillets and V-cut scoring. Shifting the 8854 standard center down by <strong>1.0 mm</strong> to <strong>(44.0, 47.0) mm</strong> (7.0 mm from the top edge; [1732, 1850] mil, a -10 µm metric/imperial delta) solves it for both SMD and THT headers. Prototype CARD v0 is the first Gerber package built to (44.0, 47.0) mm.</li>
 <li><strong>Low-Cost ENIG Fabrication vs. Low-Ticket Reality</strong>:<br />
-   Using 8854's standard <code>2×3</code> V-cut panelization (<code>6 pcs/panel</code> × 20 panels = <strong>120 bare boards</strong>) with an <strong>ENIG</strong> finish (far nicer than HASL for hand-soldering 1.27 mm SMD pads and shelf storage), JLCPCB came out to <strong><code>$116.55</code> shipped—<code>$0.97</code> per board</strong>.<br />
-   The honest catch: on a sub-dollar bare PCB, a naive 4× retail multiplier (<code>$3.88</code>) gets eaten alive by fixed per-order costs like ESD bags, pick-and-pack time, and payment fees. Making cheap open-hardware prototyping accessories sustainable to distribute is a separate puzzle from making them cheap to fab.</li>
+   Using 8854's standard 2×3 V-cut panelization (6 pcs/panel × 20 panels = <strong>120 bare boards</strong>) with an <strong>ENIG</strong> finish (far nicer than HASL for hand-soldering 1.27 mm SMD pads and shelf storage), JLCPCB came out to <strong>$116.55 shipped—$0.97 per board</strong>.<br />
+   The honest catch: on a sub-dollar bare PCB, a naive 4× retail multiplier (<strong>$3.88</strong>) gets eaten alive by fixed per-order costs like ESD bags, pick-and-pack time, and payment fees. Making cheap open-hardware prototyping accessories sustainable to distribute is a separate puzzle from making them cheap to fab.</li>
 </ol>
 <hr />
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">A Small Side Experiment: <em>Off the Breadboard</em> Audio Log</h2>
 <p>On a lighter note—alongside these written devlogs, we just pushed Episode 1 of a short (3–5 minute) companion audio experiment called <strong><em>Off the Breadboard</em></strong> on <a href="https://open.spotify.com/show/79cvRtpnEFaMkGB9mDjPpd">Spotify</a>: <em>"Why Build Another MCU Board When the $4 Pico Exists?"</em></p>
-<p>Full transparency up front: the narration is <strong>AI-generated (via OmniVoice)</strong> and dramatizes stories inspired by our devlogs rather than reading out datasheets. It dives into the exact question behind <code>CORE-U</code> and this protoboard—what starts breaking the moment you pull a working circuit off a breadboard and shut the lid of a box. If you like short background listening while soldering, feel free to give it a spin (and tell us honestly if audio devlogs are useful or just noise!).</p>
+<p>Full transparency up front: the narration is <strong>AI-generated (via OmniVoice)</strong> and dramatizes stories inspired by our devlogs rather than reading out datasheets. It dives into the exact question behind CORE-U and this protoboard—what starts breaking the moment you pull a working circuit off a breadboard and shut the lid of a box. If you like short background listening while soldering, feel free to give it a spin (and tell us honestly if audio devlogs are useful or just noise!).</p>
 <hr />
 <h2 style="border-bottom: 2px solid #00f0ff; padding-bottom: 4px; margin-top: 28px; margin-bottom: 14px; font-weight: 600; color: #111;">Let's Hear From You</h2>
 <ol>
 <li><strong>Dual-pitch protoboards (2.54 mm THT + 1.27 mm SMD)</strong>: Do you actually use 1.27 mm SMD pad grids on perfboards for quick SOIC/0603 hacks, or do you still prefer sticking separate SOP-to-DIP breakout boards onto a standard 2.54 mm grid?</li>
-<li><strong>Preprocessor landmines</strong>: What is the nastiest global <code>#define</code> collision you have hit in Arduino or embedded C/C++ libraries?</li>
+<li><strong>Preprocessor landmines</strong>: What is the nastiest global <strong>#define</strong> collision you have hit in Arduino or embedded C/C++ libraries?</li>
 <li><strong>2×20P breakout rows</strong>: Having two linked holes per bus signal makes clipping probes easy, at the cost of one extra row of board depth—worth the trade-off on a compact 88×54 mm card?</li>
 </ol>
 <p>Drop your thoughts in the comments below!</p>
 
 <hr style="margin: 36px 0 20px; border: 0; border-top: 1px solid #e2e8f0;">
 <p style="text-align: center; font-size: 0.95em; color: #475569; margin: 24px 0 12px;">
-  📂 <strong>Open Source Hardware &amp; Code:</strong> <a href="https://github.com/Masafuro/ADX" target="_blank" style="color: #0284c7; text-decoration: underline;">GitHub Repository (Masafuro/ADX)</a>
+  📂 <strong>Open Source Hardware &amp; Code:</strong> <a href="https://github.com/Masafuro/ADX" target="_blank" style="color: #0284c7; text-decoration: underline;">GitHub (Masafuro/ADX)</a>
+  &nbsp;|&nbsp;
+  🎙️ <strong>Podcast:</strong> <a href="https://open.spotify.com/show/79cvRtpnEFaMkGB9mDjPpd" target="_blank" style="color: #0284c7; text-decoration: underline;">Off the Breadboard (Spotify)</a>
 </p>
