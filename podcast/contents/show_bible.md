@@ -103,13 +103,31 @@ podcast/contents/
    * **役割**: `episodes/` の台本と 1対1 で対応する、Podcast / YouTube 公開時の**タイトル案と概要文（Show Notes）**を管理する場所。
    * **命名例**: `epXX_<slug>.md`（対応する `episodes/` と同じファイル名で揃える）
    * **必ず含める内容**:
-     * **Title**: メイン案（＋必要ならサブ案）
-     * **Description（Podcast短縮版）**: **600文字以内**（CRLF換算でも600字未満に収める）
+     * **Title**: メイン案（Spotify / Podcast SEO 最適化版）＋ 必要ならサブ案
+     * **Target SEO Keywords**: その回で検索流入を狙う主要英語キーワード（3〜5語）
+     * **Description（Podcast短縮版）**: **600文字以内**（CRLF換算でも600字未満に収める）。タイトルの主要SEOキーワードを冒頭1〜2文にも自然に織り込む。
      * **Description（YouTube拡張版）**: 箇条書きや余白を使った長文版（任意）
      * **必須注記（すべての版に含める）**:
        1. **OmniVoice による AI 生成音声**であることの開示
        2. 開発ログに基づく**フィクション（脚色・不正確な点・旧仕様を含み得る）**であり、データシートではないこと
        3. 検証済みの最新仕様リンク（`https://github.com/Masafuro/ADX`）
+
+### タイトル設計ルール（Spotify / Podcast SEO 最適化）
+
+Spotify をはじめとする Podcast プラットフォームでは、概要欄以上に**エピソードタイトルに含まれる語句が検索（SEO）および関連レコメンドと強く結びつく**ため、タイトルは以下のルールで設計します。
+
+1. **「クリックしたくなるフック」＋「検索される具体SEOキーワード」を必ず両立させる**
+   * 抽象的・詩的な表現（例：*The War of One Millimeter*、*The Art of Subtraction*）だけで完結させず、潜在リスナーが実際に検索する**具体的な技術・ハードウェア名詞を必ず 1〜3 語**含める。
+   * **狙うキーワード例**: `PCB Design`, `PCB Layout`, `DFM`, `Hardware Design`, `Microcontroller` / `MCU Board`, `3D Printing` / `3D-Printed Enclosure`, `Embedded`, `Arduino`, `Raspberry Pi Pico`, `USB-C`, `SMD`, `RS-485`, `Web MIDI` 等。
+2. **独自固有名詞をタイトルの主役にしない**
+   * `ADX`, `CORE-U`, `8854`, `LN-485` のようなプロジェクト固有の型番・規格名は、まだ検索ボリュームがないためタイトル枠を消費させない（固有名詞は原則として概要欄へ逃がす）。
+3. **基本構文と文字数バランス（スパム化を避けつつ前半重視）**
+   * **推奨フォーマット**:
+     * `Ep. XX: <Hook with Main Keyword>`
+     * `Ep. XX: <Curiosity Hook> (<Concrete SEO Keywords>)`
+   * Spotify のスマホ一覧で見切れにくい**前半 50〜65 文字**に「刺さるフック＋最重要キーワード」を配置し、全体は**およそ 60〜90 文字以内**に収める。キーワードの機械的な羅列は避け、人間が自然に読んで興味を引かれる英語にする。
+4. **タイトルと概要欄冒頭のキーワード整合**
+   * タイトルに採用した主要 SEO キーワードは、Podcast 短縮版 Description の**最初の 1〜2 文**にも自然な文脈で反復させる。
 
 ### 台本フォーマット（Stage 2 `episodes/`）
 `v4` と完全同一の `@DEV:` ＋ `# （日本語対訳）` 形式を使用します。
