@@ -1,55 +1,55 @@
-# ARLE.cc Brand Website
+<!--
+Copyright (c) 2026 ADX Project Contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
 
-Official brand website for **ARLE.cc** (https://arle.cc).
+# ARLE.cc Website & ADX Documentation Portal
 
-## 1. Brand Hierarchy
+Official website and documentation portal for **[ARLE.cc](https://arle.cc)** and the **ADX** open-hardware ecosystem, built with **Astro + Starlight** and deployed on **Cloudflare Pages**.
 
-```text
-┌─────────────────────────────────────────────────────────────────┐
-│ 【 運営母体・法的主体 】                                         │
-│  古川企画 (Furukawa Kikaku) / furukawakikaku.jp                  │
-│  ・日本・長崎・佐世保の組込システム開発ファーム                  │
-│  ・国内B2B受託開発、回路・基板・ファームウェアの受託設計         │
-└────────────────────────────────┬────────────────────────────────┘
-                                 │ 自社グローバル・プロダクト部門
-                                 ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 【 世界向けメーカーブランド 】                                   │
-│  ARLE.cc (https://arle.cc)                                      │
-│  ・世界市場（英語圏メイカー、組込エンジニア）向けブランド        │
-│  ・「現場で本当に動くハードウェア」を生み出す独立デザインレーベル│
-└────────────────────────────────┬────────────────────────────────┘
-                                 │ 第1弾フラッグシップ規格＆製品群
-                                 ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 【 オープン規格 ＆ プロダクトエコシステム 】                     │
-│  ADX (Advanced Devices eXtended)                                │
-│  ・"The Working Arduino" / 8854 フォームファクタ規格 (旧8748)      │
-│  ・CORE-U / CORE-A / CARD シリーズ / MR32 通信規格              │
-└─────────────────────────────────────────────────────────────────┘
+## 1. Local Development
+
+Requires **Node.js `>= 20.3.0`** (tested on Node 20 LTS).
+
+```bash
+cd site
+npm install
+npm run dev      # Start local dev server (http://localhost:4321)
+npm run build    # Build static site + Pagefind search index into dist/
+npm run preview  # Preview the production dist/ build locally
 ```
 
-## 2. Directory Structure
+## 2. Structure & Localization
+
+- **Default Locale (English)**: `/` and `/adx/...` (`src/content/docs/`)
+- **Japanese Locale**: `/ja/` and `/ja/adx/...` (`src/content/docs/ja/`)
+- **Untranslated Fallback**: English-only SSOT pages (e.g. `/adx/standards/`) automatically fall back cleanly under `/ja/` without returning 404.
 
 ```text
 site/
-├── index.html            # Main landing page entry point
-├── public/               # Static assets directly served at web root
-│   └── assets/
-│       └── logos/        # ARLE.cc, ADX, Furukawa Kikaku logos
-├── src/                  # Source files for components and styling
-│   ├── components/       # Reusable UI sections (Hero, Features, Showcase)
-│   └── pages/            # Multi-page layouts (future expansion)
-└── README.md             # This document
+├── astro.config.mjs          # Astro + Starlight configuration (i18n, sidebar, logo)
+├── package.json              # Scripts & dependencies (Astro 5 + Starlight 0.37)
+├── public/
+│   ├── favicon.svg           # ARLE.cc SVG favicon
+│   └── assets/logos/         # Public static brand logos
+└── src/
+    ├── assets/logos/         # Brand logos processed by Astro
+    ├── content.config.ts     # Starlight Content Layer collection definition
+    ├── styles/custom.css     # ARLE.cc industrial dark/light theme overrides
+    └── content/docs/         # EN (root) & JA (ja/) documentation pages
 ```
 
-## 3. Deployment
+## 3. Cloudflare Pages Deployment
 
-This directory is designed to be deployed directly as the root of the `arle.cc` website:
+Configure the `arle.cc` Cloudflare Pages project (**Settings → Build**) as follows:
 
-- **Cloudflare Pages / Vercel / Netlify**:
-  - Root directory: `site`
-  - Build command: (None for static HTML, or `npm run build` if using SSG/Vite)
-  - Output directory: `.` (or `dist` if built)
-- **Domain**: `arle.cc`
+| Setting | Value |
+| :--- | :--- |
+| **Root directory** | `site` |
+| **Build command** | `npm run build` |
+| **Build output directory** | `dist` |
+| **Environment variable** | `NODE_VERSION = 20` |
+| **Build watch paths (Include)** | `site/*`, `docs/*` |
 
+- Including `docs/*` ensures future SSOT specification updates in `docs/` automatically trigger a rebuild while ignoring unrelated `memo/`, `hardware/`, `firmware/`, and `podcast/` commits.
+- Architecture & milestone roadmap: [`memo/PLAN/ARLE_STARLIGHT_SITE_ARCHITECTURE_PLAN.md`](../memo/PLAN/ARLE_STARLIGHT_SITE_ARCHITECTURE_PLAN.md)

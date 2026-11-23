@@ -1,0 +1,43 @@
+---
+title: ADX Overview
+description: Introduction to ADX (Advanced Devices eXtended) — The Working Arduino open-hardware ecosystem by ARLE.cc.
+---
+
+import { Aside, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+**ADX (Advanced Devices eXtended)** is an enclosure-native open-hardware modular ecosystem developed by **ARLE.cc**. Its goal is grounded and practical: **"The Working Arduino"** — making it straightforward to take sketches that work on a workbench and mount, wire, and operate them reliably inside real enclosures.
+
+<Aside type="note" title="Portal Rollout Status (M1)">
+  This documentation portal is being rolled out incrementally alongside physical prototype boards. Authoritative specifications, schematics, and Gerbers are always available in the <a href="https://github.com/Masafuro/ADX">Masafuro/ADX GitHub repository</a>.
+</Aside>
+
+## Core Physical & Electrical Foundation
+
+Every ADX Core board and expansion CARD shares two open standards:
+
+| Layer | Active Standard | Key Highlights |
+| :--- | :--- | :--- |
+| **Mechanical Profile** | **8858 Form Factor** (`v0.1-alpha`) | `88.0 × 58.0 mm` C0 profile, `76.0 × 46.0 mm` M3 pitch with `Φ10.0 mm` washer keep-out, `3.0 mm` card guides, single-edge `66.0 mm` I/O Edge, `M1–M4` chiral optical markers |
+| **Interconnect Bus** | **ADX 20-Pin Bus** (`ADX-BUS-SPEC-v4.2`) | 2×10P 2.54 mm shrouded IDC header, logical pin IDs (`S00`, `P01`–`P10`), panel-aligned bottom `VBUS` (`4.5–5.0V`, `2A–3A`), Pin 16 `GND` boundary wall, native `3.3V` LVCMOS I/O |
+
+## Upcoming Hardware Lineup
+
+<CardGrid>
+  <Card title="ADX CORE-U (rev4 — In Design)" icon="rocket">
+    Standard USB Core board built around Microchip **ATtiny1616-MNR** (`3.3V / 10MHz`), WCH **CH342K** dual USB-UART (independent SerialUPDI + Serial Monitor), and `AP22814` eFuse protection.
+  </Card>
+  <Card title="ADX Reference CARD v0 (8858 — Gerber Verified)" icon="approve-check">
+    Physical mechanical and silkscreen reference board visualizing every `8858` keep-out zone, `v4.2` bus label, and `M1–M4` optical alignment & DataMatrix Board ID marker.
+  </Card>
+  <Card title="ADX Prototype CARD v0 (8854 — Gerber Verified)" icon="pencil">
+    Dual THT (`2.54 mm`, 342 holes) and top-only SMD (`1.27 mm`, 240 pads) universal prototyping card with full `2×20P` bus breakout (`H1`).
+  </Card>
+</CardGrid>
+
+## Next Steps
+
+<LinkCard
+  title="Standards Snapshot (English SSOT)"
+  description="Quick index of ADX's active mechanical, electrical, and licensing standards."
+  href="/adx/standards/"
+/>

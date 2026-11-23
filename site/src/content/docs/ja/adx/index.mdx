@@ -1,0 +1,45 @@
+---
+title: ADX 概要（ADX とは）
+description: ARLE.cc が開発する筐体親和型オープンハードウェア規格「ADX（はたらく Arduino）」の概要。
+---
+
+import { Aside, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+**ADX (Advanced Devices eXtended)** は、**ARLE.cc** が開発する筐体親和型（Enclosure-Native）のオープンハードウェア・モジュラーエコシステムです。
+
+合言葉は **「はたらく Arduino（The Working Arduino）」**。ブレッドボードや机の上で動かしたスケッチを、実際のケースや設置場所へ無理なく収め、長く安心して動かし続けるための物理・電気規格として設計されています。
+
+<Aside type="note" title="ドキュメントポータル構築状況（M1）">
+  現在、実基板の試作進捗に合わせて公式ポータルを段階的に立ち上げています（M1：Starlight 基盤・多言語疎通フェーズ）。最新の仕様書やガーバーデータは <a href="https://github.com/Masafuro/ADX">Masafuro/ADX GitHub リポジトリ</a> にて常時公開しています。
+</Aside>
+
+## 共通の土台となる 2 つのオープン規格
+
+ADX のすべての Core ボードと拡張 CARD は、以下の 2 つのオープン規格を共有します。
+
+| レイヤー | 現行規格 | 主な特徴 |
+| :--- | :--- | :--- |
+| **物理・機械規格** | **8858 フォームファクタ**（正式 α 版） | `88.0 × 58.0 mm` 完全矩形（C0）、M3 取付穴ピッチ `76.0 × 46.0 mm`＋`Φ10.0 mm` 座面クリアランス、左右 `3.0 mm` カードガイド、片辺集約 `66.0 mm` I/O Edge、`M1–M4` キラル光学マーカー |
+| **共通拡張バス** | **ADX 20 ピンバス**（`ADX-BUS-SPEC-v4.2`） | 2×10P 2.54mm ボックスヘッダー、MCU 非依存の論理ピン ID（`S00`, `P01`–`P10`）、底面大電流 `VBUS`（`4.5–5.0V`, `2A–3A`）、Pin 16 `GND` 保護境界壁、`3.3V` ネイティブ論理 |
+
+## 展開予定の初期ハードウェア群
+
+<CardGrid>
+  <Card title="ADX CORE-U（rev4・設計中）" icon="rocket">
+    Microchip **ATtiny1616-MNR**（`3.3V / 10MHz`）＋ WCH **CH342K** デュアル USB-UART（SerialUPDI とシリアルモニタ独立）＋ `AP22814` eFuse 保護を備えた標準 USB コアボード。
+  </Card>
+  <Card title="ADX Reference CARD v0（8858・ガーバー検証済）" icon="approve-check">
+    `8858` フォームファクタの各キープアウト領域、`v4.2` ピン表、`M1–M4` 光学アライメント＆DataMatrix Board ID マーカーを実基板シルク上に可視化した公式リファレンス基板。
+  </Card>
+  <Card title="ADX Prototype CARD v0（8854・ガーバー検証済）" icon="pencil">
+    THT（`2.54 mm` / 342 穴）と表面専用 SMD（`1.27 mm` / 240 パッド）の両ユニバーサルエリアと `2×20P` バス引き出し（`H1`）を備えた試作用カード。
+  </Card>
+</CardGrid>
+
+## 次のステップ
+
+<LinkCard
+  title="規格サマリー（英語 SSOT）"
+  description="現行の物理・電気規格およびライセンス一覧（英語 SSOT へのフォールバック表示テストも兼ねています）。"
+  href="/ja/adx/standards/"
+/>

@@ -52,6 +52,14 @@ _autosave-*
 *.bak
 
 # ==========================================
+# Web / Astro Starlight (site/)
+# ==========================================
+site/node_modules/
+site/dist/
+site/.astro/
+site/src/content/docs/_synced/
+
+# ==========================================
 # OS & Editor
 # ==========================================
 .DS_Store

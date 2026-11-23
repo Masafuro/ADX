@@ -1,0 +1,69 @@
+---
+title: ARLE.cc — Hardware Engineered for the Real World
+description: Independent hardware label creating field-ready, enclosure-native open-hardware tools and the ADX modular ecosystem.
+template: splash
+hero:
+  title: Hardware Engineered for the Real World.
+  tagline: ARLE.cc builds enclosure-native open-hardware standards and boards. Meet ADX — "The Working Arduino" designed to step off the breadboard and run reliably inside real enclosures.
+  actions:
+    - text: Explore ADX Docs
+      link: /adx/
+      icon: right-arrow
+      variant: primary
+    - text: GitHub Repository
+      link: https://github.com/Masafuro/ADX
+      icon: external
+      variant: secondary
+    - text: Hackaday.io
+      link: https://hackaday.io/project/205547-adx-enclosure-native-modular-hardware-standard
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<div class="arle-status-bar">
+  <span class="arle-status-pill">
+    <span class="arle-status-dot"></span>
+    <span>ADX DOCS PORTAL · M1 ONLINE</span>
+  </span>
+  <span>SASEBO, NAGASAKI, JAPAN · CERN-OHL-P-v2 / MIT / CC-BY-4.0</span>
+</div>
+
+## Built Around Three Perspectives
+
+ADX is designed from day one so hardware boards, enclosures, and expansion circuits share one clean physical and electrical contract.
+
+<CardGrid>
+  <Card title="Hardware Catalog" icon="laptop">
+    Board-by-board visual pinouts, specifications, and fabrication data for **ADX CORE-U**, **Reference CARD v0**, and **Prototype CARD v0** *(rolling out as prototype boards arrive)*.
+  </Card>
+  <Card title="For Enclosure Designers" icon="setting">
+    The **8858 Form Factor (`88.0 × 58.0 mm`)** with generous `Φ10.0 mm` M3 washer clearances, `3.0 mm` card guides, single-edge `66.0 mm` I/O alignment, and optical alignment markers.
+  </Card>
+  <Card title="For Circuit & CARD Designers" icon="puzzle">
+    The **ADX 20-Pin Bus (`v4.2`)** featuring MCU-independent logical pin IDs (`S00`, `P01`–`P10`), bottom-aligned `VBUS` (`2A–3A`), coplanar analog shielding, and native `3.3V` LVCMOS signaling.
+  </Card>
+  <Card title="Open Standards & SSOT" icon="open-book">
+    Specifications are maintained in English as a Single Source of Truth in GitHub and surfaced here alongside Japanese guides and visual reference sheets.
+  </Card>
+</CardGrid>
+
+<div class="arle-heritage">
+  <div class="arle-heritage-copy">
+    <h3>Backed by Furukawa Kikaku (古川企画)</h3>
+    <p>
+      ARLE.cc is an independent hardware label founded by
+      <a href="https://furukawakikaku.jp" target="_blank" rel="noopener">Furukawa Kikaku</a>,
+      an embedded systems engineering firm in Sasebo, Nagasaki, Japan.
+    </p>
+    <div class="arle-heritage-meta">
+      Hardware: CERN-OHL-P-v2 · Firmware/Software: MIT · Docs: CC-BY-4.0
+    </div>
+  </div>
+  <div class="arle-heritage-logo">
+    <a href="https://furukawakikaku.jp" target="_blank" rel="noopener" title="Furukawa Kikaku">
+      <img src="/assets/logos/furukawakikaku_logo.png" alt="Furukawa Kikaku" class="arle-brand-invert" />
+    </a>
+  </div>
+</div>
