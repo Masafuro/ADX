@@ -1,0 +1,1176 @@
+PROTEL NETLIST 2.0
+[
+DESIGNATOR
+01-C1
+FOOTPRINT
+C0402
+PARTTYPE
+CL05B104KO5NNNC
+DESCRIPTION
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:16V Temperature Coefficient:X7R 
+Component Kind
+Standard
+Footprint
+C0402
+Designator
+01-C1
+LCSC Part Name
+100nF ±10% 16V
+Supplier Part
+C1525
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL05B104KO5NNNC
+Supplier Footprint
+0402
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL05B104KO5NNNC/1877.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+C0402_L1.0-W0.5-H0.5
+Value
+100nF
+Tolerance
+±10%
+Voltage Rating
+16V
+Temperature Coefficient
+X7R
+Name
+100nF
+Description
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:16V Temperature Coefficient:X7R 
+Unique ID
+gge12
+Reuse Block
+
+Group ID
+
+Channel ID
+$2I28
+Device
+CL05B104KO5NNNC
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+01-C2
+FOOTPRINT
+C0603
+PARTTYPE
+CL10A106KP8NNNC
+DESCRIPTION
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R 
+Component Kind
+Standard
+Footprint
+C0603
+Designator
+01-C2
+LCSC Part Name
+10uF ±10% 10V
+Supplier Part
+C19702
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL10A106KP8NNNC
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL10A106KP8NNNC/20411.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+10uF
+Tolerance
+±10%
+Voltage Rating
+10V
+Temperature Coefficient
+X5R
+Name
+10uF
+Description
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R 
+Unique ID
+gge13
+Reuse Block
+
+Group ID
+
+Channel ID
+$2I29
+Device
+CL10A106KP8NNNC
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+01-C3
+FOOTPRINT
+C0402
+PARTTYPE
+CL05B104KO5NNNC
+DESCRIPTION
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:16V Temperature Coefficient:X7R 
+Component Kind
+Standard
+Footprint
+C0402
+Designator
+01-C3
+LCSC Part Name
+100nF ±10% 16V
+Supplier Part
+C1525
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL05B104KO5NNNC
+Supplier Footprint
+0402
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL05B104KO5NNNC/1877.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+C0402_L1.0-W0.5-H0.5
+Value
+100nF
+Tolerance
+±10%
+Voltage Rating
+16V
+Temperature Coefficient
+X7R
+Name
+100nF
+Description
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:16V Temperature Coefficient:X7R 
+Unique ID
+gge14
+Reuse Block
+
+Group ID
+
+Channel ID
+$2I30
+Device
+CL05B104KO5NNNC
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+01-C4
+FOOTPRINT
+C0603
+PARTTYPE
+CL10A106KP8NNNC
+DESCRIPTION
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R 
+Component Kind
+Standard
+Footprint
+C0603
+Designator
+01-C4
+LCSC Part Name
+10uF ±10% 10V
+Supplier Part
+C19702
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL10A106KP8NNNC
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL10A106KP8NNNC/20411.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+10uF
+Tolerance
+±10%
+Voltage Rating
+10V
+Temperature Coefficient
+X5R
+Name
+10uF
+Description
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R 
+Unique ID
+gge15
+Reuse Block
+
+Group ID
+
+Channel ID
+$2I31
+Device
+CL10A106KP8NNNC
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+R1
+FOOTPRINT
+R0402
+PARTTYPE
+0402WGF1200TCE
+DESCRIPTION
+Type:Thick Film Resistor Resistance:120Ω Tolerance:±1% Tolerance:±1% Power(Watts):62.5mW Voltage-Supply(Max):50V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃ 
+Component Kind
+Standard
+Footprint
+R0402
+Designator
+R1
+LCSC Part Name
+厚膜电阻 120Ω ±1%
+Supplier Part
+C25079
+Manufacturer
+UNI-ROYAL(厚声)
+Manufacturer Part
+0402WGF1200TCE
+Supplier Footprint
+0402
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/0402WGF1200TCE/25822.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+R0402_L1.0-W0.5-H0.4
+Type
+Thick Film Resistor
+Value
+120Ω
+Tolerance
+±1%
+Power(Watts)
+62.5mW
+Voltage-Supply(Max)
+50V
+Temperature Coefficient
+±100ppm/℃
+Operating Temperature
+-55℃~+155℃
+Name
+120Ω
+Description
+Type:Thick Film Resistor Resistance:120Ω Tolerance:±1% Tolerance:±1% Power(Watts):62.5mW Voltage-Supply(Max):50V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃ 
+Unique ID
+gge16
+Reuse Block
+
+Group ID
+
+Channel ID
+$2I37
+Device
+0402WGF1200TCE
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+D1
+FOOTPRINT
+SOT-23-3_L3.0-W1.7-P0.95-LS2.9-BR
+PARTTYPE
+PSM712-LF-T7_C32677
+DESCRIPTION
+Polarity:Unidirectional Reverse Stand-Off Voltage (Vrwm):12V Clamping Voltage:19V Peak Pulse Current (Ipp):34A@8/20us；30A@8/20us Peak Pulse Power Dissipation (Ppp):600W@8/20us Voltage - Breakdown:13.3V Reverse Leakage Current (Ir):1uA；20uA Operating Tempe
+Component Kind
+Standard
+Footprint
+SOT-23-3_L3.0-W1.7-P0.95-LS2.9-BR
+Designator
+D1
+LCSC Part Name
+单向TVS 12V截止 峰值浪涌电流：34A@8/20us 30A@8/20us
+Supplier Part
+C32677
+Manufacturer
+PROTEK
+Manufacturer Part
+PSM712-LF-T7
+Supplier Footprint
+SOT-23
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/PSM712-LF-T7/33642.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+SOT-23-3L_L2.9-W1.6-H1.1-LS2.8-P0.95
+Polarity
+Unidirectional
+Reverse Stand-Off Voltage (Vrwm)
+12V
+Clamping Voltage
+19V
+Peak Pulse Current (Ipp)
+34A@8/20us；30A@8/20us
+Peak Pulse Power Dissipation (Ppp)
+600W@8/20us
+Voltage - Breakdown
+13.3V
+Reverse Leakage Current (Ir)
+1uA；20uA
+Operating Temperature
+-55℃~+150℃
+level of protection
+IEC 61000-4-4；IEC 61000-4-5；IEC 61000-4-2
+Type
+TVS
+Junction Capacitance
+75pF
+Name
+PSM712-LF-T7
+Description
+Polarity:Unidirectional Reverse Stand-Off Voltage (Vrwm):12V Clamping Voltage:19V Peak Pulse Current (Ipp):34A@8/20us；30A@8/20us Peak Pulse Power Dissipation (Ppp):600W@8/20us Voltage - Breakdown:13.3V Reverse Leakage Current (Ir):1uA；20uA Operating Tempe
+Unique ID
+gge17
+Reuse Block
+
+Group ID
+
+Channel ID
+$2I38
+Device
+PSM712-LF-T7_C32677
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+06-C5
+FOOTPRINT
+C0402
+PARTTYPE
+CL05B104KO5NNNC
+DESCRIPTION
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:16V Temperature Coefficient:X7R 
+Component Kind
+Standard
+Footprint
+C0402
+Designator
+06-C5
+LCSC Part Name
+100nF ±10% 16V
+Supplier Part
+C1525
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL05B104KO5NNNC
+Supplier Footprint
+0402
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL05B104KO5NNNC/1877.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+C0402_L1.0-W0.5-H0.5
+Value
+100nF
+Tolerance
+±10%
+Voltage Rating
+16V
+Temperature Coefficient
+X7R
+Name
+100nF
+Description
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:16V Temperature Coefficient:X7R 
+Unique ID
+gge14_2
+Reuse Block
+
+Group ID
+
+Channel ID
+$3I39
+Device
+CL05B104KO5NNNC
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+06-C6
+FOOTPRINT
+C0603
+PARTTYPE
+CL10A106KP8NNNC
+DESCRIPTION
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R 
+Component Kind
+Standard
+Footprint
+C0603
+Designator
+06-C6
+LCSC Part Name
+10uF ±10% 10V
+Supplier Part
+C19702
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL10A106KP8NNNC
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL10A106KP8NNNC/20411.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+10uF
+Tolerance
+±10%
+Voltage Rating
+10V
+Temperature Coefficient
+X5R
+Name
+10uF
+Description
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R 
+Unique ID
+gge15_0
+Reuse Block
+
+Group ID
+
+Channel ID
+$3I40
+Device
+CL10A106KP8NNNC
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+06-C7
+FOOTPRINT
+C0603
+PARTTYPE
+CL10A106KP8NNNC
+DESCRIPTION
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R 
+Component Kind
+Standard
+Footprint
+C0603
+Designator
+06-C7
+LCSC Part Name
+10uF ±10% 10V
+Supplier Part
+C19702
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL10A106KP8NNNC
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL10A106KP8NNNC/20411.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+10uF
+Tolerance
+±10%
+Voltage Rating
+10V
+Temperature Coefficient
+X5R
+Name
+10uF
+Description
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R 
+Unique ID
+gge15_1
+Reuse Block
+
+Group ID
+
+Channel ID
+$3I41
+Device
+CL10A106KP8NNNC
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+LDO1
+FOOTPRINT
+SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BL
+PARTTYPE
+ME6211C33M5G-N
+DESCRIPTION
+Output Configuration:Positive Voltage - Supply:6V Output Voltage:3.3V Output Voltage:3.3V Output Current:500mA Power Supply Rejection Ratio (PSRR):70dB@(1kHz) Voltage Dropout:120mV@(100mA) standby current:60uA Noise:50uVrms Features:Enable control；Short C
+Component Kind
+Standard
+Footprint
+SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BL
+Designator
+LDO1
+LCSC Part Name
+3.3V 500mA 6V
+Supplier Part
+C82942
+Manufacturer
+MICRONE(南京微盟)
+Manufacturer Part
+ME6211C33M5G-N
+Supplier Footprint
+SOT-23-5
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/ME6211C33M5G-N/84106.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+SOT-23-5_L2.9-W1.6-H1.1-LS2.8-P0.95
+Output Configuration
+Positive
+Voltage - Supply
+6V
+Output Voltage
+3.3V
+Output Current
+500mA
+Power Supply Rejection Ratio (PSRR)
+70dB@(1kHz)
+Voltage Dropout
+120mV@(100mA)
+standby current
+60uA
+Noise
+50uVrms
+Features
+Enable control；Short Circuit Protection；Over Current Protection
+Operating Temperature
+-40℃~+150℃
+Output Type
+Fixed
+Number of Outputs
+1
+Name
+ME6211C33M5G-N
+Description
+Output Configuration:Positive Voltage - Supply:6V Output Voltage:3.3V Output Voltage:3.3V Output Current:500mA Power Supply Rejection Ratio (PSRR):70dB@(1kHz) Voltage Dropout:120mV@(100mA) standby current:60uA Noise:50uVrms Features:Enable control；Short C
+Unique ID
+gge34
+Reuse Block
+
+Group ID
+
+Channel ID
+$3I42
+Device
+ME6211C33M5G-N
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+U3
+FOOTPRINT
+SOIC-16_L10.3-W7.5-P1.27-LS10.3-TL
+PARTTYPE
+TDA51S485HC_C49242252
+DESCRIPTION
+Features:Fail-safe circuit 
+Component Kind
+Standard
+Footprint
+SOIC-16_L10.3-W7.5-P1.27-LS10.3-TL
+Designator
+U3
+LCSC Part Name
+SOIC16封装RS485半双工隔离收发器
+Supplier Part
+C49242252
+Manufacturer
+YLPTEC(易川)
+Manufacturer Part
+TDA51S485HC
+Supplier Footprint
+SOIC-16
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/TDA51S485HC/51667031.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+SOIC-16_L10.3-W7.5-H2.7-LS10.3-P1.27
+Features
+Fail-safe circuit
+Name
+TDA51S485HC
+Description
+Features:Fail-safe circuit 
+Unique ID
+gge46
+Reuse Block
+
+Group ID
+
+Channel ID
+$2I49
+Device
+TDA51S485HC_C49242252
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+U2
+FOOTPRINT
+SW-SMD_YZA-009
+PARTTYPE
+YZA-009
+DESCRIPTION
+PressForce:250±50gf Switch Size:3*4*2.0MM Installation Method:Momentary RatedCurrent:50mA ButtonShape:Rectangle button WorkingLife:100,000 cycles Circuit:SPST Type:Tactile Switch 
+Component Kind
+Standard
+Footprint
+SW-SMD_YZA-009
+Designator
+U2
+LCSC Part Name
+YIZHI(逸致) YZA-009 3*4*2.0MM 2脚贴片小龟正按轻触开关
+Supplier Part
+C49108621
+Manufacturer
+YIZHI(逸致)
+Manufacturer Part
+YZA-009
+Supplier Footprint
+-
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/YZA-009/51487238.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+SW-SMD_YZA-009
+PressForce
+250±50gf
+Switch Size
+3*4*2.0MM
+Installation Method
+Momentary
+RatedCurrent
+50mA
+ButtonShape
+Rectangle button
+WorkingLife
+100,000 cycles
+Circuit
+SPST
+Type
+Tactile Switch
+Name
+YZA-009
+Description
+PressForce:250±50gf Switch Size:3*4*2.0MM Installation Method:Momentary RatedCurrent:50mA ButtonShape:Rectangle button WorkingLife:100,000 cycles Circuit:SPST Type:Tactile Switch 
+Unique ID
+gge49
+Reuse Block
+
+Group ID
+
+Channel ID
+$1I87
+Device
+YZA-009
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+U4
+FOOTPRINT
+QFN-28_L4.0-W4.0-P0.40-BL-EP2.8
+PARTTYPE
+CH32X035G8U6
+DESCRIPTION
+CPU Core:RISC-V4C CPU Maximum Speed:48MHz Core Size:32 Bit Program Storage Size:62KB Program Memory Type:FLASH RAM Size:20KB EEPROM:- Number of I/O:27 ADC (Bit):12bit DAC (Bit):- Oscillator Type:Built-in Voltage - Supply:3.3V；5V Voltage - Supply:3.3V；5V O
+Component Kind
+Standard
+Footprint
+QFN-28_L4.0-W4.0-P0.40-BL-EP2.8
+Designator
+U4
+LCSC Part Name
+基于QingKe RISC - V内核的工业级微控制器
+Supplier Part
+C7437027
+Manufacturer
+WCH(南京沁恒)
+Manufacturer Part
+CH32X035G8U6
+Supplier Footprint
+QFN-28(4X4)
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/CH32X035G8U6/8457379.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+QFN-28_L4.0-W4.0-P0.40-BL-EP2.8
+CPU Core
+RISC-V4C
+CPU Maximum Speed
+48MHz
+Core Size
+32 Bit
+Program Storage Size
+62KB
+Program Memory Type
+FLASH
+RAM Size
+20KB
+EEPROM
+-
+Number of I/O
+27
+ADC (Bit)
+12bit
+DAC (Bit)
+-
+Oscillator Type
+Built-in
+Voltage - Supply
+3.3V；5V
+Operating Temperature
+-40℃~+85℃
+Features
+-
+Name
+CH32X035G8U6
+Description
+CPU Core:RISC-V4C CPU Maximum Speed:48MHz Core Size:32 Bit Program Storage Size:62KB Program Memory Type:FLASH RAM Size:20KB EEPROM:- Number of I/O:27 ADC (Bit):12bit DAC (Bit):- Oscillator Type:Built-in Voltage - Supply:3.3V；5V Voltage - Supply:3.3V；5V O
+Unique ID
+gge50
+Reuse Block
+
+Group ID
+
+Channel ID
+$1I88
+Device
+CH32X035G8U6
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+USB1
+FOOTPRINT
+USB-C_UC09-0B16F00P11
+PARTTYPE
+UC09-0B16F00P11
+DESCRIPTION
+Connector Type:Type-C Gender:Female Mounting Type:Surface Mount, Right Angle Number of Contacts:16P Number of Ports:1 Current Rating-Power:3A Voltage Rating:20V Connect-Disconnect Life:10,000 cycles Length:7.35mm Operating Temperature:-45℃~+85℃ Operating 
+Component Kind
+Standard
+Footprint
+USB-C_UC09-0B16F00P11
+Designator
+USB1
+LCSC Part Name
+Type-C 母 卧贴
+Supplier Part
+C36936538
+Manufacturer
+BXCONN(宝讯)
+Manufacturer Part
+UC09-0B16F00P11
+Supplier Footprint
+SMD
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/UC09-0B16F00P11/38663614.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+USB-C_UC09-0B16F00P11
+Connector Type
+Type-C
+Gender
+Female
+Mounting Type
+Surface Mount, Right Angle
+Number of Contacts
+16P
+Number of Ports
+1
+Current Rating-Power
+3A
+Voltage Rating
+20V
+Connect-Disconnect Life
+10,000 cycles
+Length
+7.35mm
+Operating Temperature
+-45℃~+85℃
+Name
+UC09-0B16F00P11
+Description
+Connector Type:Type-C Gender:Female Mounting Type:Surface Mount, Right Angle Number of Contacts:16P Number of Ports:1 Current Rating-Power:3A Voltage Rating:20V Connect-Disconnect Life:10,000 cycles Length:7.35mm Operating Temperature:-45℃~+85℃ Operating 
+Unique ID
+gge51
+Reuse Block
+
+Group ID
+
+Channel ID
+$3I44
+Device
+UC09-0B16F00P11
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+CN1
+FOOTPRINT
+CONN-TH_2P-P5.08_KF142R-5.08-2P
+PARTTYPE
+KF142R-5.08-2P
+DESCRIPTION
+Number of Positions or Pins:1x2P Pitch:5.08mm Color:Green Mounting Type:Right Angle Number of Pins:2P Number of PINs Per Row:2 Number of Rows:1 Current Rating:15A Voltage Rating (Max):250V Wire Gauge - AWG:14~22 Wire Gauge - mm2:1.5 Operating Temperature:
+Component Kind
+Standard
+Footprint
+CONN-TH_2P-P5.08_KF142R-5.08-2P
+Designator
+CN1
+LCSC Part Name
+1x2P 5.08mm 每排P数:2 排数:1
+Supplier Part
+C475144
+Manufacturer
+KEFA(科发)
+Manufacturer Part
+KF142R-5.08-2P
+Supplier Footprint
+弯插,P=5.08mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/KF142R-5.08-2P/481640.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+CONN-TH_2P-P5.08_KF142R-5.08-2P
+Number of Positions or Pins
+1x2P
+Pitch
+5.08mm
+Color
+Green
+Mounting Type
+Right Angle
+Number of Pins
+2P
+Number of PINs Per Row
+2
+Number of Rows
+1
+Current Rating
+15A
+Voltage Rating (Max)
+250V
+Wire Gauge - AWG
+14~22
+Wire Gauge - mm2
+1.5
+Operating Temperature
+-40℃~+105℃
+Name
+KF142R-5.08-2P
+Description
+Number of Positions or Pins:1x2P Pitch:5.08mm Color:Green Mounting Type:Right Angle Number of Pins:2P Number of PINs Per Row:2 Number of Rows:1 Current Rating:15A Voltage Rating (Max):250V Wire Gauge - AWG:14~22 Wire Gauge - mm2:1.5 Operating Temperature:
+Unique ID
+gge53
+Reuse Block
+
+Group ID
+
+Channel ID
+$2I56
+Device
+KF142R-5.08-2P
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+[
+DESIGNATOR
+CN3
+FOOTPRINT
+CONN-TH_2P-P5.08_KF142R-5.08-2P
+PARTTYPE
+KF142R-5.08-2P
+DESCRIPTION
+Number of Positions or Pins:1x2P Pitch:5.08mm Color:Green Mounting Type:Right Angle Number of Pins:2P Number of PINs Per Row:2 Number of Rows:1 Current Rating:15A Voltage Rating (Max):250V Wire Gauge - AWG:14~22 Wire Gauge - mm2:1.5 Operating Temperature:
+Component Kind
+Standard
+Footprint
+CONN-TH_2P-P5.08_KF142R-5.08-2P
+Designator
+CN3
+LCSC Part Name
+1x2P 5.08mm 每排P数:2 排数:1
+Supplier Part
+C475144
+Manufacturer
+KEFA(科发)
+Manufacturer Part
+KF142R-5.08-2P
+Supplier Footprint
+弯插,P=5.08mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/KF142R-5.08-2P/481640.html
+Supplier
+LCSC
+Add into BOM
+yes
+3D Model Title
+CONN-TH_2P-P5.08_KF142R-5.08-2P
+Number of Positions or Pins
+1x2P
+Pitch
+5.08mm
+Color
+Green
+Mounting Type
+Right Angle
+Number of Pins
+2P
+Number of PINs Per Row
+2
+Number of Rows
+1
+Current Rating
+15A
+Voltage Rating (Max)
+250V
+Wire Gauge - AWG
+14~22
+Wire Gauge - mm2
+1.5
+Operating Temperature
+-40℃~+105℃
+Name
+KF142R-5.08-2P
+Description
+Number of Positions or Pins:1x2P Pitch:5.08mm Color:Green Mounting Type:Right Angle Number of Pins:2P Number of PINs Per Row:2 Number of Rows:1 Current Rating:15A Voltage Rating (Max):250V Wire Gauge - AWG:14~22 Wire Gauge - mm2:1.5 Operating Temperature:
+Unique ID
+gge52
+Reuse Block
+
+Group ID
+
+Channel ID
+$2I55
+Device
+KF142R-5.08-2P
+PCB Layer
+TopLayer
+Convert to PCB
+yes
+
+*
+]
+(
+ISO_GND 
+01-C1-1 CL05B104KO5NNNC-1 Passive 
+01-C2-1 CL10A106KP8NNNC-1 Passive 
+D1-3 PSM712-LF-T7_C32677-3 Passive 
+CN3-1 KF142R-5.08-2P-1 Passive 
+)
+(
+$2N21 
+01-C1-2 CL05B104KO5NNNC-2 Passive 
+01-C2-2 CL10A106KP8NNNC-2 Passive 
+)
+(
+GND 
+01-C3-1 CL05B104KO5NNNC-1 Passive 
+01-C4-1 CL10A106KP8NNNC-1 Passive 
+06-C5-1 CL05B104KO5NNNC-1 Passive 
+06-C6-1 CL10A106KP8NNNC-1 Passive 
+06-C7-1 CL10A106KP8NNNC-1 Passive 
+)
+(
++3V3 
+01-C3-2 CL05B104KO5NNNC-2 Passive 
+01-C4-2 CL10A106KP8NNNC-2 Passive 
+06-C7-2 CL10A106KP8NNNC-2 Passive 
+)
+(
+$2N27 
+R1-1 0402WGF1200TCE-1 Passive 
+)
+(
+$2N26 
+R1-2 0402WGF1200TCE-2 Passive 
+)
+(
+A 
+D1-1 PSM712-LF-T7_C32677-1 Passive 
+CN1-1 KF142R-5.08-2P-1 Passive 
+)
+(
+B 
+D1-2 PSM712-LF-T7_C32677-2 Passive 
+CN3-2 KF142R-5.08-2P-2 Passive 
+)
+(
+VBUS 
+06-C5-2 CL05B104KO5NNNC-2 Passive 
+06-C6-2 CL10A106KP8NNNC-2 Passive 
+)
