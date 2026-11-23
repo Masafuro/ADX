@@ -89,13 +89,15 @@ To achieve this balance, this guideline defines three requirement tiers based on
   - **DIY / General Add-ons [MAY]:** Standard boxed shrouded headers or simple pin headers may be used where low profile or minimal cost is prioritized.
 
 ### 4.2 Board Dimensions & Stacking
-- **Official Standard [SHOULD]: 8854 Form Factor (Next-Gen Standard):**
-  - Board Outline: **`88.0 mm × 54.0 mm`**
-  - Mounting Holes: **4× M3 clearance holes (Φ3.3 mm NPTH)**
-  - Hole Pitch: **`76.0 mm × 42.0 mm`** (`6.0 mm` margin from board edges, $\Phi 10.0\,\text{mm}$ washer keep-out)
+- **Official Standard [SHOULD]: 8858 Form Factor (Official Alpha / Current Standard):**
+  - Board Outline: **`88.0 mm × 58.0 mm`**
+  - Mounting Holes: **4× M3 clearance holes (Φ3.30 mm NPTH)**
+  - Hole Pitch: **`76.0 mm × 46.0 mm`** (`6.0 mm` margin from board edges, $\Phi 10.0\,\text{mm}$ washer keep-out)
+  - 20P Vertical IDC Center: **`(44.0, 51.0) mm`** (centered on long edge, `7.0 mm` from top edge)
   - Corner Treatment: **C0 (Right angles, continuous straight V-cut ready)**
-  - Underside Structure: **SMD-only zone outside 66.0 mm I/O Edge** (enables bottom slide-in rails and snap-fits)
-  - *(Refer to [8854 Form Factor Specification](8854_formfactor.md) for full CAD details; legacy: [8748 Form Factor](8748_formfactor.md)).*
+  - Underside Structure: **SMD-only zone outside 66.0 mm I/O Edge (`36.0 × 8.0 mm × 2`)** (enables bottom slide-in rails, snap-fits, and optional optical markers)
+  - Optical Alignment Markers [MAY / Official SHOULD]: Corner `M1–M4` zones (pitch **`76.0 × 30.0 mm`**, X-aligned with M3 mounting holes)
+  - *(Refer to [8858 Form Factor Specification](8858_formfactor.md) for full CAD details; legacy: [8854 Form Factor](8854_formfactor.md) / [8748 Form Factor](8748_formfactor.md)).*
 - **Third-Party / Custom Shapes [MAY]:**
   - Custom outline shapes (compact daughterboards, full-size carrier shields, L-shapes) are fully permitted as long as the 20-pin IDC interface aligns electrically.
 
@@ -135,7 +137,7 @@ Before releasing or sending a PCB for fabrication (JLCPCB PCBA):
 - [ ] **[SHOULD]** If the Card connects to `P02` (Pin 5: `EXTCLK`), did you insert a series 0Ω resistor (DNP-capable) for 2-wire SWD Core compatibility?
 - [ ] **[SHOULD]** Did you use a transformer-isolated DC-DC converter for industrial 24V/48V inputs?
 - [ ] **[SHOULD]** Did you select a latched Eject Header if intended for high-vibration applications?
-- [ ] **[SHOULD]** Does the board outline match the 8854 pitch (`76.0 mm × 42.0 mm`) or legacy 8748 pitch (`77.0 mm × 38.0 mm`) for enclosure compatibility?
+- [ ] **[SHOULD]** Does the board outline match the 8858 pitch (`76.0 mm × 46.0 mm`) (or legacy 8854 `76.0 × 42.0 mm` / 8748 `77.0 × 38.0 mm`) for enclosure compatibility?
 
 ---
 

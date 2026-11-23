@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ADX ハードウェア設計・製造・検査向けのユーティリティスクリプト群です。
 
-## `gen_adx_datamatrix.py` — 8854 光学 Board ID 用 DataMatrix 生成ツール
+## `gen_adx_datamatrix.py` — 8858 光学 Board ID 用 DataMatrix 生成ツール
 
 ADX Official Optical Profile（`M4` スロット：`10×10` ECC200 DataMatrix / 6 桁 Board ID）用の、EasyEDA Pro / KiCad 取り込み対応 **SVG（結合ベクターパス）** および **透過 PNG** を生成します。
 
@@ -34,5 +34,5 @@ python3 software/tools/gen_adx_datamatrix.py 100010 --mode negative-box --quiet-
 
 1. 生成された `adx_dm_<ID>_4.0mm.svg`（または `.png`）を `TopSilkscreen` 層へ `Place → Image` で取り込む。
 2. 幅・高さを **`4.0 mm × 4.0 mm`**（`0.45 mm/cell` の場合は `4.5 mm × 4.5 mm`）、**極性反転（Invert）は OFF**（黒ピクセル＝シルク ON）に設定する。
-3. 中心座標を **`(81.0, 14.0) mm`** に合わせる（周囲 `1.0 mm` が `6.0 × 6.0 mm` の予約領域余白となる）。
-4. 両面実装で裏面にも配置する場合は、`BottomSilkscreen` 層へ同じく `(81.0, 14.0) mm` へ通常配置する（手動で左右反転しないこと）。
+3. 中心座標を **`(82.0, 14.0) mm`** に合わせる（8858 正式 α 版標準：M3 穴の X 座標と一致し、周囲 `1.0 mm` が `6.0 × 6.0 mm` の予約領域余白となる）。
+4. 両面実装で裏面にも配置する場合は、`BottomSilkscreen` 層へ同じく **`(82.0, 14.0) mm`** へ通常配置する（手動で左右反転しないこと。実物裏返し正視で左下となり、ブルズアイ 3 点によるキラル表裏自動判別が成立する）。

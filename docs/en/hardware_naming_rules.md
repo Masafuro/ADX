@@ -39,7 +39,7 @@ ADX [FAMILY]-[TYPE] [GRADE]
 | Element | Meaning | Definitions & Examples |
 | :--- | :--- | :--- |
 | **`ADX`** | Brand / Platform Prefix | Fixed prefix for all official ADX hardware. |
-| **`[FAMILY]`** | Board Category / Form Factor | • `CORE`: Main MCU processor board (8854 / 8748 Form Factor)<br/>• `CARD`: Expansion add-on card (8854 / 8748 Form Factor)<br/>• `PWR`: Power supply / distribution module<br/>• `BASE`: Backplane / baseboard carrier |
+| **`[FAMILY]`** | Board Category / Form Factor | • `CORE`: Main processor board (8858 Form Factor / legacy 8854, 8748)<br/>• `CARD`: Expansion add-on card (8858 Form Factor / legacy 8854, 8748)<br/>• `PWR`: Power supply / distribution module<br/>• `BASE`: Backplane / baseboard carrier |
 | **`[TYPE]`** | Function & Architecture | • `G`: Grove / M5Unit focused single Type-C model<br/>• `U`: Standard USB development model<br/>• `A` / `A24`: Isolated RS-485 field edge model<br/>• `D`: Development / Debug (Internal R&D testbed)<br/>• `RELAY`: Relay output card<br/>• `DIO`: Digital I/O card |
 | **`[GRADE]`** | **Target Domain & Rating Grade** | • **(Unmarked)**: **Standard Grade (Workbench, Prototyping & General Use)**<br/>• **`PRO`**: **PRO Grade (Field / Industrial Deployment, Rated & Testable)** |
 

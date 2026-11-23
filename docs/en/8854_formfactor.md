@@ -7,6 +7,10 @@ SPDX-License-Identifier: CC-BY-4.0
 
 [ **English** | [日本語 (../ja/8854_formfactor.md)](../ja/8854_formfactor.md) ]
 
+> [!NOTE]
+> **Evolution to Next-Generation Standard (2026-11-23)**:
+> The `8854` profile (`88.0 × 54.0 mm`) has been superseded by the **[8858 Form Factor Specification (88.0 × 58.0 mm / Official Alpha)](8858_formfactor.md)**, which adds near-square 4-side-rail panelization (`186 × 184 mm`), expanded CM0/Pi Zero/rear-CM4 headroom, W=70 / PLC vertical-rack rear IDC cable clearance, and integrated chiral optical alignment markers (`76 × 30 mm` pitch). All new designs are strongly encouraged to adopt **8858 Form Factor (Official Alpha)**.
+
 ![ADX Reference CARD v0](../blog/images/reference_card_v0_20261109.png)
 
 ## Overview

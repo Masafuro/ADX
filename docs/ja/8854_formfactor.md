@@ -5,7 +5,11 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # 8854 Form Factor 仕様書 (8854 Form Factor Specification)
 
-[ English (../en/8854_formfactor.md) | **日本語** ]
+[ [English](../en/8854_formfactor.md) | **日本語** ]
+
+> [!NOTE]
+> **次世代標準規格への移行について (2026-11-23)**:
+> 本「8854 規格（88.0 × 54.0 mm）」は、200mm 角 4 辺レール正方形パネライズ（`186 × 184 mm`）・CM0 / CM4 収容余裕・W=70 筐体および PLC 縦挿しラックでの背面 IDC ケーブル逃がし幅・光学マーカー規格（ピッチ `76 × 30 mm`）を統合した次世代標準 **「[8858 Form Factor 仕様書 (88.0 × 58.0 mm / 正式 α 版)](8858_formfactor.md)」** へと進化・改訂されました。新規設計においては **8858 Form Factor（正式 α 版）** の採用を推奨します。
 
 ![ADX Reference CARD v0](../blog/images/reference_card_v0_20261109.png)
 

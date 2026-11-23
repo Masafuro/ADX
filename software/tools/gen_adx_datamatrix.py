@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ADX 8854 Optical Board ID DataMatrix (ECC200 10x10) Generator
+ADX 8858 Optical Board ID DataMatrix (ECC200 10x10) Generator
 Copyright (c) 2026 ADX Project Contributors
 SPDX-License-Identifier: MIT
 
@@ -434,7 +434,7 @@ def render_svg(
     size_str = fmt(size_mm)
     return (
         f'<?xml version="1.0" encoding="UTF-8"?>\n'
-        f'<!-- ADX 8854 DataMatrix ECC200 10x10 | payload="{payload}" | '
+        f'<!-- ADX 8858 DataMatrix ECC200 10x10 | payload="{payload}" | '
         f'mode={mode} | cell={fmt(cell_mm)}mm | bleed_comp={fmt(bleed_comp_mm)}mm | '
         f'size={size_str}x{size_str}mm -->\n'
         f'<svg xmlns="http://www.w3.org/2000/svg" '
@@ -548,7 +548,7 @@ def format_ascii_matrix(grid: Sequence[Sequence[int]]) -> str:
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Generate ADX 8854 10x10 ECC200 DataMatrix silkscreen assets (SVG / PNG).",
+        description="Generate ADX 8858 10x10 ECC200 DataMatrix silkscreen assets (SVG / PNG).",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(

@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 > [!NOTE]
 > **次世代標準規格への移行について**:
-> 本「8748規格（87×48mm）」は、Vカット面付け量産性（DFM）およびスロットイン筐体組立性（DFA）を向上させた次世代標準 **「[8854 Form Factor 仕様書 (88×54mm)](8854_formfactor.md)」** へと進化・改訂されました。新規設計においては 8854 Form Factor の採用を推奨します。詳細な移行背景は [`memo/PLAN/8854_FORMFACTOR_MIGRATION_PLAN.md`](../../memo/PLAN/8854_FORMFACTOR_MIGRATION_PLAN.md) を参照してください。
+> 本「8748 規格（87×48mm）」は、中間規格である [8854 Form Factor (88×54mm)](8854_formfactor.md) を経て、現行の標準規格 **「[8858 Form Factor 仕様書 (88.0 × 58.0 mm / 正式 α 版)](8858_formfactor.md)」** へと進化・改訂されました。新規設計においては **8858 Form Factor（正式 α 版）** の採用を推奨します。
 
 ## 概要 (Overview)
 「8748 Form Factor」は、基板設計（mil単位）と筐体・メカ設計（mm単位）の寸法整合性を高め、製造公差や加工時のクリアランスに配慮した小型制御基板向けのフォームファクタ規格です。

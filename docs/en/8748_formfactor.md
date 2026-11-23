@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 > [!NOTE]
 > **Evolution to Next-Generation Standard**:
-> The legacy 8748 standard ($87.0\,\text{mm} \times 48.0\,\text{mm}$) has evolved into the **[8854 Form Factor Specification (88.0 mm × 54.0 mm)](8854_formfactor.md)** to provide native straight V-scoring panelization, vertical IDC bus integration, and slide-in enclosure assembly. All new designs are strongly encouraged to adopt the 8854 profile. For background details, refer to [`memo/PLAN/8854_FORMFACTOR_MIGRATION_PLAN.md`](../../memo/PLAN/8854_FORMFACTOR_MIGRATION_PLAN.md).
+> The legacy `8748` standard (`87.0 × 48.0 mm`) evolved via the interim [8854 Form Factor (`88.0 × 54.0 mm`)](8854_formfactor.md) into the current **[8858 Form Factor Specification (`88.0 × 58.0 mm` / Official Alpha)](8858_formfactor.md)**, featuring straight V-scoring panelization (`186 × 184 mm`), vertical IDC integration, PLC vertical slide-in support, and chiral optical inspection markers. All new designs are strongly encouraged to adopt **8858 Form Factor (Official Alpha)**.
 
 ## Overview
 The "8748 Form Factor" is a compact board standard designed to optimize dimensional alignment between PCB CAD (mil-based) and mechanical enclosure CAD (mm-based).

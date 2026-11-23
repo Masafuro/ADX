@@ -28,7 +28,7 @@ Find what you need based on what you want to achieve:
 | 🛡 **Deploy tough RS-485 nodes** | High-temp (-40℃ ~ +105℃) isolated Core board | [CORE-A5 Specification](../../hardware/archive/CORE-A5/spec_study.md) |
 | 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](../spec/ADX_PINOUT.md) (v4.2) |
 | 📖 **Learn pinout engineering rationale**| Panel-aligned topology & coplanar shielding details | [ADX Pinout Architecture Guide](ADX_pinout.md) |
-| 📦 **Design or 3D-print cases** | Dimensions, M3 hole spacing & rail margins | [8748 Form Factor Specification](8748_formfactor.md) |
+| 📦 **Design or 3D-print cases** | Dimensions, M3 hole spacing & rail margins | [8858 Form Factor Specification (Alpha)](8858_formfactor.md) |
 
 ---
 
@@ -55,9 +55,9 @@ The ADX ecosystem is built upon two open, modular physical standards:
 ```text
        ════════════════════════════════════════════════════════════════════
                          【 ADX ECOSYSTEM ARCHITECTURE 】
-         ・8748 Form Factor (87.0 mm × 48.0 mm standardized profile)
-         ・Corner M3 Mounting Holes with Φ5.0 mm Washer Clearances
-         ・Unidirectional I/F Edge (All field wiring on a single face)
+         ・8858 Form Factor (88.0 mm × 58.0 mm profile / Official Alpha, straight V-cut)
+         ・Corner M3 Mounting Holes (76.0 mm × 46.0 mm pitch) with Φ10.0 mm Clearances
+         ・Unidirectional I/O Edge (66.0 mm span on bottom edge)
          ・ADX Pinout v4.2 (S00 / P01–P10 Abstraction, Bottom VBUS, Native 3.3V)
        ════════════════════════════════════════════════════════════════════
                                        │
@@ -70,11 +70,11 @@ The ADX ecosystem is built upon two open, modular physical standards:
      ・Automated 20P IDC Fixture Inspection & Flashing                ・3D-Printable Enclosures
 ```
 
-### 2.1 8748 Form Factor & Mechanical Mounting
-- **Dimensions**: Standardized `87.0 mm × 48.0 mm` (`3425 mil × 1890 mil`).
-- **Clearance for Real Screws**: Four-corner M3 mounting holes (`77.0 mm × 38.0 mm` pitch) with generous **Φ5.0 mm washer clearances**, ensuring screws and lock washers never bite into traces.
-- **Enclosure Grab Margins**: Dedicated keep-out zones along both long edges support **slot-in rail mounting** and **3D-printed snap-fit tabs**.
-- *Reference*: [8748 Form Factor Specification](8748_formfactor.md)
+### 2.1 8858 Form Factor (Official Alpha) & Mechanical Mounting
+- **Dimensions**: Standardized `88.0 mm × 58.0 mm` (`3465 mil × 2283 mil`, crisp `1.52 : 1` proportion) with near-square `186 × 184 mm` 2×3 straight V-cut panelization.
+- **Clearance for Real Screws**: Four-corner M3 mounting holes (`76.0 mm × 46.0 mm` pitch, `6.0 mm` edge margin) with generous **Φ10.0 mm washer clearances**, ensuring screws and lock washers never bite into traces.
+- **Enclosure Grab & Optical Inspection**: Dedicated `3.0 mm` card guide keep-outs, underside **SMD-only zones** (`36.0 × 8.0 mm × 2`), and chiral **optical alignment markers** (`76.0 × 30.0 mm` pitch) support PLC vertical slide-in racks, 3D-printed snap-fit tabs, and automated inspection.
+- *Reference*: [8858 Form Factor Specification (Official Alpha)](8858_formfactor.md) *(Legacy: [8854](8854_formfactor.md) / [8748](8748_formfactor.md))*
 
 ### 2.2 Unidirectional Interface Edge
 External field connections (power and communications) are strictly aligned along **one single edge of the PCB**.  
