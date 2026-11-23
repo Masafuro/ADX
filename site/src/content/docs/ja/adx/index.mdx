@@ -9,8 +9,8 @@ import { Aside, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 合言葉は **「はたらく Arduino（The Working Arduino）」**。ブレッドボードや机の上で動かしたスケッチを、実際のケースや設置場所へ無理なく収め、長く安心して動かし続けるための物理・電気規格として設計されています。
 
-<Aside type="note" title="ドキュメントポータル構築状況（M1）">
-  現在、実基板の試作進捗に合わせて公式ポータルを段階的に立ち上げています（M1：Starlight 基盤・多言語疎通フェーズ）。最新の仕様書やガーバーデータは <a href="https://github.com/Masafuro/ADX">Masafuro/ADX GitHub リポジトリ</a> にて常時公開しています。
+<Aside type="note" title="ドキュメントポータル構築状況">
+  現在、実基板の試作進捗に合わせて公式ポータルを段階的に立ち上げています。最新の仕様書やガーバーデータは <a href="https://github.com/Masafuro/ADX">Masafuro/ADX GitHub リポジトリ</a> にて常時公開しています。
 </Aside>
 
 ## 共通の土台となる 2 つのオープン規格
@@ -38,8 +38,17 @@ ADX のすべての Core ボードと拡張 CARD は、以下の 2 つのオー�
 
 ## 次のステップ
 
-<LinkCard
-  title="規格サマリー（英語 SSOT）"
-  description="現行の物理・電気規格およびライセンス一覧（英語 SSOT へのフォールバック表示テストも兼ねています）。"
-  href="/ja/adx/standards/"
-/>
+<CardGrid>
+  <LinkCard
+    title="規格サマリー（英語 SSOT）"
+    description="現行の物理・電気規格およびライセンス一覧（英語 SSOT への自動フォールバック表示）。"
+    href="/ja/adx/standards/"
+  />
+  <LinkCard
+    title="Podcast: Off the Breadboard（Spotify）"
+    description="ADX 開発ログをもとに筐体や BOM の裏話を 3〜5 分で語る英語ショートポッドキャスト。"
+    href="https://open.spotify.com/show/79cvRtpnEFaMkGB9mDjPpd"
+    target="_blank"
+    rel="noopener"
+  />
+</CardGrid>

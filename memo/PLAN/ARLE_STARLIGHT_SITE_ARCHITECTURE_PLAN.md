@@ -195,8 +195,10 @@ site/
 ```
 
 ### 6.2 デザイン方針
-- 現在の [site/index.html](../../site/index.html) および [draft_lp.html](../../site/src/pages/draft_lp.html) のブランドトーン（**ダーク背景 `#090a0d`、微細な設計グリッド、`Inter` ＋ `JetBrains Mono`、抑制の効いたグリーン／シアンアクセント**）を `custom.css` で Starlight テーマに反映する。
-- Starlight 標準のライト／ダーク切替は残しつつ、デフォルト（またはブランド表現）として工業用計測器・データシートのような清潔でコントラストの高い見た目を保つ。
+- ビジュアルの正本規定は [ARLE_VISUAL_TONE_AND_MANNER.md](../ARLE_VISUAL_TONE_AND_MANNER.md)（`ARLE-GUIDELINE-VISUAL-001`）に従う。
+- **白ベース（`#FFFFFF` ＋ RAL 7035 系ライトグレー `#F4F5F7`）** をメインエリア、**漆黒（`#12151C`）** を工業銘板ヘッダー・構造のサブ色、**JIS Z 9103 CUD 黄（`#F2E700`）** を面積約 3% の精密計器ポイントとする 3 色基調（`82 : 15 : 3`）。
+- ドキュメント全ページは「① 黒銘板ヘッダ＋白ベース」、トップ LP（`/`・`/ja/`）のファーストビューのみ「④ 黒ヒーロー帯 → 純白セクション」のハイブリッド構成を採用する。
+- デフォルトは **Light（白ベース）** とし、夜間作業向けのダークモードも Starlight 標準切替で破綻なく提供する。
 
 ---
 
@@ -225,7 +227,7 @@ site/
    - **Root directory**: `site`（そのまま）
    - **Build command**: `npm run build`
    - **Build output directory**: `dist`
-   - **Environment variables**: `NODE_VERSION = 20`（ローカル環境と揃える）
+   - **Environment variables**: `NODE_VERSION = 22`（Cloudflare Pages 側での警告回避のため 22 を推奨。ローカル開発は Node 20 以上で動作）
    - **Build watch paths（Include paths）**: `site/*`, `docs/*`
 4. Cloudflare Pages の初回ビルド成功を確認し、`https://arle.cc/` および `https://arle.cc/ja/` の表示・検索を実確認する。
 

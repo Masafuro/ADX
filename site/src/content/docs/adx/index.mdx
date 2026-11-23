@@ -7,7 +7,7 @@ import { Aside, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 **ADX (Advanced Devices eXtended)** is an enclosure-native open-hardware modular ecosystem developed by **ARLE.cc**. Its goal is grounded and practical: **"The Working Arduino"** — making it straightforward to take sketches that work on a workbench and mount, wire, and operate them reliably inside real enclosures.
 
-<Aside type="note" title="Portal Rollout Status (M1)">
+<Aside type="note" title="Portal Rollout Status">
   This documentation portal is being rolled out incrementally alongside physical prototype boards. Authoritative specifications, schematics, and Gerbers are always available in the <a href="https://github.com/Masafuro/ADX">Masafuro/ADX GitHub repository</a>.
 </Aside>
 
@@ -36,8 +36,17 @@ Every ADX Core board and expansion CARD shares two open standards:
 
 ## Next Steps
 
-<LinkCard
-  title="Standards Snapshot (English SSOT)"
-  description="Quick index of ADX's active mechanical, electrical, and licensing standards."
-  href="/adx/standards/"
-/>
+<CardGrid>
+  <LinkCard
+    title="Standards Snapshot (English SSOT)"
+    description="Quick index of ADX's active mechanical, electrical, and licensing standards."
+    href="/adx/standards/"
+  />
+  <LinkCard
+    title="Podcast: Off the Breadboard (Spotify)"
+    description="3–5 minute hardware engineering stories behind ADX's enclosure & BOM trade-offs."
+    href="https://open.spotify.com/show/79cvRtpnEFaMkGB9mDjPpd"
+    target="_blank"
+    rel="noopener"
+  />
+</CardGrid>

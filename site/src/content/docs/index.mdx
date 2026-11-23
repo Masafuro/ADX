@@ -25,7 +25,7 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 <div class="arle-status-bar">
   <span class="arle-status-pill">
     <span class="arle-status-dot"></span>
-    <span>ADX DOCS PORTAL · M1 ONLINE</span>
+    <span>ADX DOCUMENTATION PORTAL · WHITE / BLACK / JIS CUD YELLOW</span>
   </span>
   <span>SASEBO, NAGASAKI, JAPAN · CERN-OHL-P-v2 / MIT / CC-BY-4.0</span>
 </div>
@@ -36,18 +36,39 @@ ADX is designed from day one so hardware boards, enclosures, and expansion circu
 
 <CardGrid>
   <Card title="Hardware Catalog" icon="laptop">
-    Board-by-board visual pinouts, specifications, and fabrication data for **ADX CORE-U**, **Reference CARD v0**, and **Prototype CARD v0** *(rolling out as prototype boards arrive)*.
+    Board-by-board visual pinouts, specifications, and fabrication data for **ADX CORE-U**, **Reference CARD v0**, and **Prototype CARD v0** *(rolling out as physical boards arrive)*.
   </Card>
   <Card title="For Enclosure Designers" icon="setting">
-    The **8858 Form Factor (`88.0 × 58.0 mm`)** with generous `Φ10.0 mm` M3 washer clearances, `3.0 mm` card guides, single-edge `66.0 mm` I/O alignment, and optical alignment markers.
+    The **8858 Form Factor (`88.0 × 58.0 mm`)** with `Φ10.0 mm` M3 washer clearances, `3.0 mm` card guides, single-edge `66.0 mm` I/O alignment, and `M1–M4` optical alignment markers.
   </Card>
   <Card title="For Circuit & CARD Designers" icon="puzzle">
     The **ADX 20-Pin Bus (`v4.2`)** featuring MCU-independent logical pin IDs (`S00`, `P01`–`P10`), bottom-aligned `VBUS` (`2A–3A`), coplanar analog shielding, and native `3.3V` LVCMOS signaling.
   </Card>
   <Card title="Open Standards & SSOT" icon="open-book">
-    Specifications are maintained in English as a Single Source of Truth in GitHub and surfaced here alongside Japanese guides and visual reference sheets.
+    Specifications are maintained in English as a Single Source of Truth in GitHub and surfaced here alongside Japanese guides and CUD-compliant visual reference sheets.
   </Card>
 </CardGrid>
+
+<div class="arle-podcast-strip">
+  <div class="arle-podcast-copy">
+    <div class="arle-podcast-eyebrow">PODCAST · OFF THE BREADBOARD</div>
+    <h3>Everything works on a breadboard. Then you put it inside a box.</h3>
+    <p>
+      Short 3-to-5-minute hardware stories inspired by the ADX open-hardware dev logs—unpacking enclosure tolerances, BOM trade-offs, and field constraints behind electronics built to leave the workbench.
+    </p>
+    <p class="arle-podcast-note">
+      Note: AI-narrated dramatized dev-log stories (not a datasheet). See verified specs on GitHub or in ADX Docs.
+    </p>
+  </div>
+  <a
+    href="https://open.spotify.com/show/79cvRtpnEFaMkGB9mDjPpd"
+    class="arle-btn"
+    target="_blank"
+    rel="noopener"
+  >
+    Listen on Spotify ↗
+  </a>
+</div>
 
 <div class="arle-heritage">
   <div class="arle-heritage-copy">

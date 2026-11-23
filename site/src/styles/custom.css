@@ -1,94 +1,390 @@
-/* ARLE.cc Industrial Dark Theme for Astro Starlight */
+/*
+ * ARLE.cc / ADX Visual Tone & Manner (ARLE-GUIDELINE-VISUAL-001)
+ * White Blueprint (#FFFFFF / RAL 7035 #F4F5F7)
+ * × Black Industrial Nameplate (#12151C)
+ * × JIS Z 9103 CUD Signal Yellow (#F2E700, ~3% precision accent)
+ */
 
 :root {
   --sl-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Hiragino Sans',
-    'Noto Sans JP', 'Segoe UI', Roboto, sans-serif;
+    'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', 'Segoe UI', sans-serif;
   --sl-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, monospace;
 
-  /* Dark mode palette (default) — matches ARLE.cc brand identity */
-  --sl-color-accent-low: #0b2919;
-  --sl-color-accent: #22c55e;
-  --sl-color-accent-high: #86efac;
+  /* ARLE.cc Canonical Tokens */
+  --arle-bg-canvas: #ffffff;
+  --arle-bg-surface: #f4f5f7;
+  --arle-bg-surface-alt: #eaecef;
+  --arle-border: #d8dce3;
+  --arle-border-strong: #b8c0cc;
+
+  --arle-ink-primary: #12151c;
+  --arle-ink-secondary: #3f4754;
+  --arle-ink-muted: #5b6472;
+  --arle-dark-border: #252a35;
+
+  /* JIS Z 9103 (2018) CUD Safety Yellow */
+  --arle-signal-yellow: #f2e700;
+  --arle-signal-yellow-soft: #faf7b8;
+
+  /* JIS Z 9103 / CUD v4 Semantic Family */
+  --arle-cud-red: #ff4b00;
+  --arle-cud-orange: #f6aa00;
+  --arle-cud-green: #00b06b;
+  --arle-cud-blue: #005a9c;
+  --arle-cud-sky: #4dc4ff;
+  --arle-cud-purple: #990099;
+
+  /* Dark Mode Defaults (when data-theme="dark") */
+  --sl-color-accent-low: #272508;
+  --sl-color-accent: #f2e700;
+  --sl-color-accent-high: #faf7b8;
 
   --sl-color-white: #f4f4f5;
   --sl-color-gray-1: #e4e4e7;
-  --sl-color-gray-2: #a1a1aa;
-  --sl-color-gray-3: #71717a;
-  --sl-color-gray-4: #3f3f46;
-  --sl-color-gray-5: #1f222a;
-  --sl-color-gray-6: #111318;
-  --sl-color-black: #090a0d;
+  --sl-color-gray-2: #a8b0bc;
+  --sl-color-gray-3: #7c8594;
+  --sl-color-gray-4: #3a4150;
+  --sl-color-gray-5: #232834;
+  --sl-color-gray-6: #161b24;
+  --sl-color-black: #0e1117;
 
-  --sl-color-bg: #090a0d;
-  --sl-color-bg-nav: rgba(9, 10, 13, 0.88);
-  --sl-color-bg-sidebar: #0d0f14;
+  --sl-color-bg: #0e1117;
+  --sl-color-bg-nav: #12151c;
+  --sl-color-bg-sidebar: #131720;
   --sl-color-hairline-light: rgba(255, 255, 255, 0.08);
-  --sl-color-hairline: rgba(255, 255, 255, 0.1);
+  --sl-color-hairline: rgba(255, 255, 255, 0.12);
 }
 
+/* Canonical Light Theme (White-Base Industrial Standard) */
 :root[data-theme='light'] {
-  --sl-color-accent-low: #dcfce7;
-  --sl-color-accent: #15803d;
-  --sl-color-accent-high: #14532d;
+  --sl-color-accent-low: #faf7b8;
+  --sl-color-accent: #12151c;
+  --sl-color-accent-high: #12151c;
 
-  --sl-color-white: #18181b;
-  --sl-color-gray-1: #27272a;
-  --sl-color-gray-2: #52525b;
-  --sl-color-gray-3: #71717a;
-  --sl-color-gray-4: #a1a1aa;
-  --sl-color-gray-5: #e4e4e7;
-  --sl-color-gray-6: #f4f4f5;
+  --sl-color-white: #12151c;
+  --sl-color-gray-1: #232833;
+  --sl-color-gray-2: #3f4754;
+  --sl-color-gray-3: #5b6472;
+  --sl-color-gray-4: #8e97a6;
+  --sl-color-gray-5: #d8dce3;
+  --sl-color-gray-6: #f4f5f7;
+  --sl-color-gray-7: #f8f9fb;
   --sl-color-black: #ffffff;
 
   --sl-color-bg: #ffffff;
-  --sl-color-bg-nav: rgba(255, 255, 255, 0.9);
-  --sl-color-bg-sidebar: #f8fafc;
+  --sl-color-bg-nav: #12151c;
+  --sl-color-bg-sidebar: #f8f9fb;
+  --sl-color-bg-inline-code: #f0f2f5;
+  --sl-color-hairline-light: #e4e7ec;
+  --sl-color-hairline: #d8dce3;
+  --sl-color-hairline-shade: #d8dce3;
+  --sl-color-text-accent: #12151c;
+  --sl-color-text-invert: #ffffff;
 }
 
-/* Invert black-on-transparent brand logo on dark canvas */
-:root:not([data-theme='light']) .site-title img,
-:root:not([data-theme='light']) .arle-brand-invert {
+/* ==========================================================================
+   1. Black Industrial Nameplate Header (Consistent across Light & Dark)
+   ========================================================================== */
+
+header.header {
+  background-color: #12151c !important;
+  border-top: 2px solid var(--arle-signal-yellow);
+  border-bottom: 1px solid #252a35;
+  color: #f4f4f5;
+}
+
+header.header .site-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #ffffff;
+}
+
+/* 10x10px JIS CUD Yellow precision mark left of ARLE.cc logo */
+header.header .site-title::before {
+  content: '';
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 1px;
+  background-color: var(--arle-signal-yellow);
+  flex-shrink: 0;
+}
+
+header.header .site-title img {
+  height: 1.45rem;
+  width: auto;
   filter: invert(1);
 }
 
-.site-title img {
-  height: 1.55rem;
-  width: auto;
+/* Search button inside black nameplate */
+header.header site-search button[data-open-modal] {
+  background-color: #1b202b;
+  border: 1px solid #2f3646;
+  border-radius: 3px;
+  color: #d4d8e0;
 }
 
-/* Subtle engineering grid background on splash / landing pages */
-[data-has-hero] .page {
+header.header site-search button[data-open-modal]:hover {
+  border-color: var(--arle-signal-yellow);
+  color: #ffffff;
+}
+
+header.header site-search kbd {
+  background-color: #12151c;
+  color: #a8b0bc;
+  border: 1px solid #323949;
+}
+
+/* Social icons & right controls inside black nameplate */
+header.header .social-icons a {
+  color: #d4d8e0;
+}
+
+header.header .social-icons a:hover {
+  color: var(--arle-signal-yellow);
+  opacity: 1;
+}
+
+header.header .social-icons::after {
+  border-inline-end-color: #2c3342;
+}
+
+header.header label,
+header.header select {
+  color: #e4e7ec;
+}
+
+header.header select option {
+  background-color: #12151c;
+  color: #f4f4f5;
+}
+
+header.header label:hover,
+header.header select:hover {
+  color: var(--arle-signal-yellow);
+}
+
+/* Mobile menu button inside dark header */
+starlight-menu-button button {
+  background-color: #1b202b;
+  color: #ffffff;
+  border: 1px solid #323949;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   2. Sidebar & Navigation (Light White-Base Precision)
+   ========================================================================== */
+
+:root[data-theme='light'] nav.sidebar .sidebar-pane {
+  border-inline-end: 1px solid var(--arle-border);
+}
+
+:root[data-theme='light'] nav.sidebar a[aria-current='page'],
+:root[data-theme='light'] nav.sidebar a[aria-current='page']:hover {
+  background-color: #12151c;
+  color: #ffffff;
+  border-radius: 2px;
+  border-inline-start: 3px solid var(--arle-signal-yellow);
+  font-weight: 600;
+}
+
+:root[data-theme='dark'] nav.sidebar a[aria-current='page'],
+:root[data-theme='dark'] nav.sidebar a[aria-current='page']:hover {
+  background-color: #1c222e;
+  color: #ffffff;
+  border-radius: 2px;
+  border-inline-start: 3px solid var(--arle-signal-yellow);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   3. Top Landing Page Hybrid (④ Dark Industrial Hero → Pure White Sections)
+   ========================================================================== */
+
+[data-has-hero] .content-panel:has(.hero) {
+  background-color: #111318;
   background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(34, 197, 94, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 0%, rgba(242, 231, 0, 0.08) 0%, transparent 55%),
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 100% 100%, 32px 32px, 32px 32px;
+  background-size: 100% 100%, 24px 24px, 24px 24px;
+  border-bottom: 3px solid var(--arle-signal-yellow);
+  color: #f4f4f5;
 }
 
-:root[data-theme='light'] [data-has-hero] .page {
-  background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(21, 128, 61, 0.07) 0%, transparent 55%),
-    linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
-  background-size: 100% 100%, 32px 32px, 32px 32px;
+[data-has-hero] .hero {
+  padding-block: clamp(2.75rem, 6vw, 4.75rem);
 }
 
-/* Status pill banner for landing pages */
+[data-has-hero] .hero h1 {
+  color: #ffffff;
+  letter-spacing: -0.03em;
+}
+
+[data-has-hero] .hero .tagline {
+  color: #c4c9d4;
+  max-width: 44rem;
+}
+
+/* Hero Primary CTA: JIS CUD Yellow fill + Black ink (14.1:1 AAA) */
+[data-has-hero] .hero .sl-link-button.primary {
+  background-color: var(--arle-signal-yellow);
+  border-color: var(--arle-signal-yellow);
+  color: #12151c;
+  font-weight: 700;
+  border-radius: 3px;
+}
+
+[data-has-hero] .hero .sl-link-button.primary:hover {
+  background-color: #fff21a;
+  border-color: #fff21a;
+  color: #090a0d;
+}
+
+/* Hero Secondary CTA */
+[data-has-hero] .hero .sl-link-button.secondary {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #f4f4f5;
+  border-radius: 3px;
+}
+
+[data-has-hero] .hero .sl-link-button.secondary:hover {
+  border-color: var(--arle-signal-yellow);
+  color: #ffffff;
+}
+
+/* Hero Minimal CTA */
+[data-has-hero] .hero .sl-link-button.minimal {
+  color: #d4d8e0;
+}
+
+[data-has-hero] .hero .sl-link-button.minimal:hover {
+  color: var(--arle-signal-yellow);
+}
+
+/* ==========================================================================
+   4. Documentation Typography, Links (3-Color Pure), Tables & Cards
+   ========================================================================== */
+
+/* Doc page H1 precision left tick */
+:root:not([data-has-hero]) main h1#_top {
+  border-inline-start: 4px solid var(--arle-signal-yellow);
+  padding-inline-start: 0.75rem;
+  letter-spacing: -0.025em;
+}
+
+/* Pure 3-Color Markdown Links (18:1 AAA contrast on white) */
+:root[data-theme='light'] .sl-markdown-content a:not(.sl-link-button):not(.arle-btn):not(.sl-anchor-link) {
+  color: #12151c;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--arle-signal-yellow);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  background: linear-gradient(transparent 72%, var(--arle-signal-yellow-soft) 72%);
+  transition: background-color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+:root[data-theme='light'] .sl-markdown-content a:not(.sl-link-button):not(.arle-btn):not(.sl-anchor-link):hover {
+  background: var(--arle-signal-yellow-soft);
+  text-decoration-color: #12151c;
+}
+
+:root[data-theme='dark'] .sl-markdown-content a:not(.sl-link-button):not(.arle-btn):not(.sl-anchor-link) {
+  color: #f4f4f5;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--arle-signal-yellow);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+:root[data-theme='dark'] .sl-markdown-content a:not(.sl-link-button):not(.arle-btn):not(.sl-anchor-link):hover {
+  background-color: var(--arle-signal-yellow);
+  color: #12151c;
+  text-decoration-color: #12151c;
+}
+
+/* Sharp industrial corners & control-panel datasheet tables */
+.sl-markdown-content table {
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+:root[data-theme='light'] .sl-markdown-content thead th {
+  background-color: #181c24;
+  color: #ffffff;
+  font-family: var(--sl-font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  border-color: #2c3342;
+}
+
+:root[data-theme='light'] .sl-markdown-content tbody tr:nth-child(even) {
+  background-color: #f7f8fa;
+}
+
+:root[data-theme='light'] .sl-markdown-content td {
+  border-color: var(--arle-border);
+}
+
+/* Starlight Cards & LinkCards: sharp 4px border, zero blurry shadows */
+.card,
+.sl-link-card {
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+:root[data-theme='light'] .card {
+  background-color: #ffffff;
+  border: 1px solid var(--arle-border);
+}
+
+:root[data-theme='light'] .card .icon {
+  background-color: #12151c;
+  border-color: #12151c;
+  color: var(--arle-signal-yellow);
+  border-radius: 3px;
+}
+
+:root[data-theme='light'] .sl-link-card {
+  background-color: #f8f9fb;
+  border: 1px solid var(--arle-border);
+}
+
+:root[data-theme='light'] .sl-link-card:hover {
+  background-color: #ffffff;
+  border-color: #12151c;
+  border-inline-start: 3px solid var(--arle-signal-yellow);
+}
+
+.starlight-aside {
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   5. Custom ARLE.cc Sections (Status Bar, Podcast Strip, Heritage Footer)
+   ========================================================================== */
+
 .arle-status-bar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   padding: 0.65rem 1rem;
   border: 1px solid var(--sl-color-hairline);
-  border-radius: 0.5rem;
-  background: rgba(255, 255, 255, 0.02);
+  border-inline-start: 3px solid var(--arle-signal-yellow);
+  border-radius: 3px;
+  background: var(--sl-color-gray-6);
   font-family: var(--sl-font-mono);
   font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--sl-color-gray-2);
 }
@@ -98,34 +394,95 @@
   align-items: center;
   gap: 0.5rem;
   color: var(--sl-color-white);
+  font-weight: 600;
 }
 
 .arle-status-dot {
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 999px;
-  background-color: #22c55e;
-  box-shadow: 0 0 8px rgba(34, 197, 94, 0.65);
-  animation: arle-pulse 2s infinite ease-in-out;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 1px;
+  background-color: var(--arle-signal-yellow);
+  outline: 1px solid #12151c;
 }
 
-@keyframes arle-pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.45;
-    transform: scale(0.85);
-  }
+/* Podcast Feature Strip ("Off the Breadboard") */
+.arle-podcast-strip {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 4px;
+  background-color: #12151c;
+  border: 1px solid #252a35;
+  border-inline-start: 4px solid var(--arle-signal-yellow);
+  color: #f4f4f5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
 }
 
-/* Heritage footer strip on splash pages */
+.arle-podcast-copy {
+  flex: 1 1 22rem;
+}
+
+.arle-podcast-eyebrow {
+  font-family: var(--sl-font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--arle-signal-yellow);
+  margin-bottom: 0.35rem;
+}
+
+.arle-podcast-copy h3 {
+  margin: 0 0 0.35rem 0 !important;
+  font-size: 1.05rem;
+  color: #ffffff;
+}
+
+.arle-podcast-copy p {
+  margin: 0 !important;
+  font-size: 0.875rem;
+  color: #c4c9d4;
+  line-height: 1.55;
+}
+
+.arle-podcast-note {
+  margin-top: 0.45rem !important;
+  font-family: var(--sl-font-mono);
+  font-size: 0.72rem !important;
+  color: #8e97a6 !important;
+}
+
+.arle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1.05rem;
+  border-radius: 3px;
+  font-family: var(--sl-font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  background-color: var(--arle-signal-yellow) !important;
+  color: #12151c !important;
+  border: 1px solid var(--arle-signal-yellow);
+  white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+
+.arle-btn:hover {
+  background-color: #fff21a !important;
+  color: #090a0d !important;
+}
+
+/* Heritage Footer Strip */
 .arle-heritage {
-  margin-top: 2.5rem;
-  padding: 1.5rem;
+  margin-top: 2rem;
+  padding: 1.35rem 1.5rem;
   border: 1px solid var(--sl-color-hairline);
-  border-radius: 0.75rem;
+  border-radius: 4px;
   background: var(--sl-color-gray-6);
   display: flex;
   flex-wrap: wrap;
@@ -139,12 +496,12 @@
 }
 
 .arle-heritage-copy h3 {
-  margin-top: 0;
-  font-size: 1.05rem;
+  margin-top: 0 !important;
+  font-size: 1rem;
 }
 
 .arle-heritage-copy p {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
   font-size: 0.9rem;
   color: var(--sl-color-gray-2);
 }
@@ -153,20 +510,15 @@
   font-family: var(--sl-font-mono);
   font-size: 0.75rem;
   color: var(--sl-color-gray-3);
-  margin-top: 0.65rem;
+  margin-top: 0.6rem;
 }
 
 .arle-heritage-logo img {
-  max-height: 2.25rem;
+  max-height: 2.15rem;
   width: auto;
   display: block;
 }
 
-/* Refine hero typography */
-.hero h1 {
-  letter-spacing: -0.03em;
-}
-
-.hero .tagline {
-  max-width: 40rem;
+:root[data-theme='dark'] .arle-brand-invert {
+  filter: invert(1);
 }

@@ -48,7 +48,7 @@ Configure the `arle.cc` Cloudflare Pages project (**Settings → Build**) as fol
 | **Root directory** | `site` |
 | **Build command** | `npm run build` |
 | **Build output directory** | `dist` |
-| **Environment variable** | `NODE_VERSION = 20` |
+| **Environment variable** | `NODE_VERSION = 22` *(ローカルは Node 20 以上で動作)* |
 | **Build watch paths (Include)** | `site/*`, `docs/*` |
 
 - Including `docs/*` ensures future SSOT specification updates in `docs/` automatically trigger a rebuild while ignoring unrelated `memo/`, `hardware/`, `firmware/`, and `podcast/` commits.

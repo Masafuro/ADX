@@ -15,6 +15,10 @@ export default defineConfig({
         alt: 'ARLE.cc',
         replacesTitle: true,
       },
+      components: {
+        ThemeProvider: './src/components/ThemeProvider.astro',
+        ThemeSelect: './src/components/ThemeSelect.astro',
+      },
       defaultLocale: 'root',
       locales: {
         root: {
@@ -36,6 +40,11 @@ export default defineConfig({
           icon: 'external',
           label: 'Hackaday.io',
           href: 'https://hackaday.io/project/205547-adx-enclosure-native-modular-hardware-standard',
+        },
+        {
+          icon: 'rss',
+          label: 'Off the Breadboard (Spotify Podcast)',
+          href: 'https://open.spotify.com/show/79cvRtpnEFaMkGB9mDjPpd',
         },
       ],
       editLink: {
@@ -62,7 +71,7 @@ export default defineConfig({
           tag: 'link',
           attrs: {
             rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap',
+            href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap',
           },
         },
       ],
