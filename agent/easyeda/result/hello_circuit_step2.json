@@ -1,0 +1,105 @@
+{
+  "ok": true,
+  "path": "invoke",
+  "data": {
+    "boardCleanup": "deleted Board2",
+    "vccPt": {
+      "x": 570,
+      "y": 660
+    },
+    "gndPt": {
+      "x": 560,
+      "y": 300
+    },
+    "ledOrientation": {
+      "top": {
+        "number": "1",
+        "name": "A",
+        "x": 720,
+        "y": 420
+      },
+      "bottom": {
+        "number": "2",
+        "name": "K",
+        "x": 720,
+        "y": 380
+      }
+    },
+    "wires": [
+      {
+        "tag": "VCC->TopRail",
+        "id": "4640b3c2369042c6",
+        "net": ""
+      },
+      {
+        "tag": "TopRail->R1.top",
+        "id": "4640b3c2369042c6",
+        "net": ""
+      },
+      {
+        "tag": "TopRail->R3.top",
+        "id": "4640b3c2369042c6",
+        "net": ""
+      },
+      {
+        "tag": "R1.bot->MidNode",
+        "id": "cbc6981949eb5959",
+        "net": ""
+      },
+      {
+        "tag": "MidNode->R2.top",
+        "id": "cbc6981949eb5959",
+        "net": ""
+      },
+      {
+        "tag": "MidNode->C1.top",
+        "id": "cbc6981949eb5959",
+        "net": ""
+      },
+      {
+        "tag": "R3.bot->LED1.A",
+        "id": "83e9ed8360ec159e",
+        "net": ""
+      },
+      {
+        "tag": "R2.bot->GndNode",
+        "id": "863500ad33747d69",
+        "net": ""
+      },
+      {
+        "tag": "C1.bot->GndNode",
+        "id": "863500ad33747d69",
+        "net": ""
+      },
+      {
+        "tag": "LED1.K->GndNode",
+        "id": "863500ad33747d69",
+        "net": ""
+      },
+      {
+        "tag": "GndNode->GND",
+        "id": "863500ad33747d69",
+        "net": ""
+      }
+    ],
+    "drcStrictPass": true,
+    "drcVerbose": [],
+    "exports": {
+      "png": {
+        "name": "hello_circuit_sch.png",
+        "size": 275621,
+        "b64": "<saved to hello_circuit_sch.png (275621 bytes)>"
+      },
+      "bom": {
+        "name": "hello_circuit_bom.csv",
+        "size": 730,
+        "b64": "<saved to hello_circuit_bom.csv (730 bytes)>"
+      },
+      "netlist": {
+        "name": "hello_circuit_netlist.enet",
+        "size": 15273,
+        "b64": "<saved to hello_circuit_netlist.enet (15273 bytes)>"
+      }
+    }
+  }
+}

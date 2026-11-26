@@ -1,0 +1,7 @@
+# Local configuration containing secrets/tokens/LAN IPs (never commit)
+bridge.config.local.ps1
+*.local.ps1
+*.local.cmd
+*.local.bat
+.env
+.env.*

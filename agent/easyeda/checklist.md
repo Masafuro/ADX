@@ -9,11 +9,11 @@
 
 ## 環境メモ（作業しながら記入）
 
-- **EasyEDA Pro バージョン**: `（例: 4.1.70 / International）`
-- **EasyEDA Pro 実行ファイルパス**: `（例: C:\Program Files\EasyEDA-Pro\easyeda-pro.exe）`
-- **ローカルプロジェクト保存先**: `（例: C:\Users\<user>\Documents\EasyEDA-Pro\projects）`
-- **Node.js バージョン（Windows / Ubuntu）**: `Windows: v__ / Ubuntu: v__`
-- **採用接続方式**: `[ ] SSH リバーストンネル（推奨）` / `[ ] Node.js フォアグラウンド中継`
+- **EasyEDA Pro バージョン**: `4.1.105.0339a6cd / International`（半オフラインモード有効）
+- **EasyEDA Pro 実行ファイルパス**: `C:\Program Files\easyeda-pro\easyeda-pro.exe`
+- **ローカルプロジェクト保存先**: `C:\Users\User\Documents\EasyEDA-Pro\projects`（M4 プロジェクト情報から確認済み）
+- **Node.js バージョン（Windows / Ubuntu）**: `Windows: 未使用（不要） / Ubuntu: v20.20.2`
+- **採用接続方式**: `[x] SSH リバーストンネル（推奨・AG-G3 経由）` / `[ ] Node.js フォアグラウンド中継`
 - **使用ローカルポート**: `3030`（変更時はここを更新）
 
 ---
@@ -25,7 +25,7 @@
 - [x] 半オフライン／ローカル保存モードの設定と、`Documents\EasyEDA-Pro\projects` フォルダの存在を確認した
 - [x] コマンドプロンプト / PowerShell で `easyeda-pro --help` が実行でき、バージョン情報が表示された
   - *(パスが通っていない場合はインストール先フォルダを環境変数 `PATH` に追加)*
-- [ ] `easyeda-pro --mcp --help` を実行し、`--mcp http` で利用可能なオプション（`--port` / `--token` / ホスト指定可否など）を確認・記録した
+- [x] `easyeda-pro --mcp --help` を実行し、`--mcp http` で利用可能なオプション（`--port` / `--token` / ホスト指定可否など）を確認・記録した
 - [x] EasyEDA Pro GUI を起動した状態で `easyeda-pro doctor` を実行し、`"ok": true` かつ `"connected": true` が返ることを確認した
 
 ---
@@ -80,68 +80,68 @@ PS C:\Users\User> easyeda-pro session close --session $S --destroy | Out-Host
 
 ## M1: Windows 単体での CLI 自動操作 PoC
 
-- [ ] Windows ターミナルで `easyeda-pro open` を実行し、`ok: true` と `sessionId` が返ることを確認した
-- [ ] 取得した `sessionId` を使い、以下のコマンドで内部 API が実行できることを確認した
+- [x] Windows ターミナルで `easyeda-pro open` を実行し、`ok: true` と `sessionId` が返ることを確認した
+- [x] 取得した `sessionId` を使い、以下のコマンドで内部 API が実行できることを確認した
   ```bat
   easyeda-pro invoke --session <SESSION_ID> --ext-uuid eda --code "return eda.sys_Environment.getEditorCurrentVersion()"
   ```
-- [ ] `easyeda-pro doc api` で API クラス一覧が JSON で返ることを確認した
-- [ ] `easyeda-pro session list` で起動中セッションが表示されることを確認した
-- [ ] `easyeda-pro session close --session <SESSION_ID> --destroy` で CLI が開いたウィンドウが正常に閉じることを確認した
+- [x] `easyeda-pro doc api` で API クラス一覧が JSON で返ることを確認した
+- [x] `easyeda-pro session list` で起動中セッションが表示されることを確認した
+- [x] `easyeda-pro session close --session <SESSION_ID> --destroy` で CLI が開いたウィンドウが正常に閉じることを確認した
 
 ---
 
 ## M2: 非・常駐 `.bat` ランチャー作成と Ubuntu ⇄ Windows 疎通確認
 
 ### 接続前提の準備（基本案：SSH リバーストンネルの場合）
-- [ ] Windows 側で `ssh -V` が実行できることを確認した（Windows 標準 OpenSSH クライアント）
-- [ ] Ubuntu 側で SSH 接続を受け付けられる状態（`sshd` 稼働・LAN 内到達可能）であることを確認した
-- [ ] Windows → Ubuntu へ **SSH 鍵認証**（パスワード入力なし、または鍵エージェント経由）でログインできることを確認した
-- [ ] *(代替案を選ぶ場合)* Node.js（v20 以上推奨）を Windows に導入し、`node -v` を確認した
+- [x] Windows 側で `ssh -V` が実行できることを確認した（Windows 標準 OpenSSH クライアント）
+- [x] Ubuntu 側で SSH 接続を受け付けられる状態（`sshd` 稼働・LAN 内到達可能）であることを確認した（`AG-G3` / port 2222 で LXD コンテナ直着地）
+- [x] Windows → Ubuntu へ **SSH 鍵認証**（パスワード入力なし、または鍵エージェント経由）でログインできることを確認した
+- [ ] *(代替案を選ぶ場合・今回不要)* Node.js（v20 以上推奨）を Windows に導入し、`node -v` を確認した
 
 ### 非・常駐ランチャー作成と検証
-- [ ] MCP 認証用のランダムトークンを生成し、Git 管理外のローカル設定（例：Windows ローカルの環境変数設定ファイル等）に保管した
-- [ ] 作業時だけ起動する `.bat`（例：`start_easyeda_bridge.bat`）を作成した
-  - [ ] EasyEDA Pro GUI が起動していることの確認（または起動誘導）を含む
-  - [ ] `easyeda-pro --mcp http --port 3030 --token <TOKEN>` を起動できる
-  - [ ] `ssh -N -R 127.0.0.1:3030:127.0.0.1:3030 <user>@<ubuntu-ip>`（または代替中継）をフォアグラウンドで接続できる
-- [ ] `.bat` 起動状態で Ubuntu 側から `127.0.0.1:3030` への疎通を確認した
-- [ ] トークンなし／誤トークンのリクエストが拒否され、正しいトークンで応答することを確認した
-- [ ] **非・常駐確認（最重要）**:
-  - [ ] `.bat` を `Ctrl+C` またはウィンドウを閉じて終了した
-  - [ ] タスクマネージャ（または `tasklist`）で `ssh.exe` および `--mcp` 用プロセスが残っていないことを確認した
-  - [ ] Windows のサービス一覧で不要な常駐サービス（`sshd` 等）が増えていないことを確認した
-  - [ ] 終了後、Ubuntu 側から `127.0.0.1:3030` へ接続できなくなることを確認した
+- [x] MCP 認証用のランダムトークンを生成し、Git 管理外のローカル設定（Windows `bridge.config.local.ps1` / Ubuntu `~/.config/easyeda-bridge/token`）に保管した
+- [x] 作業時だけ起動する `.bat`（`win/start_easyeda_bridge.bat` ＋ `start_easyeda_bridge.ps1`）を作成した
+  - [x] EasyEDA Pro GUI が起動していることの確認（`doctor`）を含む
+  - [x] `easyeda-pro --mcp http --port 3030 --token <TOKEN>` を起動できる
+  - [x] `ssh -N -R 127.0.0.1:3030:127.0.0.1:3030 AG-G3` をフォアグラウンドで接続できる
+- [x] `.bat` 起動状態で Ubuntu 側から `127.0.0.1:3030` への疎通を確認した（[result/20261126_1502.md](result/20261126_1502.md)）
+- [x] トークンなしのリクエストが `401` で拒否され、正しいトークンで `initialize` / `tools/list` が `200` 応答することを確認した
+- [x] **非・常駐確認（最重要）**:
+  - [x] `.bat` を `Ctrl+C` で終了した（[result/20261126_1457.md](result/20261126_1457.md)）
+  - [x] ランチャーが起動した `--mcp` プロセス木のみ終了し、ポート `127.0.0.1:3030` が閉鎖されることを確認した
+  - [x] Windows 側に不要な常駐サービス（`sshd` 等）を増やしていないことを確認した
+  - [x] 終了後、Ubuntu 側から `127.0.0.1:3030` へ接続できなくなることを確認した
 
 ---
 
 ## M3: Ubuntu エージェント側への MCP 統合と運用ルール整備
 
-- [ ] Ubuntu 側の `~/.gemini/config/mcp_config.json`（または専用プラグイン設定）へ EasyEDA Pro MCP の接続設定を記述した
-- [ ] Streamable HTTP で直接接続できるか検証した
-  - [ ] *(直接接続に制約がある場合)* Ubuntu 側に薄い Node.js stdio ブリッジを用意し、MCP ツールとして認識させた
-- [ ] エージェントの MCP サーバー一覧で EasyEDA Pro ツールが表示されることを確認した
-- [ ] エージェントから以下の読み取り系操作がエラーなく実行できた：
-  - [ ] `doctor`（接続状態の確認）
-  - [ ] `session.list`（セッション一覧の確認）
-  - [ ] `doc api`（`SCH_PrimitiveComponent` 等の API リファレンス参照）
-- [ ] 公式 `cli-for-ai.md` の安全規約（`--ext-uuid eda`、ピン座標実測、ウェイト、セッションクローズ、テストプロジェクト限定ルール）を `agent/easyeda/` 配下にまとめた
+- [x] Ubuntu 側の `~/.gemini/config/mcp_config.json` へ EasyEDA Pro MCP の接続設定を記述した
+- [x] オンデマンド非・常駐運用に対応したゼロ依存 Node.js stdio ブリッジ（[ubuntu/easyeda_mcp_stdio.mjs](ubuntu/easyeda_mcp_stdio.mjs)）を作成し、ライブ／オフライン待機の両モードを検証した
+- [ ] Antigravity UI の **Additional Options (...) > MCP Servers** で `easyeda-pro` が有効になっていることをユーザー側で目視確認する
+- [x] stdio ブリッジ経由で以下の読み取り系操作がエラーなく実行できた：
+  - [x] `doctor`（接続状態の確認：`connected: true`）
+  - [x] `session.list`（セッション一覧の確認）
+  - [x] `doc.api`（`SCH_PrimitiveComponent` の API リファレンス参照・文字化けなし）
+- [x] 公式 `cli-for-ai.md` の安全規約を [agent_rules.md](agent_rules.md) にまとめた
 
 ---
 
 ## M4: 「Hello Circuit」自動構築 PoC
 
-- [ ] 本番データと分離したテスト用プロジェクト（例：`Agent_Hello_Circuit.eprj3`）を用意した
-- [ ] Ubuntu のエージェントへの指示だけで以下の自動構築ループを完走した：
-  - [ ] LCSC ライブラリからテスト用部品（抵抗・コンデンサ・LED 等）を検索できた
-  - [ ] 回路図シートに部品を配置し、Designator（`R1`, `C1` 等）を設定できた
-  - [ ] `getAllPinsByPrimitiveId()` で各ピンの絶対座標を取得できた
-  - [ ] ピン座標に基づいて `SCH_PrimitiveWire` で配線できた
-  - [ ] `VCC` / `GND` ネットフラグを配置できた
-  - [ ] 保存・反映待ち（5〜10 秒）の後に `SCH_Drc.check(true, false, true)` を実行し、エラー 0 件を確認した
-  - [ ] ネットリスト・BOM・回路図 PNG スクリーンショットを書き出せた
-- [ ] Windows 側の EasyEDA Pro 画面で、生成された回路図の見た目・接続を人間が目視確認した
-- [ ] 不要な CLI セッションを `session close --destroy` で閉じ、`.bat` も正常終了できた
+- [x] 本番データと分離したテスト用プロジェクト（`Agent_Hello_Circuit` / `.eprj3`）を自動作成した
+- [x] Ubuntu のエージェントからの操作だけで以下の自動構築ループを完走した：
+  - [x] LCSC ライブラリからアクティブな JLCPCB Basic Part（`C21190` / `C25804` / `C14663` / `C2286`）を検索できた
+  - [x] 回路図シートに部品 5 点（`R1`, `R2`, `C1`, `R3`, `LED1`）を配置し、Designator を設定できた
+  - [x] `getAllPinsByPrimitiveId()` で各ピンの絶対座標・極性（`LED1` Pin1=`A` 上 / Pin2=`K` 下）を取得できた
+  - [x] ピン座標に基づいて `SCH_PrimitiveWire` で直交配線（11 セグメント、T 字接合分割）できた
+  - [x] `VCC` / `GND` ネットフラグを配置できた
+  - [x] 保存・反映待ち（8 秒）の後に `SCH_Drc.check(true, false, true)` / `check(true, false, false)` を実行し、**厳格モード合格・違反 0 件**を確認した
+  - [x] ネットリスト（[result/hello_circuit_netlist.enet](result/hello_circuit_netlist.enet)）・BOM（[result/hello_circuit_bom.csv](result/hello_circuit_bom.csv)）・回路図 PNG（[result/hello_circuit_sch.png](result/hello_circuit_sch.png)）を書き出し、目視＆ネット検証まで完了した
+- [x] Windows 側の EasyEDA Pro 画面で、生成された回路図の見た目・接続を人間が目視確認した
+- [x] *(追加 PoC・案 A)* 同じテスト回路を PCB 同期→外形 `1000×800 mil`→配置→15 mil 配線→GND ベタ→PCB DRC 違反 0 件・未配線 0 本→PNG / Gerber / CPL 書き出しまで完走した
+- [ ] 作業完了後、不要な CLI セッションを `session close --destroy` で閉じ、`.bat` も正常終了した
 
 ---
 
