@@ -40,7 +40,7 @@ SPDX-License-Identifier: CC-BY-4.0
 | **電源保護・トポロジ** | `AP22814` (85℃) ＋ `ME6211` ＋ `X5R` (85℃) | **ADX 標準双方向 VBUS 幹線（MCU 制御なし）＋ TI `TPS259470` (125℃) ＋ `TLV75533` (125℃) ＋ 全 `X7R` ＋ 6P `USB-POW`** | OR-ing 不要で IDC 双方向受電と AC アダプタ／ケーブル保護を両立し、電源系を完全 125℃ 化 |
 | **USB-COM 隔離** | `CH342K` (85℃) 常時 3V3 通電 (~15mA) | **`USB-COM` 非接続時に電源＆信号 (`SN74LV4066A`) を完全遮断** | `CH342K` を 0mW の保存状態 (`-55〜+105℃`) へ移行しつつ待機電流・自己発熱を約 1/3 へ削減 |
 | **物理観測（Observability）** | 電圧・電流は盲目（`FLG` のみ） | **`VBUS_ISENSE` (`PA4`: 10mΩ + `TP181A2` 125℃) ＋ `VBUS_VSENSE` (`PA5`) 標準内蔵** | I2C を汚さず mA 級の精密電流・電圧・電力 (W)・チップ温度を AI がリアルタイム観測 |
-| **オンボード LED** | 汎用 0805 単色 LED×4 (85℃) | **車載 110℃ 3 色 LED `HVRTB-3433EPX` ×2（`LED_SYS`＋`LED_AI` 2 系統分離）** | `LED_SYS` でハード電源/異常/Debug を直感表示し、`LED_AI` は 3ch フルカラー RGB を -40〜+110℃ で動作 |
+| **オンボード LED** | 汎用 0805 単色 LED×4 (85℃) | **車載 110℃ 3 色 LED `HVRTB-3433EPX` ×2（`LED_SYS`＋`LED_MCU` 2 系統分離）** | `LED_SYS` でハード電源/異常/Debug を直感表示し、`LED_MCU` は 3ch フルカラー RGB を -40〜+110℃ で動作 |
 
 ---
 
@@ -79,7 +79,7 @@ CORE-U (rev5) に実装される物理端子は **`USB-COM`・`USB-POW`・`IDC 2
 
 ### 3.1 B パターン：工場出荷標準（`ADX AI-Firmata` / MCP）
 - 箱から出して接続した瞬間から、コンパイル不要で Antigravity が `Port 1` 経由で直接ボードを操作可能。
-- オンボードの車載フルカラー RGB LED（`LED_AI`：`PB4`/`PB5`/`PA7`）により、拡張 CARD ゼロの状態でも 60 秒以内に **「AI が L チカさせた（AI's First Blink）」** を完結できる。
+- オンボードの車載フルカラー RGB LED（`LED_MCU`：`PB4`/`PB5`/`PA7`）により、拡張 CARD ゼロの状態でも 60 秒以内に **「AI が L チカさせた（AI's First Blink）」** を完結できる。
 - 標準コマンド例：`set_rgb(r, g, b)`, `get_telemetry()`（VBUS 電圧・供給電流・消費電力・3.3V VDD・MCU 内部温度）, `gpio_rw`, `pwm_set`, `adc_read`, `i2c_scan/xfer`, `spi_xfer`。
 
 ### 3.2 A パターン：AI 自律ビルド ＆ UPDI 強制焼込（`adx-cli`）
@@ -105,7 +105,7 @@ CORE-U (rev5) に実装される物理端子は **`USB-COM`・`USB-POW`・`IDC 2
 | **主 MCU** | **Microchip `ATtiny1616-MNR`** | **`-40℃〜+105℃`**、QFN-20-EP (3×3mm)、3.3V / 10MHz 内蔵発振（水晶なし）、Flash 16KB / SRAM 2KB |
 | **USB ブリッジ IC** | **WCH `CH342K`** | 動作 `-40〜+85℃` / **保存 `-55〜+105℃`**、Dual CDC（Mode 3 のみ通電＆信号接続） |
 | **USB 信号隔離スイッチ** | **TI `SN74LV4066A`** | **`-40℃〜+125℃`**、4ch 双方向アナログスイッチ（Mode 1/2 で `PA0/PA1/PA2` を完全 Hi-Z 隔離） |
-| **オンボード LED（2 系統）** | **車載 3 色 LED `HVRTB-3433EPX` ×2** | **`-40℃〜+110℃`**（`C5246356`）。`LED_SYS`（ハード監視）＋ `LED_AI`（MCU 3ch RGB 制御） |
+| **オンボード LED（2 系統）** | **車載 3 色 LED `HVRTB-3433EPX` ×2** | **`-40℃〜+110℃`**（`C5246356`）。`LED_SYS`（ハード監視）＋ `LED_MCU`（MCU 3ch RGB 制御） |
 | **受動部品（MLCC / 抵抗）** | **MLCC 全 `X7R` / 抵抗 `0603WAF`** | MLCC `-55〜+125℃`（`X5R` 全廃）、抵抗 `-55〜+155℃` |
 | **拡張インターフェース (`CN1`)** | **20P THT Eject Header (`C9039`)** | **`-55℃〜+105℃`**、2.54mm 2×10P ラッチ付きバーティカル牛角、`ADX-BUS-SPEC-v4.2` 準拠 |
 | **PCB 基板材・外形** | **`FR4-TG155`（高耐熱） / `8858` 規格** | `88.0 × 58.0 mm`、M3 取付穴 `76.0 × 46.0 mm`、光学マーカー M1〜M4 対応 |
@@ -141,7 +141,7 @@ CORE-U (rev5) に実装される物理端子は **`USB-COM`・`USB-POW`・`IDC 2
    ・Mode 2/3: 外部CARDへ 5V 2A給電      (VSENSE)           │ (3V3)                     │   G = VBUS_PROT (正常緑)
    ・Mode 1  : 外部CARDから 5V受電!                         ├──▶ MCU VDD (ATtiny1616)   │   R = FLT (上流給電・異常赤)
                                                             ├──▶ U2 (TP181A2-CR)        │   B = USB_COM_EN (Debug青→シアン)
-                                                            ├──▶ U_SW (SN74LV4066A)     └─ LED_AI (HVRTB #2 / 2N7002駆動):
+                                                            ├──▶ U_SW (SN74LV4066A)     └─ LED_MCU (HVRTB #2 / 2N7002駆動):
                                                             │                               R ◀── PB4 (TCA0 WO1* PWM)
   [ USB-COM (16P Type-C) ] ──▶ [ USBLC6-2SC6 ] ──▶ D+/D-    │                               B ◀── PB5 (TCA0 WO2* PWM)
    (VBUS非給電 / CC 5.1kΩ×2)                                ▼                               G ◀── PA7 (GPIO / ソフト・CCL PWM)
@@ -176,7 +176,7 @@ CORE-U (rev5) に実装される物理端子は **`USB-COM`・`USB-POW`・`IDC 2
 - **電圧計測 (`VBUS_VSENSE`)**：`VBUS_PROT` を `10kΩ + 10kΩ`（±1%, -55〜155℃）で 1/2 分圧し、`0.1µF X7R` 経由で `PA5 (AIN5)` へ入力（`0.00V〜6.60V`、分解能約 `6.45 mV/LSB`）。全 3 Mode で実際の 5V 幹線電圧を常時監視できます。
 
 ### 5.4 2 系統・車載 110℃ フルカラー LED 構成（同一型番 `HVRTB-3433EPX` ×2）
-民生 85℃ 上限の `WS2812B` を廃し、CORE-A5 実績の車載 `-40℃〜+110℃` 3 色 LED **`HVRTB-3433EPX` (`C5246356`)** を 2 個並列配置して、**ハードウェア監視 (`LED_SYS`)** と **MCU 制御 (`LED_AI`)** を明快に分離します。
+民生 85℃ 上限の `WS2812B` を廃し、CORE-A5 実績の車載 `-40℃〜+110℃` 3 色 LED **`HVRTB-3433EPX` (`C5246356`)** を 2 個並列配置して、**ハードウェア監視 (`LED_SYS`)** と **MCU 制御 (`LED_MCU`)** を明快に分離します。
 
 - **5V 駆動＋ローサイド `2N7002` の採用理由**：InGaN 青・緑 LED は `-40℃` 低温時に順電圧 $V_f$ が ~3.2V 付近まで上昇するため、`3.3V` 直結ではなく `5V`（`VBUS_PROT` / `USB_VBUS`）から各色 `2〜3mA` 程度で駆動します。これにより全温度帯での安定輝度・105℃ での低発熱・`3V3` アナログ基準レールの無ノイズ化を同時に達成します。
 
@@ -185,7 +185,7 @@ CORE-U (rev5) に実装される物理端子は **`USB-COM`・`USB-POW`・`IDC 2
 | **System LED**<br>*(ハード直結)* | **`LED_SYS`**<br>(`HVRTB` #1) | **G (緑)** | `VBUS_PROT`（5V 幹線） | **通常通電（Embedded 稼働＝純粋な緑）** |
 | | | **B (青)** | `VBUS_PROT` ＋ `Q_DBG (USB_COM_EN)` | **Debug 接続（`G+B`＝シアンで PC/AI リンク表示）** |
 | | | **R (赤)** | **上流 `USB_VBUS`** ＋ `TPS259470 FLT` | **eFuse 遮断異常（短絡・過熱・OVLO 時は緑/青が消え赤単独点灯！）** |
-| **GPIO LED**<br>*(MCU 制御)* | **`LED_AI`**<br>(`HVRTB` #2) | **R (赤)** | **`PB4`** → `2N7002` | `TCA0 WO1*` ハード PWM 対応（**CORE-A5 Red LED とピン完全一致**） |
+| **GPIO LED**<br>*(MCU 制御)* | **`LED_MCU`**<br>(`HVRTB` #2) | **R (赤)** | **`PB4`** → `2N7002` | `TCA0 WO1*` ハード PWM 対応（**CORE-A5 Red LED とピン完全一致**） |
 | | | **B (青)** | **`PB5`** → `2N7002` | `TCA0 WO2*` ハード PWM 対応（**CORE-A5 Blue LED とピン完全一致**） |
 | | | **G (緑)** | **`PA7`** → `2N7002` | デジタル 8 色 / ソフト PWM / `TCD0→CCL LUT1-OUT` PWM 対応 |
 
@@ -205,9 +205,9 @@ ADX 20P IDC バス側（`P01`〜`P10`、`S00`）は [attiny1616.md](../../../doc
 | **5** | **`PA4`** | **`TP181A2-CR` OUT** | **`ADX_VBUS_ISENSE`** | **供給電流計測 (`ADC0 AIN4` / 1.00 V/A / 0〜3.3A)** |
 | **6** | **`PA5`** | **`VBUS_PROT` 1/2 分圧** | **`ADX_VBUS_VSENSE`** | **幹線電圧計測 (`ADC0 AIN5` / 0.50 V/V / 0〜6.6V)** |
 | **7** | `PA6/AIN` | `CN1` Pin 3 | **`P01`** (`ADX_AIN`) | ADX バス標準アナログ入力 / DAC0 / GPIO |
-| **8** | **`PA7`** | **`LED_AI` Green (`2N7002`)** | **`ADX_LED_G`** | **車載 RGB LED 緑（Active-HIGH、100kΩ PD、CCL LUT1-OUT）** |
-| **9** | **`PB5`** | **`LED_AI` Blue (`2N7002`)** | **`ADX_LED_B`** | **車載 RGB LED 青（Active-HIGH、`TCA0 WO2*` PWM、CORE-A5 互換）** |
-| **10** | **`PB4`** | **`LED_AI` Red (`2N7002`)** | **`ADX_LED_R`** | **車載 RGB LED 赤（Active-HIGH、`TCA0 WO1*` PWM、CORE-A5 互換）** |
+| **8** | **`PA7`** | **`LED_MCU` Green (`2N7002`)** | **`ADX_LED_G`** | **車載 RGB LED 緑（Active-HIGH、100kΩ PD、CCL LUT1-OUT）** |
+| **9** | **`PB5`** | **`LED_MCU` Blue (`2N7002`)** | **`ADX_LED_B`** | **車載 RGB LED 青（Active-HIGH、`TCA0 WO2*` PWM、CORE-A5 互換）** |
+| **10** | **`PB4`** | **`LED_MCU` Red (`2N7002`)** | **`ADX_LED_R`** | **車載 RGB LED 赤（Active-HIGH、`TCA0 WO1*` PWM、CORE-A5 互換）** |
 | **11** | `PB3/RX` | `CN1` Pin 8 | **`P04`** (`ADX_RX`) | USART0 Default-RX（外部拡張 UART） |
 | **12** | `PB2/TX` | `CN1` Pin 7 | **`P03`** (`ADX_TX`) | USART0 Default-TX（外部拡張 UART） |
 | **13** | `PB1/SDA` | `CN1` Pin 10 | **`P06`** (`ADX_SDA`) | I2C SDA (TWI0) / ADC0 |
@@ -265,7 +265,7 @@ ADX 20P IDC バス側（`P01`〜`P10`、`S00`）は [attiny1616.md](../../../doc
 | `U2` | ハイサイド電流アンプ | **`TP181A2-CR`** (3PEAK) *(互換: `INA180A3`)* | SC-70-6 | **-40〜+125℃** | `C2902350` (Extended) |
 | `R_SHUNT` | シャント抵抗 | **`10mΩ` ±1% 0.5W〜1W** | 1206 | **-55〜+155℃** | 選定予定 (Basic/Ext) |
 | `CN1` | 拡張 IDC 20P (ラッチ付) | **`2.54-2*10P直牛角`** (BOOMELE 等) | **THT 2×10P** | **-55〜+105℃** | **`C9039`** (THT 手実装) |
-| `LED_SYS` / `LED_AI` | 車載 3 色 LED ×2 | **`HVRTB-3433EPX`** (Honglitronic) | SMD-6P (3433) | **-40〜+110℃** | **`C5246356`** (Extended) |
+| `LED_SYS` / `LED_MCU` | 車載 3 色 LED ×2 | **`HVRTB-3433EPX`** (Honglitronic) | SMD-6P (3433) | **-40〜+110℃** | **`C5246356`** (Extended) |
 | `U_SW` | 4ch アナログスイッチ | **`SN74LV4066A`** (TI) | TSSOP-14 / VQFN | **-40〜+125℃** | Extended |
 | `Q1, Q3, Q_DBG, Q_LED×3` | 小信号 N-MOS ×6 | **`2N7002`** | SOT-23 | **-55〜+150℃** | Basic 部品 |
 | `Q2` | パワーゲート P-MOS | **`AO3401A`** 等 | SOT-23 | **-55〜+150℃** | Basic 部品 |
