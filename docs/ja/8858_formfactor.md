@@ -93,13 +93,13 @@ SPDX-License-Identifier: CC-BY-4.0
 
 本フォームファクタは [ADX 20-Pin Bus Specification (SSOT)](../spec/ADX_PINOUT.md) に完全準拠したバーティカル IDC ヘッダー（2×10 ピン、2.54 mm ピッチ）を標準搭載します。
 
-### 4.1 ピン配置 (Top View / `ADX-BUS-SPEC-v4.2`)
+### 4.1 ピン配置 (Top View / `ADX-BUS-SPEC-v5.0`)
 ```text
-[上列 (偶数ピン / PROG 側: Pins 2, 4, ..., 20)]
-S00/OWD  | GND     | GND        | P04/RX   | P06/SDA  | P07/CS   | P09/MISO | GND      | VBUS | VBUS
+[上列 (偶数ピン / AIN 側: Pins 2, 4, ..., 20)]
+P01/AIN  | P02/EXTCLK | P03/DE   | P05/RX   | P07/SDA  | P08/CS   | P10/MISO | GND      | VBUS | VBUS
 
-[下列 (奇数ピン / Pin 1・AIN 側: Pins 1, 3, ..., 19)]
-GND      | P01/AIN | P02/EXTCLK | P03/TX   | P05/SCL  | GND      | P08/MOSI | P10/SCK  | VBUS | VBUS
+[下列 (奇数ピン / Pin 1・GND 側: Pins 1, 3, ..., 19)]
+GND      | GND        | GND      | P04/TX   | P06/SCL  | GND      | P09/MOSI | P11/SCK  | VBUS | VBUS
 ```
 
 ### 4.2 電源供給仕様 (VBUS Supply)

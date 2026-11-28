@@ -14,17 +14,18 @@ import { Aside } from '@astrojs/starlight/components';
 | Domain | Identifier | Status | Source of Truth (GitHub) |
 | :--- | :--- | :--- | :--- |
 | **Form Factor** | `8858 Form Factor` | Official Alpha (`v0.1-alpha`) | [`docs/en/8858_formfactor.md`](https://github.com/Masafuro/ADX/blob/main/docs/en/8858_formfactor.md) |
-| **20-Pin Expansion Bus** | `ADX-BUS-SPEC-v4.2` | Standard (Release) | [`docs/spec/ADX_PINOUT.md`](https://github.com/Masafuro/ADX/blob/main/docs/spec/ADX_PINOUT.md) |
-| **MCU Mapping (ATtiny1616)** | `mcu_mapping/attiny1616` | Active (`CORE-U`) | [`docs/spec/mcu_mapping/attiny1616.md`](https://github.com/Masafuro/ADX/blob/main/docs/spec/mcu_mapping/attiny1616.md) |
-| **MCU Mapping (CH32X035)** | `mcu_mapping/ch32x035` | Reference | [`docs/spec/mcu_mapping/ch32x035.md`](https://github.com/Masafuro/ADX/blob/main/docs/spec/mcu_mapping/ch32x035.md) |
+| **20-Pin Expansion Bus** | `ADX-BUS-SPEC-v5.0` | Standard (Release) | [`docs/spec/ADX_PINOUT.md`](https://github.com/Masafuro/ADX/blob/main/docs/spec/ADX_PINOUT.md) |
+| **MCU Mapping (ATtiny1616)** | `mcu_mapping/attiny1616` | Active (`CORE-U rev6`) | [`docs/spec/mcu_mapping/attiny1616.md`](https://github.com/Masafuro/ADX/blob/main/docs/spec/mcu_mapping/attiny1616.md) |
+| **MCU Mapping (CH32X035)** | `mcu_mapping/ch32x035` | Reference (`v5.0`) | [`docs/spec/mcu_mapping/ch32x035.md`](https://github.com/Masafuro/ADX/blob/main/docs/spec/mcu_mapping/ch32x035.md) |
 | **Design Guidelines** | `RFC 2119 (MUST/SHOULD/MAY)` | Active | [`docs/en/adx_formfactor_guidelines.md`](https://github.com/Masafuro/ADX/blob/main/docs/en/adx_formfactor_guidelines.md) |
 
-## ADX 20-Pin Bus Quick Reference (`ADX-BUS-SPEC-v4.2`)
+## ADX 20-Pin Bus Quick Reference (`ADX-BUS-SPEC-v5.0`)
 
-- **Logical Pin IDs**: `S00` (System `OWD / PROG`, Card N.C. required) and `P01`–`P10` (user/Card signals, `3.3V` LVCMOS).
-- **Power Bus (`VBUS`, Pins 17–20)**: `4.5V – 5.0V DC`, `2.0A – 3.0A` continuous, bottom-aligned `2×2` copper cluster with mandatory reverse-current & over-current protection on sourcing modules.
-- **Boundary & Shielding**: Pin 16 `GND` protective wall above `VBUS`; `P01` (`AIN`) shielded between Pin 1 and Pin 4 `GND`; `P02` (`EXTCLK`) guarded by Pin 4 and Pin 6 `GND`; Pin 11 `GND` separates I2C (`P05–P06`) from SPI (`P07–P10`).
-- **Firmware Macros (`ADX_<BOARD>.h`)**: Always use the collision-safe `ADX_P01`–`ADX_P10` prefix (never bare `P01`–`P10`).
+- **Logical Pin IDs**: Pure sequential **`P01`–`P11`** (all 11 user/Card signals unrestricted, `3.3V` LVCMOS). Legacy `S00` (`OWD`/`UPDI`) is omitted from the IDC bus and handled internally by each Core board for HV-noise immunity.
+- **3-Wire Field UART (`P03`–`P05`, Pins 6–8)**: Dedicated RS-485 Driver Enable **`P03` (`UART_DE` / `XDIR`)** on Pin 6 (mandatory `10kΩ–100kΩ` Card-side pull-down), `P04` (`UART_TX`), and `P05` (`UART_RX`).
+- **Power Bus (`VBUS`, Pins 17–20)**: `4.5V – 5.25V DC`, `2.0A – 3.0A` continuous bidirectional power, bottom-aligned `2×2` copper cluster with mandatory reverse-current & over-current protection on sourcing modules.
+- **Boundary & Shielding**: Pin 16 `GND` protective wall above `VBUS`; triple odd-row ground guard (`Pins 1, 3, 5 GND`) coplanar-shielding `P01` (`AIN`, Pin 2) and `P02` (`EXTCLK`, Pin 4); Pin 11 `GND` separates I2C (`P06–P07`) from SPI (`P08–P11`).
+- **Firmware Macros (`ADX_<BOARD>.h`)**: Always use the collision-safe `ADX_P01`–`ADX_P11` prefix and aliases (`ADX_AIN`, `ADX_CLK`, `ADX_DE`, `ADX_TX`, `ADX_RX`, `ADX_SCL`, `ADX_SDA`, `ADX_CS`, `ADX_MOSI`, `ADX_MISO`, `ADX_SCK`) — never bare `P01`–`P11`.
 
 ## Licensing Model (Tri-License)
 

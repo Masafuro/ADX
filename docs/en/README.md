@@ -24,10 +24,9 @@ Find what you need based on what you want to achieve:
 
 | What do you want to do? | Key Documentation | Primary Links |
 | :--- | :--- | :--- |
-| 🚀 **Build with USB** | Standard USB Core board with ATtiny1616 & CH342K | [CORE-U Specification](../../hardware/CORE-U/spec_proposal.md) |
-| 🛡 **Deploy tough RS-485 nodes** | High-temp (-40℃ ~ +105℃) isolated Core board | [CORE-A5 Specification](../../hardware/archive/CORE-A5/spec_study.md) |
-| 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout & layout rules | [ADX 20-Pin Bus (SSOT)](../spec/ADX_PINOUT.md) (v4.2) |
-| 📖 **Learn pinout engineering rationale**| Panel-aligned topology & coplanar shielding details | [ADX Pinout Architecture Guide](ADX_pinout.md) |
+| 🚀 **Build with the Flagship Core** | 3-Mode (`-40°C~+85°C` target) USB & Field Core (`ATtiny1616` + `CH342K`) | [CORE-U (rev6) Specification](../../hardware/CORE-U/rev6/spec.md) |
+| 🔌 **Build custom addon CARDs** | Universal 20-pin bus pinout (`v5.0`) & RS-485 / power layout rules | [ADX 20-Pin Bus (SSOT: v5.0)](../spec/ADX_PINOUT.md) |
+| 📖 **Learn pinout engineering rationale**| Panel-aligned topology, dual-GND shielding & `UART_DE` details | [ADX Pinout Architecture Guide](ADX_pinout.md) |
 | 📦 **Design or 3D-print cases** | Dimensions, M3 hole spacing & rail margins | [8858 Form Factor Specification (Alpha)](8858_formfactor.md) |
 
 ---
@@ -58,16 +57,16 @@ The ADX ecosystem is built upon two open, modular physical standards:
          ・8858 Form Factor (88.0 mm × 58.0 mm profile / Official Alpha, straight V-cut)
          ・Corner M3 Mounting Holes (76.0 mm × 46.0 mm pitch) with Φ10.0 mm Clearances
          ・Unidirectional I/O Edge (66.0 mm span on bottom edge)
-         ・ADX Pinout v4.2 (S00 / P01–P10 Abstraction, Bottom VBUS, Native 3.3V)
+         ・ADX Pinout v5.0 (P01–P11 Abstraction, Dedicated UART_DE, Bottom VBUS, 3.3V)
        ════════════════════════════════════════════════════════════════════
                                        │
             ┌──────────────────────────┴──────────────────────────┐
             ▼                                                     ▼
-   【 Main Core Boards 】                                【 Modular CARDs 】
-     ・ADX CORE-U   (USB Standard / ATtiny1616 / Case-Friendly)        ADX CARD Ecosystem
-     ・ADX CORE-A24 (Industrial DC24V & Isolated RS-485 / Planning)   ・Prototyping CARD
-     ・Dual Type-C or Push-in Terminals                               ・Power Supply CARDs
-     ・Automated 20P IDC Fixture Inspection & Flashing                ・3D-Printable Enclosures
+   【 Flagship Core Board 】                             【 Modular CARDs 】
+     ・ADX CORE-U (rev6 Flagship / ATtiny1616 / 3-Mode)               ADX CARD Ecosystem
+       - Full Embedded Mode: -40°C~+85°C target + Eject Header       ・Isolated RS-485 / LIN CARDs
+       - Isolated Onboard Dual-CDC USB (UPDI + UART, 0mW when idle)  ・Isolated 24V / 48V Power CARDs
+       - AI Observability (V/I/W Telemetry + 3-Mode Self-ID)         ・Reference / Proto CARDs & Enclosures
 ```
 
 ### 2.1 8858 Form Factor (Official Alpha) & Mechanical Mounting
@@ -80,30 +79,29 @@ The ADX ecosystem is built upon two open, modular physical standards:
 External field connections (power and communications) are strictly aligned along **one single edge of the PCB**.  
 By eliminating multi-directional wire routing, enclosure cutouts and front-panel machining are simplified to a single opening.
 
-### 2.3 Universal 20-Pin Bus (ADX-BUS-SPEC-v4.2)
-All Core boards and Card modules interconnect via a standardized 2×10-pin shrouded IDC connector:
-- **MCU-Independent Logical Pin IDs (`S00`, `P01`–`P10`)**:  
-  Power rails (`GND`, `VBUS`) are unnumbered; Pin 2 (`OWD`) is visually separated as **`S00`** (System), and the 10 user/Card signals use flat role-neutral IDs **`P01`–`P10`** (mapped to collision-safe `ADX_P01`–`ADX_P10` macros in `ADX_<BOARD>.h`).
+### 2.3 Universal 20-Pin Bus (ADX-BUS-SPEC-v5.0)
+All Core boards and Card modules interconnect via a standardized 2×10-pin shrouded/latched IDC connector:
+- **MCU-Independent Logical Pin IDs (`P01`–`P11`)**:  
+  Power rails (`GND`, `VBUS`) are unnumbered, and all 11 signal contacts follow a pure, unrestricted sequential ID series **`P01`–`P11`** (mapped to collision-safe `ADX_P01`–`ADX_P11` macros and aliases such as `ADX_AIN`, `ADX_DE`, `ADX_TX`, `ADX_CS` in `ADX_<BOARD>.h`).
 - **Panel-Aligned Power Bus (`VBUS`: Pins 17–20)**:  
-  Directly matches industrial wiring practices (weak signals on top, heavy power on bottom), routing straight into front terminals with zero trace crossings. Secondarily guards against loose wiring contact. Continuous $2 \times 2$ grid rated for **2.0A–3.0A continuous**.
+  Directly matches industrial wiring practices (weak signals on top, heavy power on bottom), routing straight into front terminals with zero trace crossings. Continuous $2 \times 2$ grid rated for **2.0A–3.0A continuous** bidirectional power.
 - **Protective Boundary Wall (`Pin 16: GND`)**:  
-  Direct short barrier directly above VBUS, safely grounding crimp misalignments.
-- **Outer Edge Guard & Coplanar Analog (`Pins 1–4`)**:  
-  Pin 1 (GND) protects cable perimeter; `P01` (Pin 3: `AIN`) is shielded between Pins 1 and 4 from high-speed digital switching.
-- **System Programming & Debug (`S00` [Pin 2] & `P02` [Pin 5])**:  
-  Unified 1-wire (UPDI) and 2-wire (SDI) automated flashing via the 20-pin IDC fixture with Card-side DNP isolation rules.
-- **Native 3.3V Logic**: All digital pins (`P01`–`P10`) operate at **3.3V LVCMOS**.
-- *Reference (SSOT)*: [ADX 20-Pin Bus Specification](../spec/ADX_PINOUT.md) | [Architecture Guide](ADX_pinout.md)
+  Direct short barrier directly above `VBUS`, safely grounding crimp misalignments.
+- **Triple Odd-Row Ground Guard (`Pins 1, 3, 5: GND`)**:  
+  `P01` (Pin 2: `AIN`) is shielded between Pins 1 and 3 (`GND`), and `P02` (Pin 4: `EXTCLK`) is shielded between Pins 3 and 5 (`GND`).
+- **3-Wire Field UART & RS-485 Direction Control (`P03`–`P05` / Pins 6–8)**:  
+  Dedicated **`P03` (`UART_DE` / `XDIR`)** on Pin 6 (with mandatory Card-side pull-down) enables collision-free RS-485/LIN stacking alongside I2C (`P06`–`P07`) and SPI (`P08`–`P11`).
+- **Core-Side Programming Immunity**:  
+  Programming/debug lines (`UPDI` / `SWD`) are omitted from the 20-pin ribbon cable (eliminating HV-noise/accidental-reset vectors) and handled internally by each Core board.
+- **Native 3.3V Logic**: All 11 signal pins (`P01`–`P11`) operate at **3.3V LVCMOS**.
+- *Reference (SSOT)*: [ADX 20-Pin Bus Specification (v5.0)](../spec/ADX_PINOUT.md) | [Architecture Guide](ADX_pinout.md)
 
 ---
 
 ## 3. Core Board Portfolio
 
-Choose the right Core board based on your operating environment and connectivity needs:
-
-1. **[ADX CORE-U](../../hardware/CORE-U/spec_proposal.md) (Standard USB Core)**:
-   - **MCU**: Microchip ATtiny1616-MNR (8-bit AVR 3.3V 10MHz, Flash 16KB, SRAM 2KB)
-   - **Highlights**: Case-friendly development UX (no buttons needed), Dual Type-C ports (5V/2A Power + Com), CH342K dual USB-UART bridge (Port 1: SerialUPDI / Port 2: Serial Monitor), full compatibility with Arduino IDE 1.8.x & megaTinyCore.
-2. **[ADX CORE-A5](../../hardware/archive/CORE-A5/spec_study.md) / CORE-A24 (Industrial Edge)**:
-   - **MCU**: Microchip ATtiny1616-MNR (8-bit 10MHz, negligible self-heating)
-   - **Highlights**: Industrial -40℃ to +105℃ rated components, 2500V galvanic isolated RS-485, push-in spring clamp terminals. (CORE-A24 with native DC24V support is currently in planning).
+1. **[ADX CORE-U (rev6)](../../hardware/CORE-U/rev6/spec.md) (ADX Flagship Core)**:
+   - **MCU**: Microchip ATtiny1616-MNR (8-bit AVR 3.3V 10MHz, Flash 16KB, SRAM 2KB, `-40°C ~ +105°C` silicon)
+   - **Highlights**: 3-Mode operation (`Full embedded` `-40°C ~ +85°C` design target with latched THT IDC Eject Header & `CH342K` 0mW isolation), Dual Type-C (`USB-POW` 5V/2A + `USB-COM` isolated Dual CDC UPDI/UART), `VBUS` V/I/W telemetry, `PB5` 3-Mode self-ID & deep-sleep wake-up, and `PB4` hardware PWM status LED. Isolated RS-485/LIN and 24V/48V power inputs are delegated to modular expansion CARDs.
+2. **Value-Added / Legacy Derivative Boards (`CORE-A5` etc. — Archive)**:
+   - Integrated single-board variants (such as legacy [CORE-A5](../../hardware/archive/CORE-A5/spec_study.md)) are classified as specialized value-added derivatives rather than the primary Core line.

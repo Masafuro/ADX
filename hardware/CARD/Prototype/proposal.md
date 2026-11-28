@@ -9,9 +9,13 @@ SPDX-License-Identifier: CERN-OHL-P-2.0
 - **対象リビジョン**: v0
 - **更新日**: 2026-11-19
 - **グレード**: Standard Grade（無印：卓上開発・プロトタイピング向け）
-- **ステータス**: 設計完了 / ガーバー生成済
+- **ステータス**: 設計完了 / ガーバー生成済（`v0`: 旧 `8854` ＋ 旧 `ADX-BUS-SPEC-v4.2` 準拠実績）
 - **製造データ**: [`data/Gerber_PCB1_2026-11-19.zip`](data/Gerber_PCB1_2026-11-19.zip) / [`data/Netlist_PCB1_2026-11-19.net`](data/Netlist_PCB1_2026-11-19.net)
 - **基板外観図**: [`data/adx_prototype_card_v0.png`](data/adx_prototype_card_v0.png)
+
+> [!WARNING]
+> **バス規格バージョン注記（`v0` = 旧 `8854 / v4.2` 履歴保全 ／ `v5.0` は次期 `v1` タスク）**:  
+> 本書および `Gerber_PCB1_2026-11-19.zip` は **旧 `8854 Form Factor` ＋ 旧 `ADX-BUS-SPEC-v4.2` 準拠の `v0` 試作実績** として履歴保全しています。最新の **[`ADX-BUS-SPEC-v5.0`](../../../docs/spec/ADX_PINOUT.md)** とは Pins 3〜6 の信号/GND 配置が電気的に非互換のため、`v5.0` 基板（CORE-U rev6 等）との混在接続は避けてください。`8858 + ADX-BUS-SPEC-v5.0` 準拠の改訂は別ハードウェアタスクとして次期 **`Prototype CARD v1`** で実施予定です。
 
 ![ADX Prototype CARD v0](data/adx_prototype_card_v0.png)
 

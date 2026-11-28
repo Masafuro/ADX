@@ -73,7 +73,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 - **ADX ハードウェア・フォームファクタ開発ガイドライン (`docs/ja/adx_formfactor_guidelines.md`)**:
   - RFC 2119 準拠の3段階要件定義（MUST / SHOULD / MAY）を策定。
-  - 【MUST】Power CARDの逆流阻止義務（電池破裂防止）、Pin 5アイソレーション帯厳守。
+  - 【MUST】Power CARD の逆流阻止義務（電池破裂防止）、`ADX-BUS-SPEC-v5.0`（Pin 16 GND 防火壁・シールド GND `{1,3,5,11}`・RS-485 `P03` プルダウン）厳守。
   - 【SHOULD】Vertical IDC Header、産業用トランス絶縁DCDC、8854寸法（旧8748互換考慮）、-40℃〜+105℃耐熱。
   - 【MAY】非絶縁DCDC、ボックスヘッダ、自由な基板形状、独自センサー実装。
 

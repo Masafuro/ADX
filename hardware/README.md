@@ -11,16 +11,16 @@ SPDX-License-Identifier: CERN-OHL-P-2.0
 
 ## 1. ハードウェアラインナップ
 
-ADXのハードウェアは、**8858 Form Factor（正式 α 版）**（`88.0 mm × 58.0 mm`、旧 8854 / 8748）および共通の **20ピン IDC 拡張バス（`ADX-BUS-SPEC-v4.2`）** を共有する「Coreシリーズ（メインボード）」と「CARDシリーズ（機能拡張基板）」で構成されます。
+ADXのハードウェアは、**8858 Form Factor（正式 α 版）**（`88.0 mm × 58.0 mm`、旧 8854 / 8748）および共通の **20ピン IDC 拡張バス（`ADX-BUS-SPEC-v5.0`）** を共有する「Coreシリーズ（メインボード）」と「CARDシリーズ（機能拡張基板）」で構成されます。
 
 ### 1.1 Core シリーズ (メインMCUボード)
 
 | ボード名 | グレード | 保護・通信構造 | 状態・概要 | リンク |
 | :--- | :--- | :--- | :--- | :--- |
-| **ADX CORE-G** | **Standard (無印)** | **Type-C 1本 / Grove×3 (5V M5Unit対応)** | **Grove / M5Unit 特化プロトタイピング機（検討中）。** ATtiny1616 ＋ CH342K、スプリッターで2A給電対応。 | [構想書](CORE-G/concept.md) |
-| **ADX CORE-U** | **Standard (無印)** | **デュアル Type-C（5V2A給電 / UPDI・Serial独立）** | **標準 USB Core ボード（Arduino UNO R3/R4代替）。** ATtiny1616 (3.3V 10MHz) ＋ CH342K、Arduino IDE 1.8系 × megaTinyCore 最適化、筐体フレンドリー設計。 | [構想書](CORE-U/rev1/concept.md) / [技術仕様案](CORE-U/spec_proposal.md) / [比較・設計思想](CORE-U/comparison.md) |
-| **ADX CORE-A24 PRO** | **PRO** | **2500V 絶縁RS-485 / DC24V受電** | **次世代の現場・制御盤向けエッジ端末（構想中）。** CORE-A5の後継としてDC24V電源環境に最適化。 | — |
-| **ADX CORE-A5** | **Archive** | **2500V 絶縁RS-485 / VBUS幹線受電** | 旧現場向けモデル。-40℃〜+105℃耐熱部品、前面5VIN端子台（CORE-A24 PROへ発展継承）。 | [旧構想書](archive/CORE-A5/concept.md) / [旧仕様書](archive/CORE-A5/spec_study.md) |
+| **ADX CORE-U (rev6)** | **Flagship** | **3 Mode 耐環境 / 独立 Dual Type-C / ラッチ付 IDC 20P** | **ADX フラッグシップ Core ボード（仕様確定・設計中）。** ATtiny1616 (3.3V 10MHz) ＋ `CH342K`（Mode 1/2 完全 0mW 遮断）、Mode 1 `-40℃〜+85℃` 理論仕様、AI 電力観測、3 Mode 自己認識・深睡眠起床、`ADX-BUS-SPEC-v5.0` 準拠。絶縁 RS-485 / 24V・48V 電源は拡張 CARD 側へ委譲。 | [技術仕様書 (rev6)](CORE-U/rev6/spec.md) / [耐熱ベンチマーク](CORE-U/rev6/plc_thermal_benchmark_report.md) / [深睡眠考察](CORE-U/rev6/deep_sleep_potential.md) |
+| **ADX CORE-U (rev0〜rev5)** | **Legacy / Pre-rev6** | デュアル Type-C（旧 `v4.2` 試作世代） | rev6 への進化過程における前世代仕様群。 | [rev5 仕様案](CORE-U/rev5/spec_proposal.md) / [rev4 仕様案](CORE-U/spec_proposal.md) / [比較・設計思想](CORE-U/comparison.md) |
+| **ADX CORE-G** | **Archive / Study** | Type-C 1本 / Grove×3 | Grove / M5Unit 特化プロトタイピング機検討ログ。 | [構想書](archive/CORE-G/concept.md) |
+| **ADX CORE-A5 / CORE-A** | **Derivative / Archive** | 2500V 絶縁RS-485 / VBUS幹線受電 | 付加価値型派生ボード参考（旧現場向けモデル。CORE-U rev6 フラッグシップ化に伴い主軸から外しアーカイブ参照）。 | [旧構想書](archive/CORE-A5/concept.md) / [旧仕様書](archive/CORE-A5/spec_study.md) |
 | **ADX CORE-CX5** | **Archive / Research** | **デュアル Type-C（通信/電源分離）** | USB Core 試作研究モデル。WCH CH32X035（32-bit RISC-V 48MHz）、USB-PHY 内蔵。 | [研究構想書](OLD/CORE-CX5/concept.md) / [Mapping 仕様](../docs/spec/mcu_mapping/ch32x035.md) |
 | **ADX CORE-U (旧版)** | **Archive** | **PC保護回路** | 旧USB構想ボード。ATtiny1616初期試作。 | [旧検討ノート](archive/CORE-U_OLD/concept.md) |
 | **ADX CORE-A** | **Archive** | **完全絶縁RS-485 / 5V給電** | 初代現場向けモデル（CORE-A5/A24 PROへ発展継承）。 | [旧構想書](archive/CORE-A/concept.md) |
@@ -37,7 +37,7 @@ ADXのハードウェアは、**8858 Form Factor（正式 α 版）**（`88.0 mm
 ### 1.3 フォームファクタ & 規格仕様
 
 - **8858 フォームファクタ定義 (正式 α 版・現行標準)**: [8858 仕様書](../docs/ja/8858_formfactor.md) / [8858 検討書](CARD/Reference/8858ff_plan.md) *(旧仕様: [8854 仕様書](../docs/ja/8854_formfactor.md) / [8748 仕様書](../docs/ja/8748_formfactor.md))*
-- **ADX 20ピンバス規格 (SSOT)**: [普遍的バス規格書 (英語・アルファベット)](../docs/spec/ADX_PINOUT.md)（Standard: `ADX-BUS-SPEC-v4.2`）
+- **ADX 20ピンバス規格 (SSOT)**: [普遍的バス規格書 (英語・アルファベット)](../docs/spec/ADX_PINOUT.md)（Standard: `ADX-BUS-SPEC-v5.0`）
 - **ADX ピン配置 設計ガイド**: [日本語仕様解説](../docs/ja/ADX_pinout.md) / [English Architecture Guide](../docs/en/ADX_pinout.md)
 
 ---

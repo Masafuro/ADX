@@ -66,9 +66,9 @@ To achieve this balance, this guideline defines three requirement tiers based on
 1. **[MUST] Reverse-Current Blocking for Power CARDs (Mandatory):**
    - Any CARD injecting power into the 20-pin bus (Pins 17–20: `VBUS`) **MUST provide reverse-current blocking and over-current / short-circuit protection at its output** (Schottky diode, ideal diode, eFuse, or synchronous DCDC with reverse-blocking capability).
    - *(Reason: When a core board such as CORE-U is externally powered on the workbench, 5.0V must be prevented from back-feeding into external batteries or regulators, mitigating **battery rupture and electrolyte leakage risks**).*
-2. **[MUST] Protective Barrier (`Pin 16: GND`) & System Pin (`S00` / Pin 2: `OWD`) Isolation:**
-   - **Pin 16 (`GND`)** directly flanks the `VBUS` power cluster (Pins 17–20) as a short-circuit protective wall and MUST be solidly bonded to the PCB ground plane.
-   - Standard expansion Cards **MUST leave `S00` (Pin 2: `OWD`) unconnected (N.C.)** and MUST NOT connect push-buttons or pull-downs directly to GND.
+2. **[MUST] Protective Barrier (`Pin 16: GND`) & RS-485 `P03 (UART_DE)` Pull-Down:**
+   - **Pin 16 (`GND`)** directly flanks the `VBUS` power cluster (Pins 17–20) as a short-circuit protective wall and MUST be solidly bonded to the PCB ground plane along with shield grounds (Pins 1, 3, 5, 11).
+   - Every RS-485 expansion Card using **`P03` (Pin 6: `UART_DE`)** **MUST populate a $10\,\text{k}\Omega \sim 100\,\text{k}\Omega$ pull-down resistor to GND on `P03`** so the transceiver defaults to Receive mode (`DE = LOW`) during MCU reset or unprogrammed states.
 3. **[SHOULD] Transformer Isolation for High-Voltage Inputs (DC 12V/24V/48V):**
    - **Official ADX Grade:** To suppress common-mode noise, ground differentials, and lightning surges in factory panels, use a **transformer-isolated DC-DC converter (isolated 5V output)**.
    - **DIY / Hobby Grade [MAY]:** In controlled single-ground indoor environments, low-cost non-isolated buck converters are acceptable. Battery cards may also be non-isolated.
@@ -79,11 +79,12 @@ To achieve this balance, this guideline defines three requirement tiers based on
 
 ## 4. Mechanical & Connector Rules
 
-### 4.1 20-Pin Expansion Connector (`ADX-BUS-SPEC-v4.2`)
+### 4.1 20-Pin Expansion Connector (`ADX-BUS-SPEC-v5.0`)
 - **[MUST] Electrical Pinout Adherence:**
-  - All boards must strictly adhere to the [ADX 20-Pin Bus Specification (SSOT: v4.2)](../spec/ADX_PINOUT.md) and [Architecture Guide](ADX_pinout.md).
-- **[SHOULD] `P02` (Pin 5: `EXTCLK`) 0Ω Isolation:**
-  - Cards connecting clock sources or GPIO circuits to `P02` should insert a series 0Ω resistor (DNP-capable) or solder jumper to remain compatible with Core boards using `P02` as 2-wire `SWCLK` (e.g., CORE-CX5).
+  - All boards must strictly adhere to the [ADX 20-Pin Bus Specification (SSOT: v5.0)](../spec/ADX_PINOUT.md) and [Architecture Guide](ADX_pinout.md).
+  - *(Note: `v5.0` omits legacy `S00` and swaps signal/GND pins on Pins 3–6 relative to `v4.2`; `v4.x` prototypes and `v5.0` hardware are electrically incompatible. Print `ADX-BUS v5.0` clearly on PCB silkscreens.)*
+- **Core-Side Programming Separation:**
+  - Because programming/debug lines (`UPDI`/`SWD`) are omitted from the 20-pin header in `v5.0`, legacy `S00` N.C. restrictions and `P02` $0\,\Omega$ DNP isolation resistors are no longer required; all 11 pins (`P01`–`P11`) are unrestricted expansion signals.
 - **Connector Type Selection:**
   - **Official Standard [SHOULD]:** To prevent dislodging under heavy vibration and avoid misaligned blind insertion in tight spaces, use **MIL-DTL-83503 compliant Latched Eject Headers** or shrouded box headers.
   - **DIY / General Add-ons [MAY]:** Standard boxed shrouded headers or simple pin headers may be used where low profile or minimal cost is prioritized.
@@ -117,12 +118,12 @@ To achieve this balance, this guideline defines three requirement tiers based on
 
 ## 6. Optional Features & Signal Routing [MAY]
 
-The following signals may be utilized flexibly depending on application requirements using MCU-independent Logical Pin IDs (`P01`–`P10` / code macros `ADX_P01`–`ADX_P10`):
+The following signals may be utilized flexibly depending on application requirements using MCU-independent Logical Pin IDs (`P01`–`P11` / code macros `ADX_P01`–`ADX_P11`):
 
 1. **Battery Level / Bus Voltage Telemetry:**
-   - External raw battery voltage can be divided down (within 0–3.3V) and routed to **`P01` (IDC Pin 3 / `AIN`)** for analog voltage monitoring by the MCU.
+   - External raw battery voltage can be divided down (within 0–3.3V) and routed to **`P01` (IDC Pin 2 / `AIN`)** for analog voltage monitoring by the MCU.
 2. **General-Purpose GPIO & Power Control Repurposing:**
-   - When SPI, UART, or I2C is unused on a Card, those pins (e.g., **`P07` [IDC Pin 12 / `SPI_CS`]**) may be freely repurposed as 3.3V digital GPIOs—such as driving LEDs, reading switches, or controlling an on-card DC-DC Enable (EN) pin for low-power sleep.
+   - When SPI, UART, or I2C is unused on a Card, those pins (e.g., **`P08` [IDC Pin 12 / `SPI_CS`]**) may be freely repurposed as 3.3V digital GPIOs—such as driving LEDs, reading switches, or controlling an on-card DC-DC Enable (EN) pin for low-power sleep.
 
 ---
 
@@ -131,10 +132,9 @@ The following signals may be utilized flexibly depending on application requirem
 Before releasing or sending a PCB for fabrication (JLCPCB PCBA):
 
 - [ ] **[MUST]** Did you place reverse-current blocking and autonomous short-circuit/over-current protection on any Power CARD injecting into `VBUS`?
-- [ ] **[MUST]** Are Pins 17–20 (`VBUS`) bonded into a $2 \times 2$ solid copper pour, and are Pin 16 (`GND` barrier wall) plus Pins 1, 4, 6, 11 tied solidly to the ground plane?
-- [ ] **[MUST]** Is the system maintenance pin **`S00` (Pin 2: `OWD`)** left unconnected (N.C.) on standard expansion Cards?
-- [ ] **[MUST]** Does the 20-pin IDC connector pin assignment (`S00`, `P01`–`P10`, `GND`, `VBUS`) strictly match **`ADX-BUS-SPEC-v4.2`** ([`docs/spec/ADX_PINOUT.md`](../spec/ADX_PINOUT.md))?
-- [ ] **[SHOULD]** If the Card connects to `P02` (Pin 5: `EXTCLK`), did you insert a series 0Ω resistor (DNP-capable) for 2-wire SWD Core compatibility?
+- [ ] **[MUST]** Are Pins 17–20 (`VBUS`) bonded into a $2 \times 2$ solid copper pour, and are Pin 16 (`GND` barrier wall) plus Pins 1, 3, 5, 11 tied solidly to the ground plane?
+- [ ] **[MUST]** If the Card is an RS-485 transceiver using **`P03` (Pin 6: `UART_DE`)**, did you place a $10\,\text{k}\Omega \sim 100\,\text{k}\Omega$ pull-down resistor to GND on `P03` for fail-safe Receive default?
+- [ ] **[MUST]** Does the 20-pin IDC connector pin assignment (`P01`–`P11`, `GND`, `VBUS`) strictly match **`ADX-BUS-SPEC-v5.0`** ([`docs/spec/ADX_PINOUT.md`](../spec/ADX_PINOUT.md)), with `ADX-BUS v5.0` printed on silkscreen to avoid mating with legacy `v4.x` boards?
 - [ ] **[SHOULD]** Did you use a transformer-isolated DC-DC converter for industrial 24V/48V inputs?
 - [ ] **[SHOULD]** Did you select a latched Eject Header if intended for high-vibration applications?
 - [ ] **[SHOULD]** Does the board outline match the 8858 pitch (`76.0 mm × 46.0 mm`) (or legacy 8854 `76.0 × 42.0 mm` / 8748 `77.0 × 38.0 mm`) for enclosure compatibility?

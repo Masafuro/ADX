@@ -7,9 +7,13 @@ SPDX-License-Identifier: CC-BY-4.0
 
 - **文書バージョン**: v0.3 (8858 Official Alpha)
 - **更新日**: 2026-11-23
-- **ステータス**: **8858 Form Factor 正式 α 版準拠 / 製造ガーバー検証完了（発注可能）**
-- **製造データ（8858 正式 α 版）**: [`data/Gerber_PCB1_2026-11-23.zip`](data/Gerber_PCB1_2026-11-23.zip)
+- **ステータス**: **8858 Form Factor 正式 α 版準拠 / 製造ガーバー検証完了（`v0`: 旧 `ADX-BUS-SPEC-v4.2` 準拠実績）**
+- **製造データ（8858 正式 α 版 / `v4.2` 実績）**: [`data/Gerber_PCB1_2026-11-23.zip`](data/Gerber_PCB1_2026-11-23.zip)
 - **基板外観図（旧 8854 / 2026-11-09 版）**: [`docs/blog/images/reference_card_v0_20261109.png`](../../../docs/blog/images/reference_card_v0_20261109.png) *(※8858 確定版 3D レンダリング画像へ更新予定)*
+
+> [!WARNING]
+> **バス規格バージョン注記（`v0` = 旧 `v4.2` 履歴保全 ／ `v5.0` は次期 `v1` タスク）**:  
+> 本書および `Gerber_PCB1_2026-11-23.zip` は **旧 `ADX-BUS-SPEC-v4.2` 準拠の `v0` α 版実績** として履歴保全しています。最新の **[`ADX-BUS-SPEC-v5.0`](../../../docs/spec/ADX_PINOUT.md)** では Pins 3〜6 の信号/GND 配置が変更されたため、**`v0` 基板と `v5.0` 基板（CORE-U rev6 等）は電気的に非互換です**。`v5.0` 対応（シルク表および GND 接続ピン `{1,3,5,11,16}` の更新）は別ハードウェアタスクとして次期 **`Reference CARD v1`** で実施予定です。
 
 ---
 

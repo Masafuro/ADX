@@ -93,13 +93,13 @@ Dimensional definitions for PCB designers (KiCad, Altium, EasyEDA Pro, etc.):
 
 The 8858 Form Factor integrates the standardized 2×10-pin 2.54 mm vertical box header in full compliance with the [ADX 20-Pin Bus Specification (SSOT)](../spec/ADX_PINOUT.md).
 
-### 4.1 Header Pinout (Top View / `ADX-BUS-SPEC-v4.2`)
+### 4.1 Header Pinout (Top View / `ADX-BUS-SPEC-v5.0`)
 ```text
-[Upper Row (Even Pins / PROG side: Pins 2, 4, ..., 20)]
-S00/OWD  | GND     | GND        | P04/RX   | P06/SDA  | P07/CS   | P09/MISO | GND      | VBUS | VBUS
+[Upper Row (Even Pins / AIN side: Pins 2, 4, ..., 20)]
+P01/AIN  | P02/EXTCLK | P03/DE   | P05/RX   | P07/SDA  | P08/CS   | P10/MISO | GND      | VBUS | VBUS
 
-[Lower Row (Odd Pins / Pin 1 & AIN side: Pins 1, 3, ..., 19)]
-GND      | P01/AIN | P02/EXTCLK | P03/TX   | P05/SCL  | GND      | P08/MOSI | P10/SCK  | VBUS | VBUS
+[Lower Row (Odd Pins / Pin 1 & GND side: Pins 1, 3, ..., 19)]
+GND      | GND        | GND      | P04/TX   | P06/SCL  | GND      | P09/MOSI | P11/SCK  | VBUS | VBUS
 ```
 
 ### 4.2 Power Sourcing Requirements (VBUS Supply)
