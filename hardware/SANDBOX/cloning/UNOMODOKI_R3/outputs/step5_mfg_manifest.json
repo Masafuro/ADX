@@ -1,0 +1,25 @@
+{
+  "saved": true,
+  "files": {
+    "gerber": {
+      "path": "outputs/unomodoki_gerber.zip",
+      "origName": "unomodoki_gerber",
+      "size": 122805
+    },
+    "cpl": {
+      "path": "outputs/unomodoki_cpl.xlsx",
+      "origName": "unomodoki_cpl",
+      "size": 10498
+    },
+    "bomPcb": {
+      "path": "outputs/unomodoki_bom_pcb.csv",
+      "origName": "unomodoki_bom_pcb.csv",
+      "size": 2013,
+      "decodedUtf16": true
+    },
+    "pngClean": {
+      "path": "outputs/unomodoki_pcb_final_clean.png",
+      "size": 267196
+    }
+  }
+}

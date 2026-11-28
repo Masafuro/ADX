@@ -1,0 +1,252 @@
+{
+  "ok": true,
+  "path": "invoke",
+  "data": {
+    "readOnly": true,
+    "compCount": 37,
+    "padStats": {
+      "totalPads": 166,
+      "nettedPads": 152,
+      "unnettedPads": 14,
+      "unnettedList": [
+        "J_POWER.8",
+        "J_POWER.1",
+        "J_USB.B8",
+        "J_USB.A8",
+        "U1.22",
+        "U1.19",
+        "U2.7",
+        "U2.8",
+        "U2.15",
+        "U2.14",
+        "U2.12",
+        "U2.11",
+        "U2.10",
+        "U2.9"
+      ]
+    },
+    "ratlinesSummary": {
+      "keys": [
+        "items",
+        "hasMore",
+        "nextCursor",
+        "total"
+      ],
+      "total": 112
+    },
+    "drcSummary": [
+      {
+        "category": "Connection Error",
+        "totalItems": 152,
+        "subcategoryCount": 40,
+        "subcategories": [
+          {
+            "name": "GND",
+            "count": 33
+          },
+          {
+            "name": "CH340_V3",
+            "count": 2
+          },
+          {
+            "name": "+5V",
+            "count": 19
+          },
+          {
+            "name": "RESET",
+            "count": 8
+          },
+          {
+            "name": "CH340_DTR",
+            "count": 2
+          },
+          {
+            "name": "AREF",
+            "count": 3
+          },
+          {
+            "name": "+3V3",
+            "count": 4
+          },
+          {
+            "name": "XTAL1",
+            "count": 3
+          },
+          {
+            "name": "XTAL2",
+            "count": 3
+          },
+          {
+            "name": "VBUS",
+            "count": 3
+          },
+          {
+            "name": "A5_SCL",
+            "count": 3
+          },
+          {
+            "name": "A4_SDA",
+            "count": 3
+          },
+          {
+            "name": "A3",
+            "count": 2
+          },
+          {
+            "name": "A2",
+            "count": 2
+          },
+          {
+            "name": "A1",
+            "count": 2
+          },
+          {
+            "name": "A0",
+            "count": 2
+          },
+          {
+            "name": "D8",
+            "count": 2
+          },
+          {
+            "name": "D9",
+            "count": 2
+          },
+          {
+            "name": "D10",
+            "count": 2
+          },
+          {
+            "name": "D11",
+            "count": 3
+          },
+          {
+            "name": "D12",
+            "count": 3
+          },
+          {
+            "name": "D13",
+            "count": 4
+          },
+          {
+            "name": "D0_RX",
+            "count": 3
+          },
+          {
+            "name": "D1_TX",
+            "count": 3
+          },
+          {
+            "name": "D2",
+            "count": 2
+          },
+          {
+            "name": "D3",
+            "count": 2
+          },
+          {
+            "name": "D4",
+            "count": 2
+          },
+          {
+            "name": "D5",
+            "count": 2
+          },
+          {
+            "name": "D6",
+            "count": 2
+          },
+          {
+            "name": "D7",
+            "count": 2
+          },
+          {
+            "name": "USB_CC1",
+            "count": 2
+          },
+          {
+            "name": "USB_DN",
+            "count": 3
+          },
+          {
+            "name": "USB_DP",
+            "count": 3
+          },
+          {
+            "name": "USB_CC2",
+            "count": 2
+          },
+          {
+            "name": "LED_L_A",
+            "count": 2
+          },
+          {
+            "name": "LED_PWR_A",
+            "count": 2
+          },
+          {
+            "name": "LED_RX_A",
+            "count": 2
+          },
+          {
+            "name": "CH340_RX",
+            "count": 3
+          },
+          {
+            "name": "CH340_TX",
+            "count": 3
+          },
+          {
+            "name": "LED_TX_A",
+            "count": 2
+          }
+        ]
+      }
+    ],
+    "sampleConnectionErrorItem": {
+      "visible": true,
+      "errorType": "Connection Error",
+      "errorObjType": "SMD Pad",
+      "ruleName": "Common",
+      "obj1": {
+        "typeName": "SMD Pad",
+        "suffix": "(GND): e18e36"
+      },
+      "isFree": false,
+      "net": "GND",
+      "explanation": {
+        "str": "{obj1} is disconnected from other objects of the same network",
+        "param": {
+          "obj1": "Object 1",
+          "type": "ConnectError"
+        },
+        "errData": {
+          "globalIndex": "err308",
+          "position": {
+            "x": 125.74090000000004,
+            "y": 237.40155
+          },
+          "name": "Common",
+          "obj1": "6e2c6aca20e00917e36",
+          "obj1Type": "SMD Pad",
+          "net": "GND",
+          "isFree": false,
+          "layerIds": [
+            1
+          ],
+          "errorType": "No Connection",
+          "obj1Suffix": "(GND): e18e36"
+        }
+      },
+      "objs": [
+        "6e2c6aca20e00917e36"
+      ],
+      "globalIndex": "err308",
+      "pos": {
+        "x": 125.74090000000004,
+        "y": 237.40155
+      },
+      "parentId": "DRCTab|_|Errors|_|Connection Error|_|GND"
+    }
+  }
+}

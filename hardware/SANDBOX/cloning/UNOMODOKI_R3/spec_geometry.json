@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0",
+  "project": "UNOMODOKI_R3",
+  "status": "PROPOSED_BY_PL_PENDING_U0_ACK",
+  "referenceSource": {
+    "file": "data/Arduino_uno_r3_size_mill.png",
+    "drawingCredit": "Matthew Beckler Drawing v1.05 (from Arduino_Uno_Rev3-02-TH)",
+    "note": "Clean-room mechanical specification extracted strictly as numeric dimensions (no CAD file reuse)."
+  },
+  "units": {
+    "primary": "mil",
+    "milToMm": 0.0254
+  },
+  "coordinateSystem": {
+    "localOrigin": "Bottom-left corner of PCB outline (0, 0)",
+    "xAxis": "Right (+X)",
+    "yAxis": "Up (+Y)",
+    "easyedaPcbOffsetMil": {
+      "x": 1000,
+      "y": 1000
+    }
+  },
+  "boardBoundsMil": {
+    "width": 2700,
+    "height": 2100,
+    "widthMm": 68.58,
+    "heightMm": 53.34
+  },
+  "outlinePolygonCCWMil": [
+    { "x": 0,    "y": 0,    "note": "Bottom-left origin" },
+    { "x": 2600, "y": 0,    "note": "Bottom edge end" },
+    { "x": 2600, "y": 100,  "note": "Bottom-right step start" },
+    { "x": 2700, "y": 200,  "note": "Bottom-right 45-deg chamfer end" },
+    { "x": 2700, "y": 1490, "note": "Right protruding tab top" },
+    { "x": 2600, "y": 1590, "note": "Top-right 45-deg chamfer end" },
+    { "x": 2600, "y": 2040, "note": "Top-right corner chamfer bottom" },
+    { "x": 2540, "y": 2100, "note": "Top-right 60x60 mil 45-deg chamfer top" },
+    { "x": 0,    "y": 2100, "note": "Top-left corner" }
+  ],
+  "mountingHolesMil": [
+    { "id": "MH1", "location": "Bottom-Left",  "x": 550,  "y": 100,  "diameterMil": 125, "diameterMm": 3.175, "plated": false },
+    { "id": "MH2", "location": "Bottom-Right", "x": 2600, "y": 300,  "diameterMil": 125, "diameterMm": 3.175, "plated": false },
+    { "id": "MH3", "location": "Top-Right",    "x": 2600, "y": 1400, "diameterMil": 125, "diameterMm": 3.175, "plated": false },
+    { "id": "MH4", "location": "Top-Left",     "x": 600,  "y": 2000, "diameterMil": 125, "diameterMm": 3.175, "plated": false, "note": "140 mil from SCL pin; tight M3 head clearance" }
+  ],
+  "headersMil": {
+    "J_DIG_HI": {
+      "description": "Top-left 1x10P Digital/I2C header (SCL..D8)",
+      "pitchMil": 100,
+      "pins": [
+        { "pin": 1,  "label": "SCL",  "net": "A5_SCL", "x": 740,  "y": 2000 },
+        { "pin": 2,  "label": "SDA",  "net": "A4_SDA", "x": 840,  "y": 2000 },
+        { "pin": 3,  "label": "AREF", "net": "AREF",   "x": 940,  "y": 2000 },
+        { "pin": 4,  "label": "GND",  "net": "GND",    "x": 1040, "y": 2000 },
+        { "pin": 5,  "label": "13",   "net": "D13",    "x": 1140, "y": 2000 },
+        { "pin": 6,  "label": "12",   "net": "D12",    "x": 1240, "y": 2000 },
+        { "pin": 7,  "label": "11",   "net": "D11",    "x": 1340, "y": 2000 },
+        { "pin": 8,  "label": "10",   "net": "D10",    "x": 1440, "y": 2000 },
+        { "pin": 9,  "label": "9",    "net": "D9",     "x": 1540, "y": 2000 },
+        { "pin": 10, "label": "8",    "net": "D8",     "x": 1640, "y": 2000 }
+      ]
+    },
+    "J_DIG_LO": {
+      "description": "Top-right 1x8P Digital header (D7..D0), 160 mil gap after D8",
+      "pitchMil": 100,
+      "gapFromPrevHeaderMil": 160,
+      "pins": [
+        { "pin": 1, "label": "7",   "net": "D7",    "x": 1800, "y": 2000 },
+        { "pin": 2, "label": "6",   "net": "D6",    "x": 1900, "y": 2000 },
+        { "pin": 3, "label": "5",   "net": "D5",    "x": 2000, "y": 2000 },
+        { "pin": 4, "label": "4",   "net": "D4",    "x": 2100, "y": 2000 },
+        { "pin": 5, "label": "3",   "net": "D3",    "x": 2200, "y": 2000 },
+        { "pin": 6, "label": "2",   "net": "D2",    "x": 2300, "y": 2000 },
+        { "pin": 7, "label": "TX1", "net": "D1_TX", "x": 2400, "y": 2000 },
+        { "pin": 8, "label": "RX0", "net": "D0_RX", "x": 2500, "y": 2000 }
+      ]
+    },
+    "J_POWER": {
+      "description": "Bottom-left 1x8P Power header (NC..VIN)",
+      "pitchMil": 100,
+      "pins": [
+        { "pin": 1, "label": "NC",    "net": "NC_PWR1", "x": 1100, "y": 100 },
+        { "pin": 2, "label": "IOREF", "net": "+5V",     "x": 1200, "y": 100 },
+        { "pin": 3, "label": "RST",   "net": "RESET",   "x": 1300, "y": 100 },
+        { "pin": 4, "label": "3V3",   "net": "+3V3",    "x": 1400, "y": 100 },
+        { "pin": 5, "label": "5V",    "net": "+5V",     "x": 1500, "y": 100 },
+        { "pin": 6, "label": "GND",   "net": "GND",     "x": 1600, "y": 100 },
+        { "pin": 7, "label": "GND",   "net": "GND",     "x": 1700, "y": 100 },
+        { "pin": 8, "label": "VIN",   "net": "NC_VIN",  "x": 1800, "y": 100, "note": "Unconnected by design (USB-C 5V only)" }
+      ]
+    },
+    "J_ANALOG": {
+      "description": "Bottom-right 1x6P Analog header (A0..A5), 200 mil gap after VIN",
+      "pitchMil": 100,
+      "gapFromPrevHeaderMil": 200,
+      "pins": [
+        { "pin": 1, "label": "A0", "net": "A0",     "x": 2000, "y": 100 },
+        { "pin": 2, "label": "A1", "net": "A1",     "x": 2100, "y": 100 },
+        { "pin": 3, "label": "A2", "net": "A2",     "x": 2200, "y": 100 },
+        { "pin": 4, "label": "A3", "net": "A3",     "x": 2300, "y": 100 },
+        { "pin": 5, "label": "A4", "net": "A4_SDA", "x": 2400, "y": 100 },
+        { "pin": 6, "label": "A5", "net": "A5_SCL", "x": 2500, "y": 100 }
+      ]
+    },
+    "J_ICSP": {
+      "description": "Right-edge 2x3P AVR ICSP header (Pin 1 = MISO at top-left)",
+      "pitchMil": 100,
+      "pins": [
+        { "pin": 1, "label": "MISO", "net": "D12",   "x": 2505, "y": 1200 },
+        { "pin": 2, "label": "5V",   "net": "+5V",   "x": 2605, "y": 1200 },
+        { "pin": 3, "label": "SCK",  "net": "D13",   "x": 2505, "y": 1100 },
+        { "pin": 4, "label": "MOSI", "net": "D11",   "x": 2605, "y": 1100 },
+        { "pin": 5, "label": "RST",  "net": "RESET", "x": 2505, "y": 1000 },
+        { "pin": 6, "label": "GND",  "net": "GND",   "x": 2605, "y": 1000 }
+      ]
+    }
+  },
+  "connectorsAndUiZonesMil": {
+    "usbC": {
+      "referenceUsbBZone": { "xMin": -250, "xMax": 375, "yMin": 1275, "yMax": 1725 },
+      "targetCenterY": 1500,
+      "targetEdgeX": 0,
+      "note": "Center aligned to original USB-B Y=1500 mil; exact X offset finalized in U1 after measuring selected USB-C footprint origin."
+    },
+    "resetSwitch": {
+      "targetX": 250,
+      "targetY": 1880,
+      "note": "Top-left accessible corner (mirroring UNO R3 reset button placement)."
+    },
+    "statusLeds": {
+      "regionX": [900, 1300],
+      "regionY": [1550, 1750],
+      "items": ["PWR", "L", "TX", "RX"]
+    },
+    "boardTitleSilk": {
+      "text": "UNOMODOKI R3",
+      "subtext": "ADX SANDBOX / CLEAN-ROOM CLONE",
+      "targetX": 1350,
+      "targetY": 1100
+    }
+  },
+  "easyedaMeasurementCheckpoints": [
+    { "id": "CHK-1", "name": "Board Overall Width",        "from": "(0, 1000)",    "to": "(2700, 1000)", "expectedMil": 2700, "expectedMm": 68.58 },
+    { "id": "CHK-2", "name": "Board Overall Height",       "from": "(1000, 0)",    "to": "(1000, 2100)", "expectedMil": 2100, "expectedMm": 53.34 },
+    { "id": "CHK-3", "name": "Top-Bottom Header Row Span", "from": "D0 (2500,2000)", "to": "A5 (2500,100)", "expectedMil": 1900, "expectedMm": 48.26 },
+    { "id": "CHK-4", "name": "Arduino Gap (D8 to D7)",     "from": "D8 (1640,2000)", "to": "D7 (1800,2000)", "expectedMil": 160,  "expectedMm": 4.064 },
+    { "id": "CHK-5", "name": "MH4 to SCL Clearance",       "from": "MH4 (600,2000)", "to": "SCL (740,2000)", "expectedMil": 140,  "expectedMm": 3.556 },
+    { "id": "CHK-6", "name": "Right Holes Vertical Span",  "from": "MH2 (2600,300)", "to": "MH3 (2600,1400)", "expectedMil": 1100, "expectedMm": 27.94 },
+    { "id": "CHK-7", "name": "ICSP Pin 1 (MISO) Position", "from": "Origin (0,0)",   "to": "ICSP.1 (2505,1200)", "expectedXMil": 2505, "expectedYMil": 1200 }
+  ]
+}

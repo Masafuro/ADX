@@ -1,0 +1,492 @@
+{
+  "ok": true,
+  "path": "invoke",
+  "data": {
+    "LED_0603_G": [
+      {
+        "name": "KT-0603G",
+        "lcsc": "C12624",
+        "cls": "Extended Part",
+        "pkg": "0603",
+        "desc": "Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color"
+      },
+      {
+        "name": "KT-0603GH",
+        "lcsc": "C9900005170",
+        "cls": "Extended Part",
+        "pkg": "LED0603",
+        "desc": ""
+      }
+    ],
+    "LED_0603_Y": [
+      {
+        "name": "KT-0603Y",
+        "lcsc": "C2287",
+        "cls": "Extended Part",
+        "pkg": "0603",
+        "desc": "Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color"
+      },
+      {
+        "name": "KT-0603YG",
+        "lcsc": "C2289",
+        "cls": "Extended Part",
+        "pkg": "0603",
+        "desc": "Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color"
+      }
+    ],
+    "LED_0603_B": [
+      {
+        "name": "KT-0603B",
+        "lcsc": "C2288",
+        "cls": "Extended Part",
+        "pkg": "0603",
+        "desc": "Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color"
+      }
+    ],
+    "C_12P_0603": [
+      {
+        "name": "C0805X100J5GAC7800",
+        "lcsc": "C9900011191",
+        "cls": "Extended Part",
+        "pkg": "CAP CER 10PF 50V C0G/NP0 0805",
+        "desc": ""
+      },
+      {
+        "name": "XTALG32258MHz12pF",
+        "lcsc": "C9900015959",
+        "cls": "Extended Part",
+        "pkg": "8MHz12pF30ppm-40℃~125℃",
+        "desc": ""
+      },
+      {
+        "name": "XTAL4-3.2X2.5",
+        "lcsc": "C9900003449",
+        "cls": "Extended Part",
+        "pkg": "48MHz/10ppm/12pF",
+        "desc": ""
+      },
+      {
+        "name": "CSA0603C0G120J500JT",
+        "lcsc": "C18220907",
+        "cls": "Extended Part",
+        "pkg": "0603",
+        "desc": "Capacitance:12pF Tolerance:±5% Tolerance:±5% Voltage Rating:"
+      },
+      {
+        "name": "CAI0603C0G120J500JT",
+        "lcsc": "C47147533",
+        "cls": "Extended Part",
+        "pkg": "0603",
+        "desc": "Capacitance:12pF Tolerance:±5% Tolerance:±5% Voltage Rating:"
+      },
+      {
+        "name": "CGA0603C0G120J500JT",
+        "lcsc": "C45359931",
+        "cls": "Extended Part",
+        "pkg": "0603",
+        "desc": "Capacitance:12pF Tolerance:±5% Tolerance:±5% Voltage Rating:"
+      },
+      {
+        "name": "C0603C0G1H120JT00NN",
+        "lcsc": "C338042",
+        "cls": "Extended Part",
+        "pkg": "0201",
+        "desc": "Capacitance:12pF Tolerance:±5% Tolerance:±5% Voltage Rating:"
+      },
+      {
+        "name": "C0603C0G1E120K030BA",
+        "lcsc": "C3844785",
+        "cls": "Extended Part",
+        "pkg": "0201",
+        "desc": "Capacitance:12pF Tolerance:±10% Tolerance:±10% Voltage Ratin"
+      }
+    ],
+    "HDR_1X10F": [
+      {
+        "name": "PCC-SMP-K",
+        "lcsc": "C9900005665",
+        "cls": "Extended Part",
+        "pkg": "Header-Female-2.54_1x2",
+        "desc": ""
+      },
+      {
+        "name": "F535-02DG0CF4201",
+        "lcsc": "C9900174314",
+        "cls": "Extended Part",
+        "pkg": "2.54 female header 3.55 2*2P",
+        "desc": ""
+      },
+      {
+        "name": "Header-Female-2.54_2x5",
+        "lcsc": "C9900010884",
+        "cls": "Extended Part",
+        "pkg": "HDR-TH_10P-P2.54-V-M-R2-C5-S2.54",
+        "desc": ""
+      },
+      {
+        "name": "Female-Header-2.54-SMD-8",
+        "lcsc": "C9900008929",
+        "cls": "Extended Part",
+        "pkg": "HDR-SMD_8P-P2.54-V-F-R2-C4-S7.1",
+        "desc": ""
+      }
+    ],
+    "HDR_1X8F": [
+      {
+        "name": "PCC-SMP-K",
+        "lcsc": "C9900005665",
+        "cls": "Extended Part",
+        "pkg": "Header-Female-2.54_1x2",
+        "desc": ""
+      },
+      {
+        "name": "F535-02DG0CF4201",
+        "lcsc": "C9900174314",
+        "cls": "Extended Part",
+        "pkg": "2.54 female header 3.55 2*2P",
+        "desc": ""
+      },
+      {
+        "name": "Header-Female-2.54_2x5",
+        "lcsc": "C9900010884",
+        "cls": "Extended Part",
+        "pkg": "HDR-TH_10P-P2.54-V-M-R2-C5-S2.54",
+        "desc": ""
+      },
+      {
+        "name": "Female-Header-2.54-SMD-8",
+        "lcsc": "C9900008929",
+        "cls": "Extended Part",
+        "pkg": "HDR-SMD_8P-P2.54-V-F-R2-C4-S7.1",
+        "desc": ""
+      }
+    ],
+    "HDR_1X6F": [
+      {
+        "name": "PCC-SMP-K",
+        "lcsc": "C9900005665",
+        "cls": "Extended Part",
+        "pkg": "Header-Female-2.54_1x2",
+        "desc": ""
+      },
+      {
+        "name": "HEADER_MALE-XH_1X6P_2.54MM",
+        "lcsc": "C9900007627",
+        "cls": "Extended Part",
+        "pkg": "HEADER_MALE-XH_1X6P_2.54MM",
+        "desc": ""
+      },
+      {
+        "name": "F535-02DG0CF4201",
+        "lcsc": "C9900174314",
+        "cls": "Extended Part",
+        "pkg": "2.54 female header 3.55 2*2P",
+        "desc": ""
+      },
+      {
+        "name": "Header-Female-2.54_2x5",
+        "lcsc": "C9900010884",
+        "cls": "Extended Part",
+        "pkg": "HDR-TH_10P-P2.54-V-M-R2-C5-S2.54",
+        "desc": ""
+      },
+      {
+        "name": "Female-Header-2.54-SMD-8",
+        "lcsc": "C9900008929",
+        "cls": "Extended Part",
+        "pkg": "HDR-SMD_8P-P2.54-V-F-R2-C4-S7.1",
+        "desc": ""
+      }
+    ],
+    "HDR_2X3M": [
+      {
+        "name": "CON6_2X3PIN_2.54_FLEX_61H1-R2XXXX085C01",
+        "lcsc": "C9900013341",
+        "cls": "Extended Part",
+        "pkg": "2X3PIN_2.54_FLEX_61H1",
+        "desc": ""
+      },
+      {
+        "name": "YXY-PM2.54-2X3PIN-DIP-H8.5Y",
+        "lcsc": "C56435466",
+        "cls": "Extended Part",
+        "pkg": "插件,P=2.54mm",
+        "desc": ""
+      },
+      {
+        "name": "YXY-PZ2.54-2X3PIN-DIP",
+        "lcsc": "C56434769",
+        "cls": "Extended Part",
+        "pkg": "插件,P=2.54mm",
+        "desc": ""
+      },
+      {
+        "name": "2.54_2x3pin_180°SMT",
+        "lcsc": "C9900022912",
+        "cls": "Extended Part",
+        "pkg": "HDR-SMD_6P-P2.54",
+        "desc": ""
+      },
+      {
+        "name": "YXY-PZ2.54-2X3PIN-SMT",
+        "lcsc": "C56434886",
+        "cls": "Extended Part",
+        "pkg": "SMD,P=2.54mm",
+        "desc": ""
+      },
+      {
+        "name": "YXY-PM2.54-2X3PIN-DIPWZ-H8.5Y",
+        "lcsc": "C56435505",
+        "cls": "Extended Part",
+        "pkg": "弯插,P=2.54mm",
+        "desc": ""
+      },
+      {
+        "name": "2.54mm2*8Pinheader",
+        "lcsc": "C9900156076",
+        "cls": "Extended Part",
+        "pkg": "TH-16P",
+        "desc": ""
+      },
+      {
+        "name": "PinHeader_2x05_P2.54mm_Vertical",
+        "lcsc": "C9900010269",
+        "cls": "Extended Part",
+        "pkg": "HDR-TH",
+        "desc": ""
+      }
+    ],
+    "HDR_1X10F_CN": [
+      {
+        "name": "间距2.54mm蓝色排母座1x10pin",
+        "lcsc": "C9900015505",
+        "cls": "Extended Part",
+        "pkg": "间距2.54MM单排母座蓝色(1*10P）",
+        "desc": ""
+      },
+      {
+        "name": "间距2.54mm红色排母座1x10pin",
+        "lcsc": "C9900015504",
+        "cls": "Extended Part",
+        "pkg": "间距2.54MM单排母座红色(1*10P）",
+        "desc": ""
+      },
+      {
+        "name": "CSHC206-0402A001YAF",
+        "lcsc": "C9900022747",
+        "cls": "Extended Part",
+        "pkg": "2.54mm_2*4双排贴片排母",
+        "desc": ""
+      },
+      {
+        "name": "间距2.54MM单排母座红色(1*10P)",
+        "lcsc": "C9900012051",
+        "cls": "Extended Part",
+        "pkg": "P=2.54mm",
+        "desc": ""
+      },
+      {
+        "name": "间距2.54MM单排母座蓝色(1*10P)",
+        "lcsc": "C9900012052",
+        "cls": "Extended Part",
+        "pkg": "P=2.54mm",
+        "desc": ""
+      },
+      {
+        "name": "排母2.54mm 1X3pin",
+        "lcsc": "C9900016709",
+        "cls": "Extended Part",
+        "pkg": "排母2.54mm 1X3pin",
+        "desc": ""
+      },
+      {
+        "name": "直插排母1*10P",
+        "lcsc": "C69515",
+        "cls": "Extended Part",
+        "pkg": "插件,P=2mm",
+        "desc": "Holes Structure:1x10P Pitch:2mm Row Spacing:- Circular Hole "
+      },
+      {
+        "name": "[排母]铜镀金2.54mm排母 1*27P单排母",
+        "lcsc": "C9900002488",
+        "cls": "Extended Part",
+        "pkg": "TH-27P",
+        "desc": ""
+      }
+    ],
+    "HDR_1X8F_CN": [
+      {
+        "name": "1*8P-2.54mm 针长11mm针宽0.6mm",
+        "lcsc": "C9900024110",
+        "cls": "Extended Part",
+        "pkg": "1*8P-2.54mm",
+        "desc": ""
+      },
+      {
+        "name": "CSHC206-0402A001YAF",
+        "lcsc": "C9900022747",
+        "cls": "Extended Part",
+        "pkg": "2.54mm_2*4双排贴片排母",
+        "desc": ""
+      },
+      {
+        "name": "间距2.54mm蓝色排母座1x10pin",
+        "lcsc": "C9900015505",
+        "cls": "Extended Part",
+        "pkg": "间距2.54MM单排母座蓝色(1*10P）",
+        "desc": ""
+      },
+      {
+        "name": "间距2.54mm红色排母座1x10pin",
+        "lcsc": "C9900015504",
+        "cls": "Extended Part",
+        "pkg": "间距2.54MM单排母座红色(1*10P）",
+        "desc": ""
+      },
+      {
+        "name": "排母2.54mm 1X3pin",
+        "lcsc": "C9900016709",
+        "cls": "Extended Part",
+        "pkg": "排母2.54mm 1X3pin",
+        "desc": ""
+      },
+      {
+        "name": "排母1*8P",
+        "lcsc": "C92297",
+        "cls": "Extended Part",
+        "pkg": "插件,P=1.27mm",
+        "desc": "Pitch:1.27mm Row Spacing:- Circular Hole / Square Hole:Squar"
+      },
+      {
+        "name": "[排母]铜镀金2.54mm排母 1*27P单排母",
+        "lcsc": "C9900002488",
+        "cls": "Extended Part",
+        "pkg": "TH-27P",
+        "desc": ""
+      },
+      {
+        "name": "排母/2.54mm2x3直排母袋装环保",
+        "lcsc": "C47552",
+        "cls": "Extended Part",
+        "pkg": "2.54mm2x3",
+        "desc": "Circluar Pins/Square Pins:- Current Rating (Max):- Voltage R"
+      }
+    ],
+    "HDR_1X6F_CN": [
+      {
+        "name": "2.0MM 1*6",
+        "lcsc": "C9900026821",
+        "cls": "Extended Part",
+        "pkg": "排母1*6P",
+        "desc": ""
+      },
+      {
+        "name": "CSHC206-0402A001YAF",
+        "lcsc": "C9900022747",
+        "cls": "Extended Part",
+        "pkg": "2.54mm_2*4双排贴片排母",
+        "desc": ""
+      },
+      {
+        "name": "间距2.54mm蓝色排母座1x10pin",
+        "lcsc": "C9900015505",
+        "cls": "Extended Part",
+        "pkg": "间距2.54MM单排母座蓝色(1*10P）",
+        "desc": ""
+      },
+      {
+        "name": "间距2.54mm红色排母座1x10pin",
+        "lcsc": "C9900015504",
+        "cls": "Extended Part",
+        "pkg": "间距2.54MM单排母座红色(1*10P）",
+        "desc": ""
+      },
+      {
+        "name": "排母2.54mm 1X3pin",
+        "lcsc": "C9900016709",
+        "cls": "Extended Part",
+        "pkg": "排母2.54mm 1X3pin",
+        "desc": ""
+      },
+      {
+        "name": "[排母]铜镀金2.54mm排母 1*27P单排母",
+        "lcsc": "C9900002488",
+        "cls": "Extended Part",
+        "pkg": "TH-27P",
+        "desc": ""
+      },
+      {
+        "name": "排母/2.54mm2x3直排母袋装环保",
+        "lcsc": "C47552",
+        "cls": "Extended Part",
+        "pkg": "2.54mm2x3",
+        "desc": "Circluar Pins/Square Pins:- Current Rating (Max):- Voltage R"
+      },
+      {
+        "name": "[排母]2.54mm 2×15双排排母弯",
+        "lcsc": "C9900002540",
+        "cls": "Extended Part",
+        "pkg": "TH-30P",
+        "desc": ""
+      }
+    ],
+    "HDR_2X3M_CN": [
+      {
+        "name": "M-P1826-A",
+        "lcsc": "C9900023685",
+        "cls": "Extended Part",
+        "pkg": "16P单排针/弯脚贴片/2.54MM",
+        "desc": ""
+      },
+      {
+        "name": "2.54-1*6-BLUE",
+        "lcsc": "C9900192756",
+        "cls": "Extended Part",
+        "pkg": "排针插件,P=2.54mm-蓝色",
+        "desc": ""
+      },
+      {
+        "name": "2.54-1*8-BLACK",
+        "lcsc": "C9900192758",
+        "cls": "Extended Part",
+        "pkg": "排针插件,P=2.54mm-黑色",
+        "desc": ""
+      },
+      {
+        "name": "2.54-1*10-BLACK",
+        "lcsc": "C9900192757",
+        "cls": "Extended Part",
+        "pkg": "排针插件,P=2.54mm-黑色",
+        "desc": ""
+      },
+      {
+        "name": "ZTZ_X7_IO_PWM-10pin",
+        "lcsc": "C9900017187",
+        "cls": "Extended Part",
+        "pkg": "2.54mm 三排 排针 3*10P",
+        "desc": ""
+      },
+      {
+        "name": "双排针2*3P 脚距2.54mm 贴片",
+        "lcsc": "C77761",
+        "cls": "Extended Part",
+        "pkg": "SMD,P=2.54mm",
+        "desc": "Pin Structure:- Pitch:2.54mm Row Spacing:2.54mm Circluar Pin"
+      },
+      {
+        "name": "FPH25461-D30B1004191408B",
+        "lcsc": "C5200236",
+        "cls": "Extended Part",
+        "pkg": "排针 2.54mm ,双排 ,30位 ,90°插件",
+        "desc": ""
+      },
+      {
+        "name": "2.0 2*3pin贴片双排针",
+        "lcsc": "C9900000700",
+        "cls": "Extended Part",
+        "pkg": "SMD-6_L6.0-W4.0-P2.00-LS6.5",
+        "desc": ""
+      }
+    ]
+  }
+}

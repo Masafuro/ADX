@@ -1,0 +1,12 @@
+{
+  "checkedPins": 38,
+  "maxErrMil": 0,
+  "maxErrMm": 0,
+  "measuredArduinoGapMil": 160,
+  "mismatches": [],
+  "calLog": [
+    "J_USB verified: A6@(1237.4,2509.8) frontShell3@(1042.6,2670.3)",
+    "J_ICSP locked: rot=270 shift=(0,0)",
+    "U1 verified: D12@(2709.8,2232.5) D5@(2930.2,2232.5)"
+  ]
+}

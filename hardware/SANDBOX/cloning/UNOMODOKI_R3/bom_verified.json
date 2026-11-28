@@ -1,0 +1,1297 @@
+{
+  "verifiedAt": "2026-11-28T07:40:42.274Z",
+  "projectName": "Sandbox_UNOMODOKI_R3",
+  "uniqueTypes": 23,
+  "totalComponents": 37,
+  "parts": [
+    {
+      "key": "MCU",
+      "lcsc": "C14877",
+      "qty": 1,
+      "refs": [
+        "U1"
+      ],
+      "role": "Main MCU (ATmega328P-AU TQFP-32)",
+      "found": true,
+      "name": "ATMEGA328P-AU_C14877",
+      "uuid": "d3715ed247e945a4a323d50a26796f96",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "MICROCHIP(美国微芯)",
+      "mpn": "ATMEGA328P-AU",
+      "package": "TQFP-32(7x7)",
+      "has3dModel": true,
+      "pinCount": 32,
+      "pins": [
+        {
+          "number": "1",
+          "name": "(PCINT19/OC2B/INT1)PD3",
+          "dx": -170,
+          "dy": 75
+        },
+        {
+          "number": "2",
+          "name": "(PCINT20/XCK/T0)PD4",
+          "dx": -170,
+          "dy": 65
+        },
+        {
+          "number": "3",
+          "name": "GND",
+          "dx": -170,
+          "dy": 55
+        },
+        {
+          "number": "4",
+          "name": "VCC",
+          "dx": -170,
+          "dy": 45
+        },
+        {
+          "number": "5",
+          "name": "GND",
+          "dx": -170,
+          "dy": 35
+        },
+        {
+          "number": "6",
+          "name": "VCC",
+          "dx": -170,
+          "dy": 25
+        },
+        {
+          "number": "7",
+          "name": "(PCINT6/XTAL1/TOSC1)PB6",
+          "dx": -170,
+          "dy": 15
+        },
+        {
+          "number": "8",
+          "name": "(PCINT7/XTAL2/TOSC2)PB7",
+          "dx": -170,
+          "dy": 5
+        },
+        {
+          "number": "9",
+          "name": "(PCINT21/OC0B/T1)PD5",
+          "dx": -170,
+          "dy": -5
+        },
+        {
+          "number": "10",
+          "name": "(PCINT22/OC0A/AIN0)PD6",
+          "dx": -170,
+          "dy": -15
+        },
+        {
+          "number": "11",
+          "name": "(PCINT23/AIN1)PD7",
+          "dx": -170,
+          "dy": -25
+        },
+        {
+          "number": "12",
+          "name": "(PCINT0/CLKO/ICP1)PB0",
+          "dx": -170,
+          "dy": -35
+        },
+        {
+          "number": "13",
+          "name": "(PCINT1/OC1A)PB1",
+          "dx": -170,
+          "dy": -45
+        },
+        {
+          "number": "14",
+          "name": "(PCINT2/SS#/OC1B)PB2",
+          "dx": -170,
+          "dy": -55
+        },
+        {
+          "number": "15",
+          "name": "(PCINT3/OC2A/MOSI)PB3",
+          "dx": -170,
+          "dy": -65
+        },
+        {
+          "number": "16",
+          "name": "(PCINT4/MISO)PB4",
+          "dx": -170,
+          "dy": -75
+        },
+        {
+          "number": "17",
+          "name": "PB5(SCK/PCINT5)",
+          "dx": 170,
+          "dy": -75
+        },
+        {
+          "number": "18",
+          "name": "AVCC",
+          "dx": 170,
+          "dy": -65
+        },
+        {
+          "number": "19",
+          "name": "ADC6",
+          "dx": 170,
+          "dy": -55
+        },
+        {
+          "number": "20",
+          "name": "AREF",
+          "dx": 170,
+          "dy": -45
+        },
+        {
+          "number": "21",
+          "name": "GND",
+          "dx": 170,
+          "dy": -35
+        },
+        {
+          "number": "22",
+          "name": "ADC7",
+          "dx": 170,
+          "dy": -25
+        },
+        {
+          "number": "23",
+          "name": "PC0(ADC0/PCINT8)",
+          "dx": 170,
+          "dy": -15
+        },
+        {
+          "number": "24",
+          "name": "PC1(ADC1/PCINT9)",
+          "dx": 170,
+          "dy": -5
+        },
+        {
+          "number": "25",
+          "name": "PC2(ADC2/PCINT10)",
+          "dx": 170,
+          "dy": 5
+        },
+        {
+          "number": "26",
+          "name": "PC3(ADC3/PCINT11)",
+          "dx": 170,
+          "dy": 15
+        },
+        {
+          "number": "27",
+          "name": "PC4(ADC4/SDA/PCINT12)",
+          "dx": 170,
+          "dy": 25
+        },
+        {
+          "number": "28",
+          "name": "PC5(ADC5/SCL/PCINT13)",
+          "dx": 170,
+          "dy": 35
+        },
+        {
+          "number": "29",
+          "name": "PC6(RESET#/PCINT14)",
+          "dx": 170,
+          "dy": 45
+        },
+        {
+          "number": "30",
+          "name": "PD0(RXD/PCINT16)",
+          "dx": 170,
+          "dy": 55
+        },
+        {
+          "number": "31",
+          "name": "PD1(TXD/PCINT17)",
+          "dx": 170,
+          "dy": 65
+        },
+        {
+          "number": "32",
+          "name": "PD2(INT0/PCINT18)",
+          "dx": 170,
+          "dy": 75
+        }
+      ]
+    },
+    {
+      "key": "USB_UART",
+      "lcsc": "C84681",
+      "qty": 1,
+      "refs": [
+        "U2"
+      ],
+      "role": "USB-UART Bridge (CH340C SOP-16)",
+      "found": true,
+      "name": "CH340C",
+      "uuid": "02aab9e4fdf042e4bd078421b5c79fd2",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "WCH(沁恒)",
+      "mpn": "CH340C",
+      "package": "SOP-16",
+      "has3dModel": true,
+      "pinCount": 16,
+      "pins": [
+        {
+          "number": "1",
+          "name": "GND",
+          "dx": -45,
+          "dy": 35
+        },
+        {
+          "number": "2",
+          "name": "TXD",
+          "dx": -45,
+          "dy": 25
+        },
+        {
+          "number": "3",
+          "name": "RXD",
+          "dx": -45,
+          "dy": 15
+        },
+        {
+          "number": "4",
+          "name": "V3",
+          "dx": -45,
+          "dy": 5
+        },
+        {
+          "number": "5",
+          "name": "D+",
+          "dx": -45,
+          "dy": -5
+        },
+        {
+          "number": "6",
+          "name": "D-",
+          "dx": -45,
+          "dy": -15
+        },
+        {
+          "number": "7",
+          "name": "NC.",
+          "dx": -45,
+          "dy": -25
+        },
+        {
+          "number": "8",
+          "name": "OUT#",
+          "dx": -45,
+          "dy": -35
+        },
+        {
+          "number": "9",
+          "name": "CTS#",
+          "dx": 45,
+          "dy": -35
+        },
+        {
+          "number": "10",
+          "name": "DSR#",
+          "dx": 45,
+          "dy": -25
+        },
+        {
+          "number": "11",
+          "name": "RI#",
+          "dx": 45,
+          "dy": -15
+        },
+        {
+          "number": "12",
+          "name": "DCD#",
+          "dx": 45,
+          "dy": -5
+        },
+        {
+          "number": "13",
+          "name": "DTR#",
+          "dx": 45,
+          "dy": 5
+        },
+        {
+          "number": "14",
+          "name": "RTS#",
+          "dx": 45,
+          "dy": 15
+        },
+        {
+          "number": "15",
+          "name": "R232",
+          "dx": 45,
+          "dy": 25
+        },
+        {
+          "number": "16",
+          "name": "VCC",
+          "dx": 45,
+          "dy": 35
+        }
+      ]
+    },
+    {
+      "key": "LDO_3V3",
+      "lcsc": "C6186",
+      "qty": 1,
+      "refs": [
+        "U3"
+      ],
+      "role": "3.3V LDO (AMS1117-3.3 SOT-223)",
+      "found": true,
+      "name": "AMS1117-3.3_C6186",
+      "uuid": "c9e8f680e30a4d3cbde4cfbe9622845b",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "Advanced Monolithic Systems",
+      "mpn": "AMS1117-3.3",
+      "package": "SOT-223",
+      "has3dModel": true,
+      "pinCount": 4,
+      "pins": [
+        {
+          "number": "1",
+          "name": "GND",
+          "dx": -45,
+          "dy": 10
+        },
+        {
+          "number": "2",
+          "name": "VOUT",
+          "dx": -45,
+          "dy": 0
+        },
+        {
+          "number": "3",
+          "name": "VIN",
+          "dx": -45,
+          "dy": -10
+        },
+        {
+          "number": "4",
+          "name": "VOUT",
+          "dx": 45,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "USB_C",
+      "lcsc": "C165948",
+      "qty": 1,
+      "refs": [
+        "J_USB"
+      ],
+      "role": "USB Type-C 16P (TYPE-C-31-M-12)",
+      "found": true,
+      "name": "TYPE-C-31-M-12",
+      "uuid": "730e76758f9742ca9ca85c73f4ec0ecd",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "韩国韩荣",
+      "mpn": "TYPE-C-31-M-12",
+      "package": "SMD",
+      "has3dModel": true,
+      "pinCount": 16,
+      "pins": [
+        {
+          "number": "A1B12",
+          "name": "GND",
+          "dx": -35,
+          "dy": 55
+        },
+        {
+          "number": "A4B9",
+          "name": "VBUS",
+          "dx": -35,
+          "dy": 45
+        },
+        {
+          "number": "B8",
+          "name": "SBU2",
+          "dx": -35,
+          "dy": 35
+        },
+        {
+          "number": "A5",
+          "name": "CC1",
+          "dx": -35,
+          "dy": 25
+        },
+        {
+          "number": "B7",
+          "name": "DN2",
+          "dx": -35,
+          "dy": 15
+        },
+        {
+          "number": "A6",
+          "name": "DP1",
+          "dx": -35,
+          "dy": 5
+        },
+        {
+          "number": "A7",
+          "name": "DN1",
+          "dx": -35,
+          "dy": -5
+        },
+        {
+          "number": "B6",
+          "name": "DP2",
+          "dx": -35,
+          "dy": -15
+        },
+        {
+          "number": "A8",
+          "name": "SBU1",
+          "dx": -35,
+          "dy": -25
+        },
+        {
+          "number": "B5",
+          "name": "CC2",
+          "dx": -35,
+          "dy": -35
+        },
+        {
+          "number": "B4A9",
+          "name": "VBUS",
+          "dx": -35,
+          "dy": -45
+        },
+        {
+          "number": "B1A12",
+          "name": "GND",
+          "dx": -35,
+          "dy": -55
+        },
+        {
+          "number": "4",
+          "name": "EH",
+          "dx": 35,
+          "dy": -25
+        },
+        {
+          "number": "3",
+          "name": "EH",
+          "dx": 35,
+          "dy": -35
+        },
+        {
+          "number": "2",
+          "name": "EH",
+          "dx": 35,
+          "dy": -45
+        },
+        {
+          "number": "1",
+          "name": "EH",
+          "dx": 35,
+          "dy": -55
+        }
+      ]
+    },
+    {
+      "key": "XTAL_16M",
+      "lcsc": "C13738",
+      "qty": 1,
+      "refs": [
+        "Y1"
+      ],
+      "role": "16MHz Crystal (X322516MLB4SI, CL=9pF)",
+      "found": true,
+      "name": "X322516MLB4SI",
+      "uuid": "dba011b143a248829c6d7f11716dc192",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "YXC(扬兴晶振)",
+      "mpn": "X322516MLB4SI",
+      "package": "SMD3225-4P",
+      "has3dModel": true,
+      "pinCount": 4,
+      "pins": [
+        {
+          "number": "4",
+          "name": "GND",
+          "dx": -30,
+          "dy": 10
+        },
+        {
+          "number": "2",
+          "name": "GND",
+          "dx": 30,
+          "dy": -10
+        },
+        {
+          "number": "1",
+          "name": "OSC1",
+          "dx": -30,
+          "dy": -10
+        },
+        {
+          "number": "3",
+          "name": "OSC2",
+          "dx": 30,
+          "dy": 10
+        }
+      ]
+    },
+    {
+      "key": "PTC_500M",
+      "lcsc": "C369159",
+      "qty": 1,
+      "refs": [
+        "F1"
+      ],
+      "role": "500mA PTC Resettable Fuse (1206)",
+      "found": true,
+      "name": "JK-NSMD050-13.2V",
+      "uuid": "9b3b34204cf2493392d47f4c44300256",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "JK(金科)",
+      "mpn": "JK-NSMD050-13.2V",
+      "package": "1206",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "2",
+          "name": "2",
+          "dx": 20,
+          "dy": 0
+        },
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -20,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "DIODE_RST",
+      "lcsc": "C2128",
+      "qty": 1,
+      "refs": [
+        "D1"
+      ],
+      "role": "RESET Clamp Diode (1N4148WS SOD-323)",
+      "found": true,
+      "name": "1N4148WS_C2128",
+      "uuid": "24f1572ddddb42c2abec3b14b1aeb99f",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "CJ(江苏长电/长晶)",
+      "mpn": "1N4148WS",
+      "package": "SOD-323",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "2",
+          "name": "A",
+          "dx": 20,
+          "dy": 0
+        },
+        {
+          "number": "1",
+          "name": "K",
+          "dx": -20,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "SW_RST",
+      "lcsc": "C318884",
+      "qty": 1,
+      "refs": [
+        "SW1"
+      ],
+      "role": "Reset Tactile Switch (5.1x5.1mm SMD)",
+      "found": true,
+      "name": "TS-1187A-B-A-B",
+      "uuid": "38630614a58f4650bd5eefe9a5f79d9a",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "XKB Connection(中国星坤)",
+      "mpn": "TS-1187A-B-A-B",
+      "package": "SMD-4P,5.1x5.1mm",
+      "has3dModel": true,
+      "pinCount": 4,
+      "pins": [
+        {
+          "number": "2",
+          "name": "B",
+          "dx": 20,
+          "dy": 10
+        },
+        {
+          "number": "1",
+          "name": "A",
+          "dx": -20,
+          "dy": 10
+        },
+        {
+          "number": "4",
+          "name": "D",
+          "dx": 20,
+          "dy": -20
+        },
+        {
+          "number": "3",
+          "name": "C",
+          "dx": -20,
+          "dy": -20
+        }
+      ]
+    },
+    {
+      "key": "LED_PWR",
+      "lcsc": "C12624",
+      "qty": 1,
+      "refs": [
+        "LED_PWR"
+      ],
+      "role": "PWR LED Green 0603 (KT-0603G)",
+      "found": true,
+      "name": "KT-0603G",
+      "uuid": "e8b07cfe9d254e27bcc3c1116be11e2b",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "KENTO",
+      "mpn": "KT-0603G",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "2",
+          "name": "A",
+          "dx": 20,
+          "dy": 0
+        },
+        {
+          "number": "1",
+          "name": "K",
+          "dx": -20,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "LED_L",
+      "lcsc": "C2287",
+      "qty": 1,
+      "refs": [
+        "LED_L"
+      ],
+      "role": "D13 L LED Yellow 0603 (KT-0603Y)",
+      "found": true,
+      "name": "KT-0603Y",
+      "uuid": "a3e6c40842d74517ae0961fec2fc71d9",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "KENTO",
+      "mpn": "KT-0603Y",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "2",
+          "name": "K",
+          "dx": 20,
+          "dy": -5
+        },
+        {
+          "number": "1",
+          "name": "A",
+          "dx": -20,
+          "dy": -5
+        }
+      ]
+    },
+    {
+      "key": "LED_TX",
+      "lcsc": "C2286",
+      "qty": 1,
+      "refs": [
+        "LED_TX"
+      ],
+      "role": "TX LED Red 0603 (KT-0603R)",
+      "found": true,
+      "name": "KT-0603R",
+      "uuid": "015cbd77079d4b0ea5c81b79fefdcea3",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "KENTO",
+      "mpn": "KT-0603R",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "2",
+          "name": "K",
+          "dx": -20,
+          "dy": 0
+        },
+        {
+          "number": "1",
+          "name": "A",
+          "dx": 20,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "LED_RX",
+      "lcsc": "C2288",
+      "qty": 1,
+      "refs": [
+        "LED_RX"
+      ],
+      "role": "RX LED Blue 0603 (KT-0603B)",
+      "found": true,
+      "name": "KT-0603B",
+      "uuid": "1a0921f6f61a426b8b7f0aa3c5392e45",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "KENTO",
+      "mpn": "KT-0603B",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "1",
+          "name": "K",
+          "dx": -20,
+          "dy": -5
+        },
+        {
+          "number": "2",
+          "name": "A",
+          "dx": 20,
+          "dy": -5
+        }
+      ]
+    },
+    {
+      "key": "R_5K1",
+      "lcsc": "C23186",
+      "qty": 2,
+      "refs": [
+        "R1",
+        "R2"
+      ],
+      "role": "5.1k 0603 (USB-C CC1/CC2)",
+      "found": true,
+      "name": "0603WAF5101T5E",
+      "uuid": "5e5266518f0e41f791738aa9f7251c1d",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "UNI-ROYAL(厚声)",
+      "mpn": "0603WAF5101T5E",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "2",
+          "name": "2",
+          "dx": 20,
+          "dy": 0
+        },
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -20,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "R_1K",
+      "lcsc": "C21190",
+      "qty": 5,
+      "refs": [
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7"
+      ],
+      "role": "1k 0603 (UART series + PWR/TX/RX LEDs)",
+      "found": true,
+      "name": "0603WAF1001T5E",
+      "uuid": "2340647df7144fc5a30489ed06518eb5",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "UNI-ROYAL(厚声)",
+      "mpn": "0603WAF1001T5E",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "2",
+          "name": "2",
+          "dx": 20,
+          "dy": 0
+        },
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -20,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "R_2K2",
+      "lcsc": "C4190",
+      "qty": 1,
+      "refs": [
+        "R8"
+      ],
+      "role": "2.2k 0603 (D13 L LED light load)",
+      "found": true,
+      "name": "0603WAF2201T5E_C4190",
+      "uuid": "be60f304bdf4486e908bd15535a43c6d",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "UNI-ROYAL(厚声)",
+      "mpn": "0603WAF2201T5E",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "2",
+          "name": "2",
+          "dx": 20,
+          "dy": 0
+        },
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -20,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "R_10K",
+      "lcsc": "C25804",
+      "qty": 1,
+      "refs": [
+        "R9"
+      ],
+      "role": "10k 0603 (RESET pull-up)",
+      "found": true,
+      "name": "0603WAF1002T5E",
+      "uuid": "b0602c6e20fc41faa226d9f001a9bead",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "UNI-ROYAL(厚声)",
+      "mpn": "0603WAF1002T5E",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "2",
+          "name": "2",
+          "dx": 20,
+          "dy": 0
+        },
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -20,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "C_100N",
+      "lcsc": "C14663",
+      "qty": 6,
+      "refs": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6"
+      ],
+      "role": "100nF 0603 (Bypass, V3, DTR, AREF)",
+      "found": true,
+      "name": "CC0603KRX7R9BB104",
+      "uuid": "a299e4f29fd2469688f76621c3d59c4d",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "YAGEO(国巨)",
+      "mpn": "CC0603KRX7R9BB104",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -20,
+          "dy": 0
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "dx": 20,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "C_10U",
+      "lcsc": "C19702",
+      "qty": 3,
+      "refs": [
+        "C7",
+        "C8",
+        "C9"
+      ],
+      "role": "10uF 0603 (5V bulk + 3.3V LDO in/out)",
+      "found": true,
+      "name": "CL10A106KP8NNNC",
+      "uuid": "9f83e90cf78c4f3396a8045b3e521dd5",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "SAMSUNG(三星)",
+      "mpn": "CL10A106KP8NNNC",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -20,
+          "dy": 0
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "dx": 20,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "C_15P",
+      "lcsc": "C1644",
+      "qty": 2,
+      "refs": [
+        "C10",
+        "C11"
+      ],
+      "role": "15pF 0603 C0G (16MHz xtal load)",
+      "found": true,
+      "name": "CL10C150JB8NNNC",
+      "uuid": "28cf2b561d1f47a29d497fd15f60dcaa",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Basic Part",
+      "manufacturer": "SAMSUNG(三星)",
+      "mpn": "CL10C150JB8NNNC",
+      "package": "0603",
+      "has3dModel": true,
+      "pinCount": 2,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -15,
+          "dy": 0
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "dx": 15,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "key": "HDR_1X10F",
+      "lcsc": "C5116489",
+      "qty": 1,
+      "refs": [
+        "J_DIG_HI"
+      ],
+      "role": "1x10P 2.54mm Female Header (SCL..D8)",
+      "found": true,
+      "name": "PM2.54-1*10",
+      "uuid": "4c7426f41d3e471da8a5b1e357fe8420",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "ZHOURI(洲日)",
+      "mpn": "PM2.54-1*10",
+      "package": "插件,P=2.54mm",
+      "has3dModel": true,
+      "pinCount": 10,
+      "pins": [
+        {
+          "number": "10",
+          "name": "10",
+          "dx": -10,
+          "dy": -40
+        },
+        {
+          "number": "9",
+          "name": "9",
+          "dx": -10,
+          "dy": -30
+        },
+        {
+          "number": "8",
+          "name": "8",
+          "dx": -10,
+          "dy": -20
+        },
+        {
+          "number": "7",
+          "name": "7",
+          "dx": -10,
+          "dy": -10
+        },
+        {
+          "number": "6",
+          "name": "6",
+          "dx": -10,
+          "dy": 0
+        },
+        {
+          "number": "5",
+          "name": "5",
+          "dx": -10,
+          "dy": 10
+        },
+        {
+          "number": "4",
+          "name": "4",
+          "dx": -10,
+          "dy": 20
+        },
+        {
+          "number": "3",
+          "name": "3",
+          "dx": -10,
+          "dy": 30
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "dx": -10,
+          "dy": 40
+        },
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -10,
+          "dy": 50
+        }
+      ]
+    },
+    {
+      "key": "HDR_1X8F",
+      "lcsc": "C5224027",
+      "qty": 2,
+      "refs": [
+        "J_DIG_LO",
+        "J_POWER"
+      ],
+      "role": "1x8P 2.54mm Female Header (D7..D0, POWER)",
+      "found": true,
+      "name": "PM2.54-1*8",
+      "uuid": "6b668fdc043b4a89a175133403cc30b5",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "ZHOURI(洲日)",
+      "mpn": "PM2.54-1*8",
+      "package": "插件,P=2.54mm",
+      "has3dModel": true,
+      "pinCount": 8,
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -20,
+          "dy": 35
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "dx": -20,
+          "dy": 25
+        },
+        {
+          "number": "3",
+          "name": "3",
+          "dx": -20,
+          "dy": 15
+        },
+        {
+          "number": "4",
+          "name": "4",
+          "dx": -20,
+          "dy": 5
+        },
+        {
+          "number": "5",
+          "name": "5",
+          "dx": -20,
+          "dy": -5
+        },
+        {
+          "number": "6",
+          "name": "6",
+          "dx": -20,
+          "dy": -15
+        },
+        {
+          "number": "7",
+          "name": "7",
+          "dx": -20,
+          "dy": -25
+        },
+        {
+          "number": "8",
+          "name": "8",
+          "dx": -20,
+          "dy": -35
+        }
+      ]
+    },
+    {
+      "key": "HDR_1X6F",
+      "lcsc": "C5224026",
+      "qty": 1,
+      "refs": [
+        "J_ANALOG"
+      ],
+      "role": "1x6P 2.54mm Female Header (A0..A5)",
+      "found": true,
+      "name": "PM2.54-1*6",
+      "uuid": "8e95ac9116854186a5e70f61a11d32cf",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "ZHOURI(洲日)",
+      "mpn": "PM2.54-1*6",
+      "package": "插件,P=2.54mm",
+      "has3dModel": true,
+      "pinCount": 6,
+      "pins": [
+        {
+          "number": "6",
+          "name": "6",
+          "dx": -10,
+          "dy": -20
+        },
+        {
+          "number": "5",
+          "name": "5",
+          "dx": -10,
+          "dy": -10
+        },
+        {
+          "number": "4",
+          "name": "4",
+          "dx": -10,
+          "dy": 0
+        },
+        {
+          "number": "3",
+          "name": "3",
+          "dx": -10,
+          "dy": 10
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "dx": -10,
+          "dy": 20
+        },
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -10,
+          "dy": 30
+        }
+      ]
+    },
+    {
+      "key": "HDR_2X3M",
+      "lcsc": "C5116479",
+      "qty": 1,
+      "refs": [
+        "J_ICSP"
+      ],
+      "role": "2x3P 2.54mm Male Header (ICSP)",
+      "found": true,
+      "name": "2.54-2*3",
+      "uuid": "bff64006337f4523af45d3e986a6dceb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "jlcpcbClass": "Extended Part",
+      "manufacturer": "ZHOURI(洲日)",
+      "mpn": "2.54-2*3",
+      "package": "插件,P=2.54mm",
+      "has3dModel": true,
+      "pinCount": 6,
+      "pins": [
+        {
+          "number": "2",
+          "name": "2",
+          "dx": 20,
+          "dy": 10
+        },
+        {
+          "number": "5",
+          "name": "5",
+          "dx": -20,
+          "dy": -10
+        },
+        {
+          "number": "4",
+          "name": "4",
+          "dx": 20,
+          "dy": 0
+        },
+        {
+          "number": "3",
+          "name": "3",
+          "dx": -20,
+          "dy": 0
+        },
+        {
+          "number": "6",
+          "name": "6",
+          "dx": 20,
+          "dy": -10
+        },
+        {
+          "number": "1",
+          "name": "1",
+          "dx": -20,
+          "dy": 10
+        }
+      ]
+    }
+  ]
+}

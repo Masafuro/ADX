@@ -1,0 +1,284 @@
+{
+  "ok": true,
+  "path": "invoke",
+  "data": {
+    "idResults": [
+      {
+        "lcsc": "C54973826",
+        "found": true,
+        "name": "LAIL-PM2.54-6P-L",
+        "cls": "Extended Part",
+        "pkg": "插件,P=2.54mm",
+        "mfr": "LAILAN(莱联)"
+      },
+      {
+        "lcsc": "C5116479",
+        "found": true,
+        "name": "2.54-2*3",
+        "cls": "Extended Part",
+        "pkg": "插件,P=2.54mm",
+        "mfr": "ZHOURI(洲日)"
+      },
+      {
+        "lcsc": "C390688",
+        "found": true,
+        "name": "210-92-03GB04",
+        "cls": "Extended Part",
+        "pkg": "插件,P=2.54mm",
+        "mfr": "PINREX(频锐科技)"
+      },
+      {
+        "lcsc": "C965804",
+        "found": true,
+        "name": "XL-1608UGC-04",
+        "cls": "Extended Part",
+        "pkg": "0603",
+        "mfr": "XINGLIGHT(成兴光)"
+      },
+      {
+        "lcsc": "C12624",
+        "found": true,
+        "name": "KT-0603G",
+        "cls": "Extended Part",
+        "pkg": "0603",
+        "mfr": "KENTO"
+      },
+      {
+        "lcsc": "C2287",
+        "found": true,
+        "name": "KT-0603Y",
+        "cls": "Extended Part",
+        "pkg": "0603",
+        "mfr": "KENTO"
+      },
+      {
+        "lcsc": "C2286",
+        "found": true,
+        "name": "KT-0603R",
+        "cls": "Basic Part",
+        "pkg": "0603",
+        "mfr": "KENTO"
+      }
+    ],
+    "searchResults": {
+      "F10": [
+        {
+          "lcsc": "C5116489",
+          "name": "PM2.54-1*10",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C53207414",
+          "name": "PM-2.54-1*10-8.5-ZZ",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        }
+      ],
+      "F10b": [],
+      "F10c": [
+        {
+          "lcsc": "C5340290",
+          "name": "ESQ-110-14-T-S",
+          "cls": "Extended Part",
+          "pkg": "TH-1X10P,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C9900008052",
+          "name": "HDR1X10",
+          "cls": "Extended Part",
+          "pkg": "1X10P2.54mm塑高3.5mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C2905418",
+          "name": "KH-2.54FH-1X10P-H8.5",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C48641757",
+          "name": "HX PM2.54-1x10P TP H8.5-ZQ",
+          "cls": "Extended Part",
+          "pkg": "SMD,P=2.54mm(交错脚)",
+          "has3d": false
+        },
+        {
+          "lcsc": "C2932683",
+          "name": "KH-2.54FH90-1X10P-H8.5",
+          "cls": "Extended Part",
+          "pkg": "弯插,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C56435384",
+          "name": "YXY-PM2.54-1X10PIN-DIP-H8.5Y",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        }
+      ],
+      "F8": [
+        {
+          "lcsc": "C5224027",
+          "name": "PM2.54-1*8",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C9900042608",
+          "name": "PM2.54-1*8_C9900042608",
+          "cls": null,
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        }
+      ],
+      "F8b": [
+        {
+          "lcsc": "C54876737",
+          "name": "PM2.54-1x8PWZ-H8.5",
+          "cls": "Extended Part",
+          "pkg": "弯插,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C54876730",
+          "name": "PM2.54-1x8PZZ-H8.5",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C56435549",
+          "name": "YXY-PM2.54-1X8PIN-DIPWZ-H8.5Y",
+          "cls": "Extended Part",
+          "pkg": "弯插,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C2932682",
+          "name": "KH-2.54FH90-1X8P-H8.5",
+          "cls": "Extended Part",
+          "pkg": "弯插,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C2905417",
+          "name": "KH-2.54FH-1X8P-H8.5",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C56435382",
+          "name": "YXY-PM2.54-1X8PIN-DIP-H8.5Y",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        }
+      ],
+      "F6": [
+        {
+          "lcsc": "C5224026",
+          "name": "PM2.54-1*6",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        }
+      ],
+      "F6b": [
+        {
+          "lcsc": "C9900007627",
+          "name": "HEADER_MALE-XH_1X6P_2.54MM",
+          "cls": "Extended Part",
+          "pkg": "HEADER_MALE-XH_1X6P_2.54MM",
+          "has3d": false
+        },
+        {
+          "lcsc": "C54876735",
+          "name": "PM2.54-1x6PWZ-H8.5",
+          "cls": "Extended Part",
+          "pkg": "弯插,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C46635842",
+          "name": "HX PM2.54-1x6P TP H8.5-YQ",
+          "cls": "Extended Part",
+          "pkg": "SMD,P=2.54mm(交错脚)",
+          "has3d": false
+        },
+        {
+          "lcsc": "C54876728",
+          "name": "PM2.54-1x6PZZ-H8.5",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C55218897",
+          "name": "PM2.54-1x6PLT-H8.5-R",
+          "cls": "Extended Part",
+          "pkg": "SMD,P=2.54mm(交错脚)",
+          "has3d": false
+        },
+        {
+          "lcsc": "C56435380",
+          "name": "YXY-PM2.54-1X6PIN-DIP-H8.5Y",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        }
+      ],
+      "M2x3": [
+        {
+          "lcsc": "C5116479",
+          "name": "2.54-2*3",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C9900286898",
+          "name": "2.54-2*3P-L29 pin header",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C49173731",
+          "name": "KF2EDGEV-2.54-2*3P",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C3152771",
+          "name": "2.54-2*3PLTPZ",
+          "cls": "Extended Part",
+          "pkg": "SMD,P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C33344",
+          "name": "2.54-2*3P压线头",
+          "cls": "Extended Part",
+          "pkg": "P=2.54mm",
+          "has3d": false
+        },
+        {
+          "lcsc": "C42371605",
+          "name": "KF2024HAV-2.54-2*3P",
+          "cls": "Extended Part",
+          "pkg": "插件,P=2.54mm",
+          "has3d": false
+        }
+      ]
+    }
+  }
+}

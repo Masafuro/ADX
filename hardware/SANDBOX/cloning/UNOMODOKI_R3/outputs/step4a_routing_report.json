@@ -1,0 +1,73 @@
+{
+  "tracksCreated": 140,
+  "viasCreated": 10,
+  "ratlinesBefore": 112,
+  "ratlinesAfter": 68,
+  "nonConnectionDrc": [],
+  "remainingNets": [
+    {
+      "net": "GND",
+      "unroutedItems": 33
+    },
+    {
+      "net": "+5V",
+      "unroutedItems": 16
+    },
+    {
+      "net": "RESET",
+      "unroutedItems": 8
+    },
+    {
+      "net": "AREF",
+      "unroutedItems": 2
+    },
+    {
+      "net": "A5_SCL",
+      "unroutedItems": 2
+    },
+    {
+      "net": "A4_SDA",
+      "unroutedItems": 2
+    },
+    {
+      "net": "D11",
+      "unroutedItems": 2
+    },
+    {
+      "net": "D12",
+      "unroutedItems": 2
+    },
+    {
+      "net": "D13",
+      "unroutedItems": 4
+    },
+    {
+      "net": "D0_RX",
+      "unroutedItems": 3
+    },
+    {
+      "net": "D1_TX",
+      "unroutedItems": 3
+    },
+    {
+      "net": "D2",
+      "unroutedItems": 2
+    },
+    {
+      "net": "D3",
+      "unroutedItems": 2
+    },
+    {
+      "net": "D4",
+      "unroutedItems": 2
+    },
+    {
+      "net": "CH340_RX",
+      "unroutedItems": 3
+    },
+    {
+      "net": "CH340_TX",
+      "unroutedItems": 3
+    }
+  ]
+}

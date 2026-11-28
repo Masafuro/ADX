@@ -1,0 +1,2987 @@
+PROTEL NETLIST 2.0
+[
+DESIGNATOR
+J_USB
+FOOTPRINT
+USB-C_SMD-TYPE-C-31-M-12_1
+PARTTYPE
+TYPE-C-31-M-12
+DESCRIPTION
+Connector Type:Type-C Protocol Standard:- Gender:Female Mounting Type:Surface Mount, Right Angle Number of Contacts:16P Number of Ports:1 Current Rating-Power:5A Voltage Rating:20V Connect-Disconnect Life:10,000 cycles Length:7.35mm Operating Temperature:
+Component Kind
+Standard
+Unique ID
+gge1
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+TYPE-C-31-M-12
+PCB Layer
+Default
+Symbol
+TYPE-C-31-M-12
+Designator
+J_USB
+LCSC Part Name
+Type-C 母 卧贴
+Supplier Part
+C165948
+Manufacturer
+韩国韩荣
+Manufacturer Part
+TYPE-C-31-M-12
+Supplier Footprint
+SMD
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/TYPE-C-31-M-12/177331.html
+Supplier
+LCSC
+3D Model Title
+USB-C_SMD-TYPE-C-31-M-12_1
+Connector Type
+Type-C
+Protocol Standard
+-
+Gender
+Female
+Mounting Type
+Surface Mount, Right Angle
+Number of Contacts
+16P
+Number of Ports
+1
+Current Rating-Power
+5A
+Voltage Rating
+20V
+Connect-Disconnect Life
+10,000 cycles
+Length
+7.35mm
+Operating Temperature
+-30℃~+80℃
+Name
+TYPE-C-31-M-12
+Description
+Connector Type:Type-C Protocol Standard:- Gender:Female Mounting Type:Surface Mount, Right Angle Number of Contacts:16P Number of Ports:1 Current Rating-Power:5A Voltage Rating:20V Connect-Disconnect Life:10,000 cycles Length:7.35mm Operating Temperature:
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+R1
+FOOTPRINT
+R0603
+PARTTYPE
+0603WAF5101T5E
+DESCRIPTION
+Type:Thick Film Resistor Resistance:5.1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Component Kind
+Standard
+Unique ID
+gge2
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+0603WAF5101T5E
+PCB Layer
+Default
+Symbol
+0603WAF5101T5E
+Designator
+R1
+LCSC Part Name
+厚膜电阻 5.1kΩ ±1%
+Supplier Part
+C23186
+Manufacturer
+UNI-ROYAL(厚声)
+Manufacturer Part
+0603WAF5101T5E
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/0603WAF5101T5E/23913.html
+Supplier
+LCSC
+3D Model Title
+R0603
+Type
+Thick Film Resistor
+Value
+5.1kΩ
+Tolerance
+±1%
+Power(Watts)
+100mW
+Voltage-Supply(Max)
+75V
+Temperature Coefficient
+±100ppm/℃
+Operating Temperature
+-55℃~+155℃
+Name
+5.1kΩ
+Description
+Type:Thick Film Resistor Resistance:5.1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+R2
+FOOTPRINT
+R0603
+PARTTYPE
+0603WAF5101T5E
+DESCRIPTION
+Type:Thick Film Resistor Resistance:5.1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Component Kind
+Standard
+Unique ID
+gge3
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+0603WAF5101T5E
+PCB Layer
+Default
+Symbol
+0603WAF5101T5E
+Designator
+R2
+LCSC Part Name
+厚膜电阻 5.1kΩ ±1%
+Supplier Part
+C23186
+Manufacturer
+UNI-ROYAL(厚声)
+Manufacturer Part
+0603WAF5101T5E
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/0603WAF5101T5E/23913.html
+Supplier
+LCSC
+3D Model Title
+R0603
+Type
+Thick Film Resistor
+Value
+5.1kΩ
+Tolerance
+±1%
+Power(Watts)
+100mW
+Voltage-Supply(Max)
+75V
+Temperature Coefficient
+±100ppm/℃
+Operating Temperature
+-55℃~+155℃
+Name
+5.1kΩ
+Description
+Type:Thick Film Resistor Resistance:5.1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+F1
+FOOTPRINT
+F1206
+PARTTYPE
+JK-NSMD050-13.2V
+DESCRIPTION
+Voltage - Max:13.2V Current - Max:100A Hold Current:500mA Trip Current:1A Power Dissipation:- Resistance - Initial (Ri) (Min):150mΩ Resistance - Post Trip (R1) (Max):700mΩ Time to Trip(Max):100ms Operating Temperature:-40℃~+85℃ Operating Temperature:-40℃~
+Component Kind
+Standard
+Unique ID
+gge4
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+JK-NSMD050-13.2V
+PCB Layer
+Default
+Symbol
+JK-NSMD050-13.2V
+Designator
+F1
+LCSC Part Name
+贴片保险丝 1206 0.5A 13.2V  自恢复保险丝
+Supplier Part
+C369159
+Manufacturer
+JK(金科)
+Manufacturer Part
+JK-NSMD050-13.2V
+Supplier Footprint
+1206
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/JK-NSMD050-13.2V/343072.html
+Supplier
+LCSC
+3D Model Title
+F1206_L3.2-W1.7-H0.6
+Voltage - Max
+13.2V
+Current - Max
+100A
+Hold Current
+500mA
+Trip Current
+1A
+Power Dissipation
+-
+Resistance - Initial (Ri) (Min)
+150mΩ
+Resistance - Post Trip (R1) (Max)
+700mΩ
+Time to Trip(Max)
+100ms
+Operating Temperature
+-40℃~+85℃
+Length
+3.5mm
+Width
+1.8mm
+Height
+0.85mm
+Pitch
+-
+Name
+JK-NSMD050-13.2V
+Description
+Voltage - Max:13.2V Current - Max:100A Hold Current:500mA Trip Current:1A Power Dissipation:- Resistance - Initial (Ri) (Min):150mΩ Resistance - Post Trip (R1) (Max):700mΩ Time to Trip(Max):100ms Operating Temperature:-40℃~+85℃ Operating Temperature:-40℃~
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C7
+FOOTPRINT
+C0603
+PARTTYPE
+CL10A106KP8NNNC
+DESCRIPTION
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R
+Component Kind
+Standard
+Unique ID
+gge5
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CL10A106KP8NNNC
+PCB Layer
+Default
+Symbol
+CL10A106KP8NNNC
+Designator
+C7
+LCSC Part Name
+10uF ±10% 10V
+Supplier Part
+C19702
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL10A106KP8NNNC
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL10A106KP8NNNC/20411.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+10uF
+Tolerance
+±10%
+Voltage Rating
+10V
+Temperature Coefficient
+X5R
+Name
+10uF
+Description
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+U3
+FOOTPRINT
+SOT-223-3_L6.5-W3.4-P2.30-LS7.0-BR
+PARTTYPE
+AMS1117-3.3_C6186
+DESCRIPTION
+Output Configuration:Positive Voltage - Supply:15V Output Voltage:3.3V Output Voltage:3.3V Output Current:1A Power Supply Rejection Ratio (PSRR):72dB@(120Hz) Voltage Dropout:1.1V@(800mA) standby current:5mA Noise:0.003%Vout Features:Short Circuit Protecti
+Component Kind
+Standard
+Unique ID
+gge6
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+AMS1117-3.3_C6186
+PCB Layer
+Default
+Symbol
+AMS1117-3.3
+Designator
+U3
+LCSC Part Name
+3.3V 1A 15V
+Supplier Part
+C6186
+Manufacturer
+Advanced Monolithic Systems
+Manufacturer Part
+AMS1117-3.3
+Supplier Footprint
+SOT-223
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/AMS1117-3.3/6652.html
+Supplier
+LCSC
+3D Model Title
+SOT-223-4P_L6.5-W3.5-H1.6-LS7.0-P2.30
+Output Configuration
+Positive
+Voltage - Supply
+15V
+Output Voltage
+3.3V
+Output Current
+1A
+Power Supply Rejection Ratio (PSRR)
+72dB@(120Hz)
+Voltage Dropout
+1.1V@(800mA)
+standby current
+5mA
+Noise
+0.003%Vout
+Features
+Short Circuit Protection；Thermal shutdown；Over Current Protection
+Operating Temperature
+-40℃~+125℃
+Output Type
+Fixed
+Number of Outputs
+1
+Name
+AMS1117-3.3
+Description
+Output Configuration:Positive Voltage - Supply:15V Output Voltage:3.3V Output Voltage:3.3V Output Current:1A Power Supply Rejection Ratio (PSRR):72dB@(120Hz) Voltage Dropout:1.1V@(800mA) standby current:5mA Noise:0.003%Vout Features:Short Circuit Protecti
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C8
+FOOTPRINT
+C0603
+PARTTYPE
+CL10A106KP8NNNC
+DESCRIPTION
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R
+Component Kind
+Standard
+Unique ID
+gge7
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CL10A106KP8NNNC
+PCB Layer
+Default
+Symbol
+CL10A106KP8NNNC
+Designator
+C8
+LCSC Part Name
+10uF ±10% 10V
+Supplier Part
+C19702
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL10A106KP8NNNC
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL10A106KP8NNNC/20411.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+10uF
+Tolerance
+±10%
+Voltage Rating
+10V
+Temperature Coefficient
+X5R
+Name
+10uF
+Description
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C9
+FOOTPRINT
+C0603
+PARTTYPE
+CL10A106KP8NNNC
+DESCRIPTION
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R
+Component Kind
+Standard
+Unique ID
+gge8
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CL10A106KP8NNNC
+PCB Layer
+Default
+Symbol
+CL10A106KP8NNNC
+Designator
+C9
+LCSC Part Name
+10uF ±10% 10V
+Supplier Part
+C19702
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL10A106KP8NNNC
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL10A106KP8NNNC/20411.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+10uF
+Tolerance
+±10%
+Voltage Rating
+10V
+Temperature Coefficient
+X5R
+Name
+10uF
+Description
+Capacitance:10uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Temperature Coefficient:X5R
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+U2
+FOOTPRINT
+SOP-16_L10.0-W3.9-P1.27-LS6.0-BL
+PARTTYPE
+CH340C
+DESCRIPTION
+Applications Function:Transceiver USB Protocol:USB 2.0 Number of Channels:- Voltage - Supply:3.3V；5V Voltage - Supply:3.3V；5V Data Rate:2Mbps Operating Temperature:-20℃~+70℃ Operating Temperature:-20℃~+70℃ Current - Supply:7mA Quiescent Supply Current:50u
+Component Kind
+Standard
+Unique ID
+gge9
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CH340C
+PCB Layer
+Default
+Name
+CH340C
+Designator
+U2
+Symbol
+CH340C
+LCSC Part Name
+USB转串口芯片
+Supplier Part
+C84681
+Manufacturer
+WCH(沁恒)
+Manufacturer Part
+CH340C
+Supplier Footprint
+SOP-16
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/CH340C/85852.html
+Supplier
+LCSC
+3D Model Title
+SOP-16_L9.9-W3.9-H1.5-LS6.0-P1.27
+Applications Function
+Transceiver
+USB Protocol
+USB 2.0
+Number of Channels
+-
+Voltage - Supply
+3.3V；5V
+Data Rate
+2Mbps
+Operating Temperature
+-20℃~+70℃
+Current - Supply
+7mA
+Quiescent Supply Current
+50uA
+Features
+Programmable baud rate；Built-in clock generator；Power-on reset
+Description
+Applications Function:Transceiver USB Protocol:USB 2.0 Number of Channels:- Voltage - Supply:3.3V；5V Voltage - Supply:3.3V；5V Data Rate:2Mbps Operating Temperature:-20℃~+70℃ Operating Temperature:-20℃~+70℃ Current - Supply:7mA Quiescent Supply Current:50u
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C1
+FOOTPRINT
+C0603
+PARTTYPE
+CC0603KRX7R9BB104
+DESCRIPTION
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Component Kind
+Standard
+Unique ID
+gge10
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CC0603KRX7R9BB104
+PCB Layer
+Default
+Name
+100nF
+Designator
+C1
+Symbol
+CC0603KRX7R9BB104
+LCSC Part Name
+100nF ±10% 50V
+Supplier Part
+C14663
+Manufacturer
+YAGEO(国巨)
+Manufacturer Part
+CC0603KRX7R9BB104
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CC0603KRX7R9BB104/15331.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+100nF
+Tolerance
+±10%
+Voltage Rating
+50V
+Temperature Coefficient
+X7R
+Description
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C2
+FOOTPRINT
+C0603
+PARTTYPE
+CC0603KRX7R9BB104
+DESCRIPTION
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Component Kind
+Standard
+Unique ID
+gge11
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CC0603KRX7R9BB104
+PCB Layer
+Default
+Name
+100nF
+Designator
+C2
+Symbol
+CC0603KRX7R9BB104
+LCSC Part Name
+100nF ±10% 50V
+Supplier Part
+C14663
+Manufacturer
+YAGEO(国巨)
+Manufacturer Part
+CC0603KRX7R9BB104
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CC0603KRX7R9BB104/15331.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+100nF
+Tolerance
+±10%
+Voltage Rating
+50V
+Temperature Coefficient
+X7R
+Description
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C3
+FOOTPRINT
+C0603
+PARTTYPE
+CC0603KRX7R9BB104
+DESCRIPTION
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Component Kind
+Standard
+Unique ID
+gge12
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CC0603KRX7R9BB104
+PCB Layer
+Default
+Name
+100nF
+Designator
+C3
+Symbol
+CC0603KRX7R9BB104
+LCSC Part Name
+100nF ±10% 50V
+Supplier Part
+C14663
+Manufacturer
+YAGEO(国巨)
+Manufacturer Part
+CC0603KRX7R9BB104
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CC0603KRX7R9BB104/15331.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+100nF
+Tolerance
+±10%
+Voltage Rating
+50V
+Temperature Coefficient
+X7R
+Description
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+R3
+FOOTPRINT
+R0603
+PARTTYPE
+0603WAF1001T5E
+DESCRIPTION
+Type:Thick Film Resistor Resistance:1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Component Kind
+Standard
+Unique ID
+gge13
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+0603WAF1001T5E
+PCB Layer
+Default
+Symbol
+0603WAF1001T5E
+Designator
+R3
+LCSC Part Name
+1kΩ ±1% 100mW 厚膜电阻
+Supplier Part
+C21190
+Manufacturer
+UNI-ROYAL(厚声)
+Manufacturer Part
+0603WAF1001T5E
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/0603WAF1001T5E/21904.html
+Supplier
+LCSC
+3D Model Title
+R0603
+Type
+Thick Film Resistor
+Value
+1kΩ
+Tolerance
+±1%
+Power(Watts)
+100mW
+Voltage-Supply(Max)
+75V
+Temperature Coefficient
+±100ppm/℃
+Operating Temperature
+-55℃~+155℃
+Name
+1kΩ
+Description
+Type:Thick Film Resistor Resistance:1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+R4
+FOOTPRINT
+R0603
+PARTTYPE
+0603WAF1001T5E
+DESCRIPTION
+Type:Thick Film Resistor Resistance:1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Component Kind
+Standard
+Unique ID
+gge14
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+0603WAF1001T5E
+PCB Layer
+Default
+Symbol
+0603WAF1001T5E
+Designator
+R4
+LCSC Part Name
+1kΩ ±1% 100mW 厚膜电阻
+Supplier Part
+C21190
+Manufacturer
+UNI-ROYAL(厚声)
+Manufacturer Part
+0603WAF1001T5E
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/0603WAF1001T5E/21904.html
+Supplier
+LCSC
+3D Model Title
+R0603
+Type
+Thick Film Resistor
+Value
+1kΩ
+Tolerance
+±1%
+Power(Watts)
+100mW
+Voltage-Supply(Max)
+75V
+Temperature Coefficient
+±100ppm/℃
+Operating Temperature
+-55℃~+155℃
+Name
+1kΩ
+Description
+Type:Thick Film Resistor Resistance:1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+U1
+FOOTPRINT
+TQFP-32_L7.0-W7.0-P0.80-LS9.0-BL
+PARTTYPE
+ATMEGA328P-AU_C14877
+DESCRIPTION
+CPU Core:AVR CPU Maximum Speed:20MHz Core Size:8 Bit Program Storage Size:32KB Program Memory Type:FLASH RAM Size:2KB EEPROM:1KB Number of I/O:23 ADC (Bit):10bit Oscillator Type:Built-in Voltage - Supply:1.8V~5.5V Voltage - Supply:1.8V~5.5V Operating Temp
+Component Kind
+Standard
+Unique ID
+gge15
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+ATMEGA328P-AU_C14877
+PCB Layer
+Default
+Symbol
+ATMEGA328P-AU
+Designator
+U1
+LCSC Part Name
+基于AVR增强型RISC架构的低功耗CMOS 8位微控制器
+Supplier Part
+C14877
+Manufacturer
+MICROCHIP(美国微芯)
+Manufacturer Part
+ATMEGA328P-AU
+Supplier Footprint
+TQFP-32(7x7)
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/ATMEGA328P-AU/15549.html
+Supplier
+LCSC
+3D Model Title
+TQFP-32_L7.0-W7.0-H1.2-LS9.0-P0.80
+CPU Core
+AVR
+CPU Maximum Speed
+20MHz
+Core Size
+8 Bit
+Program Storage Size
+32KB
+Program Memory Type
+FLASH
+RAM Size
+2KB
+EEPROM
+1KB
+Number of I/O
+23
+ADC (Bit)
+10bit
+Oscillator Type
+Built-in
+Voltage - Supply
+1.8V~5.5V
+Operating Temperature
+-40℃~+85℃
+Features
+External pin reset (NRST)；Built-in general-purpose timer；Power-on reset (POR)；Touch function；Undervoltage detection (BOR/LVD/LVR/LVI)；Programmable watchdog
+Name
+ATMEGA328P-AU
+Description
+CPU Core:AVR CPU Maximum Speed:20MHz Core Size:8 Bit Program Storage Size:32KB Program Memory Type:FLASH RAM Size:2KB EEPROM:1KB Number of I/O:23 ADC (Bit):10bit Oscillator Type:Built-in Voltage - Supply:1.8V~5.5V Voltage - Supply:1.8V~5.5V Operating Temp
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+Y1
+FOOTPRINT
+CRYSTAL-SMD_4P-L3.2-W2.5-BL
+PARTTYPE
+X322516MLB4SI
+DESCRIPTION
+Type:Crystal Oscillator Frequency:16MHz Normal temperature Frequency Tolerance:±10ppm Normal temperature Frequency Tolerance:±10ppm Load Capacitance:9pF Frequency Stability:±20ppm Frequency Stability:±20ppm Equivalent Series Resistance(ESR):50Ω Operating
+Component Kind
+Standard
+Unique ID
+gge16
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+X322516MLB4SI
+PCB Layer
+Default
+Symbol
+X322516MLB4SI
+Designator
+Y1
+LCSC Part Name
+YSX321SL 16MHZ 4P 3225 9PF ±10PPM -40~85℃ (±20PPM)
+Supplier Part
+C13738
+Manufacturer
+YXC(扬兴晶振)
+Manufacturer Part
+X322516MLB4SI
+Supplier Footprint
+SMD3225-4P
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/X322516MLB4SI/14393.html
+Supplier
+LCSC
+3D Model Title
+CRYSTAL-SMD_4P-L3.2-W2.5-BL
+Type
+Crystal Oscillator
+Value
+16MHz
+Normal temperature Frequency Tolerance
+±10ppm
+Load Capacitance
+9pF
+Frequency Stability
+±20ppm
+Equivalent Series Resistance(ESR)
+50Ω
+Operating Temperature
+-40℃~+85℃
+Name
+16MHz
+Description
+Type:Crystal Oscillator Frequency:16MHz Normal temperature Frequency Tolerance:±10ppm Normal temperature Frequency Tolerance:±10ppm Load Capacitance:9pF Frequency Stability:±20ppm Frequency Stability:±20ppm Equivalent Series Resistance(ESR):50Ω Operating
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C10
+FOOTPRINT
+C0603
+PARTTYPE
+CL10C150JB8NNNC
+DESCRIPTION
+Capacitance:15pF Tolerance:±5% Tolerance:±5% Voltage Rating:50V Temperature Coefficient:C0G
+Component Kind
+Standard
+Unique ID
+gge17
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CL10C150JB8NNNC
+PCB Layer
+Default
+Symbol
+CL10C150JB8NNNC
+Designator
+C10
+LCSC Part Name
+15pF ±5% 50V
+Supplier Part
+C1644
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL10C150JB8NNNC
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL10C150JB8NNNC/1996.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+15pF
+Tolerance
+±5%
+Voltage Rating
+50V
+Temperature Coefficient
+C0G
+Name
+15pF
+Description
+Capacitance:15pF Tolerance:±5% Tolerance:±5% Voltage Rating:50V Temperature Coefficient:C0G
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C11
+FOOTPRINT
+C0603
+PARTTYPE
+CL10C150JB8NNNC
+DESCRIPTION
+Capacitance:15pF Tolerance:±5% Tolerance:±5% Voltage Rating:50V Temperature Coefficient:C0G
+Component Kind
+Standard
+Unique ID
+gge18
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CL10C150JB8NNNC
+PCB Layer
+Default
+Symbol
+CL10C150JB8NNNC
+Designator
+C11
+LCSC Part Name
+15pF ±5% 50V
+Supplier Part
+C1644
+Manufacturer
+SAMSUNG(三星)
+Manufacturer Part
+CL10C150JB8NNNC
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CL10C150JB8NNNC/1996.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+15pF
+Tolerance
+±5%
+Voltage Rating
+50V
+Temperature Coefficient
+C0G
+Name
+15pF
+Description
+Capacitance:15pF Tolerance:±5% Tolerance:±5% Voltage Rating:50V Temperature Coefficient:C0G
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C4
+FOOTPRINT
+C0603
+PARTTYPE
+CC0603KRX7R9BB104
+DESCRIPTION
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Component Kind
+Standard
+Unique ID
+gge19
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CC0603KRX7R9BB104
+PCB Layer
+Default
+Name
+100nF
+Designator
+C4
+Symbol
+CC0603KRX7R9BB104
+LCSC Part Name
+100nF ±10% 50V
+Supplier Part
+C14663
+Manufacturer
+YAGEO(国巨)
+Manufacturer Part
+CC0603KRX7R9BB104
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CC0603KRX7R9BB104/15331.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+100nF
+Tolerance
+±10%
+Voltage Rating
+50V
+Temperature Coefficient
+X7R
+Description
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C5
+FOOTPRINT
+C0603
+PARTTYPE
+CC0603KRX7R9BB104
+DESCRIPTION
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Component Kind
+Standard
+Unique ID
+gge20
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CC0603KRX7R9BB104
+PCB Layer
+Default
+Name
+100nF
+Designator
+C5
+Symbol
+CC0603KRX7R9BB104
+LCSC Part Name
+100nF ±10% 50V
+Supplier Part
+C14663
+Manufacturer
+YAGEO(国巨)
+Manufacturer Part
+CC0603KRX7R9BB104
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CC0603KRX7R9BB104/15331.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+100nF
+Tolerance
+±10%
+Voltage Rating
+50V
+Temperature Coefficient
+X7R
+Description
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+C6
+FOOTPRINT
+C0603
+PARTTYPE
+CC0603KRX7R9BB104
+DESCRIPTION
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Component Kind
+Standard
+Unique ID
+gge21
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+CC0603KRX7R9BB104
+PCB Layer
+Default
+Name
+100nF
+Designator
+C6
+Symbol
+CC0603KRX7R9BB104
+LCSC Part Name
+100nF ±10% 50V
+Supplier Part
+C14663
+Manufacturer
+YAGEO(国巨)
+Manufacturer Part
+CC0603KRX7R9BB104
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/CC0603KRX7R9BB104/15331.html
+Supplier
+LCSC
+3D Model Title
+C0603_L1.6-W0.8-H0.8
+Value
+100nF
+Tolerance
+±10%
+Voltage Rating
+50V
+Temperature Coefficient
+X7R
+Description
+Capacitance:100nF Tolerance:±10% Tolerance:±10% Voltage Rating:50V Temperature Coefficient:X7R
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+R9
+FOOTPRINT
+R0603
+PARTTYPE
+0603WAF1002T5E
+DESCRIPTION
+Type:Thick Film Resistor Resistance:10kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Component Kind
+Standard
+Unique ID
+gge23
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+0603WAF1002T5E
+PCB Layer
+Default
+Designator
+R9
+Symbol
+0603WAF1002T5E
+LCSC Part Name
+厚膜电阻 10kΩ ±1% 100mW
+Supplier Part
+C25804
+Manufacturer
+UNI-ROYAL(厚声)
+Manufacturer Part
+0603WAF1002T5E
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/0603WAF1002T5E/26547.html
+Supplier
+LCSC
+3D Model Title
+R0603
+Type
+Thick Film Resistor
+Value
+10kΩ
+Tolerance
+±1%
+Power(Watts)
+100mW
+Voltage-Supply(Max)
+75V
+Temperature Coefficient
+±100ppm/℃
+Operating Temperature
+-55℃~+155℃
+Name
+10kΩ
+Description
+Type:Thick Film Resistor Resistance:10kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+D1
+FOOTPRINT
+SOD-323_L1.8-W1.3-LS2.5-RD
+PARTTYPE
+1N4148WS_C2128
+DESCRIPTION
+Diode Configuration:Standalone Pd - Power Dissipation:200mW Current - Rectified:150mA Voltage - DC Reverse(Vr):100V Voltage - Forward(Vf@If):1.25V@150mA Non-Repetitive Peak Forward Surge Current:2A Reverse Leakage Current (Ir):1uA@75V Reverse Recovery Tim
+Component Kind
+Standard
+Unique ID
+gge25
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+1N4148WS_C2128
+PCB Layer
+Default
+Symbol
+1N4148WS T4
+Designator
+D1
+LCSC Part Name
+丝印T4 100V 150mA
+Supplier Part
+C2128
+Manufacturer
+CJ(江苏长电/长晶)
+Manufacturer Part
+1N4148WS
+Supplier Footprint
+SOD-323
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/1N4148WS/2485.html
+Supplier
+LCSC
+3D Model Title
+SOD-323_L1.8-W1.3-LS2.5-RD
+Diode Configuration
+Standalone
+Pd - Power Dissipation
+200mW
+Current - Rectified
+150mA
+Voltage - DC Reverse(Vr)
+100V
+Voltage - Forward(Vf@If)
+1.25V@150mA
+Non-Repetitive Peak Forward Surge Current
+2A
+Reverse Leakage Current (Ir)
+1uA@75V
+Reverse Recovery Time (trr)
+4ns
+Operating Junction Temperature Range
+-
+Name
+1N4148WS
+Description
+Diode Configuration:Standalone Pd - Power Dissipation:200mW Current - Rectified:150mA Voltage - DC Reverse(Vr):100V Voltage - Forward(Vf@If):1.25V@150mA Non-Repetitive Peak Forward Surge Current:2A Reverse Leakage Current (Ir):1uA@75V Reverse Recovery Tim
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+SW1
+FOOTPRINT
+SW-SMD_4P-L5.1-W5.1-P3.70-LS6.5-TL_H1.5
+PARTTYPE
+TS-1187A-B-A-B
+DESCRIPTION
+Circuit:SPST Actuator Style:Round Button Operating Force:1.6N Mounting Type:Surface Mount,Vertical Length:5.1mm Width:5.1mm Switch Height:1.5mm with Bracket:Without Bracket Contact Current:50mA Voltage Rating:12V Actuator/Cap Color:Gold With Lamp:No Life:
+Component Kind
+Standard
+Unique ID
+gge27
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+TS-1187A-B-A-B
+PCB Layer
+Default
+Symbol
+TS-1187A-B-A-B
+Designator
+SW1
+LCSC Part Name
+5.1*5.1*1.5mm 立贴 轻触开关
+Supplier Part
+C318884
+Manufacturer
+XKB Connection(中国星坤)
+Manufacturer Part
+TS-1187A-B-A-B
+Supplier Footprint
+SMD-4P,5.1x5.1mm
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/TS-1187A-B-A-B/299976.html
+Supplier
+LCSC
+3D Model Title
+SW-SMD_4P-L5.1-W5.1-P3.70-LS6.5-TL_H1.5
+Circuit
+SPST
+Actuator Style
+Round Button
+Operating Force
+1.6N
+Mounting Type
+Surface Mount,Vertical
+Length
+5.1mm
+Width
+5.1mm
+Switch Height
+1.5mm
+with Bracket
+Without Bracket
+Contact Current
+50mA
+Voltage Rating
+12V
+Actuator/Cap Color
+Gold
+With Lamp
+No
+Life
+100,000 cycles
+Operating Temperature
+-30℃~+85℃
+Name
+TS-1187A-B-A-B
+Description
+Circuit:SPST Actuator Style:Round Button Operating Force:1.6N Mounting Type:Surface Mount,Vertical Length:5.1mm Width:5.1mm Switch Height:1.5mm with Bracket:Without Bracket Contact Current:50mA Voltage Rating:12V Actuator/Cap Color:Gold With Lamp:No Life:
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+J_DIG_HI
+FOOTPRINT
+HDR-TH_10P-P2.54-V-F
+PARTTYPE
+PM2.54-1*10
+DESCRIPTION
+Holes Structure:1x10P Pitch:2.54mm Row Spacing:2.54mm Circular Hole / Square Hole:Square Hole Mounting Type:Through Hole Number of Rows:1 Number of Positions:10P Current Rating:2.5A Holes Direction:Top Insulation Height:8.5mm Contact Material:Brass Contac
+Component Kind
+Standard
+Unique ID
+gge29
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+PM2.54-1*10
+PCB Layer
+Default
+Symbol
+PM2.54-1*10
+Designator
+J_DIG_HI
+Supplier
+LCSC
+Supplier Part
+C5116489
+Manufacturer
+ZHOURI(洲日)
+Manufacturer Part
+PM2.54-1*10
+JLCPCB Part Class
+Extended Part
+LCSC Part Name
+1x10P 间距:2.54mm 直插
+Supplier Footprint
+插件,P=2.54mm
+Datasheet
+https://item.szlcsc.com/datasheet/PM2.54-1*10/5692732.html
+3D Model Title
+HDR-TH_10P-P2.54-F-LI-1X10P
+Holes Structure
+1x10P
+Pitch
+2.54mm
+Row Spacing
+2.54mm
+Circular Hole / Square Hole
+Square Hole
+Mounting Type
+Through Hole
+Number of Rows
+1
+Number of Positions
+10P
+Current Rating
+2.5A
+Holes Direction
+Top
+Insulation Height
+8.5mm
+Contact Material
+Brass
+Contact Plating
+Gold
+Operating Temperature
+-40℃~+105℃
+PIN Length
+3.2mm
+Name
+PM2.54-1*10
+Description
+Holes Structure:1x10P Pitch:2.54mm Row Spacing:2.54mm Circular Hole / Square Hole:Square Hole Mounting Type:Through Hole Number of Rows:1 Number of Positions:10P Current Rating:2.5A Holes Direction:Top Insulation Height:8.5mm Contact Material:Brass Contac
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+J_DIG_LO
+FOOTPRINT
+HDR-TH_8P-P2.54-V-F
+PARTTYPE
+PM2.54-1*8
+DESCRIPTION
+Holes Structure:1x8P Pitch:2.54mm Row Spacing:2.54mm Circular Hole / Square Hole:Square Hole Mounting Type:Through Hole Number of Rows:1 Number of Positions:8P Current Rating:2.5A Holes Direction:Top Insulation Height:8.5mm Contact Material:Brass Contact
+Component Kind
+Standard
+Unique ID
+gge31
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+PM2.54-1*8
+PCB Layer
+Default
+Symbol
+PM2.54-1*8
+Designator
+J_DIG_LO
+LCSC Part Name
+1x8P 间距:2.54mm 直插
+Supplier Part
+C5224027
+Manufacturer
+ZHOURI(洲日)
+Manufacturer Part
+PM2.54-1*8
+Supplier Footprint
+插件,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/PM2.54-1*8/5925206.html
+Supplier
+LCSC
+3D Model Title
+HDR-TH_8P-P2.54-V-F
+Holes Structure
+1x8P
+Pitch
+2.54mm
+Row Spacing
+2.54mm
+Circular Hole / Square Hole
+Square Hole
+Mounting Type
+Through Hole
+Number of Rows
+1
+Number of Positions
+8P
+Current Rating
+2.5A
+Holes Direction
+Top
+Insulation Height
+8.5mm
+Contact Material
+Brass
+Contact Plating
+Gold
+Operating Temperature
+-40℃~+105℃
+PIN Length
+3.2mm
+Name
+PM2.54-1*8
+Description
+Holes Structure:1x8P Pitch:2.54mm Row Spacing:2.54mm Circular Hole / Square Hole:Square Hole Mounting Type:Through Hole Number of Rows:1 Number of Positions:8P Current Rating:2.5A Holes Direction:Top Insulation Height:8.5mm Contact Material:Brass Contact
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+J_POWER
+FOOTPRINT
+HDR-TH_8P-P2.54-V-F
+PARTTYPE
+PM2.54-1*8
+DESCRIPTION
+Holes Structure:1x8P Pitch:2.54mm Row Spacing:2.54mm Circular Hole / Square Hole:Square Hole Mounting Type:Through Hole Number of Rows:1 Number of Positions:8P Current Rating:2.5A Holes Direction:Top Insulation Height:8.5mm Contact Material:Brass Contact
+Component Kind
+Standard
+Unique ID
+gge32
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+PM2.54-1*8
+PCB Layer
+Default
+Symbol
+PM2.54-1*8
+Designator
+J_POWER
+LCSC Part Name
+1x8P 间距:2.54mm 直插
+Supplier Part
+C5224027
+Manufacturer
+ZHOURI(洲日)
+Manufacturer Part
+PM2.54-1*8
+Supplier Footprint
+插件,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/PM2.54-1*8/5925206.html
+Supplier
+LCSC
+3D Model Title
+HDR-TH_8P-P2.54-V-F
+Holes Structure
+1x8P
+Pitch
+2.54mm
+Row Spacing
+2.54mm
+Circular Hole / Square Hole
+Square Hole
+Mounting Type
+Through Hole
+Number of Rows
+1
+Number of Positions
+8P
+Current Rating
+2.5A
+Holes Direction
+Top
+Insulation Height
+8.5mm
+Contact Material
+Brass
+Contact Plating
+Gold
+Operating Temperature
+-40℃~+105℃
+PIN Length
+3.2mm
+Name
+PM2.54-1*8
+Description
+Holes Structure:1x8P Pitch:2.54mm Row Spacing:2.54mm Circular Hole / Square Hole:Square Hole Mounting Type:Through Hole Number of Rows:1 Number of Positions:8P Current Rating:2.5A Holes Direction:Top Insulation Height:8.5mm Contact Material:Brass Contact
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+J_ANALOG
+FOOTPRINT
+HDR-TH_6P-P2.54-V-F_4
+PARTTYPE
+PM2.54-1*6
+DESCRIPTION
+Holes Structure:1x6P Pitch:2.54mm Row Spacing:2.54mm Circular Hole / Square Hole:Square Hole Mounting Type:Through Hole Number of Rows:1 Number of Positions:6P Current Rating:2.5A Holes Direction:Top Insulation Height:8.5mm Contact Material:Brass Contact
+Component Kind
+Standard
+Unique ID
+gge33
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+PM2.54-1*6
+PCB Layer
+Default
+Symbol
+PM2.54-1*6
+Designator
+J_ANALOG
+LCSC Part Name
+1x6P 间距:2.54mm 直插
+Supplier Part
+C5224026
+Manufacturer
+ZHOURI(洲日)
+Manufacturer Part
+PM2.54-1*6
+Supplier Footprint
+插件,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/PM2.54-1*6/5925205.html
+Supplier
+LCSC
+3D Model Title
+HDR-TH_6P-P2.54-V-F_4
+Holes Structure
+1x6P
+Pitch
+2.54mm
+Row Spacing
+2.54mm
+Circular Hole / Square Hole
+Square Hole
+Mounting Type
+Through Hole
+Number of Rows
+1
+Number of Positions
+6P
+Current Rating
+2.5A
+Holes Direction
+Top
+Insulation Height
+8.5mm
+Contact Material
+Brass
+Contact Plating
+Gold
+Operating Temperature
+-40℃~+105℃
+PIN Length
+3.2mm
+Name
+PM2.54-1*6
+Description
+Holes Structure:1x6P Pitch:2.54mm Row Spacing:2.54mm Circular Hole / Square Hole:Square Hole Mounting Type:Through Hole Number of Rows:1 Number of Positions:6P Current Rating:2.5A Holes Direction:Top Insulation Height:8.5mm Contact Material:Brass Contact
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+J_ICSP
+FOOTPRINT
+HDR-TH_6P-P2.54-V-R2-C3-S2.54_A2541WV-2X3P
+PARTTYPE
+2.54-2*3
+DESCRIPTION
+Pin Structure:2x3P Pitch:2.54mm Row Spacing:2.54mm Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:2 Number of Pins:6P Current Rating:2.5A Length of Mating Pin:6mm Insulation Height:2.54mm Length of End Connection Pin:3mm Co
+Component Kind
+Standard
+Unique ID
+gge34
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+2.54-2*3
+PCB Layer
+Default
+Symbol
+2.54-2*3
+Designator
+J_ICSP
+LCSC Part Name
+2x3P 间距:2.54mm 方针 直插
+Supplier Part
+C5116479
+Manufacturer
+ZHOURI(洲日)
+Manufacturer Part
+2.54-2*3
+Supplier Footprint
+插件,P=2.54mm
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/2.54-2*3/5692722.html
+Supplier
+LCSC
+3D Model Title
+HDR2.54-M-LI-2x3P
+Pin Structure
+2x3P
+Pitch
+2.54mm
+Row Spacing
+2.54mm
+Circluar Pins/Square Pins
+Pin Header
+Mounting Type
+Through Hole
+Number of Rows
+2
+Number of Pins
+6P
+Current Rating
+2.5A
+Length of Mating Pin
+6mm
+Insulation Height
+2.54mm
+Length of End Connection Pin
+3mm
+Contact Material
+Brass
+Contact Plating
+Gold
+Operating Temperature
+-40℃~+105℃
+Name
+2.54-2*3
+Description
+Pin Structure:2x3P Pitch:2.54mm Row Spacing:2.54mm Circluar Pins/Square Pins:Pin Header Mounting Type:Through Hole Number of Rows:2 Number of Pins:6P Current Rating:2.5A Length of Mating Pin:6mm Insulation Height:2.54mm Length of End Connection Pin:3mm Co
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+R5
+FOOTPRINT
+R0603
+PARTTYPE
+0603WAF1001T5E
+DESCRIPTION
+Type:Thick Film Resistor Resistance:1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Component Kind
+Standard
+Unique ID
+gge35
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+0603WAF1001T5E
+PCB Layer
+Default
+Symbol
+0603WAF1001T5E
+Designator
+R5
+LCSC Part Name
+1kΩ ±1% 100mW 厚膜电阻
+Supplier Part
+C21190
+Manufacturer
+UNI-ROYAL(厚声)
+Manufacturer Part
+0603WAF1001T5E
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/0603WAF1001T5E/21904.html
+Supplier
+LCSC
+3D Model Title
+R0603
+Type
+Thick Film Resistor
+Value
+1kΩ
+Tolerance
+±1%
+Power(Watts)
+100mW
+Voltage-Supply(Max)
+75V
+Temperature Coefficient
+±100ppm/℃
+Operating Temperature
+-55℃~+155℃
+Name
+1kΩ
+Description
+Type:Thick Film Resistor Resistance:1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+LED_PWR
+FOOTPRINT
+LED0603-RD
+PARTTYPE
+KT-0603G
+DESCRIPTION
+Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color:Emerald Green Voltage - Forward(Vf):3.1V Voltage - Forward(Vf):3.1V Power(Watts):100mW Forward Current:5mA Wavelength - Dominant:513nm~528nm Wavelength - Dominant:513nm~528nm Peak Wavelength:525
+Component Kind
+Standard
+Unique ID
+gge36
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+KT-0603G
+PCB Layer
+Default
+Symbol
+0603 Green 509-620mcd
+Designator
+LED_PWR
+LCSC Part Name
+0603 翠绿 高亮
+Supplier Part
+C12624
+Manufacturer
+KENTO
+Manufacturer Part
+KT-0603G
+Supplier Footprint
+0603
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/KT-0603G/13258.html
+Supplier
+LCSC
+3D Model Title
+LED0603-RD
+Lamp Holder Type
+1.6mm x 0.8mm square LED
+Illumination Color
+Emerald Green
+Voltage - Forward(Vf)
+3.1V
+Power(Watts)
+100mW
+Forward Current
+5mA
+Wavelength - Dominant
+513nm~528nm
+Peak Wavelength
+525nm
+Diode Configuration
+Discrete Diode
+Lens Color
+Water Clear
+Color Temperature
+-
+Luminous Intensity
+430mcd
+Viewing Angle
+120°
+Mounting Style
+-
+Operating Temperature
+-40℃~+85℃
+Name
+KT-0603G
+Description
+Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color:Emerald Green Voltage - Forward(Vf):3.1V Voltage - Forward(Vf):3.1V Power(Watts):100mW Forward Current:5mA Wavelength - Dominant:513nm~528nm Wavelength - Dominant:513nm~528nm Peak Wavelength:525
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+R8
+FOOTPRINT
+R0603
+PARTTYPE
+0603WAF2201T5E_C4190
+DESCRIPTION
+Type:Thick Film Resistor Resistance:2.2kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Component Kind
+Standard
+Unique ID
+gge37
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+0603WAF2201T5E_C4190
+PCB Layer
+Default
+Symbol
+0603WAF2201T5E
+Designator
+R8
+LCSC Part Name
+厚膜电阻 2.2kΩ ±1%
+Supplier Part
+C4190
+Manufacturer
+UNI-ROYAL(厚声)
+Manufacturer Part
+0603WAF2201T5E
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/0603WAF2201T5E/4597.html
+Supplier
+LCSC
+3D Model Title
+R0603
+Type
+Thick Film Resistor
+Value
+2.2kΩ
+Tolerance
+±1%
+Power(Watts)
+100mW
+Voltage-Supply(Max)
+75V
+Temperature Coefficient
+±100ppm/℃
+Operating Temperature
+-55℃~+155℃
+Name
+2.2kΩ
+Description
+Type:Thick Film Resistor Resistance:2.2kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+LED_L
+FOOTPRINT
+LED0603-R-RD
+PARTTYPE
+KT-0603Y
+DESCRIPTION
+Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color:Yellow Voltage - Forward(Vf):2.4V Voltage - Forward(Vf):2.4V Power(Watts):40mW Forward Current:- Wavelength - Dominant:584nm~594nm Wavelength - Dominant:584nm~594nm Peak Wavelength:596nm Peak Wa
+Component Kind
+Standard
+Unique ID
+gge39
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+KT-0603Y
+PCB Layer
+Default
+Symbol
+0603YYellow light 90-110
+Designator
+LED_L
+LCSC Part Name
+0603 黄灯 高亮
+Supplier Part
+C2287
+Manufacturer
+KENTO
+Manufacturer Part
+KT-0603Y
+Supplier Footprint
+0603
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/KT-0603Y/2660.html
+Supplier
+LCSC
+3D Model Title
+LED0603-R-RD
+Lamp Holder Type
+1.6mm x 0.8mm square LED
+Illumination Color
+Yellow
+Voltage - Forward(Vf)
+2.4V
+Power(Watts)
+40mW
+Forward Current
+-
+Wavelength - Dominant
+584nm~594nm
+Peak Wavelength
+596nm
+Diode Configuration
+Discrete Diode
+Lens Color
+Water Clear
+Color Temperature
+-
+Luminous Intensity
+175mcd
+Viewing Angle
+120°
+Mounting Style
+-
+Operating Temperature
+-40℃~+85℃
+Name
+KT-0603Y
+Description
+Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color:Yellow Voltage - Forward(Vf):2.4V Voltage - Forward(Vf):2.4V Power(Watts):40mW Forward Current:- Wavelength - Dominant:584nm~594nm Wavelength - Dominant:584nm~594nm Peak Wavelength:596nm Peak Wa
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+R6
+FOOTPRINT
+R0603
+PARTTYPE
+0603WAF1001T5E
+DESCRIPTION
+Type:Thick Film Resistor Resistance:1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Component Kind
+Standard
+Unique ID
+gge40
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+0603WAF1001T5E
+PCB Layer
+Default
+Symbol
+0603WAF1001T5E
+Designator
+R6
+LCSC Part Name
+1kΩ ±1% 100mW 厚膜电阻
+Supplier Part
+C21190
+Manufacturer
+UNI-ROYAL(厚声)
+Manufacturer Part
+0603WAF1001T5E
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/0603WAF1001T5E/21904.html
+Supplier
+LCSC
+3D Model Title
+R0603
+Type
+Thick Film Resistor
+Value
+1kΩ
+Tolerance
+±1%
+Power(Watts)
+100mW
+Voltage-Supply(Max)
+75V
+Temperature Coefficient
+±100ppm/℃
+Operating Temperature
+-55℃~+155℃
+Name
+1kΩ
+Description
+Type:Thick Film Resistor Resistance:1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+LED_TX
+FOOTPRINT
+LED-SMD_L1.6-W0.8-R-RD
+PARTTYPE
+KT-0603R
+DESCRIPTION
+Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color:Red Voltage - Forward(Vf):1.8V~2.4V Voltage - Forward(Vf):1.8V~2.4V Power(Watts):40mW Forward Current:20mA Wavelength - Dominant:615nm~630nm Wavelength - Dominant:615nm~630nm Peak Wavelength:645
+Component Kind
+Standard
+Unique ID
+gge41
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+KT-0603R
+PCB Layer
+Default
+Symbol
+KT-0603R
+Designator
+LED_TX
+LCSC Part Name
+0603 红灯 高亮
+Supplier Part
+C2286
+Manufacturer
+KENTO
+Manufacturer Part
+KT-0603R
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/KT-0603R/2659.html
+Supplier
+LCSC
+3D Model Title
+LED0603_L1.6-W0.8-H0.6
+Lamp Holder Type
+1.6mm x 0.8mm square LED
+Illumination Color
+Red
+Voltage - Forward(Vf)
+1.8V~2.4V
+Power(Watts)
+40mW
+Forward Current
+20mA
+Wavelength - Dominant
+615nm~630nm
+Peak Wavelength
+645nm
+Diode Configuration
+Discrete Diode
+Lens Color
+Water Clear
+Color Temperature
+-
+Luminous Intensity
+300mcd
+Viewing Angle
+120°
+Mounting Style
+-
+Operating Temperature
+-40℃~+85℃
+Name
+KT-0603R
+Description
+Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color:Red Voltage - Forward(Vf):1.8V~2.4V Voltage - Forward(Vf):1.8V~2.4V Power(Watts):40mW Forward Current:20mA Wavelength - Dominant:615nm~630nm Wavelength - Dominant:615nm~630nm Peak Wavelength:645
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+R7
+FOOTPRINT
+R0603
+PARTTYPE
+0603WAF1001T5E
+DESCRIPTION
+Type:Thick Film Resistor Resistance:1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Component Kind
+Standard
+Unique ID
+gge42
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+0603WAF1001T5E
+PCB Layer
+Default
+Symbol
+0603WAF1001T5E
+Designator
+R7
+LCSC Part Name
+1kΩ ±1% 100mW 厚膜电阻
+Supplier Part
+C21190
+Manufacturer
+UNI-ROYAL(厚声)
+Manufacturer Part
+0603WAF1001T5E
+Supplier Footprint
+0603
+JLCPCB Part Class
+Basic Part
+Datasheet
+https://item.szlcsc.com/datasheet/0603WAF1001T5E/21904.html
+Supplier
+LCSC
+3D Model Title
+R0603
+Type
+Thick Film Resistor
+Value
+1kΩ
+Tolerance
+±1%
+Power(Watts)
+100mW
+Voltage-Supply(Max)
+75V
+Temperature Coefficient
+±100ppm/℃
+Operating Temperature
+-55℃~+155℃
+Name
+1kΩ
+Description
+Type:Thick Film Resistor Resistance:1kΩ Tolerance:±1% Tolerance:±1% Power(Watts):100mW Voltage-Supply(Max):75V Temperature Coefficient:±100ppm/℃ Temperature Coefficient:±100ppm/℃ Operating Temperature:-55℃~+155℃ Operating Temperature:-55℃~+155℃
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+[
+DESIGNATOR
+LED_RX
+FOOTPRINT
+LED0603-RD
+PARTTYPE
+KT-0603B
+DESCRIPTION
+Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color:Blue Voltage - Forward(Vf):3.1V Voltage - Forward(Vf):3.1V Power(Watts):100mW Forward Current:5mA Wavelength - Dominant:460nm~475nm Wavelength - Dominant:460nm~475nm Peak Wavelength:469nm Peak W
+Component Kind
+Standard
+Unique ID
+gge43
+Add into BOM
+yes
+Convert to PCB
+yes
+Device
+KT-0603B
+PCB Layer
+Default
+Symbol
+Blue light 0603
+Designator
+LED_RX
+LCSC Part Name
+0603 蓝灯 高亮
+Supplier Part
+C2288
+Manufacturer
+KENTO
+Manufacturer Part
+KT-0603B
+Supplier Footprint
+0603
+JLCPCB Part Class
+Extended Part
+Datasheet
+https://item.szlcsc.com/datasheet/KT-0603B/2661.html
+Supplier
+LCSC
+3D Model Title
+LED0603-RD
+Lamp Holder Type
+1.6mm x 0.8mm square LED
+Illumination Color
+Blue
+Voltage - Forward(Vf)
+3.1V
+Power(Watts)
+100mW
+Forward Current
+5mA
+Wavelength - Dominant
+460nm~475nm
+Peak Wavelength
+469nm
+Diode Configuration
+Discrete Diode
+Lens Color
+Water Clear
+Color Temperature
+-
+Luminous Intensity
+175mcd
+Viewing Angle
+120°
+Mounting Style
+-
+Operating Temperature
+-40℃~+85℃
+Name
+KT-0603B
+Description
+Lamp Holder Type:1.6mm x 0.8mm square LED Illumination Color:Blue Voltage - Forward(Vf):3.1V Voltage - Forward(Vf):3.1V Power(Watts):100mW Forward Current:5mA Wavelength - Dominant:460nm~475nm Wavelength - Dominant:460nm~475nm Peak Wavelength:469nm Peak W
+Reuse Block
+
+Group ID
+
+Channel ID
+
+
+*
+]
+(
+GND 
+J_USB-A1B12 TYPE-C-31-M-12-GND Passive 
+J_USB-B1A12 TYPE-C-31-M-12-GND Passive 
+J_USB-4 TYPE-C-31-M-12-EH Passive 
+J_USB-3 TYPE-C-31-M-12-EH Passive 
+J_USB-2 TYPE-C-31-M-12-EH Passive 
+J_USB-1 TYPE-C-31-M-12-EH Passive 
+R1-2 0603WAF5101T5E-2 Input   
+R2-2 0603WAF5101T5E-2 Input   
+C7-2 CL10A106KP8NNNC-2 Passive 
+U3-1 AMS1117-3.3_C6186-GND Passive 
+C8-2 CL10A106KP8NNNC-2 Passive 
+C9-2 CL10A106KP8NNNC-2 Passive 
+U2-1 CH340C-GND Passive 
+C1-2 CC0603KRX7R9BB104-2 Passive 
+C2-2 CC0603KRX7R9BB104-2 Passive 
+U1-3 ATMEGA328P-AU_C14877-GND Passive 
+U1-5 ATMEGA328P-AU_C14877-GND Passive 
+U1-21 ATMEGA328P-AU_C14877-GND Passive 
+Y1-4 X322516MLB4SI-GND Passive 
+Y1-2 X322516MLB4SI-GND Passive 
+C10-2 CL10C150JB8NNNC-2 Input   
+C11-2 CL10C150JB8NNNC-2 Input   
+C4-2 CC0603KRX7R9BB104-2 Passive 
+C5-2 CC0603KRX7R9BB104-2 Passive 
+C6-2 CC0603KRX7R9BB104-2 Passive 
+SW1-4 TS-1187A-B-A-B-D Passive 
+SW1-3 TS-1187A-B-A-B-C Passive 
+J_DIG_HI-4 PM2.54-1*10-4 Input   
+J_POWER-6 PM2.54-1*8-6 Passive 
+J_POWER-7 PM2.54-1*8-7 Passive 
+J_ICSP-6 2.54-2*3-6 Passive 
+LED_PWR-1 KT-0603G-K Passive 
+LED_L-2 KT-0603Y-K Passive 
+)
+(
+VBUS 
+J_USB-A4B9 TYPE-C-31-M-12-VBUS Passive 
+J_USB-B4A9 TYPE-C-31-M-12-VBUS Passive 
+F1-1 JK-NSMD050-13.2V-1 Passive 
+)
+(
+USB_CC1 
+J_USB-A5 TYPE-C-31-M-12-CC1 Passive 
+R1-1 0603WAF5101T5E-1 Input   
+)
+(
+USB_DN 
+J_USB-B7 TYPE-C-31-M-12-DN2 Passive 
+J_USB-A7 TYPE-C-31-M-12-DN1 Passive 
+U2-6 CH340C-D- Passive 
+)
+(
+USB_DP 
+J_USB-A6 TYPE-C-31-M-12-DP1 Passive 
+J_USB-B6 TYPE-C-31-M-12-DP2 Passive 
+U2-5 CH340C-D+ Passive 
+)
+(
+USB_CC2 
+J_USB-B5 TYPE-C-31-M-12-CC2 Passive 
+R2-1 0603WAF5101T5E-1 Input   
+)
+(
++5V 
+F1-2 JK-NSMD050-13.2V-2 Passive 
+C7-1 CL10A106KP8NNNC-1 Passive 
+U3-3 AMS1117-3.3_C6186-VIN Passive 
+C8-1 CL10A106KP8NNNC-1 Passive 
+U2-16 CH340C-VCC Passive 
+C2-1 CC0603KRX7R9BB104-1 Passive 
+U1-4 ATMEGA328P-AU_C14877-VCC Passive 
+U1-6 ATMEGA328P-AU_C14877-VCC Passive 
+U1-18 ATMEGA328P-AU_C14877-AVCC Passive 
+C4-1 CC0603KRX7R9BB104-1 Passive 
+C5-1 CC0603KRX7R9BB104-1 Passive 
+R9-1 0603WAF1002T5E-1 Input   
+D1-1 1N4148WS_C2128-K Passive 
+J_POWER-2 PM2.54-1*8-2 Passive 
+J_POWER-5 PM2.54-1*8-5 Passive 
+J_ICSP-2 2.54-2*3-2 Passive 
+R5-1 0603WAF1001T5E-1 Input   
+R6-1 0603WAF1001T5E-1 Input   
+R7-1 0603WAF1001T5E-1 Input   
+)
+(
++3V3 
+U3-2 AMS1117-3.3_C6186-VOUT Passive 
+U3-4 AMS1117-3.3_C6186-VOUT Passive 
+C9-1 CL10A106KP8NNNC-1 Passive 
+J_POWER-4 PM2.54-1*8-4 Passive 
+)
+(
+CH340_TX 
+U2-2 CH340C-TXD Passive 
+R3-1 0603WAF1001T5E-1 Input   
+LED_TX-2 KT-0603R-K Passive 
+)
+(
+CH340_RX 
+U2-3 CH340C-RXD Passive 
+R4-1 0603WAF1001T5E-1 Input   
+LED_RX-1 KT-0603B-K Passive 
+)
+(
+CH340_V3 
+U2-4 CH340C-V3 Passive 
+C1-1 CC0603KRX7R9BB104-1 Passive 
+)
+(
+CH340_DTR 
+U2-13 CH340C-DTR# Passive 
+C3-1 CC0603KRX7R9BB104-1 Passive 
+)
+(
+RESET 
+C3-2 CC0603KRX7R9BB104-2 Passive 
+U1-29 ATMEGA328P-AU_C14877-PC6(RESET#/PCINT14) Passive 
+R9-2 0603WAF1002T5E-2 Input   
+D1-2 1N4148WS_C2128-A Passive 
+SW1-2 TS-1187A-B-A-B-B Passive 
+SW1-1 TS-1187A-B-A-B-A Passive 
+J_POWER-3 PM2.54-1*8-3 Passive 
+J_ICSP-5 2.54-2*3-5 Passive 
+)
+(
+D0_RX 
+R3-2 0603WAF1001T5E-2 Input   
+U1-30 ATMEGA328P-AU_C14877-PD0(RXD/PCINT16) Passive 
+J_DIG_LO-8 PM2.54-1*8-8 Passive 
+)
+(
+D1_TX 
+R4-2 0603WAF1001T5E-2 Input   
+U1-31 ATMEGA328P-AU_C14877-PD1(TXD/PCINT17) Passive 
+J_DIG_LO-7 PM2.54-1*8-7 Passive 
+)
+(
+D3 
+U1-1 ATMEGA328P-AU_C14877-(PCINT19/OC2B/INT1)PD3 Passive 
+J_DIG_LO-5 PM2.54-1*8-5 Passive 
+)
+(
+D4 
+U1-2 ATMEGA328P-AU_C14877-(PCINT20/XCK/T0)PD4 Passive 
+J_DIG_LO-4 PM2.54-1*8-4 Passive 
+)
+(
+XTAL1 
+U1-7 ATMEGA328P-AU_C14877-(PCINT6/XTAL1/TOSC1)PB6 Passive 
+Y1-1 X322516MLB4SI-OSC1 Passive 
+C10-1 CL10C150JB8NNNC-1 Input   
+)
+(
+XTAL2 
+U1-8 ATMEGA328P-AU_C14877-(PCINT7/XTAL2/TOSC2)PB7 Passive 
+Y1-3 X322516MLB4SI-OSC2 Passive 
+C11-1 CL10C150JB8NNNC-1 Input   
+)
+(
+D5 
+U1-9 ATMEGA328P-AU_C14877-(PCINT21/OC0B/T1)PD5 Passive 
+J_DIG_LO-3 PM2.54-1*8-3 Passive 
+)
+(
+D6 
+U1-10 ATMEGA328P-AU_C14877-(PCINT22/OC0A/AIN0)PD6 Passive 
+J_DIG_LO-2 PM2.54-1*8-2 Passive 
+)
+(
+D7 
+U1-11 ATMEGA328P-AU_C14877-(PCINT23/AIN1)PD7 Passive 
+J_DIG_LO-1 PM2.54-1*8-1 Passive 
+)
+(
+D8 
+U1-12 ATMEGA328P-AU_C14877-(PCINT0/CLKO/ICP1)PB0 Passive 
+J_DIG_HI-10 PM2.54-1*10-10 Input   
+)
+(
+D9 
+U1-13 ATMEGA328P-AU_C14877-(PCINT1/OC1A)PB1 Passive 
+J_DIG_HI-9 PM2.54-1*10-9 Input   
+)
+(
+D10 
+U1-14 ATMEGA328P-AU_C14877-(PCINT2/SS#/OC1B)PB2 Passive 
+J_DIG_HI-8 PM2.54-1*10-8 Input   
+)
+(
+D11 
+U1-15 ATMEGA328P-AU_C14877-(PCINT3/OC2A/MOSI)PB3 Passive 
+J_DIG_HI-7 PM2.54-1*10-7 Input   
+J_ICSP-4 2.54-2*3-4 Passive 
+)
+(
+D12 
+U1-16 ATMEGA328P-AU_C14877-(PCINT4/MISO)PB4 Passive 
+J_DIG_HI-6 PM2.54-1*10-6 Input   
+J_ICSP-1 2.54-2*3-1 Passive 
+)
+(
+D13 
+U1-17 ATMEGA328P-AU_C14877-PB5(SCK/PCINT5) Passive 
+J_DIG_HI-5 PM2.54-1*10-5 Input   
+J_ICSP-3 2.54-2*3-3 Passive 
+R8-1 0603WAF2201T5E_C4190-1 Input   
+)
+(
+AREF 
+U1-20 ATMEGA328P-AU_C14877-AREF Passive 
+C6-1 CC0603KRX7R9BB104-1 Passive 
+J_DIG_HI-3 PM2.54-1*10-3 Input   
+)
+(
+A0 
+U1-23 ATMEGA328P-AU_C14877-PC0(ADC0/PCINT8) Passive 
+J_ANALOG-1 PM2.54-1*6-1 Passive 
+)
+(
+A1 
+U1-24 ATMEGA328P-AU_C14877-PC1(ADC1/PCINT9) Passive 
+J_ANALOG-2 PM2.54-1*6-2 Passive 
+)
+(
+A2 
+U1-25 ATMEGA328P-AU_C14877-PC2(ADC2/PCINT10) Passive 
+J_ANALOG-3 PM2.54-1*6-3 Passive 
+)
+(
+A3 
+U1-26 ATMEGA328P-AU_C14877-PC3(ADC3/PCINT11) Passive 
+J_ANALOG-4 PM2.54-1*6-4 Passive 
+)
+(
+A4_SDA 
+U1-27 ATMEGA328P-AU_C14877-PC4(ADC4/SDA/PCINT12) Passive 
+J_DIG_HI-2 PM2.54-1*10-2 Input   
+J_ANALOG-5 PM2.54-1*6-5 Passive 
+)
+(
+A5_SCL 
+U1-28 ATMEGA328P-AU_C14877-PC5(ADC5/SCL/PCINT13) Passive 
+J_DIG_HI-1 PM2.54-1*10-1 Input   
+J_ANALOG-6 PM2.54-1*6-6 Passive 
+)
+(
+D2 
+U1-32 ATMEGA328P-AU_C14877-PD2(INT0/PCINT18) Passive 
+J_DIG_LO-6 PM2.54-1*8-6 Passive 
+)
+(
+LED_PWR_A 
+R5-2 0603WAF1001T5E-2 Input   
+LED_PWR-2 KT-0603G-A Passive 
+)
+(
+LED_L_A 
+R8-2 0603WAF2201T5E_C4190-2 Input   
+LED_L-1 KT-0603Y-A Passive 
+)
+(
+LED_TX_A 
+R6-2 0603WAF1001T5E-2 Input   
+LED_TX-1 KT-0603R-A Passive 
+)
+(
+LED_RX_A 
+R7-2 0603WAF1001T5E-2 Input   
+LED_RX-2 KT-0603B-A Passive 
+)

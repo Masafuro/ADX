@@ -1,0 +1,92 @@
+{
+  "nonFloat": [],
+  "floatPinCount": 14,
+  "raw": [
+    {
+      "type": "warn",
+      "rule": "CHECKFLOATPIN",
+      "primitives": [
+        {
+          "primitiveId": "c972cdbcdfd22cd4-e12",
+          "sheet": "6f68ec789245b0ed",
+          "name": "J_USB.B8"
+        },
+        {
+          "primitiveId": "c972cdbcdfd22cd4-e36",
+          "sheet": "6f68ec789245b0ed",
+          "name": "J_USB.A8"
+        },
+        {
+          "primitiveId": "bcc8dbeba5926825-e26",
+          "sheet": "6f68ec789245b0ed",
+          "designator": "U2",
+          "name": "7"
+        },
+        {
+          "primitiveId": "bcc8dbeba5926825-e30",
+          "sheet": "6f68ec789245b0ed",
+          "designator": "U2",
+          "name": "8"
+        },
+        {
+          "primitiveId": "bcc8dbeba5926825-e34",
+          "sheet": "6f68ec789245b0ed",
+          "designator": "U2",
+          "name": "9"
+        },
+        {
+          "primitiveId": "bcc8dbeba5926825-e38",
+          "sheet": "6f68ec789245b0ed",
+          "designator": "U2",
+          "name": "10"
+        },
+        {
+          "primitiveId": "bcc8dbeba5926825-e42",
+          "sheet": "6f68ec789245b0ed",
+          "designator": "U2",
+          "name": "11"
+        },
+        {
+          "primitiveId": "bcc8dbeba5926825-e46",
+          "sheet": "6f68ec789245b0ed",
+          "designator": "U2",
+          "name": "12"
+        },
+        {
+          "primitiveId": "bcc8dbeba5926825-e54",
+          "sheet": "6f68ec789245b0ed",
+          "designator": "U2",
+          "name": "14"
+        },
+        {
+          "primitiveId": "bcc8dbeba5926825-e58",
+          "sheet": "6f68ec789245b0ed",
+          "designator": "U2",
+          "name": "15"
+        },
+        {
+          "primitiveId": "02c828245d47cef4-e77",
+          "sheet": "6f68ec789245b0ed",
+          "designator": "U1",
+          "name": "19"
+        },
+        {
+          "primitiveId": "02c828245d47cef4-e89",
+          "sheet": "6f68ec789245b0ed",
+          "designator": "U1",
+          "name": "22"
+        },
+        {
+          "primitiveId": "520911d65ae0cc58-e5",
+          "sheet": "6f68ec789245b0ed",
+          "name": "J_POWER.1"
+        },
+        {
+          "primitiveId": "520911d65ae0cc58-e33",
+          "sheet": "6f68ec789245b0ed",
+          "name": "J_POWER.8"
+        }
+      ]
+    }
+  ]
+}
