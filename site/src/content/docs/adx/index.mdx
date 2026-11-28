@@ -18,7 +18,7 @@ Every ADX Core board and expansion CARD shares two open standards:
 | Layer | Active Standard | Key Highlights |
 | :--- | :--- | :--- |
 | **Mechanical Profile** | **8858 Form Factor** (`v0.1-alpha`) | `88.0 × 58.0 mm` C0 profile, `76.0 × 46.0 mm` M3 pitch with `Φ10.0 mm` washer keep-out, `3.0 mm` card guides, single-edge `66.0 mm` I/O Edge, `M1–M4` chiral optical markers |
-| **Interconnect Bus** | **ADX 20-Pin Bus** (`ADX-BUS-SPEC-v5.0`) | 2×10P 2.54 mm shrouded/latched IDC header, logical pin IDs (`P01`–`P11`), dedicated RS-485 `UART_DE` (`P03`), dual-GND coplanar shielding (`Pins 1, 3, 5`), panel-aligned bottom `VBUS` (`4.5–5.25V`, `2A–3A`), Pin 16 `GND` boundary wall, native `3.3V` LVCMOS I/O |
+| **Interconnect Bus** | **ADX 20-Pin Bus** (`ADX-BUS-SPEC-v5.0`) | 2×10P 2.54 mm shrouded/latched IDC header, logical pin IDs (`P01`–`P11`), dedicated RS-485 `UART_DE` (`P03`), dual-GND coplanar shielding (`Pins 1, 3, 5`), panel-aligned bottom `VBUS` (`4.5–5.5V`, `2A–3A`), Pin 16 `GND` boundary wall, native `3.3V` LVCMOS I/O |
 
 ## Upcoming Hardware Lineup
 
@@ -26,8 +26,8 @@ Every ADX Core board and expansion CARD shares two open standards:
   <Card title="ADX CORE-U (rev6 Flagship — Spec Finalized)" icon="rocket">
     3-Mode flagship Core board built around Microchip **ATtiny1616-MNR** (`3.3V / 10MHz`, `-40°C~+85°C` Full Embedded target), WCH **CH342K** (0mW isolated when unplugged), `TPS259470` eFuse, `V/I/W` telemetry, and `ADX-BUS-SPEC-v5.0`.
   </Card>
-  <Card title="ADX Reference CARD v0 (8858 / Legacy v4.2 Alpha — Gerber Verified)" icon="approve-check">
-    Physical mechanical and silkscreen alpha reference board visualizing `8858` keep-out zones, legacy `v4.2` bus labels, and `M1–M4` optical alignment & DataMatrix Board ID markers *(v1 update planned for `v5.0`)*.
+  <Card title="ADX Reference CARD v1 (8858 / ADX-BUS v5.0 — Spec Finalized)" icon="approve-check">
+    Official mechanical, electrical, and silkscreen reference board embodying `8858` keep-outs, `ADX-BUS-SPEC-v5.0` (`4.5–5.5V`, `2×2` `VBUS` island), standard THT Eject Header (`C9039`), and `M1–M4` chiral optical markers *(CAD Gerber update next)*.
   </Card>
   <Card title="ADX Prototype CARD v0 (8854 — Gerber Verified)" icon="pencil">
     Dual THT (`2.54 mm`, 342 holes) and top-only SMD (`1.27 mm`, 240 pads) universal prototyping card with full `2×20P` bus breakout (`H1`).

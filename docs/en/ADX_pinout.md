@@ -92,7 +92,7 @@ Placing the high-current external power bus (`VBUS`) at Pins 17–20 aligns the 
 1. **Straight-Through Front I/O Terminal Alignment:** Solid power planes run straight along the bottom edge of the PCB into lower front-panel power terminals without crossing upper instrumentation/communication ducts.
 2. **Zero Signal Crossings:** High-current delivery stays confined to the lower edge of the PCB, eliminating switching noise radiation and IR-drop coupling into `P01 (AIN)` and upper serial buses.
 3. **Secondary Physical Safety:** Should a lower power conductor vibrate loose in a vertical mount, gravity drops it into the lower duct away from upper communication terminals.
-4. **$2 \times 2$ Solid Copper Grid:** Pins 17–20 form a symmetrical $2 \times 2$ square pour supporting $2.0\,\text{A} \sim 3.0\,\text{A}$ continuous bidirectional power transfer with minimal IR drop.
+4. **$2 \times 2$ Solid Copper Grid & `4.5V–5.5V` (`5V ±10%`) Bus Tolerance:** Pins 17–20 form a symmetrical $2 \times 2$ square pour supporting $2.0\,\text{A} \sim 3.0\,\text{A}$ continuous bidirectional power transfer with minimal IR drop. Standardizing mandatory operating tolerance across **`4.5V – 5.5V DC` (`5.0V ±10%`)** covers both USB Type-C `vSafe5V` sources (up to `5.50V`) and heavy-load IR drops (down to `4.5V`), while regulated sourcing modules are encouraged to target `4.75V – 5.25V`.
 
 ### 3.2 Protective Boundary Wall (`Pin 16: GND`)
 `Pin 16 (GND)` sits directly above the `VBUS` cluster. In case of ribbon cable crimp misalignment or frayed strands, `VBUS` shorts directly to `GND`, tripping upstream eFuse/PTC protection rather than exposing 3.3V logic lines (Pins 1–15) to 5V.
@@ -116,8 +116,8 @@ With isolated RS-485 / LIN transceivers delegated to expansion Cards, grouping *
 
 Developers designing `v5.0`-compliant expansion Cards should observe the following guidelines:
 
-1. **Power Ingestion, Shielding & PoL Regulation:**  
-   Tie all four `VBUS` pins (Pins 17–20) to solid copper planes and bond Pin 16 (`GND` barrier wall) plus shield grounds (Pins 1, 3, 5, 11) solidly to the ground plane. **3.3V power is not distributed over the bus**; regulate locally from `VBUS` on the Card.
+1. **Power Ingestion (`4.5V–5.5V` Tolerance MUST), Shielding & PoL Regulation:**  
+   Tie all four `VBUS` pins (Pins 17–20) to solid copper planes and bond Pin 16 (`GND` barrier wall) plus shield grounds (Pins 1, 3, 5, 11) solidly to the ground plane. **Every Card MUST safely tolerate the full `4.5V – 5.5V` (`5.0V ±10%`) `VBUS` window**; narrow-range 5V components rated strictly for `4.75V – 5.25V` MUST NOT be tied directly to `VBUS` without local voltage conditioning. **3.3V power is not distributed over the bus**; regulate locally from `VBUS` on the Card, avoiding `6.0V` absolute-maximum LDOs in favor of **`≥ 10V` operating-input regulators (recommended `12V – 30V` class)** for hot-plug ringing margin (or a buck DC-DC converter for high-current 3.3V Cards).
 2. **Mandatory `P03 (UART_DE)` Pull-Down on RS-485 Cards (MUST):**  
    To prevent unprogrammed or resetting Core boards (High-Z `P03`) from jamming a shared RS-485 field bus, every RS-485 Card **MUST place a $10\,\text{k}\Omega \sim 100\,\text{k}\Omega$ pull-down resistor from `P03` to `GND`**, forcing the transceiver into Receive mode (`DE = LOW`) by default.
 3. **Unrestricted GPIO Repurposing (`P01`–`P11`):**  
@@ -127,7 +127,7 @@ Developers designing `v5.0`-compliant expansion Cards should observe the followi
 5. **Return Paths:**  
    Route high-speed SPI traces (`P08`–`P11` / Pins 12–15) and clock traces (`P02` / Pin 4) adjacent to neighboring ground pins (Pins 3, 5, 11, 16) for tight RF return paths.
 6. **Silkscreen Labeling:**  
-   Use **`P01`–`P11`, `GND`, `VBUS`** as primary labels alongside **`ADX-BUS v5.0`** to prevent accidental mating with legacy `v4.x` prototypes, appending alternate bus functions (`P03/DE`, `P04/TX`, `P08/CS`, etc.) where space allows.
+   Use **`P01`–`P11`, `GND`, `VBUS`** as primary labels alongside **`ADX-BUS v5.0`** to prevent accidental mating with legacy `v4.x` prototypes, appending alternate bus functions (`P03/DE`, `P04/TX`, `P08/CS`, etc.) and **`4.5V~5.5V`** power labeling where space allows.
 
 ---
 

@@ -36,10 +36,16 @@ To achieve this balance, this guideline defines three requirement tiers based on
 ## 3. Power & Electrical Safety Rules
 
 ### 3.1 Common 5V Power Trunk (`VBUS`) Baseline
-- **Voltage Specification:** **DC 5.0V (±10%)** (4.5V to 5.0V operating window; 4.75V–5.25V recommended)
+- **Bus Operating Voltage Tolerance (All Core & CARD Modules) [MUST]:** **`4.5V – 5.5V DC` (Nominal `5.0V ±10%`)**. Covers both USB Type-C `vSafe5V` sources (up to `5.50V`) and 2A cable/connector IR drops (down to `4.5V`). Every Core board and expansion CARD MUST operate safely and reliably across this entire window without damage, malfunction, or false protection tripping.
+- **Power Sourcing Output Window (Core Boards & Power CARDs):**
+  - **Permitted Output Range [MUST]:** `4.5V – 5.5V DC` (upstream OVLO MUST NOT nuisance-trip during steady-state `5.5V` operation while reliably isolating abnormal over-voltages).
+  - **Recommended Output Accuracy [SHOULD]:** Regulated sourcing modules (e.g., isolated 24V/48V-to-5V Power CARDs) SHOULD target **`4.75V – 5.25V DC` (`5.0V ±5%`)** to preserve headroom against light-load float and heavy-load drop. Direct USB Type-C pass-through supplies (up to `5.50V`) remain fully compliant.
+- **Narrow-Range 5V Components [MUST]:** If a CARD uses 5V-powered ICs or isolated modules rated strictly for `4.75V – 5.25V` (unable to survive the full `4.5V – 5.5V` range), designers MUST NOT tie them directly to `VBUS`; condition power locally (buck-boost/regulation) or select wide-input parts (e.g., `3.15V – 5.5V`).
 - **Current Rating:** **Up to 2.0A–3.0A continuous** (Delivered via Pins 17–20 $2 \times 2$ bottom power cluster)
 - **Bidirectionality:** Power may flow either from Core board (USB Type-C) to CARDs, or from a Power CARD to the Core board.
-- **Point of Load (PoL) Rule:** 3.3V logic power is NOT distributed across the 20-pin bus. Cards requiring 3.3V must regulate locally from `VBUS` via an onboard LDO or DC-DC converter.
+- **Point of Load (PoL) Rule & Regulator Voltage Margin:**
+  - 3.3V logic power is NOT distributed across the 20-pin bus. Cards requiring 3.3V must regulate locally from `VBUS` via an onboard LDO or DC-DC converter.
+  - **[SHOULD] High-$V_{IN}$ Regulator Selection:** To survive hot-plug LC ringing and load-step transients above `5.5V`, avoid `6.0V` absolute-maximum LDOs and select regulators rated for **`≥ 10V` operating input (recommended `12V – 30V` class)**. Because LDO heat increases by ~29% at `5.5V` vs. `5.0V`, high-current 3.3V CARDs (`> 150–200mA`) should use a step-down buck DC-DC converter.
 
 ### 3.2 Power CARD Design Rules (Separation of Responsibilities)
 
@@ -132,6 +138,7 @@ The following signals may be utilized flexibly depending on application requirem
 Before releasing or sending a PCB for fabrication (JLCPCB PCBA):
 
 - [ ] **[MUST]** Did you place reverse-current blocking and autonomous short-circuit/over-current protection on any Power CARD injecting into `VBUS`?
+- [ ] **[MUST]** Does the board safely tolerate the full **`4.5V – 5.5V` (`5.0V ±10%`)** `VBUS` window (no narrow-range 5V parts tied directly to `VBUS`, and adequate input voltage / transient margin on `VBUS`-connected LDOs and protection devices)?
 - [ ] **[MUST]** Are Pins 17–20 (`VBUS`) bonded into a $2 \times 2$ solid copper pour, and are Pin 16 (`GND` barrier wall) plus Pins 1, 3, 5, 11 tied solidly to the ground plane?
 - [ ] **[MUST]** If the Card is an RS-485 transceiver using **`P03` (Pin 6: `UART_DE`)**, did you place a $10\,\text{k}\Omega \sim 100\,\text{k}\Omega$ pull-down resistor to GND on `P03` for fail-safe Receive default?
 - [ ] **[MUST]** Does the 20-pin IDC connector pin assignment (`P01`–`P11`, `GND`, `VBUS`) strictly match **`ADX-BUS-SPEC-v5.0`** ([`docs/spec/ADX_PINOUT.md`](../spec/ADX_PINOUT.md)), with `ADX-BUS v5.0` printed on silkscreen to avoid mating with legacy `v4.x` boards?

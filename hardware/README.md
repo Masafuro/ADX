@@ -31,7 +31,7 @@ ADXのハードウェアは、**8858 Form Factor（正式 α 版）**（`88.0 mm
 
 | ボード名 | 概要 | リンク |
 | :--- | :--- | :--- |
-| **ADX Reference CARD v0** | 8858 Form Factor（正式 α 版）の物理寸法・キープアウト・光学マーカー・ピン配置を可視化した公式リファレンスボード。 | [仕様書](CARD/Reference/concept.md) |
+| **ADX Reference CARD v1** | 8858 Form Factor・`ADX-BUS-SPEC-v5.0`（`4.5V~5.5V`）・THT Eject Header (`C9039`)・光学マーカーを具現化した公式リファレンスボード（`v1` 仕様確定・CAD 更新待ち）。 | [仕様書](CARD/Reference/concept.md) |
 | **ADX Prototype CARD** | 2×20P ADX バス引き出し ＋ THT / SMD ユニバーサル試作エリアを備えたプロトタイピング拡張基板（v0 は旧 8854 試作）。 | [仕様書](CARD/Prototype/proposal.md) |
 
 ### 1.3 フォームファクタ & 規格仕様

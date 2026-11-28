@@ -8,8 +8,8 @@ SPDX-License-Identifier: CC-BY-4.0
 [ **English** | [日本語](../ja/8858_formfactor.md) ]
 
 - **Specification Status**: **Official Alpha (`v0.1-alpha`)**
-- **Revision Date**: 2026-11-23
-- **Reference Implementation**: [ADX Reference CARD v0 Specification](../../hardware/CARD/Reference/concept.md) / [`Gerber_PCB1_2026-11-23.zip`](../../hardware/CARD/Reference/data/Gerber_PCB1_2026-11-23.zip)
+- **Revision Date**: 2026-11-28
+- **Reference Implementation**: [ADX Reference CARD v1 Specification](../../hardware/CARD/Reference/concept.md) (`v5.0` / `C9039` spec finalized, CAD update pending) / Baseline [`Gerber_PCB1_2026-11-23.zip`](../../hardware/CARD/Reference/data/Gerber_PCB1_2026-11-23.zip) (`v0` mechanical & marker verified)
 - **Design Rationale**: [8858 Form Factor Study (JA)](../../hardware/CARD/Reference/8858ff_plan.md)
 
 ---
@@ -102,9 +102,10 @@ P01/AIN  | P02/EXTCLK | P03/DE   | P05/RX   | P07/SDA  | P08/CS   | P10/MISO | G
 GND      | GND        | GND      | P04/TX   | P06/SCL  | GND      | P09/MOSI | P11/SCK  | VBUS | VBUS
 ```
 
-### 4.2 Power Sourcing Requirements (VBUS Supply)
-* **Supply Voltage:** `4.75 V ~ 5.25 V`
-* **Mandatory Protection:**
+### 4.2 Power Requirements (VBUS)
+* **Bus Operating Voltage Tolerance (All Boards [MUST]):** **`4.5 V ~ 5.5 V DC`** (nominal `5.0 V ±10%`, covering both USB Type-C `vSafe5V` up to `5.50 V` and 2 A cable/connector IR drops; every Core and CARD must operate safely across this full range)
+* **Power Sourcing Recommended Accuracy [SHOULD]:** `4.75 V ~ 5.25 V DC` (`5.0 V ±5%`, strictly within `4.5 V ~ 5.5 V`; upstream OVLO must not nuisance-trip at steady-state `5.5 V`)
+* **Mandatory Protection (Sourcing Modules [MUST]):**
   * Overcurrent Protection (approx. `2 A`)
   * Short-Circuit Protection
   * Reverse Current Blocking (Schottky diode, ideal diode, or eFuse)

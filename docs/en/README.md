@@ -84,7 +84,7 @@ All Core boards and Card modules interconnect via a standardized 2×10-pin shrou
 - **MCU-Independent Logical Pin IDs (`P01`–`P11`)**:  
   Power rails (`GND`, `VBUS`) are unnumbered, and all 11 signal contacts follow a pure, unrestricted sequential ID series **`P01`–`P11`** (mapped to collision-safe `ADX_P01`–`ADX_P11` macros and aliases such as `ADX_AIN`, `ADX_DE`, `ADX_TX`, `ADX_CS` in `ADX_<BOARD>.h`).
 - **Panel-Aligned Power Bus (`VBUS`: Pins 17–20)**:  
-  Directly matches industrial wiring practices (weak signals on top, heavy power on bottom), routing straight into front terminals with zero trace crossings. Continuous $2 \times 2$ grid rated for **2.0A–3.0A continuous** bidirectional power.
+  Directly matches industrial wiring practices (weak signals on top, heavy power on bottom), routing straight into front terminals with zero trace crossings. Continuous $2 \times 2$ grid rated for **`4.5V–5.5V` (`5V ±10%` mandatory board tolerance)** and **2.0A–3.0A continuous** bidirectional power.
 - **Protective Boundary Wall (`Pin 16: GND`)**:  
   Direct short barrier directly above `VBUS`, safely grounding crimp misalignments.
 - **Triple Odd-Row Ground Guard (`Pins 1, 3, 5: GND`)**:  

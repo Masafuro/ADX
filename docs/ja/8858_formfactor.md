@@ -8,8 +8,8 @@ SPDX-License-Identifier: CC-BY-4.0
 [ [English](../en/8858_formfactor.md) | **日本語** ]
 
 - **規格ステータス**: **正式 α 版 (Official Alpha / v0.1-alpha)**
-- **改訂日**: 2026-11-23
-- **リファレンス実装**: [ADX Reference CARD v0 仕様書](../../hardware/CARD/Reference/concept.md) / [`Gerber_PCB1_2026-11-23.zip`](../../hardware/CARD/Reference/data/Gerber_PCB1_2026-11-23.zip)
+- **改訂日**: 2026-11-28
+- **リファレンス実装**: [ADX Reference CARD v1 仕様書](../../hardware/CARD/Reference/concept.md)（`v5.0` / `C9039` 仕様確定・CAD 更新待ち） / 前版ベースライン [`Gerber_PCB1_2026-11-23.zip`](../../hardware/CARD/Reference/data/Gerber_PCB1_2026-11-23.zip)（`v0` 機械・マーカー検証済）
 - **設計検討経緯**: [8858 フォームファクター検討書](../../hardware/CARD/Reference/8858ff_plan.md)
 
 ---
@@ -102,9 +102,10 @@ P01/AIN  | P02/EXTCLK | P03/DE   | P05/RX   | P07/SDA  | P08/CS   | P10/MISO | G
 GND      | GND        | GND      | P04/TX   | P06/SCL  | GND      | P09/MOSI | P11/SCK  | VBUS | VBUS
 ```
 
-### 4.2 電源供給仕様 (VBUS Supply)
-* **供給電圧:** `4.75 V 〜 5.25 V`
-* **必須保護機能:**
+### 4.2 電源仕様 (VBUS Power Requirements)
+* **バス許容動作電圧（全カード耐性【MUST】）:** **`4.5 V 〜 5.5 V DC`**（公称 `5.0 V ±10%`：USB Type-C `vSafe5V` 上限および 2A 給電時の電圧降下を両端カバー。すべての Core / CARD はこの全範囲で安全に動作すること）
+* **電源供給側の推奨精度【SHOULD】:** `4.75 V 〜 5.25 V DC`（`5.0 V ±5%`、許容上限 `5.5 V` 厳守。過電圧保護 OVLO は `5.5 V` 定常で誤遮断しない設計とすること）
+* **必須保護機能（供給側【MUST】）:**
   * 過電流保護（Overcurrent Protection ≈ 2 A）
   * 短絡保護（Short-Circuit Protection）
   * 逆流防止（Reverse Current Blocking：ショットキーまたは理想ダイオード / eFuse）

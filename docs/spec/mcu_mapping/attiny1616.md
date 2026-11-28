@@ -43,7 +43,7 @@ In `v5.0` / `CORE-U rev6`, isolated RS-485 / LIN transceivers and isolated field
 | **14** | **P10** | `ADX_P10` (`ADX_MISO`) | **SPI_MISO** | **PC1** | 16 | **SPI0 MISO (Alternate)** / ADC1 AIN7\* / **TCD0 WOD** (48 MHz 12-bit PWM) / CCL LUT1-OUT (Alt) |
 | **15** | **P11** | `ADX_P11` (`ADX_SCK`) | **SPI_SCK** | **PC0** | 15 | **SPI0 SCK (Alternate)** / ADC1 AIN6\* / **TCD0 WOC** / TCB0 WO (Alt) |
 | **16** | **GND** | — | — | - | - | VBUS Protective Boundary Wall & SPI Return |
-| **17–20** | **VBUS** | — | — | - | - | Main Bidirectional High-Current Power Bus (4.5V–5.25V, $2 \times 2$ solid plane) |
+| **17–20** | **VBUS** | — | — | - | - | Main Bidirectional High-Current Power Bus (4.5V–5.5V / 5V ±10%, $2 \times 2$ solid plane) |
 
 > **\*Note on `ADC0` vs. `ADC1` under Arduino (`megaTinyCore`):**  
 > Under `v5.0`, ATtiny1616 exposes **all 11 bus pins (`P01`–`P11`) with ADC capability**, split across two hardware converters:

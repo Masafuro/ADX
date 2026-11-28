@@ -73,10 +73,10 @@ The bus separates every contact into three layers: **Physical IDC Pin** (`1`–`
 | **14** | **P10** | **SPI_MISO** | General / Comm | 3.3V LVCMOS | SPI Controller In / Peripheral Out / 3.3V GPIO | Wire #14 (SPI Bus Group) |
 | **15** | **P11** | **SPI_SCK** | General / Comm | 3.3V LVCMOS | SPI Serial Clock / 3.3V GPIO | Wire #15 (SPI Bus Group) |
 | **16** | **GND** | — | Power / Shield | 0V Return | VBUS Short-Circuit Barrier Wall & SPI Return | Wire #16 (Protective Boundary Wall) |
-| **17** | **VBUS** | — | Power | 4.5V – 5.25V DC (2.0A–3.0A) | Main Bidirectional Power Bus (Panel-Aligned Bottom Cluster) | Wire #17 ($2 \times 2$ Solid Power Plane) |
-| **18** | **VBUS** | — | Power | 4.5V – 5.25V DC (2.0A–3.0A) | Main Bidirectional Power Bus (Panel-Aligned Bottom Cluster) | Wire #18 ($2 \times 2$ Solid Power Plane) |
-| **19** | **VBUS** | — | Power | 4.5V – 5.25V DC (2.0A–3.0A) | Main Bidirectional Power Bus (Panel-Aligned Bottom Cluster) | Wire #19 ($2 \times 2$ Solid Power Plane) |
-| **20** | **VBUS** | — | Power | 4.5V – 5.25V DC (2.0A–3.0A) | Main Bidirectional Power Bus (Panel-Aligned Bottom Cluster) | Wire #20 ($2 \times 2$ Solid Power Plane) |
+| **17** | **VBUS** | — | Power | 4.5V – 5.5V DC (5.0V ±10%, 2.0A–3.0A) | Main Bidirectional Power Bus (Panel-Aligned Bottom Cluster) | Wire #17 ($2 \times 2$ Solid Power Plane) |
+| **18** | **VBUS** | — | Power | 4.5V – 5.5V DC (5.0V ±10%, 2.0A–3.0A) | Main Bidirectional Power Bus (Panel-Aligned Bottom Cluster) | Wire #18 ($2 \times 2$ Solid Power Plane) |
+| **19** | **VBUS** | — | Power | 4.5V – 5.5V DC (5.0V ±10%, 2.0A–3.0A) | Main Bidirectional Power Bus (Panel-Aligned Bottom Cluster) | Wire #19 ($2 \times 2$ Solid Power Plane) |
+| **20** | **VBUS** | — | Power | 4.5V – 5.5V DC (5.0V ±10%, 2.0A–3.0A) | Main Bidirectional Power Bus (Panel-Aligned Bottom Cluster) | Wire #20 ($2 \times 2$ Solid Power Plane) |
 
 ---
 
@@ -88,7 +88,13 @@ The bus separates every contact into three layers: **Physical IDC Pin** (`1`–`
   1. **Direct Straight-Through Routing**: High-current power planes run straight along the bottom edge of the PCB directly into front-panel power terminals and high-current connectors, without traversing or coupling noise into low-voltage signals above.
   2. **Zero Signal Crossings**: Eliminates magnetic and capacitive crosstalk into sensitive analog (`P01 / AIN`) and high-speed communication pairs (`UART`, `SPI`) across both the backplane and module boards.
   3. **Secondary Physical Safety**: As an inherent physical side-effect of this bottom placement, should an external terminal connection come loose in vertical mounts, the loose conductor hangs or drops downward toward the lower wiring duct, preventing accidental contact with communication lines routed above.
-- **Operating Voltage Window**: Nominal $5.0\,\text{V}$ ($4.5\,\text{V} \sim 5.25\,\text{V}$ operating range across bidirectional sourcing/sinking paths).
+- **Bus Operating Voltage Tolerance (MUST — All Core & Card Modules)**:  
+  Nominal **$5.0\,\text{V} \pm 10\%$** (**$4.5\,\text{V} \sim 5.5\,\text{V}\,\text{DC}$**). Every ADX Core board and expansion Card **MUST** operate safely and reliably across the full $4.5\,\text{V} \sim 5.5\,\text{V}$ window without damage, malfunction, or false protection tripping. This window encompasses both USB Type-C `vSafe5V` sources (up to $5.50\,\text{V}$) and $2\,\text{A}$ cable/connector IR drops (down to $4.5\,\text{V}$).
+- **Power Sourcing Output Window (Core Boards & Power Cards)**:
+  - **Permitted Output Range (MUST)**: $4.5\,\text{V} \sim 5.5\,\text{V}\,\text{DC}$. Upstream over-voltage protection (OVLO) MUST NOT nuisance-trip during steady-state $5.5\,\text{V}$ operation while reliably isolating abnormal over-voltages above $5.5\,\text{V}$.
+  - **Recommended Output Accuracy (SHOULD)**: Regulated sourcing modules (e.g., isolated 24V/48V-to-5V Power Cards) **SHOULD** target **$4.75\,\text{V} \sim 5.25\,\text{V}\,\text{DC}$** ($5.0\,\text{V} \pm 5\%$) to preserve headroom against both light-load float and heavy-load IR drop. Direct USB Type-C pass-through supplies (up to $5.50\,\text{V}$) are fully compliant.
+- **Narrow-Range 5V Components (MUST)**:  
+  If a Card integrates 5V-powered ICs or isolated modules rated only for $4.75\,\text{V} \sim 5.25\,\text{V}$ (unable to survive the full $4.5\,\text{V} \sim 5.5\,\text{V}$ bus window), designers **MUST NOT** tie them directly to `VBUS`; the Card MUST provide local voltage conditioning (buck-boost / regulation) or substitute wide-input devices (e.g., $3.15\,\text{V} \sim 5.5\,\text{V}$).
 - **Current Carrying Capacity**: Rated for **$2.0\,\text{A} \sim 3.0\,\text{A}$ continuous** across Pins 17–20 combined.
 - **$2 \times 2$ Grid Copper Plane**: Pins 17, 18, 19, and 20 form a symmetrical $2 \times 2$ square grid. PCB layouts MUST bond all four pins together into a continuous solid copper pour on outer and inner layers to minimize IR drop and parasitic inductance.
 - **Mandatory Sourcing Protection (MUST)**:
@@ -131,7 +137,9 @@ System-level resets and recovery are governed via Core-board onboard programming
   - $V_{IH} \ge 2.0\,\text{V}$
   - $V_{OL} \le 0.4\,\text{V}$
   - $V_{OH} \ge 2.4\,\text{V}$
-- **Point of Load (PoL) Regulation Rule**: 3.3V power is NOT distributed across the 20-pin bus. Addon Cards requiring 3.3V logic supply MUST receive `VBUS` (Pins 17–20) and regulate down locally using dedicated on-card LDO or DC-DC stages.
+- **Point of Load (PoL) Regulation Rule & Transient Voltage Margin**:
+  - 3.3V power is NOT distributed across the 20-pin bus. Addon Cards requiring 3.3V logic supply **MUST** receive `VBUS` (Pins 17–20) and regulate down locally using dedicated on-card LDO or DC-DC stages rated across the full $4.5\,\text{V} \sim 5.5\,\text{V}$ bus window.
+  - **High-$V_{IN}$ Regulator Margin (SHOULD)**: Because hot-plug LC ringing and load-step transients on a $5.5\,\text{V}$ bus can easily exceed $6.0\,\text{V}$ (leaving only $0.5\,\text{V}$ headroom on $6.0\,\text{V}$ absolute-maximum LDOs), on-card 3.3V LDOs/regulators and `VBUS`-connected devices **SHOULD** avoid $6.0\,\text{V}$ absolute-maximum parts and instead select regulators with an operating input rating of **$\ge 10\,\text{V}$** (recommended **$12\,\text{V} \sim 30\,\text{V}$** class). For high-current 3.3V Cards (approximately $> 150\,\text{mA} \sim 200\,\text{mA}$), a step-down DC-DC (buck) converter is recommended to avoid excessive LDO dissipation ($+29\%$ heat at $5.5\,\text{V}$ vs. $5.0\,\text{V}$).
 
 ---
 
@@ -187,7 +195,7 @@ void loop() {
 ```
 
 ### 5.5 Silkscreen Labeling Guideline
-Where PCB silkscreen space adjacent to the 20-pin IDC header is constrained, designers SHOULD label contacts using the compact Logical Pin IDs (`P01`–`P11`, `GND`, `VBUS`) alongside the bus revision tag (`ADX-BUS v5.0`). Where space permits, primary bus functions MAY be appended (e.g., `P01/AIN`, `P03/DE`, `P04/TX`, `P08/CS`).
+Where PCB silkscreen space adjacent to the 20-pin IDC header is constrained, designers SHOULD label contacts using the compact Logical Pin IDs (`P01`–`P11`, `GND`, `VBUS`) alongside the bus revision tag (`ADX-BUS v5.0`). Where space permits, primary bus functions MAY be appended (e.g., `P01/AIN`, `P03/DE`, `P04/TX`, `P08/CS`), and power-rail silkscreens SHOULD print **`4.5V~5.5V`** (or `5V (4.5~5.5V)`) rather than legacy `4.75V~5.25V`.
 
 ---
 
@@ -216,4 +224,4 @@ Explanatory architecture guides in Japanese ([`docs/ja/ADX_pinout.md`](../ja/ADX
 | **v4.0** | 2026-10-16 | Initial unified release of the 20-Pin Bus Specification with Gravity Fail-Safe power architecture, Pin 2 OWD, and coplanar analog shield. |
 | **v4.1** | 2026-11-03 | Explicitly define Pins 2 and 5 as system management lines. Establish Card-side $0\,\Omega$ DNP isolation recommendation for Pin 5 to support both 1-wire and 2-wire serial programming topologies. Refine power topology rationale to emphasize industrial panel alignment (weak-signal top, heavy-power bottom) and straight-through non-crossing layout. |
 | **v4.2** | 2026-11-19 | Introduce MCU-independent Logical Pin IDs (`S00` for system `OWD`, `P01`–`P10` for the 10 user/Card signal pins; power rails `GND`/`VBUS` unnumbered) with 100% electrical and physical backward compatibility to v4.1. Formalize collision-safe `ADX_<BOARD>.h` C/C++ macro conventions (`ADX_P01`–`ADX_P10`). |
-| **v5.0** | 2026-11-28 | **Major Breaking Revision (Flagship Field-Bus Architecture)**: Omit `S00` (`OWD / UPDI`) from the 20-pin IDC bus to eliminate HV-noise / accidental-reset vectors and move programming interfaces to Core-board internal responsibility (removing Card-side `S00` N.C. and `P02` $0\,\Omega$ DNP rules). Compact Pins 1–5 to `GND / P01(AIN) / GND / P02(EXTCLK) / GND` for true dual-GND coplanar shielding. Introduce dedicated RS-485 Driver Enable **`P03` (`UART_DE` / `ADX_DE`)** on Pin 6 with mandatory Card-side pull-down ($10\,\text{k}\Omega$–$100\,\text{k}\Omega$), keeping Pins 7–20 physically identical to `v4.2`. Renumber all 11 unrestricted signal pins sequentially as **`P01`–`P11`** (`ADX_P01`–`ADX_P11`). *Electrically incompatible with `v4.x` boards on Pins 3–6.* |
+| **v5.0** | 2026-11-28 | **Major Breaking Revision (Flagship Field-Bus & Unified `VBUS` Architecture)**: Omit `S00` (`OWD / UPDI`) from the 20-pin IDC bus to eliminate HV-noise / accidental-reset vectors and move programming interfaces to Core-board internal responsibility (removing Card-side `S00` N.C. and `P02` $0\,\Omega$ DNP rules). Compact Pins 1–5 to `GND / P01(AIN) / GND / P02(EXTCLK) / GND` for true dual-GND coplanar shielding. Introduce dedicated RS-485 Driver Enable **`P03` (`UART_DE` / `ADX_DE`)** on Pin 6 with mandatory Card-side pull-down ($10\,\text{k}\Omega$–$100\,\text{k}\Omega$), keeping Pins 7–20 physically identical to `v4.2`. Renumber all 11 unrestricted signal pins sequentially as **`P01`–`P11`** (`ADX_P01`–`ADX_P11`). Standardize **`VBUS` to $4.5\,\text{V} \sim 5.5\,\text{V}\,\text{DC}$ ($5.0\,\text{V} \pm 10\%$)** mandatory tolerance across all Core/Card modules (USB-C `vSafe5V` compliant, $4.75\,\text{V} \sim 5.25\,\text{V}$ recommended sourcing accuracy, $\ge 10\,\text{V}$ PoL regulator margin guideline, and prohibition of direct `VBUS` tie for narrow-range 5V components). *Electrically incompatible with `v4.x` boards on Pins 3–6.* |
